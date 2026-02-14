@@ -10,9 +10,12 @@ export default {
                 sans: ['"Montserrat"', 'sans-serif'],
             },
             colors: {
-                primary: "#5D7C89",
-                secondary: "#F4F6F7",
-                accent: "#B0BEC5",
+                primary: "#5D7C89",       // Original Muted Blue
+                "primary-dark": "#0E1038",// Deep Navy Blue (from designs)
+                secondary: "#F8FAFC",     // Very Light Gray/White (Slate-50)
+                accent: "#CBD5E1",        // Light Gray-Blue (Slate-300)
+                "text-dark": "#1E293B",   // Slate-800 for main text
+                "text-light": "#64748B",  // Slate-500 for secondary text
                 "card-bg": "#FFFFFF",
             },
             // We can add custom animations back if needed here, 

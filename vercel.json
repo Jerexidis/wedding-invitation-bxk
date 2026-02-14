@@ -1,3 +1,4 @@
 {
-    "buildComand": "npx vite build"
+    "buildCommand": "npx vite build",
+    "framework": "vite"
 }

@@ -10,7 +10,7 @@ import Footer from './components/Footer'
 
 function App() {
     return (
-        <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-rose-200">
+        <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-primary/30">
             <Hero />
             <Countdown />
             <Events />

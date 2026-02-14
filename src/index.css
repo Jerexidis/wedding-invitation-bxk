@@ -1,21 +1,46 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
-/* Custom keyframes if needed, though Tailwind has animate-spin, animate-bounce etc. */
+*,
+*::before,
+*::after {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    overflow-x: clip;
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Force GPU layer for fixed/absolute positioned elements */
+img {
+    content-visibility: auto;
+}
+
+/* Custom keyframes */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translate3d(0, 20px, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
 .animate-fade-in {
     animation: fadeIn 1s ease-out forwards;
+    will-change: opacity, transform;
 }
 
 /* Custom Scrollbar */

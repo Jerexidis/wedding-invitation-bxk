@@ -10,7 +10,7 @@ const Events = () => {
                 title="Ceremonia"
                 location="Quinta Maria Jardin de Eventos"
                 time="6:00 PM"
-                link="https://maps.app.goo.gl/Pco9kmjdYqEjeDHi6?g_st=aw"
+                link="https://maps.app.goo.gl/e4Mi817xanEJ4B6c9"
             />
 
             <EventCard
@@ -18,7 +18,7 @@ const Events = () => {
                 title="Recepción"
                 location="Misma ubicación de Ceremonia"
                 time="7:00 PM"
-                link="https://maps.app.goo.gl/Pco9kmjdYqEjeDHi6?g_st=aw"
+                link="https://maps.app.goo.gl/e4Mi817xanEJ4B6c9"
             />
 
         </section>
@@ -38,7 +38,7 @@ const EventCard = ({ icon, title, location, time, link }) => (
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide hover:bg-[#0E1038] transition-colors"
+            className="inline-flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors"
         >
             <MapPin size={16} /> Ver Ubicación
         </a>

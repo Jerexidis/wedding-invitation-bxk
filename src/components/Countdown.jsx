@@ -45,6 +45,13 @@ const Countdown = () => {
                     </div>
                 )}
 
+                {!isTime && (
+                    <div className="mb-8 animate-fade-in">
+                        <p className="text-xl md:text-3xl text-slate-700 font-serif mb-2">Sábado, 30 de Mayo</p>
+                        <p className="text-lg text-slate-500 uppercase tracking-widest">2026</p>
+                    </div>
+                )}
+
                 {!isTime && <AddToCalendar />}
             </div>
         </section>

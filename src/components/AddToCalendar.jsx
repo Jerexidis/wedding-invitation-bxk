@@ -19,21 +19,28 @@ const AddToCalendar = () => {
     const outlookEnd = "2026-05-30T23:00:00";
     const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(event.title)}&body=${encodeURIComponent(event.description)}&startdt=${outlookStart}&enddt=${outlookEnd}&location=${encodeURIComponent(event.location)}`;
 
-    const generateICS = () => {
-        const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${event.start}\nDTEND:${event.end}\nSUMMARY:${event.title}\nDESCRIPTION:${event.description}\nLOCATION:${event.location}\nEND:VEVENT\nEND:VCALENDAR`;
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'boda-kassandra-brian.ics');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    const openAppleCalendar = () => {
+        const icsContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//Boda K&B//ES',
+            'BEGIN:VEVENT',
+            `DTSTART:${event.start}`,
+            `DTEND:${event.end}`,
+            `SUMMARY:${event.title}`,
+            `DESCRIPTION:${event.description}`,
+            `LOCATION:${event.location}`,
+            'END:VEVENT',
+            'END:VCALENDAR'
+        ].join('\r\n');
+
+        const dataUri = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
+        window.open(dataUri, '_blank');
     };
 
     // Estilos dinámicos
     const buttonStyle = {
-        background: '#a68a56', // Un tono dorado elegante
+        background: '#5D7C89', // Azul primario para combinar con el tema
         color: 'white',
         padding: '12px 24px',
         border: 'none',
@@ -79,7 +86,7 @@ const AddToCalendar = () => {
         borderRadius: '8px',
         transition: 'background 0.2s',
         fontSize: '0.95rem',
-        background: hoveredLink === id ? '#f7f3eb' : 'transparent',
+        background: hoveredLink === id ? '#F8FAFC' : 'transparent',
         border: 'none',
         width: '100%',
         textAlign: 'left',
@@ -121,12 +128,12 @@ const AddToCalendar = () => {
                     <i className="fab fa-windows" style={{ color: '#0078D4' }}></i> Outlook Online
                 </a>
                 <button
-                    onClick={generateICS}
+                    onClick={openAppleCalendar}
                     style={getLinkStyle('apple')}
                     onMouseEnter={() => setHoveredLink('apple')}
                     onMouseLeave={() => setHoveredLink(null)}
                 >
-                    <i className="fab fa-apple" style={{ color: '#000' }}></i> Apple / Otros
+                    <i className="fab fa-apple" style={{ color: '#000' }}></i> Apple
                 </button>
             </div>
         </div>
