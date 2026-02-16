@@ -16,7 +16,7 @@ const Details = () => {
                     <p className="text-sm text-slate-600 italic leading-relaxed">
                         "Amamos a los niños, pero queremos que este día papá y mamá celebren sin preocupaciones."
                     </p>
-                    <div className="mt-4 inline-flex items-center gap-2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                    <div className="mt-4 inline-flex items-center gap-2 bg-[#668896] text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
                         <Ban size={12} />
                         <span>Evento sin niños</span>
                     </div>

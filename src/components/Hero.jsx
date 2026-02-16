@@ -52,7 +52,7 @@ const Hero = () => {
             <div className="relative z-10 text-white animate-fade-in space-y-4 px-6 pb-16 md:pb-8">
                 <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl drop-shadow-lg leading-tight">Nos Casamos</h1>
                 <p className="text-lg md:text-xl uppercase tracking-[0.3em] font-light">KASSANDRA & BRIAN</p>
-                <div className="w-24 h-0.5 bg-white/60 mx-auto my-4"></div>
+                <div className="w-40 h-[2px] bg-white/60 mx-auto my-6"></div>
             </div>
 
             {/* Audio Player */}
