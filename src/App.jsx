@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom'
 import { getDefaultInvitation, getInvitationBySlug } from './invitations/registry'
 
+const RsvpDashboard = lazy(() => import('./components/RsvpDashboard'))
+
 // Admin panel solo disponible en dev (el archivo no existe en producción)
 let AdminPanel = null
 if (import.meta.env.DEV) {
@@ -45,6 +47,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<DefaultInvitation />} />
                 <Route path="/i/:slug" element={<InvitationBySlug />} />
+                <Route path="/i/:slug/rsvp" element={<RsvpDashboard />} />
                 {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
                 <Route path="*" element={<NotFound />} />
             </Routes>
