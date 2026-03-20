@@ -40,6 +40,13 @@ function InvitationBySlug() {
     const Component = invitation.component
     return <Component />
 }
+/* Carga el dashboard de RSVP validando primero que la invitación exista */
+function RsvpBySlug() {
+    const { slug } = useParams()
+    const invitation = getInvitationBySlug(slug)
+    if (!invitation) return <NotFound />
+    return <RsvpDashboard />
+}
 
 function App() {
     return (
@@ -47,7 +54,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<DefaultInvitation />} />
                 <Route path="/i/:slug" element={<InvitationBySlug />} />
-                <Route path="/i/:slug/rsvp" element={<RsvpDashboard />} />
+                <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
                 {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
                 <Route path="*" element={<NotFound />} />
             </Routes>
