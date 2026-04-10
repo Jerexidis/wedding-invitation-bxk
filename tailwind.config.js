@@ -31,15 +31,15 @@ export default {
                     text: '#1C2B23',
                     gray: '#6E7F72',
                 },
-                // XV Años — Lila / Lavanda
+                // XV Años — Crema cálido / Vino
                 xv: {
-                    primary: '#9B7DB8',
-                    accent: '#C4A8D8',
-                    light: '#F3EDF8',
-                    cream: '#F9F5FC',
-                    dark: '#3D2B52',
-                    text: '#2A1F35',
-                    gray: '#8A7F94',
+                    primary: '#8B2332',
+                    accent: '#A3344A',
+                    light: '#F5EDE0',
+                    cream: '#F0E6D6',
+                    dark: '#3D1A1A',
+                    text: '#2C1810',
+                    gray: '#8A7568',
                 },
                 // Bautizo — Azul cielo
                 bautizo: {
@@ -50,6 +50,16 @@ export default {
                     dark: '#1E3A4F',
                     text: '#1A2D3D',
                     gray: '#6E8490',
+                },
+                // Cumpleaños — Coral/Durazno festivo
+                cumple: {
+                    primary: '#E07A5F',
+                    accent: '#F4A261',
+                    light: '#FDF6F5',
+                    cream: '#FEFAF9',
+                    dark: '#3D1E16',
+                    text: '#2C1B18',
+                    gray: '#8C6B63',
                 },
             },
             animation: {

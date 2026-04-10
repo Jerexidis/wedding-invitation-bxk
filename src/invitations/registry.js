@@ -22,6 +22,12 @@ const invitations = [
     //     component: lazy(() => import('./maria-jose/index.jsx')),
     // },
 
+    {
+        slug: 'atziri-belen',
+        title: 'Atziri Belén',
+        component: lazy(() => import('./atziri-belen/index.jsx')),
+    },
+
 ]
 
 export const getDefaultInvitation = () =>

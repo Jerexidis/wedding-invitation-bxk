@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getConfirmations, removeConfirmation } from '../utils/rsvpStore'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import html2canvas from 'html2canvas'
 
 const RsvpDashboard = () => {
     const { slug } = useParams()
@@ -10,6 +13,17 @@ const RsvpDashboard = () => {
     const [loading, setLoading] = useState(true)
     const [deleting, setDeleting] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
+    const [showExportMenu, setShowExportMenu] = useState(false)
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!e.target.closest('.rsvp-dropdown-container')) {
+                setShowExportMenu(false)
+            }
+        }
+        document.addEventListener('click', handleClickOutside)
+        return () => document.removeEventListener('click', handleClickOutside)
+    }, [])
 
     // ─── Auth State ───
     const [authorized, setAuthorized] = useState(false)
@@ -183,6 +197,112 @@ const RsvpDashboard = () => {
         URL.revokeObjectURL(url)
     }
 
+    const exportDOC = () => {
+        const headersHTML = '<tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">Nombre</th><th style="padding:8px;border:1px solid #ddd;">Personas</th><th style="text-align:left;padding:8px;border:1px solid #ddd;">Mensaje</th><th style="text-align:left;padding:8px;border:1px solid #ddd;">Fecha</th></tr>'
+        const rowsHTML = confirmations.map(c => `<tr>
+            <td style="padding:8px;border:1px solid #ddd;">${c.name || ''}</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:center;">${c.guests || 1}</td>
+            <td style="padding:8px;border:1px solid #ddd;">${c.message || '—'}</td>
+            <td style="padding:8px;border:1px solid #ddd;">${formatDate(c.created_at)} ${formatTime(c.created_at)}</td>
+        </tr>`).join('')
+
+        const htmlContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="utf-8"><title>Confirmaciones</title></head>
+            <body style="font-family:sans-serif;">
+                <h2 style="color:#1a73e8;">Lista de Invitados Confirmados</h2>
+                <table style="border-collapse: collapse; width: 100%; font-size:14px;">
+                    <thead>${headersHTML}</thead>
+                    <tbody>${rowsHTML}</tbody>
+                </table>
+            </body>
+            </html>
+        `
+        const blob = new Blob(['\ufeff', htmlContent], {
+            type: 'application/msword;charset=utf-8'
+        })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `confirmaciones-${slug}.doc`
+        a.click()
+        URL.revokeObjectURL(url)
+    }
+
+    const exportPDF = () => {
+        const doc = new jsPDF()
+        doc.text('Lista de Invitados Confirmados', 14, 15)
+        const tableData = confirmations.map(c => [
+            c.name || '',
+            c.guests || 1,
+            c.message || '—',
+            `${formatDate(c.created_at)} ${formatTime(c.created_at)}`
+        ])
+        autoTable(doc, {
+            head: [['Nombre', 'Personas', 'Mensaje', 'Fecha']],
+            body: tableData,
+            startY: 20,
+            theme: 'grid',
+            headStyles: { fillColor: [26, 115, 232] }
+        })
+        doc.save(`confirmaciones-${slug}.pdf`)
+    }
+
+    const exportJPG = async () => {
+        const container = document.createElement('div')
+        container.style.position = 'absolute'
+        container.style.left = '-9999px'
+        container.style.top = '0'
+        container.style.width = '800px'
+        container.style.background = '#ffffff'
+        container.style.padding = '32px'
+        container.style.fontFamily = 'sans-serif'
+        
+        let html = `
+            <div style="margin-bottom: 24px;">
+                <h2 style="color: #1a73e8; font-size: 24px; margin: 0 0 8px 0;">Lista de Confirmaciones</h2>
+                <p style="color: #5f6368; font-size: 14px; margin: 0;">Total de asistentes confirmados: <strong>${totalGuests}</strong></p>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dadce0;">
+                        <th style="padding: 12px 16px; font-weight: 600; color: #5f6368;">Nombre</th>
+                        <th style="padding: 12px 16px; font-weight: 600; color: #5f6368;">Lugares</th>
+                        <th style="padding: 12px 16px; font-weight: 600; color: #5f6368;">Mensaje</th>
+                        <th style="padding: 12px 16px; font-weight: 600; color: #5f6368;">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `
+        confirmations.forEach(c => {
+            html += `
+                <tr style="border-bottom: 1px solid #f1f3f4;">
+                    <td style="padding: 14px 16px; font-weight: 500; color: #202124;">${c.name || ''}</td>
+                    <td style="padding: 14px 16px; color: #1a73e8; font-weight: 600; text-align: center;">${c.guests || 1}</td>
+                    <td style="padding: 14px 16px; color: #5f6368;">${c.message || '—'}</td>
+                    <td style="padding: 14px 16px; color: #80868b; font-size: 13px;">${formatDate(c.created_at)}</td>
+                </tr>
+            `
+        })
+        html += `</tbody></table>`
+        container.innerHTML = html
+        document.body.appendChild(container)
+        
+        try {
+            const canvas = await html2canvas(container, { backgroundColor: '#ffffff', scale: 2 })
+            const imgData = canvas.toDataURL('image/jpeg', 1.0)
+            const a = document.createElement('a')
+            a.href = imgData
+            a.download = `confirmaciones-${slug}.jpg`
+            a.click()
+        } catch (err) {
+            console.error('Error exportando JPG:', err)
+            alert('Hubo un error al generar la imagen')
+        } finally {
+            document.body.removeChild(container)
+        }
+    }
+
     // ─── AUTH CHECKING SCREEN ───
     if (authChecking) {
         return (
@@ -251,7 +371,8 @@ const RsvpDashboard = () => {
                         <div className="rsvp-topbar-left">
                             <div className="rsvp-logo-icon">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v-2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
                                 </svg>
                             </div>
                             <div>
@@ -260,21 +381,28 @@ const RsvpDashboard = () => {
                             </div>
                         </div>
                         <div className="rsvp-topbar-actions">
-                            <button onClick={fetchData} className="rsvp-btn-icon" title="Actualizar">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
-                                    <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                                </svg>
-                            </button>
                             {confirmations.length > 0 && (
-                                <button onClick={exportCSV} className="rsvp-btn-secondary" title="Exportar CSV">
-                                    <span className="rsvp-btn-text">📥 Exportar</span>
-                                    <span className="rsvp-btn-icon-only">📥</span>
-                                </button>
+                                <div className="rsvp-dropdown-container">
+                                    <button onClick={() => setShowExportMenu(!showExportMenu)} className="rsvp-btn-secondary" title="Opciones de exportación">
+                                        <span className="rsvp-btn-text">📥 Exportar</span>
+                                        <span className="rsvp-btn-icon-only">📥</span>
+                                    </button>
+                                    {showExportMenu && (
+                                        <div className="rsvp-dropdown-menu">
+                                            <button onClick={() => { exportCSV(); setShowExportMenu(false) }}>📑 Exportar CSV</button>
+                                            <button onClick={() => { exportDOC(); setShowExportMenu(false) }}>📝 Exportar Word</button>
+                                            <button onClick={() => { exportPDF(); setShowExportMenu(false) }}>📄 Exportar PDF</button>
+                                            <button onClick={() => { exportJPG(); setShowExportMenu(false) }}>🖼️ Exportar JPG</button>
+                                        </div>
+                                    )}
+                                </div>
                             )}
-                            <button onClick={() => navigate(`/i/${slug}`)} className="rsvp-btn-secondary" title="Ver invitación">
-                                <span className="rsvp-btn-text">Ver invitación</span>
-                                <span className="rsvp-btn-icon-only">💌</span>
+                            <button onClick={() => {
+                                navigator.clipboard.writeText(window.location.origin + `/i/${slug}`);
+                                alert('Enlace copiado al portapapeles');
+                            }} className="rsvp-btn-secondary" title="Copiar link">
+                                <span className="rsvp-btn-text">Copiar link</span>
+                                <span className="rsvp-btn-icon-only">🔗</span>
                             </button>
                         </div>
                     </div>
@@ -284,9 +412,9 @@ const RsvpDashboard = () => {
                     {/* ─── Stats Cards ─── */}
                     <div className="rsvp-stats-grid">
                         <div className="rsvp-stat-card">
-                            <div className="rsvp-stat-icon" style={{ background: '#e8f0fe', color: '#1a73e8' }}>
+                            <div className="rsvp-stat-icon" style={{ background: '#e6f4ea', color: '#1e8e3e' }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                                 </svg>
                             </div>
                             <div className="rsvp-stat-info">
@@ -298,9 +426,9 @@ const RsvpDashboard = () => {
                             </div>
                         </div>
                         <div className="rsvp-stat-card">
-                            <div className="rsvp-stat-icon" style={{ background: '#fce8e6', color: '#d93025' }}>
+                            <div className="rsvp-stat-icon" style={{ background: '#e8f0fe', color: '#1a73e8' }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                                    <path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                                 </svg>
                             </div>
                             <div className="rsvp-stat-info">
@@ -322,7 +450,15 @@ const RsvpDashboard = () => {
                     {/* ─── Search and Table ─── */}
                     <div className="rsvp-panel">
                         <div className="rsvp-panel-header">
-                            <h2 className="rsvp-panel-title">Lista de invitados confirmados</h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <h2 className="rsvp-panel-title">Lista de invitados confirmados</h2>
+                                <button onClick={fetchData} className="rsvp-btn-icon" title="Actualizar" style={{ width: '32px', height: '32px' }}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+                                        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                                    </svg>
+                                </button>
+                            </div>
                             <div className="rsvp-search-wrap">
                                 <svg className="rsvp-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -423,7 +559,7 @@ const RsvpDashboard = () => {
                                 )}
 
                                 <div className="rsvp-panel-footer">
-                                    Mostrando {filtered.length} de {confirmations.length} confirmaciones • Se actualiza automáticamente
+                                    Se actualiza automáticamente cada 30 segundos
                                 </div>
                             </>
                         )}
@@ -628,6 +764,44 @@ const cssStyles = `
     .rsvp-btn-icon-only {
         display: none;
         font-size: 16px;
+    }
+
+    .rsvp-dropdown-container {
+        position: relative;
+    }
+    .rsvp-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: #fff;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        min-width: 170px;
+        z-index: 1000;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .rsvp-dropdown-menu button {
+        padding: 12px 16px;
+        background: none;
+        border: none;
+        border-bottom: 1px solid #e8eaed;
+        text-align: left;
+        font-family: inherit;
+        font-size: 13px;
+        color: #3c4043;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+    .rsvp-dropdown-menu button:last-child {
+        border-bottom: none;
+    }
+    .rsvp-dropdown-menu button:hover {
+        background: #f8f9fa;
+        color: #1a73e8;
     }
 
     /* ─── Body ─── */
