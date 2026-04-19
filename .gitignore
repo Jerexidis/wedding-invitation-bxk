@@ -5,3 +5,8 @@ dist
 src/admin/
 src/templates/
 plugins/
+
+# ─── Environment variables (credentials — NEVER push to git) ───
+.env
+.env.local
+.env.*.local
