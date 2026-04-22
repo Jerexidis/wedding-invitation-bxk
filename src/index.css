@@ -1,5 +1,19 @@
 @import "tailwindcss";
+@source "./templates";
+@source "./admin";
 @config "../tailwind.config.js";
+
+:root {
+    /* Fallback default theme (Sage/Boda defaults) - RGB space separated */
+    --t-primary: 93 124 137;
+    --t-accent: 203 213 225;
+    --t-light: 248 250 252;
+    --t-cream: 255 255 255;
+    --t-dark: 14 16 56;
+    --t-text: 30 41 59;
+    --t-gray: 100 116 139;
+    --t-font: 'Great Vibes', cursive;
+}
 
 *,
 *::before,

@@ -19,11 +19,12 @@ const invitations = [
         isDefault: true,
         enabled: true,
     },
+
     {
-        slug: 'atziri-belen',
-        title: 'Atziri Belén',
-        component: lazy(() => import('./atziri-belen/index.jsx')),
-        enabled: false, // cambiar a true para activar
+        slug: 'luis-y-hannia',
+        title: 'Luis y Hannia ',
+        component: lazy(() => import('./luis-y-hannia/index.jsx')),
+        enabled: true,
     },
     {
         slug: 'melani-marisol',

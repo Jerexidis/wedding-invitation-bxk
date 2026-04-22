@@ -13,7 +13,7 @@ export default {
                 // Aliases semánticos explícitos (usados en los templates)
                 vibes:   ["'Great Vibes'", 'cursive'],
                 dancing: ["'Dancing Script'", 'cursive'],
-                // Nota: font-montserrat fue eliminado (duplicado de font-sans)
+                montserrat: ["'Montserrat'", 'sans-serif'],
             },
             colors: {
                 // ── Invitación Kassandra & Brian (producción) ──────────────
@@ -25,35 +25,35 @@ export default {
                 "text-light":  "#64748B",
                 "card-bg":     "#FFFFFF",
 
-                // ── Boda — Verde salvia ────────────────────────────────────
+                // ── Boda — Driven by CSS custom properties for per-invitation theming
                 boda: {
-                    primary: '#5D7C6F',
-                    accent:  '#8FAE8B',
-                    light:   '#EAF0E8',
-                    cream:   '#F4F7F2',
-                    dark:    '#2C4A3E',
-                    text:    '#1C2B23',
-                    gray:    '#6E7F72',
+                    primary: 'rgb(var(--t-primary) / <alpha-value>)',
+                    accent:  'rgb(var(--t-accent) / <alpha-value>)',
+                    light:   'rgb(var(--t-light) / <alpha-value>)',
+                    cream:   'rgb(var(--t-cream) / <alpha-value>)',
+                    dark:    'rgb(var(--t-dark) / <alpha-value>)',
+                    text:    'rgb(var(--t-text) / <alpha-value>)',
+                    gray:    'rgb(var(--t-gray) / <alpha-value>)',
                 },
                 // ── XV Años — Crema cálido / Vino ──────────────────────────
                 xv: {
-                    primary: '#8B2332',
-                    accent:  '#A3344A',
-                    light:   '#F5EDE0',
-                    cream:   '#F0E6D6',
-                    dark:    '#3D1A1A',
-                    text:    '#2C1810',
-                    gray:    '#8A7568',
+                    primary: 'rgb(var(--t-primary) / <alpha-value>)',
+                    accent:  'rgb(var(--t-accent) / <alpha-value>)',
+                    light:   'rgb(var(--t-light) / <alpha-value>)',
+                    cream:   'rgb(var(--t-cream) / <alpha-value>)',
+                    dark:    'rgb(var(--t-dark) / <alpha-value>)',
+                    text:    'rgb(var(--t-text) / <alpha-value>)',
+                    gray:    'rgb(var(--t-gray) / <alpha-value>)',
                 },
                 // ── Bautizo — Azul cielo ───────────────────────────────────
                 bautizo: {
-                    primary: '#5B8BA0',
-                    accent:  '#8BB8CC',
-                    light:   '#E8F2F7',
-                    cream:   '#F2F8FB',
-                    dark:    '#1E3A4F',
-                    text:    '#1A2D3D',
-                    gray:    '#6E8490',
+                    primary: 'rgb(var(--t-primary) / <alpha-value>)',
+                    accent:  'rgb(var(--t-accent) / <alpha-value>)',
+                    light:   'rgb(var(--t-light) / <alpha-value>)',
+                    cream:   'rgb(var(--t-cream) / <alpha-value>)',
+                    dark:    'rgb(var(--t-dark) / <alpha-value>)',
+                    text:    'rgb(var(--t-text) / <alpha-value>)',
+                    gray:    'rgb(var(--t-gray) / <alpha-value>)',
                 },
                 // ── Cumpleaños — Coral / Durazno festivo ───────────────────
                 cumple: {

@@ -38,7 +38,38 @@ function InvitationBySlug() {
     const invitation = getInvitationBySlug(slug)
     if (!invitation) return <NotFound />
     const Component = invitation.component
-    return <Component />
+    return (
+        <ErrorBoundary slug={slug}>
+            <Component />
+        </ErrorBoundary>
+    )
+}
+
+/* Error Boundary para capturar errores de renderizado */
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = { hasError: false, error: null }
+    }
+    static getDerivedStateFromError(error) {
+        return { hasError: true, error }
+    }
+    render() {
+        if (this.state.hasError) {
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center bg-white text-slate-800 font-sans p-8">
+                    <h1 className="font-serif text-4xl mb-4 text-red-600">Error en la invitación</h1>
+                    <p className="text-lg text-slate-500 mb-4">Slug: {this.props.slug}</p>
+                    <pre className="bg-red-50 text-red-800 p-4 rounded-lg max-w-2xl overflow-auto text-sm">
+                        {this.state.error?.message}
+                        {'\n\n'}
+                        {this.state.error?.stack}
+                    </pre>
+                </div>
+            )
+        }
+        return this.props.children
+    }
 }
 /* Carga el dashboard de RSVP validando primero que la invitación exista */
 function RsvpBySlug() {
