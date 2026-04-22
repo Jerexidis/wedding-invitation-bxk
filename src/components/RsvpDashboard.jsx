@@ -576,7 +576,7 @@ const RsvpDashboard = () => {
 
 // ─── CSS ────────────────────────────────────────────────────
 const cssStyles = `
-    @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap');
+    /* Google Fonts (Google Sans + Roboto) cargadas en index.html — no duplicar @import aquí */
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 

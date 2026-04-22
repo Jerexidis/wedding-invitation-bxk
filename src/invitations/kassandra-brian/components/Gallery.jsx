@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const initialPhotos = [
-    { src: "/invitations/kassandra-brian/img/foto1.jpeg", caption: "K & B" }, //recortar
+    { src: "/invitations/kassandra-brian/img/foto1.jpeg", caption: "K & B" },
     { src: "/invitations/kassandra-brian/img/foto2.jpeg", caption: "Juntos" },
     { src: "/invitations/kassandra-brian/img/foto3.jpeg", caption: "¡Sí quiero!" },
     { src: "/invitations/kassandra-brian/img/foto4.jpeg", caption: "Para siempre" }
@@ -9,12 +9,15 @@ const initialPhotos = [
 
 const Gallery = () => {
     const [photos, setPhotos] = useState(initialPhotos);
-    const [isAnimating, setIsAnimating] = useState(false);
+    // useRef en vez de useState para la bandera de animación:
+    // esto evita que el useEffect se re-registre y genere múltiples intervalos (memory leak)
+    const isAnimatingRef = useRef(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (isAnimating) return;
-            setIsAnimating(true);
+            if (isAnimatingRef.current) return;
+            isAnimatingRef.current = true;
+
             setTimeout(() => {
                 setPhotos(prev => {
                     const newPhotos = [...prev];
@@ -22,12 +25,12 @@ const Gallery = () => {
                     newPhotos.unshift(topPhoto);
                     return newPhotos;
                 });
-                setIsAnimating(false);
+                isAnimatingRef.current = false;
             }, 600);
-        }, 2000); // Tiempo original de 2 segundos
+        }, 2000);
 
         return () => clearInterval(interval);
-    }, [isAnimating]);
+    }, []); // sin dependencias — el interval se registra una sola vez
 
     return (
         <section className="py-24 bg-secondary overflow-x-hidden text-center">
@@ -38,7 +41,7 @@ const Gallery = () => {
                     {photos.map((photo, index) => {
                         const isTop = index === photos.length - 1;
                         let rotation = index % 2 === 0 ? '-rotate-2' : 'rotate-3';
-                        if (isTop && isAnimating) rotation = '-translate-x-[150%] -translate-y-[20%] -rotate-[30deg] opacity-0';
+                        if (isTop && isAnimatingRef.current) rotation = '-translate-x-[150%] -translate-y-[20%] -rotate-[30deg] opacity-0';
 
                         return (
                             <div

@@ -4,7 +4,10 @@ import { addConfirmation } from '../utils/rsvpStore'
 /**
  * Hook reutilizable para el formulario RSVP.
  * @param {string} slug - Slug de la invitación para guardar en Supabase.
- * @returns {{ formData, handleInputChange, handleSubmit, rsvpStatus, resetForm }}
+ * @returns {{ formData, handleInputChange, handleSubmit, rsvpStatus, rsvpError, resetForm }}
+ *
+ * rsvpStatus: 'idle' | 'submitting' | 'success' | 'error'
+ * rsvpError: string con el mensaje de error, o null si no hay error
  */
 export function useRsvpForm(slug) {
     const [formData, setFormData] = useState({
@@ -12,7 +15,8 @@ export function useRsvpForm(slug) {
         guests: 1,
         message: '',
     })
-    const [rsvpStatus, setRsvpStatus] = useState('idle') // idle | submitting | success
+    const [rsvpStatus, setRsvpStatus] = useState('idle')
+    const [rsvpError, setRsvpError] = useState(null)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -22,6 +26,7 @@ export function useRsvpForm(slug) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setRsvpStatus('submitting')
+        setRsvpError(null)
         try {
             await addConfirmation(slug, {
                 name: formData.name,
@@ -31,15 +36,18 @@ export function useRsvpForm(slug) {
             setRsvpStatus('success')
         } catch (err) {
             console.error('Error al confirmar:', err)
-            setRsvpStatus('idle')
-            alert('Hubo un error al enviar tu confirmación. Intenta de nuevo.')
+            // En lugar de alert(), exponemos el error como estado
+            // para que cada template lo muestre en su propio estilo
+            setRsvpStatus('error')
+            setRsvpError('Hubo un error al enviar tu confirmación. Intenta de nuevo.')
         }
     }
 
     const resetForm = () => {
         setFormData({ name: '', guests: 1, message: '' })
         setRsvpStatus('idle')
+        setRsvpError(null)
     }
 
-    return { formData, handleInputChange, handleSubmit, rsvpStatus, resetForm }
+    return { formData, handleInputChange, handleSubmit, rsvpStatus, rsvpError, resetForm }
 }
