@@ -40,7 +40,7 @@ const Hero = () => {
             {/* Background Image with Magic Overlay */}
             <div className="absolute inset-0 z-0 will-change-transform">
                 <img
-                    src="/invitations/melani-marisol/img/hero-bg.jpg"
+                    src="/invitations/melani-marisol/img/hero-bg.png"
                     alt="Fondo mágico La Princesa y el Sapo"
                     loading="eager"
                     decoding="async"
