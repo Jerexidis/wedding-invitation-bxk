@@ -1,23 +1,26 @@
 import React from 'react';
-import { MapPin, Church } from 'lucide-react';
+import { MapPin, Church, PartyPopper } from 'lucide-react';
 
 const Events = () => {
     return (
         <section className="relative py-16 px-6 bg-rana-cream overflow-hidden">
-            {/* Princess silhouette watermark */}
-            <img
-                src="/invitations/melani-marisol/img/princess-silhouette.png"
-                alt=""
-                className="absolute -bottom-6 -left-4 w-44 md:w-52 opacity-[0.05] pointer-events-none select-none"
-                style={{ filter: 'sepia(0.5) hue-rotate(100deg)', transform: 'scaleX(-1)' }}
-            />
-            {/* Frog silhouette watermark */}
-            <img
-                src="/invitations/melani-marisol/img/frog-silhouette.png"
-                alt=""
-                className="absolute -top-2 -right-4 w-28 md:w-36 opacity-[0.04] pointer-events-none select-none"
-                style={{ filter: 'sepia(0.5) hue-rotate(100deg)' }}
-            />
+            {/* Contenedor de marcas de agua */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                {/* Princess silhouette watermark */}
+                <img
+                    src="/invitations/melani-marisol/img/princess-silhouette.png"
+                    alt=""
+                    className="absolute -bottom-6 -left-4 w-44 md:w-52 opacity-[0.05] select-none"
+                    style={{ filter: 'sepia(0.5) hue-rotate(100deg)', transform: 'scaleX(-1)' }}
+                />
+                {/* Frog silhouette watermark */}
+                <img
+                    src="/invitations/melani-marisol/img/frog-silhouette.png"
+                    alt=""
+                    className="absolute top-10 -right-4 w-32 md:w-36 opacity-[0.04] select-none"
+                    style={{ filter: 'sepia(0.5) hue-rotate(100deg)' }}
+                />
+            </div>
             <div className="max-w-4xl mx-auto relative z-10">
                 <div className="text-center mb-12">
                     <p className="text-sm uppercase tracking-[0.3em] text-rana-gray mb-2">Te esperamos en</p>
@@ -49,11 +52,11 @@ const Events = () => {
 };
 
 const EventCard = ({ icon, title, location, address, time, link }) => (
-    <div className="flex-1 min-w-[280px] max-w-md mx-auto bg-white p-8 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center border border-rana-lily/50 hover:-translate-y-1 group">
+    <div className="flex-1 min-w-[280px] max-w-md mx-auto bg-white/80 backdrop-blur-md p-8 rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center border border-rana-lily/50 hover:-translate-y-1 group relative z-10">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-rana-primary to-rana-teal flex items-center justify-center text-white mb-6 text-2xl shadow-md group-hover:scale-110 transition-transform duration-300">
             {icon === 'church' ?
-                <i className="fas fa-church"></i> :
-                <i className="fas fa-glass-cheers"></i>
+                <Church className="w-7 h-7 text-white" /> :
+                <PartyPopper className="w-8 h-8 text-white" strokeWidth={2.5} />
             }
         </div>
         <h3 className="text-lg uppercase tracking-widest text-rana-dark font-semibold mb-3">{title}</h3>
