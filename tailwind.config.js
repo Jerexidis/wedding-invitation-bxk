@@ -62,6 +62,22 @@ export default {
                     text: '#2C1B18',
                     gray: '#8C6B63',
                 },
+                // La Princesa y el Sapo — Verde esmeralda / Dorado
+                rana: {
+                    primary: '#1B5E20',
+                    'primary-light': '#2E7D32',
+                    accent: '#FFD700',
+                    'accent-warm': '#DAA520',
+                    light: '#E8F5E9',
+                    cream: '#F1F8E9',
+                    dark: '#0D2818',
+                    text: '#1B2F1B',
+                    gray: '#4E6B4E',
+                    teal: '#00695C',
+                    lily: '#C8E6C9',
+                    firefly: '#FFF59D',
+                    swamp: '#263238',
+                },
             },
             animation: {
                 'fade-in': 'fadeIn 1s ease-out forwards',

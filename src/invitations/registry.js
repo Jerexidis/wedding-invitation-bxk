@@ -15,6 +15,11 @@ const invitations = [
         component: lazy(() => import('./kassandra-brian/index.jsx')),
         isDefault: true,
     },
+    {
+        slug: 'melani-marisol',
+        title: 'XV Años | Melani Marisol',
+        component: lazy(() => import('./melani-marisol/index.jsx')),
+    },
     // Ejemplo para futuras invitaciones:
     // {
     //     slug: 'maria-jose',
