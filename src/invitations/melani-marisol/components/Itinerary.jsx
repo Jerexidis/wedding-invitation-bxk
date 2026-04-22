@@ -3,9 +3,9 @@ import { Church, PartyPopper, Music, UtensilsCrossed } from 'lucide-react';
 
 const itineraryItems = [
     { time: '7:00 PM', event: 'Ceremonia Religiosa', icon: <Church className="w-5 h-5 text-white" />, description: 'Santa María Estrella de la Evangelización' },
-    { time: '7:00 PM', event: 'Recepción', icon: <PartyPopper className="w-6 h-6 text-white" strokeWidth={2.5} />, description: 'Quinta Sarai' },
-    { time: '8:30 PM', event: 'Vals', icon: <Music className="w-5 h-5 text-white" />, description: 'Momento Especial' },
-    { time: '9:00 PM', event: 'Cena', icon: <UtensilsCrossed className="w-5 h-5 text-white" />, description: 'Banquete en Quinta Sarai' },
+    { time: '8:00 PM', event: 'Recepción', icon: <PartyPopper className="w-6 h-6 text-white" strokeWidth={2.5} />, description: 'Quinta Sarai' },
+    { time: '9:00 PM', event: 'Vals', icon: <Music className="w-5 h-5 text-white" />, description: 'Momento Especial' },
+    { time: '9:30 PM', event: 'Cena', icon: <UtensilsCrossed className="w-5 h-5 text-white" />, description: 'Banquete en Quinta Sarai' },
 ];
 
 const Itinerary = () => {

@@ -19,19 +19,15 @@ const invitations = [
         isDefault: true,
         enabled: true,
     },
-
-    {
-        slug: 'luis-y-hannia',
-        title: 'Luis y Hannia ',
-        component: lazy(() => import('./luis-y-hannia/index.jsx')),
-        enabled: true,
-    },
     {
         slug: 'melani-marisol',
         title: 'XV Años | Melani Marisol',
         component: lazy(() => import('./melani-marisol/index.jsx')),
         enabled: true,
     },
+
+    
+
 ]
 
 // Solo invitaciones activas
