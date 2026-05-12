@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, Check, Loader2, FileText, MoreVertical } from 'lucide-react'
+import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, Check, Loader2, FileText, MoreVertical, Upload, CloudOff, EyeOff, Rocket, X, AlertTriangle } from 'lucide-react'
 import WizardForm from './WizardForm'
 import './AdminPanel.css'
 
@@ -15,6 +15,12 @@ export default function AdminPanel() {
     const [toast, setToast] = useState(null)
     const [selectedSlug, setSelectedSlug] = useState(null)
 
+    // Deploy state
+    const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [] })
+    const [deploying, setDeploying] = useState(false)
+    const [showDeployDialog, setShowDeployDialog] = useState(false)
+    const [commitMessage, setCommitMessage] = useState('')
+
     const fetchInvitations = useCallback(async () => {
         setLoading(true)
         try {
@@ -25,8 +31,23 @@ export default function AdminPanel() {
         setLoading(false)
     }, [])
 
-    useEffect(() => { fetchInvitations() }, [fetchInvitations])
+    const fetchDeployStatus = useCallback(async () => {
+        try {
+            const res = await fetch('/api/deploy/status')
+            const json = await res.json()
+            if (json.ok) setDeployStatus({ hasChanges: json.hasChanges, changeCount: json.changeCount, files: json.files || [] })
+        } catch (err) { console.error('Deploy status check failed:', err) }
+    }, [])
 
+    useEffect(() => { fetchInvitations() }, [fetchInvitations])
+    useEffect(() => { fetchDeployStatus() }, [fetchDeployStatus])
+
+    // Poll deploy status every 15s while on list view
+    useEffect(() => {
+        if (view !== 'list') return
+        const interval = setInterval(fetchDeployStatus, 15000)
+        return () => clearInterval(interval)
+    }, [view, fetchDeployStatus])
 
     const showToast = (msg, type = 'success') => {
         setToast({ msg, type })
@@ -39,9 +60,52 @@ export default function AdminPanel() {
         try {
             const res = await fetch(`${API}/${slug}`, { method: 'DELETE' })
             const json = await res.json()
-            if (json.ok) { showToast('Invitación eliminada correctamente'); fetchInvitations() }
+            if (json.ok) {
+                showToast('Invitación eliminada (solo local)')
+                setSelectedSlug(null)
+                fetchInvitations()
+                fetchDeployStatus()
+            }
             else showToast(json.error, 'error')
         } catch (err) { showToast(err.message, 'error') }
+    }
+
+    const handleToggle = async (slug, currentEnabled) => {
+        try {
+            const res = await fetch(`${API}/${slug}/toggle`, { method: 'PATCH' })
+            const json = await res.json()
+            if (json.ok) {
+                showToast(json.enabled ? `"${slug}" activada` : `"${slug}" desactivada`)
+                fetchInvitations()
+                fetchDeployStatus()
+            }
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+    }
+
+    const handleDeploy = async () => {
+        setDeploying(true)
+        try {
+            const res = await fetch('/api/deploy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: commitMessage || undefined })
+            })
+            const json = await res.json()
+            if (json.ok) {
+                if (json.deployed) {
+                    showToast('✅ Cambios publicados — Vercel iniciará el deploy')
+                } else {
+                    showToast(json.message || 'No hay cambios para publicar')
+                }
+                setShowDeployDialog(false)
+                setCommitMessage('')
+                fetchDeployStatus()
+            } else {
+                showToast(json.error || 'Error al publicar', 'error')
+            }
+        } catch (err) { showToast('Error de conexión: ' + err.message, 'error') }
+        setDeploying(false)
     }
 
     const PROD_BASE = 'https://eventos.invita-ya.com'
@@ -56,11 +120,73 @@ export default function AdminPanel() {
         showToast('Enlace RSVP copiado al portapapeles')
     }
 
-    const goBack = () => { setView('list'); fetchInvitations() }
+    const goBack = () => { setView('list'); fetchInvitations(); fetchDeployStatus() }
 
     return (
         <div className="admin admin-no-sidebar">
             {toast && <div className={`admin-toast ${toast.type}`}>{toast.type !== 'error' && <Check size={14} />}{toast.msg}</div>}
+
+            {/* Deploy Confirmation Dialog */}
+            {showDeployDialog && (
+                <div className="deploy-overlay" onClick={() => !deploying && setShowDeployDialog(false)}>
+                    <div className="deploy-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon">
+                                <Rocket size={22} />
+                            </div>
+                            <h3>Publicar cambios a producción</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => !deploying && setShowDeployDialog(false)} disabled={deploying}>
+                                <X size={18} />
+                            </button>
+                        </div>
+
+                        <div className="deploy-dialog-body">
+                            <div className="deploy-warning">
+                                <AlertTriangle size={16} />
+                                <span>Estos cambios serán visibles para todos los visitantes</span>
+                            </div>
+
+                            <div className="deploy-changes-summary">
+                                <span className="deploy-changes-label">Archivos modificados</span>
+                                <span className="deploy-changes-count">{deployStatus.changeCount}</span>
+                            </div>
+
+                            {deployStatus.files.length > 0 && (
+                                <div className="deploy-file-list">
+                                    {deployStatus.files.map((f, i) => (
+                                        <div key={i} className="deploy-file-item">
+                                            <span className={`deploy-file-status ${f.startsWith('??') ? 'new' : f.startsWith(' D') || f.startsWith('D') ? 'deleted' : 'modified'}`}>
+                                                {f.startsWith('??') ? 'NEW' : f.startsWith(' D') || f.startsWith('D') ? 'DEL' : 'MOD'}
+                                            </span>
+                                            <code>{f.substring(3).trim()}</code>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <div className="form-group" style={{ marginTop: 16, marginBottom: 0 }}>
+                                <label className="form-label">Mensaje del commit (opcional)</label>
+                                <input
+                                    type="text"
+                                    className="form-input"
+                                    placeholder="deploy: update invitations"
+                                    value={commitMessage}
+                                    onChange={e => setCommitMessage(e.target.value)}
+                                    disabled={deploying}
+                                    onKeyDown={e => e.key === 'Enter' && !deploying && handleDeploy()}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowDeployDialog(false)} disabled={deploying}>Cancelar</button>
+                            <button className="btn btn-deploy" onClick={handleDeploy} disabled={deploying}>
+                                {deploying ? <><Loader2 size={14} className="animate-spin" /> Publicando…</> : <><Rocket size={14} /> Publicar</>}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Main */}
             <main className="admin-main" style={{ marginLeft: 0 }}>
@@ -77,7 +203,14 @@ export default function AdminPanel() {
                 {view === 'list' && <>
                     <div className="admin-header">
                         <h2>Invitaciones</h2>
-                        <button onClick={() => setView('create')} className="btn btn-primary"><Plus size={15} /> Nueva invitación</button>
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                            <button onClick={() => setShowDeployDialog(true)} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges}>
+                                <Upload size={15} />
+                                Publicar
+                                {deployStatus.hasChanges && <span className="deploy-badge">{deployStatus.changeCount}</span>}
+                            </button>
+                            <button onClick={() => setView('create')} className="btn btn-primary"><Plus size={15} /> Nueva invitación</button>
+                        </div>
                     </div>
                     <div className="admin-content">
                         {loading ? (
@@ -99,6 +232,7 @@ export default function AdminPanel() {
                                                 <span className="inv-row-name">{inv.title}</span>
                                                 <div className="inv-row-meta">
                                                     {inv.isDefault && <span className="badge badge-blue">Landing</span>}
+                                                    {!inv.enabled && <span className="badge badge-gray">Inactiva</span>}
                                                     {inv.eventType && <span className={`badge ${inv.eventType === 'xv' ? 'badge-purple' : inv.eventType === 'boda' ? 'badge-orange' : 'badge-gray'}`}>{EVENT_LABELS[inv.eventType] || inv.eventType}</span>}
                                                     {inv.rsvpMode && <span className={`badge ${inv.rsvpMode === 'whatsapp' ? 'badge-green' : inv.rsvpMode === 'supabase' ? 'badge-orange' : 'badge-gray'}`}>{RSVP_LABELS[inv.rsvpMode] || inv.rsvpMode}</span>}
                                                     {inv.eventDate && new Date(inv.eventDate) < new Date() && <span className="badge badge-red">Vencida</span>}
@@ -114,6 +248,20 @@ export default function AdminPanel() {
                                     return (
                                         <div className="inv-detail">
                                             <h3 className="inv-detail-title">{inv.title}</h3>
+
+                                            {/* Toggle visibility */}
+                                            {!inv.isDefault && (
+                                                <div className="inv-detail-toggle">
+                                                    <div className="toggle-row">
+                                                        <label className="toggle">
+                                                            <input type="checkbox" checked={inv.enabled} onChange={() => handleToggle(inv.slug, inv.enabled)} />
+                                                            <span className="toggle-slider" />
+                                                        </label>
+                                                        <span className="toggle-label">{inv.enabled ? 'Activa — visible' : 'Inactiva — oculta'}</span>
+                                                    </div>
+                                                </div>
+                                            )}
+
                                             <div className="inv-detail-actions">
                                                 <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>
                                                 <a href={`/i/${inv.slug}`} target="_blank" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>
