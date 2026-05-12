@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { exec } from 'child_process'
 
 const INVITATIONS_SRC = path.resolve('src/invitations')
 const INVITATIONS_PUBLIC = path.resolve('public/invitations')
@@ -48,6 +49,52 @@ export default function devAdminPlugin() {
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify({ ok: true, ...result }))
                     } catch (err) {
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // POST /api/deploy — Git add + commit + push
+                if (req.method === 'POST' && req.url === '/api/deploy') {
+                    try {
+                        const data = await parseBody(req)
+                        const commitMsg = data.message || 'deploy: update invitations'
+                        const result = await gitDeploy(commitMsg)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // GET /api/deploy/status — Check for pending changes
+                if (req.method === 'GET' && req.url === '/api/deploy/status') {
+                    try {
+                        const status = await getDeployStatus()
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...status }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // PATCH /api/invitations/:slug/toggle
+                const toggleMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/toggle$/)
+                if (req.method === 'PATCH' && toggleMatch) {
+                    try {
+                        const slug = toggleMatch[1]
+                        const newState = toggleInvitation(slug)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, slug, enabled: newState }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
                         res.statusCode = 500
                         res.end(JSON.stringify({ ok: false, error: err.message }))
                     }
@@ -267,4 +314,74 @@ function removeFromRegistry(slug) {
     const regex = new RegExp(`\\s*\\{[^}]*slug:\\s*'${slug}'[^}]*\\},?`, 'g')
     content = content.replace(regex, '')
     fs.writeFileSync(REGISTRY_PATH, content, 'utf-8')
+}
+
+// ─── TOGGLE INVITATION ─────────────────────────────────────────
+function toggleInvitation(slug) {
+    if (slug === 'kassandra-brian') {
+        throw new Error('No se puede desactivar la invitación default (kassandra-brian)')
+    }
+
+    let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
+
+    // Find the block for this slug
+    const blockRegex = new RegExp(`(\\{[^}]*slug:\\s*'${slug}'[^}]*)enabled:\\s*(true|false)`, 's')
+    const match = content.match(blockRegex)
+
+    if (!match) {
+        throw new Error(`Invitación "${slug}" no encontrada en el registro`)
+    }
+
+    const currentState = match[2] === 'true'
+    const newState = !currentState
+    content = content.replace(blockRegex, `$1enabled: ${newState}`)
+    fs.writeFileSync(REGISTRY_PATH, content, 'utf-8')
+    return newState
+}
+
+// ─── GIT DEPLOY ─────────────────────────────────────────────────
+function gitDeploy(commitMsg) {
+    const PROJECT_ROOT = path.resolve('.')
+    return new Promise((resolve, reject) => {
+        // Stage all changes, commit, and push
+        exec(
+            `git add . && git commit -m "${commitMsg.replace(/"/g, '\\"')}" && git push`,
+            { cwd: PROJECT_ROOT, timeout: 60000 },
+            (error, stdout, stderr) => {
+                if (error) {
+                    // If nothing to commit, that's not a real error
+                    if (stderr?.includes('nothing to commit') || stdout?.includes('nothing to commit')) {
+                        resolve({ deployed: false, message: 'No hay cambios para publicar' })
+                        return
+                    }
+                    reject(new Error(stderr || error.message))
+                    return
+                }
+                resolve({ deployed: true, message: 'Cambios publicados exitosamente', output: stdout })
+            }
+        )
+    })
+}
+
+// ─── DEPLOY STATUS ──────────────────────────────────────────────
+function getDeployStatus() {
+    const PROJECT_ROOT = path.resolve('.')
+    return new Promise((resolve, reject) => {
+        exec(
+            'git status --porcelain',
+            { cwd: PROJECT_ROOT, timeout: 10000 },
+            (error, stdout) => {
+                if (error) {
+                    reject(new Error(error.message))
+                    return
+                }
+                const changes = stdout.trim().split('\n').filter(Boolean)
+                resolve({
+                    hasChanges: changes.length > 0,
+                    changeCount: changes.length,
+                    files: changes.slice(0, 20), // Limit to 20 for display
+                })
+            }
+        )
+    })
 }
