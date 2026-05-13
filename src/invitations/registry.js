@@ -33,6 +33,13 @@ const invitations = [
         enabled: true,
     },
 
+    {
+        slug: 'isabella',
+        title: 'Celebración | Isabella',
+        component: lazy(() => import('./isabella/index.jsx')),
+        enabled: true,
+    },
+
 ]
 
 // Solo invitaciones activas

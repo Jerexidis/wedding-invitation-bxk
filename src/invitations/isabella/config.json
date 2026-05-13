@@ -1,0 +1,104 @@
+{
+    "slug": "isabella",
+    "eventType": "primera-comunion",
+    "title": "Primera Comunión | Isabella",
+    "theme": {
+        "primaryHue": 30,
+        "primarySat": 40,
+        "accentHue": 42,
+        "fontBody": "Poppins",
+        "fontDisplay": "Cormorant Garamond"
+    },
+    "hero": {
+        "subtitle": "Primera Comunión",
+        "name": "Isabella",
+        "date": "27 DE JUNIO DE 2026",
+        "backgroundImage": "hero.png",
+        "song": "communion.mp3"
+    },
+    "intro": {
+        "message": "Con la bendición de Dios y la guía del Espíritu Santo",
+        "label": "Mis Papás",
+        "parent1": "Elizabeth Amador",
+        "parent2": "José Carlos Peláez",
+        "closingMessage": "Te invitan a celebrar conmigo el día que recibo a Jesús en mi corazón por primera vez"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño y guía espiritual de",
+        "padrino1": "Marijose Aguilar O.",
+        "padrino2": "Felipe Jesus Amador B."
+    },
+    "countdown": {
+        "targetDate": "2026-06-27T13:00:00",
+        "displayDate": "sábado, 27 de junio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "Primera Comunión | Isabella",
+        "description": "¡Celebra conmigo este día tan especial!",
+        "location": "Las Palmas Terraza Y Jardín, Rincón de Romos 416-A, San José del Arenal, 20130 Aguascalientes, Ags.",
+        "startDateTime": "20260627T190000",
+        "endDateTime": "20260628T020000",
+        "outlookStart": "2026-06-27T19:00:00",
+        "outlookEnd": "2026-06-28T02:00:00",
+        "icsFilename": "isabella.ics",
+        "icsProdId": "Primera Comunión | Isabella"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Parroquia De Nuestra Señora de los Bosques",
+            "address": "Montes Himalaya S/N, Los Bosques, 20120 Aguascalientes, Ags.",
+            "time": "10:00",
+            "mapLink": "https://maps.app.goo.gl/UtTqxphps9K5KvN16"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Las Palmas Terraza Y Jardín",
+            "address": "Rincón de Romos 416-A, San José del Arenal, 20130 Aguascalientes, Ags.",
+            "time": "15:00",
+            "mapLink": "https://maps.app.goo.gl/sHRhkzYtVRmJcjCK9"
+        }
+    ],
+    "dressCode": {
+        "enabled": false,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": []
+    },
+    "gifts": {
+        "enabled": false,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Lluvia de Sobres",
+        "envelopeDescription": "Tradición de regalar efectivo en sobres.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": false,
+        "items": []
+    },
+    "rsvp": {
+        "mode": "supabase",
+        "whatsappNumber": "",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Isabella",
+        "subtitle": "Primera Comunión • sábado, 27 de junio"
+    },
+    "rsvpKey": "ln9yib"
+}

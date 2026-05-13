@@ -8,7 +8,7 @@ const WhatsAppIcon = () => (
 );
 
 const RSVP = ({ data, slug, basePath }) => {
-    const [formData, setFormData] = useState({ name: '', guests: 1, attendance: 'si', message: '' });
+    const [formData, setFormData] = useState({ name: '', guests: 1, message: '' });
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
@@ -26,8 +26,7 @@ const RSVP = ({ data, slug, basePath }) => {
         e.preventDefault();
 
         if (data.mode === 'whatsapp') {
-            const template = formData.attendance === 'si' ? data.whatsappConfirmMessage : data.whatsappDeclineMessage;
-            const message = template
+            const message = data.whatsappConfirmMessage
                 .replace('{name}', formData.name)
                 .replace('{guests}', formData.guests);
             window.location.href = `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -54,58 +53,52 @@ const RSVP = ({ data, slug, basePath }) => {
 
     if (submitted) {
         return (
-            <section className="py-24 px-4 bg-gradient-to-b from-inv-dark to-inv-swamp text-white relative overflow-hidden">
-                <div className="max-w-lg mx-auto text-center relative z-10 bg-white/5 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-inv-accent/20 shadow-2xl">
-                    <div className="inline-flex items-center justify-center p-3 bg-inv-primary/30 rounded-full mb-4">
-                        <Heart className="w-10 h-10 text-inv-accent" fill="currentColor" />
+            <section className="py-24 px-4 bg-gradient-to-b from-[#A8896A] to-[#C4A882] text-white relative overflow-hidden">
+                <div className="max-w-lg mx-auto text-center relative z-10 bg-white/15 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-white/20 shadow-lg">
+                    <div className="inline-flex items-center justify-center p-3 bg-inv-accent/15 rounded-full mb-4">
+                        <Heart className="w-10 h-10 text-white" fill="currentColor" />
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-inv-display mb-4">¡Gracias!</h2>
-                    <p className="text-inv-lily/70">Tu confirmación ha sido registrada exitosamente.</p>
+                    <h2 className="text-3xl md:text-4xl font-inv-display mb-4 text-white">¡Gracias!</h2>
+                    <p className="text-white/70">Tu confirmación ha sido registrada exitosamente.</p>
                 </div>
             </section>
         );
     }
 
     return (
-        <section className="py-24 px-4 bg-gradient-to-b from-inv-dark to-inv-swamp text-white relative overflow-hidden">
+        <section className="py-24 px-4 bg-gradient-to-b from-[#A8896A] to-[#C4A882] text-white relative overflow-hidden">
 
-            <div className="max-w-lg mx-auto relative z-10 bg-white/5 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-inv-accent/20 shadow-2xl">
+            <div className="max-w-lg mx-auto relative z-10 bg-white/15 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-white/20 shadow-lg">
                 <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center p-3 bg-inv-primary/30 rounded-full mb-4">
+                    <div className="inline-flex items-center justify-center p-3 bg-white/15 rounded-full mb-4">
                         <Heart className="w-10 h-10 text-inv-accent animate-pulse" fill="currentColor" />
                     </div>
                     <h2 className="text-4xl md:text-5xl font-inv-display mb-4 text-white">Confirmar</h2>
-                    <p className="text-inv-lily/70 font-light">{data.deadline}</p>
+                    <p className="text-white/70 font-light">{data.deadline}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <input type="text" name="name" required placeholder="Nombre Completo" value={formData.name} onChange={handleNameChange} pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+" title="Solo se permiten letras" className="w-full px-4 py-4 bg-white/10 border border-inv-accent/20 rounded-xl focus:outline-none focus:border-inv-accent focus:ring-1 focus:ring-inv-accent text-white placeholder-inv-lily/40 transition-colors" />
+                        <input type="text" name="name" required placeholder="Nombre Completo" value={formData.name} onChange={handleNameChange} pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+" title="Solo se permiten letras" className="w-full px-4 py-4 bg-white/20 border border-white/25 rounded-xl focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 text-white placeholder-white/50 transition-colors" />
                     </div>
 
-                    <div className={`grid gap-4 ${formData.attendance === 'si' ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                        {formData.attendance === 'si' && (
-                            <input type="number" name="guests" min="1" max="10" placeholder="N° Personas" value={formData.guests} onChange={handleInputChange} className="w-full px-4 py-4 bg-white/10 border border-inv-accent/20 rounded-xl focus:outline-none focus:border-inv-accent text-white placeholder-inv-lily/40" />
-                        )}
-                        <select name="attendance" value={formData.attendance} onChange={handleInputChange} className="w-full px-4 py-4 bg-white/10 border border-inv-accent/20 rounded-xl focus:outline-none focus:border-inv-accent text-white [&>option]:text-inv-dark">
-                            <option value="si">¡Sí iré! 🎉</option>
-                            <option value="no">No podré :(</option>
-                        </select>
+                    <div>
+                        <input type="number" name="guests" min="1" max="10" placeholder="N° de Personas" value={formData.guests} onChange={handleInputChange} className="w-full px-4 py-4 bg-white/20 border border-white/25 rounded-xl focus:outline-none focus:border-white/50 text-white placeholder-white/50" />
                     </div>
 
                     {data.mode === 'supabase' && (
-                        <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-4 py-4 bg-white/10 border border-inv-accent/20 rounded-xl focus:outline-none focus:border-inv-accent focus:ring-1 focus:ring-inv-accent text-white placeholder-inv-lily/40 transition-colors resize-none" />
+                        <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-4 py-4 bg-white/20 border border-white/25 rounded-xl focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/30 text-white placeholder-white/50 transition-colors resize-none" />
                     )}
 
-                    <button type="submit" disabled={submitting} className="w-full py-4 bg-gradient-to-r from-inv-primary to-inv-teal hover:from-inv-primary-light hover:to-inv-primary text-white rounded-xl font-bold tracking-wide transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg border border-inv-accent/20 disabled:opacity-60">
+                    <button type="submit" disabled={submitting} className="w-full py-4 bg-white/25 hover:bg-white/35 text-white rounded-xl font-bold tracking-wide transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg border border-white/20 disabled:opacity-60">
                         {submitting ? 'Enviando...' : data.mode === 'whatsapp' ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
                     </button>
                 </form>
 
                 {data.directMessage?.enabled && (
                     <div className="mt-8 text-center">
-                        <p className="text-inv-lily/50 text-sm mb-3">{data.directMessage.label}</p>
-                        <a href={`https://wa.me/${data.directMessage.number}?text=${encodeURIComponent(data.directMessage.text)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-inv-accent hover:text-inv-firefly transition-colors text-sm font-medium">
+                        <p className="text-white/50 text-sm mb-3">{data.directMessage.label}</p>
+                        <a href={`https://wa.me/${data.directMessage.number}?text=${encodeURIComponent(data.directMessage.text)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm font-medium">
                             <WhatsAppIcon /> {data.directMessage.buttonText}
                         </a>
                     </div>

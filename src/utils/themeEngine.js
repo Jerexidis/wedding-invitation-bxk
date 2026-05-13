@@ -18,6 +18,11 @@ const rgb = (h, s, l) => hslToRgb(h, s, l).join(' ');
 export function generatePalette(primaryHue = 130, primarySat = 60, accentHue = 48) {
     const h = primaryHue;
     const s = primarySat;
+    // For warm themes (hue < 60), keep teal in the gold/amber family
+    // instead of pushing +38 into green territory
+    const isWarm = h < 60;
+    const tealHue = isWarm ? Math.max(h - 5, 20) : (h + 38) % 360;
+    const tealSat = isWarm ? Math.min(s + 20, 70) : 80;
     return {
         '--inv-primary':       rgb(h, s, 24),
         '--inv-primary-light': rgb(h, s - 10, 35),
@@ -28,10 +33,10 @@ export function generatePalette(primaryHue = 130, primarySat = 60, accentHue = 4
         '--inv-dark':          rgb(h, s, 10),
         '--inv-text':          rgb(h, 30, 15),
         '--inv-gray':          rgb(h, 15, 37),
-        '--inv-teal':          rgb((h + 38) % 360, 80, 21),
+        '--inv-teal':          rgb(tealHue, tealSat, 21),
         '--inv-lily':          rgb(h, 40, 78),
         '--inv-firefly':       rgb(accentHue + 7, 100, 80),
-        '--inv-swamp':         rgb(200, 20, 18),
+        '--inv-swamp':         rgb(isWarm ? h : 200, isWarm ? 25 : 20, 18),
     };
 }
 
