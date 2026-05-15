@@ -10,51 +10,48 @@
         "fontDisplay": "Cormorant Garamond"
     },
     "hero": {
-        "subtitle": "Nuesta Primera Comunión",
-        "name": "Isabella, Alexa y Santiago",
+        "subtitle": "Primera Comunión",
+        "name": "Isabella",
         "date": "27 DE JUNIO DE 2026",
         "backgroundImage": "hero.png",
         "song": "communion.mp3"
     },
-    "seo": {
-        "shareImage": "og-preview.jpg"
-    },
     "intro": {
         "message": "Con la bendición de Dios y la guía del Espíritu Santo",
-        "closingMessage": "Te invitan a celebrar el día que reciben a Jesús en su corazón por primera vez",
-        "groups": [
-            {
-                "label": "Papás de Isabella",
-                "parent1": "Elizabeth Amador",
-                "parent2": "José Carlos Peláez"
-            },
-            {
-                "label": "Papás de Alexa y Santiago",
-                "parent1": "Luis Antonio Amador",
-                "parent2": "Iris Lucero Salas"
-            }
-        ]
+        "label": "Mis Papás",
+        "parent1": "Elizabeth Amador",
+        "parent2": "José Carlos Peláez",
+        "closingMessage": "Te invitan a celebrar conmigo el día que recibo a Jesús en mi corazón por primera vez"
     },
+    "intro2": {
+        "message": "Con la bendición de Dios y la guía del Espíritu Santo",
+        "label": "Mis Papás",
+        "parent1": "Luis Antonio Amador",
+        "parent2": "Iris Lucero Salas",
+        "closingMessage": "Te invitan a celebrar conmigo el día que recibo a Jesús en mi corazón por primera vez"
+    },
+  
     "padrinos": {
         "enabled": true,
-        "label": "Mis Padrinos",
+        "label": "Padrinos de Isabella",
         "subtitle": "Con el cariño y guía espiritual de",
-        "groups": [
-            {
-                "label": "Padrinos de Isabella",
-                "padrino1": "Marijose Aguilar O.",
-                "padrino2": "Felipe Jesus Amador B."
-            },
-            {
-                "label": "Padrinos de Alexa",
-                "padrino1": "Hery Aguilar",
-                "padrino2": "Salvador Garcia"
-            },
-            {
-                "label": "Madrina de Santiago",
-                "padrino1": "Karen Amador"
-            }
-        ]
+        "padrino1": "Marijose Aguilar O.",
+        "padrino2": "Felipe Jesus Amador B."
+    },
+    "padrinos2": {
+        "enabled": true,
+        "label": "Padrinos de Alexa",
+        
+        "padrino1": "Hery Aguilar",
+        "padrino2": "Salvador Garcia"
+        
+    },
+    "padrinos3": {
+        "enabled": true,
+        "label": "Padrinos de Santiago",
+        
+        "padrino1": "Karen Amador"
+        
     },
    
     "countdown": {
@@ -124,7 +121,7 @@
         }
     },
     "footer": {
-        "name": "Isabella, Alexa y Santiago",
+        "name": "Isabella",
         "subtitle": "Primera Comunión • sábado, 27 de junio"
     },
     "rsvpKey": "ln9yib"

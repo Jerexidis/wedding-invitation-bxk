@@ -197,7 +197,7 @@ const Hero = ({ data, basePath }) => {
                     {data.subtitle}
                 </p>
                 <h1
-                    className={`font-inv-display drop-shadow-lg leading-tight text-white ${data.name?.length > 15 ? 'text-4xl sm:text-5xl md:text-7xl' : 'text-5xl sm:text-6xl md:text-8xl'}`}
+                    className="font-inv-display text-5xl sm:text-6xl md:text-8xl drop-shadow-lg leading-tight text-white"
                     style={{ textShadow: isCommunion
                         ? '0 0 30px rgba(212, 175, 85, 0.35)'
                         : '0 0 30px rgba(255, 215, 0, 0.4)'

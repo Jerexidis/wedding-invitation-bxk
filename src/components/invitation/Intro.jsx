@@ -9,7 +9,7 @@ const Intro = ({ data, basePath }) => {
                 }}
             />
 
-            <div className="max-w-5xl mx-auto relative z-10">
+            <div className="max-w-2xl mx-auto relative z-10">
 
                 {/* Opening message with small cross */}
                 <div className="flex items-center justify-center gap-3 mb-4">
@@ -20,49 +20,22 @@ const Intro = ({ data, basePath }) => {
                     </svg>
                     <div className="w-8 h-[1px] bg-inv-accent/40" />
                 </div>
-                <p className="text-inv-gray text-sm md:text-base uppercase tracking-[0.3em] mb-6">{data.message}</p>
+                <p className="text-inv-gray text-sm uppercase tracking-[0.3em] mb-6">{data.message}</p>
 
-                {data.groups && data.groups.length > 0 ? (
-                    <div className="flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-stretch mb-8">
-                        {data.groups.map((group, idx) => (
-                            <div key={idx} className="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-lg border border-inv-lily/50 flex flex-col justify-center">
-                                {group.label && (
-                                    <h3 className="text-xs md:text-sm uppercase tracking-[0.25em] text-inv-primary font-semibold mb-4">{group.label}</h3>
-                                )}
-                                <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
-                                    {group.parent1}
-                                </p>
-                                {group.parent2 && (
-                                    <>
-                                        <div className="flex items-center justify-center gap-3 my-2 md:my-3">
-                                            <div className="w-8 h-[1px] bg-inv-accent" />
-                                            <span className="text-inv-accent text-lg">&</span>
-                                            <div className="w-8 h-[1px] bg-inv-accent" />
-                                        </div>
-                                        <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
-                                            {group.parent2}
-                                        </p>
-                                    </>
-                                )}
-                            </div>
-                        ))}
+                <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-lg border border-inv-lily/50 mb-8">
+                    <h3 className="text-sm uppercase tracking-[0.25em] text-inv-primary font-semibold mb-3">{data.label}</h3>
+                    <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
+                        {data.parent1}
+                    </p>
+                    <div className="flex items-center justify-center gap-3 my-2">
+                        <div className="w-8 h-[1px] bg-inv-accent" />
+                        <span className="text-inv-accent text-lg">&</span>
+                        <div className="w-8 h-[1px] bg-inv-accent" />
                     </div>
-                ) : (
-                    <div className="max-w-2xl mx-auto bg-white/70 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-lg border border-inv-lily/50 mb-8">
-                        <h3 className="text-sm uppercase tracking-[0.25em] text-inv-primary font-semibold mb-3">{data.label}</h3>
-                        <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
-                            {data.parent1}
-                        </p>
-                        <div className="flex items-center justify-center gap-3 my-2">
-                            <div className="w-8 h-[1px] bg-inv-accent" />
-                            <span className="text-inv-accent text-lg">&</span>
-                            <div className="w-8 h-[1px] bg-inv-accent" />
-                        </div>
-                        <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
-                            {data.parent2}
-                        </p>
-                    </div>
-                )}
+                    <p className="font-inv-display text-2xl md:text-3xl text-inv-dark leading-relaxed">
+                        {data.parent2}
+                    </p>
+                </div>
 
                 <p className="text-inv-gray text-base md:text-lg italic leading-relaxed max-w-lg mx-auto">
                     "{data.closingMessage}"

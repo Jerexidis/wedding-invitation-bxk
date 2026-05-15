@@ -84,26 +84,10 @@ export default function DynamicInvitation({ config }) {
     return (
         <div className="min-h-screen bg-inv-cream text-inv-text font-inv-body selection:bg-inv-primary/30 overflow-x-hidden" style={themeVars}>
             <Hero data={config.hero} basePath={basePath} />
-            <div className="flex flex-col md:flex-row w-full">
-                {Object.keys(config)
-                    .filter(key => key.startsWith('intro') && config[key]?.enabled !== false)
-                    .sort()
-                    .map(key => (
-                        <div key={key} className="flex-1">
-                            <Intro data={config[key]} basePath={basePath} />
-                        </div>
-                    ))}
-            </div>
-            <div className="flex flex-col md:flex-row w-full">
-                {Object.keys(config)
-                    .filter(key => key.startsWith('padrinos') && config[key]?.enabled)
-                    .sort()
-                    .map(key => (
-                        <div key={key} className="flex-1">
-                            <Padrinos data={config[key]} basePath={basePath} />
-                        </div>
-                    ))}
-            </div>
+            <Intro data={config.intro} basePath={basePath} />
+            {config.padrinos?.enabled && (
+                <Padrinos data={config.padrinos} basePath={basePath} />
+            )}
             <Countdown data={config.countdown} calendar={config.calendar} basePath={basePath} />
             <Events data={config.events} basePath={basePath} />
             {config.dressCode?.enabled && (
