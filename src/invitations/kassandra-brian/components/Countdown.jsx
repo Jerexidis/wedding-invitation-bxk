@@ -1,5 +1,6 @@
 import AddToCalendar from './AddToCalendar';
 import { useCountdown } from '../../../hooks/useCountdown';
+import Confetti from '../../../components/Confetti';
 
 // Fecha de la boda — usamos el hook compartido en lugar de lógica inline
 const WEDDING_DATE = '2026-05-30T16:00:00';
@@ -8,18 +9,27 @@ const Countdown = () => {
     const { days, hours, minutes, seconds, isTime } = useCountdown(WEDDING_DATE);
 
     return (
-        <section className="py-20 px-4 bg-white text-center">
+        <section className="py-20 px-4 bg-white text-center relative">
+            {/* Confeti extra en el countdown cuando es el día */}
+            {isTime && (
+                <Confetti
+                    duration={6000}
+                    particleCount={100}
+                    colors={['#5D7C89', '#89CFF0', '#B8DFF0', '#0E1038', '#CBD5E1', '#FFFFFF', '#A7D8F0', '#6BA3BE']}
+                />
+            )}
+
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-4xl md:text-5xl font-serif text-primary mb-12">
-                    {isTime ? '¡Es Hoy!' : '¡Falta Poco!'}
+                    {isTime ? '🎉 ¡Es Hoy! 🎉' : '¡Falta Poco!'}
                 </h2>
 
                 {!isTime && (
                     <div className="flex flex-wrap justify-center gap-6 md:gap-12 mb-10">
-                        <TimerBox value={days}     label="Días" />
-                        <TimerBox value={hours}    label="Hrs"  />
-                        <TimerBox value={minutes}  label="Min"  />
-                        <TimerBox value={seconds}  label="Seg"  />
+                        <TimerBox value={days} label="Días" />
+                        <TimerBox value={hours} label="Hrs" />
+                        <TimerBox value={minutes} label="Min" />
+                        <TimerBox value={seconds} label="Seg" />
                     </div>
                 )}
 

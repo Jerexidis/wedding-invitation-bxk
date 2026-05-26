@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, ChevronDown } from 'lucide-react';
 
 /* ─── SVG Decorations ───────────────────────────────────────────── */
@@ -110,15 +110,36 @@ const Hero = ({ data, basePath }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [needsInteraction, setNeedsInteraction] = useState(false);
+
+    // Intentar autoplay al cargar — si falla, mostrar indicador visual
+    useEffect(() => {
+        if (!data.song || !audioRef.current) return;
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => setIsPlaying(true))
+                .catch(() => setNeedsInteraction(true));
+        }
+    }, [data.song]);
 
     const toggleMusic = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
-            } else {
-                audioRef.current.play();
+        if (!audioRef.current) return;
+        if (isPlaying) {
+            audioRef.current.pause();
+            setIsPlaying(false);
+        } else {
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        setIsPlaying(true);
+                        setNeedsInteraction(false);
+                    })
+                    .catch(() => {
+                        setIsPlaying(false);
+                    });
             }
-            setIsPlaying(!isPlaying);
         }
     };
 
@@ -230,7 +251,7 @@ const Hero = ({ data, basePath }) => {
                     </audio>
 
                     <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-md bg-inv-dark/90 backdrop-blur-md rounded-full px-6 py-3 shadow-lg flex items-center gap-4 z-20 border border-inv-accent/30">
-                        <button onClick={toggleMusic} className="text-inv-accent hover:text-white transition-colors">
+                        <button onClick={toggleMusic} className={`text-inv-accent hover:text-white transition-colors ${needsInteraction && !isPlaying ? 'animate-pulse' : ''}`}>
                             {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                         </button>
 

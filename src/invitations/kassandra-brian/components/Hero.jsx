@@ -1,11 +1,18 @@
 import { useState, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { useCountdown } from '../../../hooks/useCountdown';
+import Confetti from '../../../components/Confetti';
+
+// Fecha del evento — centralizada para consistencia
+// TODO: Restaurar a '2026-05-30T16:00:00' después de testear
+const EVENT_DATE = '2026-05-30T16:00:00';
 
 const Hero = () => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [progress, setProgress] = useState(0);
+    const { isTime } = useCountdown(EVENT_DATE);
 
     const toggleMusic = () => {
         if (audioRef.current) {
@@ -37,6 +44,9 @@ const Hero = () => {
 
     return (
         <header className="relative min-h-[100dvh] w-full flex flex-col items-center justify-end pb-32 md:pb-20 text-center">
+            {/* Confeti cuando es el día del evento */}
+            {isTime && <Confetti duration={10000} particleCount={200} colors={['#5D7C89', '#89CFF0', '#B8DFF0', '#0E1038', '#CBD5E1', '#FFFFFF', '#A7D8F0', '#6BA3BE']} />}
+
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0 will-change-transform">
                 <img
@@ -50,7 +60,21 @@ const Hero = () => {
             </div>
 
             <div className="relative z-10 text-white animate-fade-in space-y-4 px-6 pb-16 md:pb-8">
-                <h1 className="font-serif text-5xl sm:text-6xl md:text-8xl drop-shadow-lg leading-tight">Nos Casamos</h1>
+                {isTime ? (
+                    <h1
+                        className="text-5xl sm:text-6xl md:text-8xl drop-shadow-lg leading-tight font-semibold animate-pulse"
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                        ¡Es Hoy!
+                    </h1>
+                ) : (
+                    <h1
+                        className="text-5xl sm:text-6xl md:text-8xl drop-shadow-lg leading-tight tracking-[0.15em] font-semibold"
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                        SAVE THE DATE
+                    </h1>
+                )}
                 <p className="text-lg md:text-xl uppercase tracking-[0.3em] font-light">KASSANDRA & BRIAN</p>
                 <div className="w-40 h-[2px] bg-white/60 mx-auto my-6"></div>
             </div>

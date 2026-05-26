@@ -45,6 +45,7 @@ const invitations = [
         component: lazy(() => import('./alexa-y-santiago/index.jsx')),
         enabled: true,
     },
+
 ]
 
 // Solo invitaciones activas

@@ -1,10 +1,12 @@
 import fs from 'fs'
 import path from 'path'
+import crypto from 'crypto'
 import { exec } from 'child_process'
 
 const INVITATIONS_SRC = path.resolve('src/invitations')
 const INVITATIONS_PUBLIC = path.resolve('public/invitations')
 const REGISTRY_PATH = path.resolve('src/invitations/registry.js')
+const OG_DATA_PATH = path.resolve('og-data.js')
 const BASE_TEMPLATE = path.resolve('src/invitations/melani-marisol')
 
 /**
@@ -170,7 +172,7 @@ export default function devAdminPlugin() {
 function readRegistry() {
     const content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
     const entries = []
-    const regex = /\{\s*slug:\s*'([^']+)',\s*title:\s*'([^']+)',/g
+    const regex = /\{\s*slug:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],/g
     let match
     while ((match = regex.exec(content)) !== null) {
         const slug = match[1]
@@ -242,10 +244,11 @@ function createInvitation(data) {
         'utf-8'
     )
 
-    // 4. Write rsvp-access.json to public
+    // 4. Write rsvp-access.json to public (hash only — clave cruda queda solo en config.json)
+    const rsvpKeyHash = crypto.createHash('sha256').update(rsvpKey).digest('hex')
     fs.writeFileSync(
         path.join(publicDir, 'rsvp-access.json'),
-        JSON.stringify({ key: rsvpKey }),
+        JSON.stringify({ hash: rsvpKeyHash }),
         'utf-8'
     )
 
@@ -261,6 +264,13 @@ function createInvitation(data) {
 
     // 6. Update registry.js
     updateRegistry(slug, title)
+
+    // 7. Update og-data.js for WhatsApp/Facebook previews
+    try {
+        updateOgData(slug, title, config.eventType)
+    } catch (e) {
+        console.warn(`[Admin] No se pudo actualizar og-data.js para "${slug}":`, e.message)
+    }
 
     return { slug, path: `/i/${slug}`, rsvpLink: `/i/${slug}/rsvp?key=${rsvpKey}` }
 }
@@ -287,6 +297,13 @@ function deleteInvitation(slug) {
         fs.rmSync(publicDir, { recursive: true, force: true })
     }
     removeFromRegistry(slug)
+
+    // Limpiar og-data.js
+    try {
+        removeFromOgData(slug)
+    } catch (e) {
+        console.warn(`[Admin] No se pudo limpiar og-data.js para "${slug}":`, e.message)
+    }
 }
 
 // ─── REGISTRY HELPERS ───────────────────────────────────────────
@@ -311,9 +328,54 @@ function updateRegistry(slug, title) {
 
 function removeFromRegistry(slug) {
     let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
-    const regex = new RegExp(`\\s*\\{[^}]*slug:\\s*'${slug}'[^}]*\\},?`, 'g')
+    const regex = new RegExp(`\\s*\\{[^}]*slug:\\s*['"]${slug}['"][^}]*\\},?`, 'g')
     content = content.replace(regex, '')
     fs.writeFileSync(REGISTRY_PATH, content, 'utf-8')
+}
+
+// ─── OG-DATA HELPERS ────────────────────────────────────────────
+const EVENT_EMOJIS = { xv: '✨', boda: '💕', bautizo: '👶', cumple: '🎂', 'primera-comunion': '🕊️' }
+const EVENT_DESCRIPTIONS = {
+    xv: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
+    boda: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',
+    bautizo: 'Te invitamos a celebrar este día tan especial. ¡Toca aquí para ver la invitación!',
+    cumple: '¡Estás invitad@! Toca aquí para ver la invitación y confirmar tu asistencia.',
+    'primera-comunion': 'Te invito a celebrar mi Primera Comunión. ¡Toca aquí para confirmar tu asistencia!',
+}
+
+function updateOgData(slug, title, eventType) {
+    if (!fs.existsSync(OG_DATA_PATH)) return
+
+    let content = fs.readFileSync(OG_DATA_PATH, 'utf-8')
+
+    // No duplicar si ya existe
+    if (content.includes(`'${slug}'`) || content.includes(`"${slug}"`)) return
+
+    const emoji = EVENT_EMOJIS[eventType] || '🎉'
+    const description = EVENT_DESCRIPTIONS[eventType] || '¡Estás invitad@! Toca aquí para ver la invitación y confirmar tu asistencia.'
+
+    const newEntry = `    '${slug}': {
+        title: '${title.replace(/'/g, "\\'")} ${emoji}',
+        description: '${description}',
+        image: '/invitations/${slug}/img/og-preview.jpg',
+    },`
+
+    // Insertar antes del cierre del objeto }
+    const closingIndex = content.lastIndexOf('}')
+    if (closingIndex === -1) return
+
+    content = content.slice(0, closingIndex) + newEntry + '\n' + content.slice(closingIndex)
+    fs.writeFileSync(OG_DATA_PATH, content, 'utf-8')
+}
+
+function removeFromOgData(slug) {
+    if (!fs.existsSync(OG_DATA_PATH)) return
+
+    let content = fs.readFileSync(OG_DATA_PATH, 'utf-8')
+    // Eliminar el bloque completo del slug (con comillas simples o dobles)
+    const regex = new RegExp(`\\s*['"]${slug}['"]:\\s*\\{[^}]*\\},?`, 'g')
+    content = content.replace(regex, '')
+    fs.writeFileSync(OG_DATA_PATH, content, 'utf-8')
 }
 
 // ─── TOGGLE INVITATION ─────────────────────────────────────────
@@ -325,7 +387,7 @@ function toggleInvitation(slug) {
     let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
 
     // Find the block for this slug
-    const blockRegex = new RegExp(`(\\{[^}]*slug:\\s*'${slug}'[^}]*)enabled:\\s*(true|false)`, 's')
+    const blockRegex = new RegExp(`(\\{[^}]*slug:\\s*['"]${slug}['"][^}]*)enabled:\\s*(true|false)`, 's')
     const match = content.match(blockRegex)
 
     if (!match) {

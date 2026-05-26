@@ -25,12 +25,20 @@ const RsvpDashboard = () => {
         return () => document.removeEventListener('click', handleClickOutside)
     }, [])
 
+    // ─── Auth Helpers ───
+    const hashKey = async (key) => {
+        const data = new TextEncoder().encode(key)
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('')
+    }
+
     // ─── Auth State ───
     const [authorized, setAuthorized] = useState(false)
     const [authChecking, setAuthChecking] = useState(true)
     const [passwordInput, setPasswordInput] = useState('')
     const [authError, setAuthError] = useState('')
     const [storedKey, setStoredKey] = useState(null)
+    const [isHashMode, setIsHashMode] = useState(false)
 
     // Check authorization on mount
     useEffect(() => {
@@ -44,26 +52,36 @@ const RsvpDashboard = () => {
                     return
                 }
                 const data = await res.json()
-                const correctKey = data.key
+
+                // Detectar formato: nuevo {hash} vs viejo {key}
+                const hashed = !!data.hash
+                const storedValue = data.hash || data.key
 
                 // Check URL param first
                 const urlKey = searchParams.get('key')
-                if (urlKey && urlKey === correctKey) {
-                    localStorage.setItem(`rsvp_auth_${slug}`, correctKey)
-                    setAuthorized(true)
-                    setAuthChecking(false)
-                    return
+                if (urlKey) {
+                    const compareValue = hashed ? await hashKey(urlKey) : urlKey
+                    if (compareValue === storedValue) {
+                        localStorage.setItem(`rsvp_auth_${slug}`, urlKey)
+                        setAuthorized(true)
+                        setAuthChecking(false)
+                        return
+                    }
                 }
 
                 // Check localStorage
                 const savedKey = localStorage.getItem(`rsvp_auth_${slug}`)
-                if (savedKey && savedKey === correctKey) {
-                    setAuthorized(true)
-                    setAuthChecking(false)
-                    return
+                if (savedKey) {
+                    const compareValue = hashed ? await hashKey(savedKey) : savedKey
+                    if (compareValue === storedValue) {
+                        setAuthorized(true)
+                        setAuthChecking(false)
+                        return
+                    }
                 }
 
-                setStoredKey(correctKey)
+                setStoredKey(storedValue)
+                setIsHashMode(hashed)
                 setAuthChecking(false)
             } catch {
                 // If fetch fails, allow access (backwards compatible)
@@ -74,10 +92,11 @@ const RsvpDashboard = () => {
         checkAuth()
     }, [slug, searchParams])
 
-    const handlePasswordSubmit = (e) => {
+    const handlePasswordSubmit = async (e) => {
         e.preventDefault()
-        if (passwordInput === storedKey) {
-            localStorage.setItem(`rsvp_auth_${slug}`, storedKey)
+        const compareValue = isHashMode ? await hashKey(passwordInput) : passwordInput
+        if (compareValue === storedKey) {
+            localStorage.setItem(`rsvp_auth_${slug}`, passwordInput)
             setAuthorized(true)
             setAuthError('')
         } else {
