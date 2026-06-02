@@ -46,6 +46,13 @@ const invitations = [
         enabled: true,
     },
 
+    {
+        slug: 'emilia-lopez',
+        title: 'XV Años | Emilia Lopez',
+        component: lazy(() => import('./emilia-lopez/index.jsx')),
+        enabled: true,
+    },
+
 ]
 
 // Solo invitaciones activas

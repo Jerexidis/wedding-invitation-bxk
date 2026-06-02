@@ -1,0 +1,104 @@
+{
+    "slug": "emilia-lopez",
+    "eventType": "xv",
+    "title": "XV Años | Emilia Lopez",
+    "theme": {
+        "primaryHue": 330,
+        "primarySat": 60,
+        "accentHue": 280,
+        "fontBody": "Montserrat",
+        "fontDisplay": "Great Vibes"
+    },
+    "hero": {
+        "subtitle": "✨ Mis XV Años ✨",
+        "name": "Emilia Lopez",
+        "date": "30 DE JUNIO DE 2026",
+        "backgroundImage": "hero-bg.png",
+        "song": ""
+    },
+    "intro": {
+        "message": "Con la bendición de Dios",
+        "label": "Mis Papás",
+        "parent1": "Ricardo  Lopez ",
+        "parent2": "Araceli Rodriguez",
+        "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Francisco Martinez ",
+        "photo1": "padrino1.jpg",
+        "padrino2": "Rebeca Reyes ",
+        "photo2": "padrino2.jpg"
+    },
+    "countdown": {
+        "targetDate": "2026-06-30T19:00:00",
+        "displayDate": "martes, 30 de junio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "XV Años | Emilia Lopez",
+        "description": "¡Celebra con nosotros!",
+        "location": "La Quinta de Luis, ",
+        "startDateTime": "20260701T010000",
+        "endDateTime": "20260701T080000",
+        "outlookStart": "2026-07-01T01:00:00",
+        "outlookEnd": "2026-07-01T08:00:00",
+        "icsFilename": "emilia-lopez.ics",
+        "icsProdId": "XV Años | Emilia Lopez"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "San Antonio",
+            "address": "",
+            "time": "19:00",
+            "mapLink": ""
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "La Quinta de Luis",
+            "address": "",
+            "time": "20:00",
+            "mapLink": ""
+        }
+    ],
+    "dressCode": {
+        "enabled": true,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": []
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "link",
+        "link": "https://www.liverpool.com.mx/tienda/mesa-de-regalos",
+        "linkText": "Ver Mesa en Liverpool"
+    },
+    "itinerary": {
+        "enabled": false,
+        "items": []
+    },
+    "rsvp": {
+        "mode": "supabase",
+        "whatsappNumber": "",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Emilia Lopez",
+        "subtitle": "XV Años • martes, 30 de junio"
+    },
+    "rsvpKey": "8t7p9i"
+}

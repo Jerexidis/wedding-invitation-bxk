@@ -41,4 +41,9 @@ export const ogData = {
         description: 'Te invitamos a celebrar nuestra Primera Comunión. ¡Toca aquí para confirmar tu asistencia!',
         image: '/invitations/alexa-y-santiago/img/og-preview.jpg',
     },
+    'emilia-lopez': {
+        title: 'XV Años | Emilia Lopez ✨',
+        description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/emilia-lopez/img/og-preview.jpg',
+    },
 }

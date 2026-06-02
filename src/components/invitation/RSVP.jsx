@@ -53,7 +53,7 @@ const RSVP = ({ data, slug, basePath }) => {
 
     if (submitted) {
         return (
-            <section className="py-24 px-4 bg-gradient-to-b from-[#A8896A] to-[#C4A882] text-white relative overflow-hidden">
+            <section className="py-24 px-4 bg-gradient-to-b from-inv-dark to-inv-dark/90 text-white relative overflow-hidden">
                 <div className="max-w-lg mx-auto text-center relative z-10 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg p-8 md:p-12 rounded-3xl border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
                     {/* Inner highlight */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-30 pointer-events-none rounded-3xl"></div>
@@ -68,7 +68,7 @@ const RSVP = ({ data, slug, basePath }) => {
     }
 
     return (
-        <section className="py-24 px-4 bg-gradient-to-b from-[#A8896A] to-[#C4A882] text-white relative overflow-hidden">
+        <section className="py-24 px-4 bg-gradient-to-b from-inv-dark to-inv-dark/90 text-white relative overflow-hidden">
 
             <div className="max-w-lg mx-auto relative z-10 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg p-8 md:p-12 rounded-3xl border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
                 {/* Inner highlight */}
@@ -94,7 +94,7 @@ const RSVP = ({ data, slug, basePath }) => {
                         <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
                     )}
 
-                    <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-[#8B7332] rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">
+                    <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">
                         {submitting ? 'Enviando...' : data.mode === 'whatsapp' ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
                     </button>
                 </form>
