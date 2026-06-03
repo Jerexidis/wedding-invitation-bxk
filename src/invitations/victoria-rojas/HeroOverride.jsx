@@ -130,7 +130,7 @@ const HeroOverride = ({ data, basePath }) => {
             <div className="relative z-10 text-white animate-fade-in space-y-4 px-6 pb-24 md:pb-16 text-center">
 
 
-                <p className="text-sm md:text-base uppercase tracking-[0.4em] font-semibold text-[#D4DFC4] drop-shadow-md" style={{ textShadow: '0 1px 8px rgba(107, 127, 59, 0.4)' }}>
+                <p className="text-sm md:text-base uppercase tracking-[0.4em] font-semibold text-[#768A57] drop-shadow-md" style={{ textShadow: '0 1px 8px rgba(107, 127, 59, 0.4)' }}>
                     {data.subtitle}
                 </p>
 
@@ -143,11 +143,11 @@ const HeroOverride = ({ data, basePath }) => {
 
                 <div className="flex items-center justify-center gap-4 mt-2">
                     <div className="w-16 h-[1px] bg-[#A3B18A]/50" />
-                    <FloralDivider size="small" className="text-[#C4D4A8]" />
+                    <FloralDivider size="small" className="text-[#8DA170]" />
                     <div className="w-16 h-[1px] bg-[#A3B18A]/50" />
                 </div>
 
-                <p className="text-base md:text-lg tracking-[0.25em] font-medium text-[#D4DFC4]" style={{ textShadow: '0 1px 10px rgba(107, 127, 59, 0.35)' }}>
+                <p className="text-base md:text-lg tracking-[0.25em] font-medium text-[#768A57]" style={{ textShadow: '0 1px 10px rgba(107, 127, 59, 0.35)' }}>
                     {data.date}
                 </p>
             </div>
@@ -184,7 +184,7 @@ const HeroOverride = ({ data, basePath }) => {
             )}
 
             {/* Scroll Indicator */}
-            <div className={`absolute ${data.song ? 'bottom-24' : 'bottom-8'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-20 text-[#C4D4A8]`}>
+            <div className={`absolute ${data.song ? 'bottom-24' : 'bottom-8'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-20 text-[#768A57]`}>
                 <span className="text-xs uppercase tracking-[0.25em] font-medium" style={{ textShadow: '0 1px 6px rgba(107, 127, 59, 0.3)' }}>Desliza</span>
                 <ChevronDown size={24} />
             </div>
