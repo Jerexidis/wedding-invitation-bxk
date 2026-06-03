@@ -74,6 +74,7 @@ const HeroOverride = ({ data, basePath }) => {
                     loading="eager"
                     decoding="async"
                     className="w-full h-full object-cover transform-gpu"
+                    style={{ objectPosition: 'center bottom' }}
                 />
                 {/* Overlay en degradado cálido de champagne dorado */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2E271F]/90 via-[#4A3F35]/35 to-[#F7E7CE]/15" />
