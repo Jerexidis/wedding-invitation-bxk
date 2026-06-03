@@ -6,14 +6,14 @@ import config from './config.json'
 import HeroOverride from './HeroOverride'
 import IntroOverride from './IntroOverride'
 import PadrinosOverride from './PadrinosOverride'
+import CountdownOverride from './CountdownOverride'
+import RSVPOverride from './RSVPOverride'
 
 // Generic invitation components
-import Countdown from '../../components/invitation/Countdown'
 import Events from '../../components/invitation/Events'
 import DressCode from '../../components/invitation/DressCode'
 import Gallery from '../../components/invitation/Gallery'
 import Gifts from '../../components/invitation/Gifts'
-import RSVP from '../../components/invitation/RSVP'
 import FooterOverride from './FooterOverride'
 
 export default function VictoriaRojasInvitation() {
@@ -192,7 +192,7 @@ export default function VictoriaRojasInvitation() {
                     className="absolute left-6 bottom-4 w-16 h-16 opacity-[0.12] pointer-events-none select-none z-0 object-contain -rotate-12 animate-pulse-soft"
                     alt="gold star sticker"
                 />
-                <Countdown data={config.countdown} calendar={config.calendar} basePath={basePath} />
+                <CountdownOverride data={config.countdown} calendar={config.calendar} basePath={basePath} />
             </div>
 
             {/* Custom Intro Section (No Cross, Custom Floral Divider) */}
@@ -262,7 +262,7 @@ export default function VictoriaRojasInvitation() {
                     className="absolute right-8 bottom-12 w-20 h-20 opacity-[0.18] pointer-events-none select-none z-0 object-contain animate-pulse-soft"
                     alt="gold sparkle"
                 />
-                <RSVP data={config.rsvp} slug={config.slug} basePath={basePath} />
+                <RSVPOverride data={config.rsvp} slug={config.slug} basePath={basePath} />
             </div>
 
             {/* Footer Section */}
