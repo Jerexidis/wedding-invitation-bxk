@@ -22,32 +22,58 @@ const RSVPOverride = ({ data, slug, basePath }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const buildWhatsAppUrl = () => {
+        let messageText = data.whatsappConfirmMessage
+            .replace('{name}', formData.name)
+            .replace('{guests}', formData.guests);
+        
+        if (formData.message.trim()) {
+            messageText += `\n\nMensaje para la Quinceañera: "${formData.message.trim()}"`;
+        }
+        
+        return `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+    };
+
+    const saveToDatabase = async () => {
+        const { addConfirmation } = await import('../../utils/rsvpStore');
+        await addConfirmation(slug, {
+            name: formData.name,
+            guests: parseInt(formData.guests),
+            message: formData.message,
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (data.mode === 'whatsapp') {
-            let messageText = data.whatsappConfirmMessage
-                .replace('{name}', formData.name)
-                .replace('{guests}', formData.guests);
-            
-            if (formData.message.trim()) {
-                messageText += `\n\nMensaje para la Quinceañera: "${formData.message.trim()}"`;
-            }
-            
-            window.location.href = `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+            window.location.href = buildWhatsAppUrl();
         } else if (data.mode === 'supabase') {
             setSubmitting(true);
             try {
-                const { addConfirmation } = await import('../../utils/rsvpStore');
-                await addConfirmation(slug, {
-                    name: formData.name,
-                    guests: parseInt(formData.guests),
-                    message: formData.message,
-                });
+                await saveToDatabase();
                 setSubmitted(true);
             } catch (err) {
                 console.error('Error submitting RSVP:', err);
                 alert('Hubo un error al enviar tu confirmación. Inténtalo de nuevo.');
+            } finally {
+                setSubmitting(false);
+            }
+        } else if (data.mode === 'mixed') {
+            setSubmitting(true);
+            try {
+                // 1. Save to database first
+                await saveToDatabase();
+                setSubmitted(true);
+                // 2. Then open WhatsApp after a short delay so the user sees the success state
+                setTimeout(() => {
+                    window.open(buildWhatsAppUrl(), '_blank');
+                }, 800);
+            } catch (err) {
+                console.error('Error submitting RSVP:', err);
+                // Even if DB fails, still send to WhatsApp
+                window.open(buildWhatsAppUrl(), '_blank');
+                setSubmitted(true);
             } finally {
                 setSubmitting(false);
             }
@@ -97,7 +123,7 @@ const RSVPOverride = ({ data, slug, basePath }) => {
                     </div>
 
                     <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">
-                        {submitting ? 'Enviando...' : data.mode === 'whatsapp' ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
+                        {submitting ? 'Enviando...' : (data.mode === 'whatsapp' || data.mode === 'mixed') ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
                     </button>
                 </form>
 

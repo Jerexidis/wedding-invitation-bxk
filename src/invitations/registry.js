@@ -47,13 +47,6 @@ const invitations = [
     },
 
     {
-        slug: 'emilia-lopez',
-        title: 'XV Años | Emilia Lopez',
-        component: lazy(() => import('./emilia-lopez/index.jsx')),
-        enabled: true,
-    },
-
-    {
         slug: 'victoria-rojas',
         title: 'XV Años | Victoria Rojas',
         component: lazy(() => import('./victoria-rojas/index.jsx')),

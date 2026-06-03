@@ -12,39 +12,39 @@
     "hero": {
         "subtitle": "✨ Mis XV Años ✨",
         "name": "Victoria Rojas",
-        "date": "25 DE JUNIO DE 2026",
-        "backgroundImage": "victoria_floral_bg.png",
+        "date": "25 DE JULIO DE 2026",
+        "backgroundImage": "victoria_hero_bg.png",
         "song": "Birds-of-a-Feather-Billie-Eilish.mp3"
     },
     "intro": {
         "message": "Con la bendición de Dios",
         "label": "Mis Papás",
-        "parent1": "Aquí va el nombre del papá",
-        "parent2": "Aquí va el nombre de la mamá",
+        "parent1": "Teresita Jasso Rodríguez",
+        "parent2": "Victor Rojas Villalpando",
         "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años"
     },
     "padrinos": {
         "enabled": true,
         "label": "Mis Padrinos",
         "subtitle": "Con el cariño de",
-        "padrino1": "Aquí va el nombre del Padrino",
+        "padrino1": "Leticia Jasso Rodríguez",
         "photo1": "",
-        "padrino2": "Aquí va el nombre de la Madrina",
+        "padrino2": "Jorge Alberto Jasso Rodríguez",
         "photo2": ""
     },
     "countdown": {
-        "targetDate": "2026-06-25T19:00:00",
-        "displayDate": "jueves, 25 de junio",
+        "targetDate": "2026-07-25T12:00:00",
+        "displayDate": "sábado, 25 de julio",
         "displayYear": "2026"
     },
     "calendar": {
         "title": "XV Años | Victoria Rojas",
         "description": "¡Celebra con nosotros!",
-        "location": "Misión San Antonio, ",
-        "startDateTime": "20260625T190000",
-        "endDateTime": "20260626T020000",
-        "outlookStart": "2026-06-25T19:00:00",
-        "outlookEnd": "2026-06-26T02:00:00",
+        "location": "Santuario de Guadalupe",
+        "startDateTime": "20260725T120000",
+        "endDateTime": "20260726T020000",
+        "outlookStart": "2026-07-25T12:00:00",
+        "outlookEnd": "2026-07-26T02:00:00",
         "icsFilename": "victoria-rojas.ics",
         "icsProdId": "XV Años | Victoria Rojas"
     },
@@ -52,18 +52,18 @@
         {
             "icon": "church",
             "title": "Ceremonia Religiosa",
-            "location": "Templo de San Antonio de Padua",
+            "location": "Santuario de Guadalupe",
             "address": "",
-            "time": "19:00",
-            "mapLink": "https://maps.app.goo.gl/wcfFn8u6iEqiVUhC7"
+            "time": "12:00 pm",
+            "mapLink": "https://maps.app.goo.gl/JzvdW64tXEsoZiSE6"
         },
         {
             "icon": "party",
             "title": "Recepción",
-            "location": "Misión San Antonio",
+            "location": "Quinta Anita",
             "address": "",
-            "time": "20:00",
-            "mapLink": "https://maps.app.goo.gl/QVcC1FBL3kW9HdqW8"
+            "time": "3:00 pm",
+            "mapLink": "https://maps.app.goo.gl/5non877EPjzbpVZi6"
         }
     ],
     "dressCode": {
@@ -74,20 +74,28 @@
     "gallery": {
         "photos": [
             {
-                "src": "1111.jpg",
-                "caption": "!Mis XV!"
+                "src": "carrete_1.jpeg",
+                "caption": "¡Mis XV!"
             },
             {
-                "src": "22222.jpg",
+                "src": "carrete_2.jpeg",
                 "caption": "Sonríe"
             },
             {
-                "src": "33333.jpg",
+                "src": "carrete_3.jpeg",
                 "caption": "¡Gracias!"
             },
             {
-                "src": "444444.jpg ",
+                "src": "carrete_4.jpeg",
                 "caption": "Agradecida"
+            },
+            {
+                "src": "carrete_5.jpeg",
+                "caption": "Momentos"
+            },
+            {
+                "src": "carrete_6.jpeg",
+                "caption": "Recuerdos"
             }
         ]
     },
@@ -106,8 +114,8 @@
         "items": []
     },
     "rsvp": {
-        "mode": "whatsapp",
-        "whatsappNumber": "524499851353",
+        "mode": "mixed",
+        "whatsappNumber": "524491028219",
         "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
         "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
         "deadline": "Por favor confirma tu asistencia",
@@ -117,7 +125,7 @@
     },
     "footer": {
         "name": "Victoria Rojas",
-        "subtitle": "XV Años • jueves, 25 de junio"
+        "subtitle": "XV Años • sábado, 25 de julio"
     },
     "rsvpKey": "a7lexf"
 }

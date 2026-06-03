@@ -2,29 +2,11 @@ import React from 'react';
 import { LeafWatermark } from './FloralDecorations';
 
 const PadrinosOverride = ({ data, basePath }) => {
-    // Helper function to render a photo frame or an elegant dashed placeholder
-    const renderPadrinoSlot = (name, photo) => {
+    // Helper function to render padrino name only
+    const renderPadrinoSlot = (name) => {
         if (!name) return null;
         return (
-            <div className="flex flex-col items-center gap-3 group">
-                {photo ? (
-                    <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-[#F7E7CE]/40 shadow-lg transform hover:scale-105 transition-all duration-300">
-                        <img
-                            src={`${basePath}/img/${photo}`}
-                            alt={name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                        />
-                    </div>
-                ) : (
-                    /* Elegant placeholder slot for photos */
-                    <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-white/5 border border-dashed border-[#F7E7CE]/40 flex flex-col items-center justify-center text-[#F7E7CE]/70 shadow-inner transform hover:scale-105 hover:border-[#F7E7CE]/80 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="w-8 h-8 opacity-60 mb-1">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                        </svg>
-                        <span className="text-[0.55rem] uppercase tracking-[0.15em] opacity-60">Foto Padrino</span>
-                    </div>
-                )}
+            <div className="flex flex-col items-center gap-1 group">
                 <p className="font-inv-display text-xl md:text-2xl text-white leading-relaxed drop-shadow-md">
                     {name}
                 </p>
@@ -82,7 +64,7 @@ const PadrinosOverride = ({ data, basePath }) => {
                             </div>
 
                             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
-                                {renderPadrinoSlot(group.padrino1, group.photo1)}
+                                {renderPadrinoSlot(group.padrino1)}
 
                                 {group.padrino1 && group.padrino2 && (
                                     <div className="flex md:flex-col items-center gap-3 md:gap-4">
@@ -92,7 +74,7 @@ const PadrinosOverride = ({ data, basePath }) => {
                                     </div>
                                 )}
 
-                                {renderPadrinoSlot(group.padrino2, group.photo2)}
+                                {renderPadrinoSlot(group.padrino2)}
                             </div>
 
                             <div className="flex items-center justify-center gap-2 mt-4 md:mt-6">
