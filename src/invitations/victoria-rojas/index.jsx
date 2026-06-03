@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { buildThemeVars, injectGoogleFonts } from '../../utils/themeEngine'
 import config from './config.json'
 
@@ -18,6 +18,20 @@ import FooterOverride from './FooterOverride'
 
 export default function VictoriaRojasInvitation() {
     const basePath = `/invitations/${config.slug}`
+    const [envelopeOpen, setEnvelopeOpen] = useState(false);
+    const [envelopeExit, setEnvelopeExit] = useState(false);
+
+    const handleOpenEnvelope = () => {
+        setEnvelopeExit(true);
+        // Play the audio immediately upon user interaction
+        const audio = document.getElementById('invitationAudio');
+        if (audio) {
+            audio.play().catch(err => console.log('Audio autoplay blocked or failed:', err));
+        }
+        setTimeout(() => {
+            setEnvelopeOpen(true);
+        }, 1000); // Wait for transition animation to finish
+    };
 
     // Base theme variables
     const baseThemeVars = buildThemeVars(config.theme)
@@ -174,6 +188,70 @@ export default function VictoriaRojasInvitation() {
                 .victoria-rojas-invitation .padrinos-wrapper section {
                     background: linear-gradient(to bottom, #2E271F, #1C1713) !important;
                 }
+
+                /* Envelope Entrance Overlay Styles */
+                .envelope-overlay {
+                    position: fixed;
+                    inset: 0;
+                    z-index: 99999;
+                    background: linear-gradient(135deg, #FAF4EB, #F7E7CE);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+                }
+                .envelope-overlay.exit {
+                    opacity: 0;
+                    visibility: hidden;
+                    pointer-events: none;
+                }
+                .envelope-container {
+                    perspective: 1000px;
+                    width: 90%;
+                    max-width: 420px;
+                    text-align: center;
+                    padding: 3rem 2.5rem;
+                    background: #ffffff;
+                    border-radius: 2.5rem;
+                    box-shadow: 0 20px 60px rgba(112, 92, 70, 0.18);
+                    border: 1px solid rgba(218, 171, 107, 0.4);
+                    transform: translateY(0) scale(1);
+                    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .envelope-overlay.exit .envelope-container {
+                    transform: translateY(-80px) scale(0.92);
+                }
+                .envelope-seal-btn {
+                    cursor: pointer;
+                    width: 96px;
+                    height: 96px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #DFC59C, #B39768);
+                    border: 3px solid #ffffff;
+                    box-shadow: 0 10px 25px rgba(179, 151, 104, 0.45), inset 0 2px 4px rgba(255,255,255,0.4);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #ffffff;
+                    font-family: 'Great Vibes', cursive;
+                    font-size: 2.8rem;
+                    font-weight: bold;
+                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+                    outline: none;
+                    animation: sealPulse 2s infinite;
+                }
+                .envelope-seal-btn:hover {
+                    transform: scale(1.08) rotate(5deg);
+                    box-shadow: 0 15px 30px rgba(179, 151, 104, 0.55), inset 0 2px 4px rgba(255,255,255,0.4);
+                }
+                .envelope-seal-btn:active {
+                    transform: scale(0.96);
+                }
+                @keyframes sealPulse {
+                    0% { box-shadow: 0 0 0 0 rgba(179, 151, 104, 0.55); }
+                    70% { box-shadow: 0 0 0 15px rgba(179, 151, 104, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(179, 151, 104, 0); }
+                }
             `}</style>
 
             {/* Custom Hero Section */}
@@ -267,6 +345,39 @@ export default function VictoriaRojasInvitation() {
 
             {/* Footer Section */}
             <FooterOverride data={config.footer} basePath={basePath} />
+
+            {/* Elegant Envelope Entrance Screen */}
+            {!envelopeOpen && (
+                <div className={`envelope-overlay ${envelopeExit ? 'exit' : ''}`}>
+                    <div className="envelope-container relative overflow-hidden">
+                        {/* Decorative flowers and sparkles peaking inside the envelope */}
+                        <img 
+                            src={`${basePath}/img/flower_single.png?v=2`} 
+                            className="absolute -left-12 -top-12 w-28 h-28 opacity-[0.14] rotate-45 pointer-events-none select-none" 
+                            alt="flower decor" 
+                        />
+                        <img 
+                            src={`${basePath}/img/gold_element_12.png`} 
+                            className="absolute -right-6 -bottom-6 w-20 h-20 opacity-[0.15] rotate-12 pointer-events-none select-none" 
+                            alt="gold sparkle decor" 
+                        />
+
+                        <div className="space-y-6">
+                            <p className="text-xs uppercase tracking-[0.35em] text-[#8A7662] font-semibold">Te invitamos a celebrar</p>
+                            <h2 className="font-inv-display text-4xl sm:text-5xl text-[#705C46] drop-shadow-sm leading-tight">Victoria Rojas</h2>
+                            <p className="text-xs uppercase tracking-[0.25em] text-[#8A7662] font-semibold pb-4">Mis XV Años</p>
+                            
+                            <div className="py-4">
+                                <button onClick={handleOpenEnvelope} className="envelope-seal-btn" title="Abrir invitación">
+                                    V
+                                </button>
+                            </div>
+                            
+                            <p className="text-xs uppercase tracking-[0.2em] text-[#A18A72] font-bold animate-pulse">Abrir Invitación</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

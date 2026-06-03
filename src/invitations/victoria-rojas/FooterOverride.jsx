@@ -7,7 +7,7 @@ const FooterOverride = ({ data, basePath }) => {
                 {/* Clean flower image instead of the Christian cross */}
                 <div className="flex items-center justify-center mb-4">
                     <img
-                        src={`${basePath}/img/flower.png`}
+                        src={`${basePath}/img/flower_single.png`}
                         className="w-10 h-10 object-contain drop-shadow-[0_2px_6px_rgba(218,171,107,0.4)]"
                         alt="flower footer icon"
                     />

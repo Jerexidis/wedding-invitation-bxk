@@ -83,7 +83,7 @@ const HeroOverride = ({ data, basePath }) => {
             <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
                 {[...Array(15)].map((_, i) => {
                     const asset = floatingAssets[i % floatingAssets.length];
-                    const size = asset === 'golden-flower.png' ? 32 + (i % 3) * 12 : 22 + (i % 3) * 8;
+                    const size = asset === 'flower_single.png' ? 32 + (i % 3) * 12 : 22 + (i % 3) * 8;
                     return (
                         <img
                             key={i}
