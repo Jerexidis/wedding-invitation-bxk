@@ -13,8 +13,8 @@
         "subtitle": "✨ Mis XV Años ✨",
         "name": "Victoria Rojas",
         "date": "25 DE JUNIO DE 2026",
-        "backgroundImage": "hero-bg.png",
-        "song": ""
+        "backgroundImage": "victoria_floral_bg.png",
+        "song": "Birds-of-a-Feather-Billie-Eilish.mp3"
     },
     "intro": {
         "message": "Con la bendición de Dios",
@@ -28,7 +28,9 @@
         "label": "Mis Padrinos",
         "subtitle": "Con el cariño de",
         "padrino1": "Aquí va el nombre del Padrino",
-        "padrino2": "Aquí va el nombre de la Madrina"
+        "photo1": "",
+        "padrino2": "Aquí va el nombre de la Madrina",
+        "photo2": ""
     },
     "countdown": {
         "targetDate": "2026-06-25T19:00:00",
