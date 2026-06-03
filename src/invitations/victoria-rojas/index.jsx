@@ -258,7 +258,7 @@ export default function VictoriaRojasInvitation() {
             <HeroOverride data={config.hero} basePath={basePath} />
 
             {/* Countdown Section (Wrapped with custom gold background stickers) */}
-            <div className="relative overflow-hidden bg-gradient-to-b from-inv-light to-inv-cream z-10">
+            <div className="relative overflow-x-clip bg-gradient-to-b from-inv-light to-inv-cream z-10">
                 {/* Gold sticker behind countdown */}
                 <img 
                     src={`${basePath}/img/gold_element_10.png`} 
