@@ -81,9 +81,9 @@ const HeroOverride = ({ data, basePath }) => {
 
             {/* Floating modern gold elements & flowers */}
             <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-                {[...Array(15)].map((_, i) => {
+                {[...Array(7)].map((_, i) => {
                     const asset = floatingAssets[i % floatingAssets.length];
-                    const size = asset === 'flower_single.png' ? 32 + (i % 3) * 12 : 22 + (i % 3) * 8;
+                    const size = asset === 'flower_single.png' ? 36 + (i % 3) * 8 : 30 + (i % 3) * 6;
                     return (
                         <img
                             key={i}
@@ -92,9 +92,9 @@ const HeroOverride = ({ data, basePath }) => {
                             style={{
                                 width: `${size}px`,
                                 height: `${size}px`,
-                                left: `${(i * 7 + 4) % 100}%`,
-                                top: `${(i * 13 + 8) % 100}%`,
-                                animation: `floatingPetal ${7 + (i % 5)}s ease-in-out ${(i % 3) * 0.8}s infinite alternate`,
+                                left: `${(i * 12 + 8) % 100}%`,
+                                top: `${(i * 17 + 12) % 100}%`,
+                                animation: `floatingPetal ${8 + (i % 4)}s ease-in-out ${(i % 3) * 1.2}s infinite alternate`,
                                 filter: asset.includes('gold') || asset.includes('flower') ? 'drop-shadow(0 2px 4px rgba(218, 171, 107, 0.4))' : 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))'
                             }}
                             alt="particle"
