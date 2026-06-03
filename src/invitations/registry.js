@@ -53,6 +53,13 @@ const invitations = [
         enabled: true,
     },
 
+    {
+        slug: 'victoria-rojas',
+        title: 'XV Años | Victoria Rojas',
+        component: lazy(() => import('./victoria-rojas/index.jsx')),
+        enabled: true,
+    },
+
 ]
 
 // Solo invitaciones activas

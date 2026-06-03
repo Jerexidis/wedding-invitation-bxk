@@ -46,4 +46,9 @@ export const ogData = {
         description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
         image: '/invitations/emilia-lopez/img/og-preview.jpg',
     },
+    'victoria-rojas': {
+        title: 'XV Años | Victoria Rojas ✨',
+        description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/victoria-rojas/img/og-preview.jpg',
+    },
 }

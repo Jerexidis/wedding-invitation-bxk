@@ -1,0 +1,121 @@
+{
+    "slug": "victoria-rojas",
+    "eventType": "xv",
+    "title": "XV Años | Victoria Rojas",
+    "theme": {
+        "primaryHue": 37,
+        "primarySat": 60,
+        "accentHue": 45,
+        "fontBody": "Montserrat",
+        "fontDisplay": "Great Vibes"
+    },
+    "hero": {
+        "subtitle": "✨ Mis XV Años ✨",
+        "name": "Victoria Rojas",
+        "date": "25 DE JUNIO DE 2026",
+        "backgroundImage": "hero-bg.png",
+        "song": ""
+    },
+    "intro": {
+        "message": "Con la bendición de Dios",
+        "label": "Mis Papás",
+        "parent1": "Aquí va el nombre del papá",
+        "parent2": "Aquí va el nombre de la mamá",
+        "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Aquí va el nombre del Padrino",
+        "padrino2": "Aquí va el nombre de la Madrina"
+    },
+    "countdown": {
+        "targetDate": "2026-06-25T19:00:00",
+        "displayDate": "jueves, 25 de junio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "XV Años | Victoria Rojas",
+        "description": "¡Celebra con nosotros!",
+        "location": "Misión San Antonio, ",
+        "startDateTime": "20260626T010000",
+        "endDateTime": "20260626T080000",
+        "outlookStart": "2026-06-26T01:00:00",
+        "outlookEnd": "2026-06-26T08:00:00",
+        "icsFilename": "victoria-rojas.ics",
+        "icsProdId": "XV Años | Victoria Rojas"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Templo de San Antonio de Padua",
+            "address": "",
+            "time": "19:00",
+            "mapLink": "https://maps.app.goo.gl/wcfFn8u6iEqiVUhC7"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Misión San Antonio",
+            "address": "",
+            "time": "20:00",
+            "mapLink": "https://maps.app.goo.gl/QVcC1FBL3kW9HdqW8"
+        }
+    ],
+    "dressCode": {
+        "enabled": true,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": [
+            {
+                "src": "1111.jpg",
+                "caption": "!Mis XV!"
+            },
+            {
+                "src": "22222.jpg",
+                "caption": "Sonríe"
+            },
+            {
+                "src": "33333.jpg",
+                "caption": "¡Gracias!"
+            },
+            {
+                "src": "444444.jpg ",
+                "caption": "Agradecida"
+            }
+        ]
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "link",
+        "envelopeText": "Lluvia de Sobres",
+        "envelopeDescription": "Tradición de regalar efectivo en sobres.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": false,
+        "items": []
+    },
+    "rsvp": {
+        "mode": "whatsapp",
+        "whatsappNumber": "524499851353",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Victoria Rojas",
+        "subtitle": "XV Años • jueves, 25 de junio"
+    },
+    "rsvpKey": "a7lexf"
+}
