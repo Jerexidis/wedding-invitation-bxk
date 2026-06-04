@@ -52,9 +52,9 @@ const invitations = [
         eventDate: '2026-06-27T13:00:00',
     },
     {
-        slug: 'erick-shady-bermejo',
-        title: 'Primera Comunión y 10 Años | Erick Shady Bermejo',
-        component: lazy(() => import('./erick-shady-bermejo/index.jsx')),
+        slug: 'erik-shady-bermejo',
+        title: 'Primera Comunión y 10 Años | Erik Shady Bermejo',
+        component: lazy(() => import('./erik-shady-bermejo/index.jsx')),
         enabled: true,
         eventType: 'primera-comunion',
         rsvpMode: 'mixed',

@@ -1,7 +1,7 @@
 {
-    "slug": "erick-shady-bermejo",
+    "slug": "erik-shady-bermejo",
     "eventType": "primera-comunion",
-    "title": "Primera Comunión y 10 Años | Erick Shady Bermejo",
+    "title": "Primera Comunión y 10 Años | Erik Shady Bermejo",
     "theme": {
         "primaryHue": 75,
         "primarySat": 35,
@@ -11,7 +11,7 @@
     },
     "hero": {
         "subtitle": "Primera Comunión y 10 Años",
-        "name": "Erick Shady Bermejo",
+        "name": "Erik Shady Bermejo",
         "date": "SÁBADO, 27 DE JUNIO DE 2026",
         "backgroundImage": "hero.png",
         "song": "communion.mp3"
@@ -22,7 +22,7 @@
     "intro": {
         "message": "Con la bendición de Dios y la guía del Espíritu Santo",
         "label": "Mis Papás",
-        "parent1": "Erick Bermejo",
+        "parent1": "Erik Bermejo",
         "parent2": "Cinthia Rosales",
         "closingMessage": "Te invitan a celebrar conmigo el día que recibo a Jesús en mi corazón por primera vez y celebro mis 10 años."
     },
@@ -38,15 +38,15 @@
         "displayYear": "2026"
     },
     "calendar": {
-        "title": "Primera Comunión y 10 Años | Erick Shady Bermejo",
+        "title": "Primera Comunión y 10 Años | Erik Shady Bermejo",
         "description": "¡Celebra conmigo este día tan especial!",
         "location": "Salón El Corral, Calle Cristóbal Colón 724, Fraccionamiento Cedros, Aguascalientes, Ags.",
         "startDateTime": "20260627T120000",
         "endDateTime": "20260627T235900",
         "outlookStart": "2026-06-27T12:00:00",
         "outlookEnd": "2026-06-27T23:59:00",
-        "icsFilename": "erick_shady.ics",
-        "icsProdId": "Primera Comunión | Erick Shady Bermejo"
+        "icsFilename": "erik_shady.ics",
+        "icsProdId": "Primera Comunión | Erik Shady Bermejo"
     },
     "events": [
         {
@@ -72,7 +72,20 @@
         "image": "dresscode-icon.png"
     },
     "gallery": {
-        "photos": []
+        "photos": [
+            {
+                "src": "1.jpeg",
+                "caption": "Mi Primera Comunión"
+            },
+            {
+                "src": "2.jpeg",
+                "caption": "El Sacramento"
+            },
+            {
+                "src": "3.jpeg",
+                "caption": "La Celebración"
+            }
+        ]
     },
     "gifts": {
         "enabled": false,
@@ -122,7 +135,7 @@
     "rsvp": {
         "mode": "mixed",
         "whatsappNumber": "524492868510",
-        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s) a la Primera Comunión de Erick Shady. 🎉",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s) a la Primera Comunión de Erik Shady. 🎉",
         "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
         "deadline": "Por favor confirma tu asistencia",
         "directMessage": {
@@ -130,7 +143,7 @@
         }
     },
     "footer": {
-        "name": "Erick Shady Bermejo",
+        "name": "Erik Shady Bermejo",
         "subtitle": "Primera Comunión y 10 Años • sábado, 27 de junio"
     }
 }

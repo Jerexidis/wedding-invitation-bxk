@@ -212,8 +212,8 @@ const Hero = ({ data, basePath }) => {
                     {isCommunion ? <CommunionCross size="large" /> : <LotusDecor size="large" />}
                 </div>
 
-                <p className={`text-sm md:text-base uppercase tracking-[0.4em] font-light ${
-                    isCommunion ? 'text-[#E8D5A3]' : 'text-inv-firefly'
+                <p className={`text-sm md:text-base uppercase tracking-[0.4em] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${
+                    isCommunion ? 'text-[#F4E1B3]' : 'text-inv-firefly'
                 }`}>
                     {data.subtitle}
                 </p>
