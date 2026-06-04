@@ -14,7 +14,7 @@ export const ogData = {
     'kassandra-brian': {
         title: 'Invitación de Kassandra & Brian 💕',
         description: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',
-        image: '/invitations/kassandra-brian/img/og-preview.jpg',
+        image: '/invitations/kassandra-brian/img/Portada.jpeg',
     },
     'atziri-belen': {
         title: 'Mis XV Años — Atziri Belén ✨',
