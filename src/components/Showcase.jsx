@@ -1,158 +1,238 @@
 import { Link } from 'react-router-dom'
 import activeInvitations from '../invitations/registry'
 import { ogData } from '../../og-data'
-import { Eye, Heart, Sparkles, MessageCircle, Calendar } from 'lucide-react'
+import { ArrowUpRight, Calendar, Eye, Heart, MessageCircle, Sparkles } from 'lucide-react'
 
-// Helper to get friendly event labels and colors
 const getEventMeta = (eventType) => {
     switch (eventType?.toLowerCase()) {
         case 'boda':
             return {
                 label: 'Boda',
-                bg: 'bg-emerald-50 text-emerald-700 border-emerald-100',
-                icon: <Heart size={14} className="text-emerald-600" />
+                chip: 'bg-[#F6EFEA] text-[#1F1F1F] border-[#E9DED6]',
+                accent: 'from-[#D98982] to-[#E9C7B7]',
+                icon: <Heart size={14} />,
             }
         case 'xv':
             return {
                 label: 'XV Años',
-                bg: 'bg-purple-50 text-purple-700 border-purple-100',
-                icon: <Sparkles size={14} className="text-purple-600" />
+                chip: 'bg-[#FBE9EF] text-[#9B4660] border-[#F1CAD4]',
+                accent: 'from-[#D96A86] to-[#E6A0AF]',
+                icon: <Sparkles size={14} />,
             }
         case 'primera-comunion':
             return {
                 label: 'Primera Comunión',
-                bg: 'bg-amber-50 text-amber-700 border-amber-100',
-                icon: <Calendar size={14} className="text-amber-600" />
-            }
-        case 'bautizo':
-            return {
-                label: 'Bautizo',
-                bg: 'bg-sky-50 text-sky-700 border-sky-100',
-                icon: <Sparkles size={14} className="text-sky-600" />
-            }
-        case 'cumple':
-            return {
-                label: 'Cumpleaños',
-                bg: 'bg-rose-50 text-rose-700 border-rose-100',
-                icon: <Sparkles size={14} className="text-rose-600" />
+                chip: 'bg-[#F6EFEA] text-[#8B6B52] border-[#E9DED6]',
+                accent: 'from-[#C9A38B] to-[#E9C7B7]',
+                icon: <Calendar size={14} />,
             }
         case 'despedida':
             return {
                 label: 'Despedida',
-                bg: 'bg-pink-50 text-pink-700 border-pink-100',
-                icon: <Heart size={14} className="text-pink-600" />
+                chip: 'bg-[#FBE9EF] text-[#A33D61] border-[#F1CAD4]',
+                accent: 'from-[#D96A86] to-[#C9A38B]',
+                icon: <Heart size={14} />,
             }
         default:
             return {
-                label: 'Celebración',
-                bg: 'bg-slate-50 text-slate-700 border-slate-100',
-                icon: <Sparkles size={14} className="text-slate-600" />
+                label: 'Evento',
+                chip: 'bg-[#F6EFEA] text-[#1F1F1F] border-[#E9DED6]',
+                accent: 'from-[#D98982] to-[#E9C7B7]',
+                icon: <Sparkles size={14} />,
             }
     }
 }
 
-export default function Showcase() {
-    return (
-        <div className="min-h-screen bg-gradient-to-b from-[#FAF8F5] via-white to-[#F5EFE6] text-slate-800 font-sans selection:bg-amber-200/50">
-            {/* Header / Hero */}
-            <header className="relative py-20 px-6 text-center max-w-4xl mx-auto overflow-hidden">
-                <div className="absolute inset-0 pointer-events-none opacity-[0.03] select-none">
-                    <svg width="100%" height="100%">
-                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" />
-                        </pattern>
-                        <rect width="100%" height="100%" fill="url(#grid)" />
-                    </svg>
-                </div>
+const formatEventDate = (date) => {
+    if (!date) return 'Evento finalizado'
+    return new Intl.DateTimeFormat('es-MX', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    }).format(new Date(date))
+}
 
-                <div className="relative z-10 animate-fade-in space-y-4">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-100/60 text-amber-800 text-xs font-semibold uppercase tracking-wider mb-2">
-                        ✨ Invitaciones Digitales Premium
+export default function Showcase() {
+    const expiredInvitations = activeInvitations.filter((inv) => {
+        if (!inv.eventDate) return false
+        return new Date(inv.eventDate) < new Date()
+    })
+
+    return (
+        <div className="min-h-screen bg-[#FBFAF8] text-[#1F1F1F] font-sans selection:bg-[#E7A2B1]/30">
+            <header className="relative overflow-hidden border-b border-[#EFE8E2] bg-[#FBFAF8]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_16%,rgba(217,106,134,0.12),transparent_30%),radial-gradient(circle_at_12%_75%,rgba(201,163,139,0.13),transparent_28%)]" />
+                <div className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-7 pb-14 md:pb-20">
+                    <nav className="flex items-center justify-center mb-14 md:mb-16">
+                        <div className="inline-flex items-center gap-3">
+                            <Heart size={14} className="text-[#E996A1]" fill="currentColor" />
+                            <p className="text-2xl font-black tracking-tight">
+                                INVITA<span className="text-[#D98982]">-YA.</span>
+                            </p>
+                        </div>
+                    </nav>
+
+                    <div className="grid lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-14 items-end">
+                        <div className="max-w-3xl">
+                            <div className="inline-flex items-center gap-2 rounded-full bg-[#F1ECE7] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#D6537A]">
+                                <Sparkles size={14} fill="currentColor" />
+                                La tendencia de 2026
+                            </div>
+                            <h1 className="mt-7 text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-[-0.02em]">
+                                Invitaciones que se sienten <span className="text-[#D96A86]">inolvidables.</span>
+                            </h1>
+                            <p className="mt-7 max-w-2xl text-base sm:text-xl leading-8 text-[#7B7F86]">
+                                Explora ejemplos reales de invitaciones digitales hermosas, con música, galería y confirmación automática.
+                            </p>
+                            <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                                <a
+                                    href="#ejemplos"
+                                    className="inline-flex items-center gap-3 rounded-full border-2 border-[#1F1F1F] bg-white px-7 py-4 text-sm font-bold text-[#1F1F1F] transition hover:bg-[#1F1F1F] hover:text-white"
+                                >
+                                    Ver ejemplos
+                                    <ArrowUpRight size={17} />
+                                </a>
+                                <div className="flex items-center gap-4 text-xs text-[#7B7F86]">
+                                    <span className="inline-flex items-center gap-2"><span className="text-[#1FB66B]">✓</span> Eventos finalizados</span>
+                                    <span className="text-[#C9A38B]">•</span>
+                                    <span className="inline-flex items-center gap-2"><span className="text-[#1FB66B]">✓</span> Demos reales</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {expiredInvitations[0] && (() => {
+                            const featured = expiredInvitations[0]
+                            const meta = ogData[featured.slug] || {}
+                            const coverImg = meta.image || `/invitations/${featured.slug}/img/hero.png`
+                            const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉/g, '').trim() || featured.title
+
+                            return (
+                                <Link
+                                    to={`/i/${featured.slug}`}
+                                    className="group hidden lg:block rounded-lg border border-[#EFE8E2] bg-white p-3 shadow-[0_28px_80px_rgba(31,31,31,0.10)] transition hover:-translate-y-1 hover:border-[#E0C9C4]"
+                                >
+                                    <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-[#F6EFEA]">
+                                        <img
+                                            src={coverImg}
+                                            alt={title}
+                                            className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1F1F]/76 via-[#1F1F1F]/10 to-transparent" />
+                                        <div className="absolute inset-x-0 bottom-0 p-5">
+                                            <p className="text-xs uppercase tracking-[0.18em] text-white/70">Ejemplo destacado</p>
+                                            <h2 className="mt-2 text-3xl font-black leading-tight tracking-[-0.01em] text-white">{title}</h2>
+                                            <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#1F1F1F]">
+                                                Abrir demo <ArrowUpRight size={15} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        })()}
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold tracking-tight text-slate-900 leading-tight">
-                        Colección de <span className="bg-gradient-to-r from-amber-600 to-amber-800 bg-clip-text text-transparent">Invitaciones</span>
-                    </h1>
-                    <p className="text-base md:text-lg text-slate-500 max-w-xl mx-auto font-light leading-relaxed">
-                        Explora nuestros diseños interactivos creados a medida con confirmación RSVP en tiempo real, música de fondo y galerías de fotos.
-                    </p>
                 </div>
             </header>
 
-            {/* Showcase Grid */}
-            <main className="max-w-6xl mx-auto px-6 pb-28">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {activeInvitations.filter(inv => {
-                        if (inv.eventDate) {
-                            return new Date(inv.eventDate) < new Date()
-                        }
-                        return false
-                    }).map((inv) => {
-                        const meta = ogData[inv.slug] || {}
-                        const eventMeta = getEventMeta(inv.eventType)
-                        const coverImg = meta.image || `/invitations/${inv.slug}/img/hero.png`
-
-                        return (
-                            <article 
-                                key={inv.slug} 
-                                className="group bg-white/80 backdrop-blur-md border border-slate-100 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden"
-                            >
-                                {/* Cover Image Container */}
-                                <div className="relative h-48 overflow-hidden bg-slate-50 border-b border-slate-50">
-                                    <img 
-                                        src={coverImg} 
-                                        alt={meta.title || inv.title} 
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                                        loading="lazy"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent" />
-                                    
-                                    {/* Event Badge */}
-                                    <span className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-medium backdrop-blur-sm ${eventMeta.bg}`}>
-                                        {eventMeta.icon}
-                                        {eventMeta.label}
-                                    </span>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                                    <div className="space-y-2">
-                                        <h2 className="text-xl font-semibold text-slate-900 group-hover:text-amber-700 transition-colors line-clamp-1">
-                                            {meta.title?.replace(/🕊️|💕|✨|🐸/g, '').trim() || inv.title}
-                                        </h2>
-                                        <p className="text-sm text-slate-500 font-light line-clamp-2 leading-relaxed">
-                                            {meta.description || 'Toca para abrir la invitación y confirmar tu asistencia en el evento especial.'}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex items-center justify-between pt-2">
-                                        <Link 
-                                            to={`/i/${inv.slug}`} 
-                                            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-700 group-hover:text-amber-800 transition-colors"
-                                        >
-                                            <Eye size={14} /> Ver Demo
-                                        </Link>
-                                        
-                                        {(inv.rsvpMode === 'supabase' || inv.rsvpMode === 'mixed') && (
-                                            <Link 
-                                                to={`/i/${inv.slug}/rsvp`} 
-                                                className="inline-flex items-center gap-1.5 text-[0.7rem] font-medium text-slate-400 hover:text-slate-600 transition-colors"
-                                            >
-                                                <MessageCircle size={12} /> RSVPs
-                                            </Link>
-                                        )}
-                                    </div>
-                                </div>
-                            </article>
-                        )
-                    })}
+            <main id="ejemplos" className="relative max-w-7xl mx-auto px-5 sm:px-8 py-10 md:py-14">
+                <div className="mb-8 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                    <div>
+                        <div className="inline-flex items-center gap-2 rounded-full bg-[#F1ECE7] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#9B4660]">
+                            <Sparkles size={13} />
+                            Archivo visual
+                        </div>
+                        <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-[-0.01em]">
+                            Invitaciones publicadas
+                        </h2>
+                    </div>
+                    <p className="max-w-md text-sm leading-6 text-[#7B7F86]">
+                        Solo mostramos invitaciones cuya fecha ya expiró, como portafolio de experiencias terminadas.
+                    </p>
                 </div>
+
+                {expiredInvitations.length === 0 ? (
+                    <div className="rounded-lg border border-[#EFE8E2] bg-white p-10 text-center shadow-sm">
+                        <p className="text-lg font-medium">Aún no hay invitaciones expiradas para mostrar.</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                        {expiredInvitations.map((inv, index) => {
+                            const meta = ogData[inv.slug] || {}
+                            const eventMeta = getEventMeta(inv.eventType)
+                            const coverImg = meta.image || `/invitations/${inv.slug}/img/hero.png`
+                            const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉/g, '').trim() || inv.title
+
+                            return (
+                                <article
+                                    key={inv.slug}
+                                    className={`group relative overflow-hidden rounded-lg border border-[#EFE8E2] bg-white shadow-[0_18px_50px_rgba(31,31,31,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#E0C9C4] ${index === 0 ? 'md:col-span-2 xl:col-span-1' : ''}`}
+                                >
+                                    <div className="relative aspect-[4/3] overflow-hidden bg-[#F6EFEA]">
+                                        <img
+                                            src={coverImg}
+                                            alt={title}
+                                            className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1F1F]/70 via-[#1F1F1F]/12 to-transparent" />
+                                        <div className={`absolute left-0 right-0 bottom-0 h-1 bg-gradient-to-r ${eventMeta.accent}`} />
+                                        <span className={`absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm ${eventMeta.chip}`}>
+                                            {eventMeta.icon}
+                                            {eventMeta.label}
+                                        </span>
+                                    </div>
+
+                                    <div className="p-5">
+                                        <div className="mb-4 flex items-center justify-between gap-4 text-xs text-[#7B7F86]">
+                                            <span className="inline-flex items-center gap-2">
+                                                <Calendar size={14} />
+                                                {formatEventDate(inv.eventDate)}
+                                            </span>
+                                            <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#B7A7A0]">
+                                                {inv.slug}
+                                            </span>
+                                        </div>
+
+                                        <h2 className="text-2xl font-black leading-tight tracking-[-0.01em] text-[#1F1F1F]">
+                                            {title}
+                                        </h2>
+                                        <p className="mt-3 min-h-[3rem] text-sm leading-6 text-[#7B7F86] line-clamp-2">
+                                            {meta.description || 'Invitación digital personalizada para evento especial.'}
+                                        </p>
+
+                                        <div className="mt-6 flex items-center justify-between gap-3">
+                                            <Link
+                                                to={`/i/${inv.slug}`}
+                                                className="inline-flex items-center gap-2 rounded-full bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#D96A86]"
+                                            >
+                                                <Eye size={16} />
+                                                Ver invitación
+                                            </Link>
+
+                                            {(inv.rsvpMode === 'supabase' || inv.rsvpMode === 'mixed') && (
+                                                <Link
+                                                    to={`/i/${inv.slug}/rsvp`}
+                                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#EFE8E2] bg-[#FBFAF8] text-[#7B7F86] transition hover:border-[#D96A86] hover:text-[#D96A86]"
+                                                    title="RSVP"
+                                                >
+                                                    <MessageCircle size={16} />
+                                                </Link>
+                                            )}
+
+                                            <ArrowUpRight size={18} className="ml-auto text-[#C9A38B] transition group-hover:text-[#D96A86]" />
+                                        </div>
+                                    </div>
+                                </article>
+                            )
+                        })}
+                    </div>
+                )}
             </main>
 
-            {/* Minimal Footer */}
-            <footer className="border-t border-slate-100 py-10 text-center bg-white/40">
-                <p className="text-xs text-slate-400">
-                    &copy; 2026 Invita-Ya. Todos los derechos reservados.
-                </p>
+            <footer className="border-t border-[#EFE8E2] px-5 py-8 text-center text-xs text-[#9A8F8A]">
+                Invita-Ya · Invitaciones digitales interactivas
             </footer>
         </div>
     )
