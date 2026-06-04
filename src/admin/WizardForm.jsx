@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { ChevronLeft, Plus, Loader2, Check, ArrowRight, ArrowLeft, Palette, Trash2, Image } from 'lucide-react'
+import { useState, useMemo, useEffect } from 'react'
+import { ChevronLeft, Plus, Loader2, Check, ArrowRight, ArrowLeft, Palette, Trash2, Image, Upload } from 'lucide-react'
 import { generatePalette, DISPLAY_FONTS, BODY_FONTS, DEFAULT_THEME } from '../utils/themeEngine'
 
 const API = '/api/invitations'
@@ -13,6 +13,21 @@ const hslColor = (h, s, l) => `hsl(${h}, ${s}%, ${l}%)`
 export default function WizardForm({ onBack, showToast }) {
     const [step, setStep] = useState(0)
     const [creating, setCreating] = useState(false)
+
+    // Load all Google Fonts on mount for display inside select options and preview
+    useEffect(() => {
+        const allFonts = [...DISPLAY_FONTS, ...BODY_FONTS]
+        const families = allFonts.map(f => `family=${f.replace(/\s+/g, '+')}`).join('&')
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = `https://fonts.googleapis.com/css2?${families}&display=swap`
+        document.head.appendChild(link)
+        return () => {
+            if (document.head.contains(link)) {
+                document.head.removeChild(link)
+            }
+        }
+    }, [])
     const [form, setForm] = useState({
         eventType: 'xv', slug: '', title: '', name: '', date: '', time: '19:00',
         parent1: '', parent2: '', parentLabel1: '', parentLabel2: '',
@@ -62,7 +77,7 @@ export default function WizardForm({ onBack, showToast }) {
                 { icon: 'party', title: 'Recepción', location: form.receptionName, address: form.receptionAddress, time: form.receptionTime, mapLink: form.receptionMap },
             ],
             dressCode: { enabled: form.dressCodeEnabled, type: form.dressCode, image: 'dresscode-icon.png' },
-            gallery: { photos: form.galleryPhotos.filter(p => p.src.trim()) },
+            gallery: { photos: form.galleryPhotos.filter(p => p.src.trim()).map(p => ({ src: p.src, caption: p.caption })) },
             gifts: { enabled: form.giftsEnabled, title: 'Mesa de Regalos', message: form.giftsMessage, type: form.giftsType, envelopeText: 'Lluvia de Sobres', envelopeDescription: 'Tradición de regalar efectivo en sobres.', link: form.giftsLink, linkText: form.giftsLinkText },
             itinerary: { enabled: false, items: [] },
             rsvp: { mode: form.rsvpMode, whatsappNumber: form.whatsappNumber, whatsappConfirmMessage: '¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉', whatsappDeclineMessage: 'Hola! Soy {name}. Lamentablemente no podré asistir.', deadline: 'Por favor confirma tu asistencia', directMessage: { enabled: false } },
@@ -74,7 +89,15 @@ export default function WizardForm({ onBack, showToast }) {
         setCreating(true)
         try {
             const config = buildConfig()
-            const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: form.slug, title: form.title, config }) })
+            const photosToUpload = form.galleryPhotos
+                .filter(p => p.src.trim() && p.fileData)
+                .map(p => ({ name: p.src, data: p.fileData }))
+
+            const res = await fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ slug: form.slug, title: form.title, config, photos: photosToUpload })
+            })
             const json = await res.json()
             if (json.ok) { showToast(`Invitación creada — ${json.path}`); onBack() }
             else showToast(json.error, 'error')
@@ -193,19 +216,58 @@ export default function WizardForm({ onBack, showToast }) {
 
                         {step === 4 && <>
                             <div className="section-divider"><span>Fotos de la galería</span></div>
-                            <p className="form-hint" style={{ marginBottom: 16 }}>Agrega los nombres de archivo de las fotos que estarán en la carpeta <code>/img/</code> de la invitación. Ejemplo: <code>img1.jpg</code></p>
+                            <p className="form-hint" style={{ marginBottom: 16 }}>Selecciona y carga las fotos para la galería. Se guardarán automáticamente en la carpeta de la invitación al crearla.</p>
                             {form.galleryPhotos.map((photo, idx) => (
-                                <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
-                                    <input value={photo.src} onChange={e => { const next = [...form.galleryPhotos]; next[idx] = { ...next[idx], src: e.target.value }; update('galleryPhotos', next) }} placeholder="foto1.jpg" className="form-input" style={{ flex: 1 }} />
-                                    <input value={photo.caption} onChange={e => { const next = [...form.galleryPhotos]; next[idx] = { ...next[idx], caption: e.target.value }; update('galleryPhotos', next) }} placeholder="Caption" className="form-input" style={{ flex: 1 }} />
-                                    <button onClick={() => { const next = form.galleryPhotos.filter((_, i) => i !== idx); update('galleryPhotos', next) }} className="btn-icon" style={{ flexShrink: 0 }}><Trash2 size={16} style={{ color: '#c5221f' }} /></button>
+                                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16, padding: 12, border: '1px solid #e8eaed', borderRadius: 12, background: '#f8f9fa' }}>
+                                    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                        {photo.fileData ? (
+                                            <img src={photo.fileData} alt="Preview" style={{ width: 40, height: 40, borderRadius: 6, objectFit: 'cover', border: '1px solid #dadce0' }} />
+                                        ) : (
+                                            <div style={{ width: 40, height: 40, borderRadius: 6, background: '#e8eaed', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5f6368' }}><Image size={18} /></div>
+                                        )}
+                                        <input value={photo.src} onChange={e => { const next = [...form.galleryPhotos]; next[idx] = { ...next[idx], src: e.target.value }; update('galleryPhotos', next) }} placeholder="nombre_archivo.jpg" className="form-input" style={{ flex: 1 }} />
+                                        <input value={photo.caption} onChange={e => { const next = [...form.galleryPhotos]; next[idx] = { ...next[idx], caption: e.target.value }; update('galleryPhotos', next) }} placeholder="Título / Leyenda" className="form-input" style={{ flex: 1 }} />
+                                        <button onClick={() => { const next = form.galleryPhotos.filter((_, i) => i !== idx); update('galleryPhotos', next) }} className="btn-icon" style={{ flexShrink: 0 }}><Trash2 size={16} style={{ color: '#c5221f' }} /></button>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: 10, alignItems: 'center', paddingLeft: 48 }}>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            id={`file-upload-${idx}`}
+                                            style={{ display: 'none' }}
+                                            onChange={e => {
+                                                const file = e.target.files[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = (event) => {
+                                                        const next = [...form.galleryPhotos];
+                                                        next[idx] = {
+                                                            ...next[idx],
+                                                            src: file.name,
+                                                            fileData: event.target.result
+                                                        };
+                                                        update('galleryPhotos', next);
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            }}
+                                        />
+                                        <label htmlFor={`file-upload-${idx}`} className="btn btn-secondary" style={{ fontSize: 11, padding: '4px 10px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                            <Upload size={12} /> Cargar foto
+                                        </label>
+                                        {photo.fileData && (
+                                            <span style={{ fontSize: 11, color: '#5f6368' }}>
+                                                Listo ({Math.round((photo.fileData.length * 3) / 4 / 1024)} KB)
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             ))}
-                            <button onClick={() => update('galleryPhotos', [...form.galleryPhotos, { src: '', caption: '' }])} className="btn btn-secondary" style={{ marginTop: 8 }}><Plus size={14} /> Agregar foto</button>
+                            <button onClick={() => update('galleryPhotos', [...form.galleryPhotos, { src: '', caption: '', fileData: null }])} className="btn btn-secondary" style={{ marginTop: 8 }}><Plus size={14} /> Agregar foto</button>
                             {form.galleryPhotos.length === 0 && (
                                 <div style={{ textAlign: 'center', padding: '24px 0', color: '#9aa0a6' }}>
                                     <Image size={32} style={{ margin: '0 auto 8px', opacity: 0.5 }} />
-                                    <p style={{ fontSize: 13 }}>Sin fotos. Puedes agregarlas después en la configuración.</p>
+                                    <p style={{ fontSize: 13 }}>Sin fotos. Agrega y selecciona las imágenes para subirlas.</p>
                                 </div>
                             )}
                         </>}
@@ -241,15 +303,24 @@ export default function WizardForm({ onBack, showToast }) {
                             <div className="form-row">
                                 <div className="form-group">
                                     <label className="form-label">Fuente títulos</label>
-                                    <select value={form.fontDisplay} onChange={e => update('fontDisplay', e.target.value)} className="form-input">
-                                        {DISPLAY_FONTS.map(f => <option key={f} value={f}>{f}</option>)}
+                                    <select value={form.fontDisplay} onChange={e => update('fontDisplay', e.target.value)} className="form-input" style={{ fontFamily: `'${form.fontDisplay}', cursive` }}>
+                                        {DISPLAY_FONTS.map(f => <option key={f} value={f} style={{ fontFamily: `'${f}', cursive` }}>{f}</option>)}
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label className="form-label">Fuente cuerpo</label>
-                                    <select value={form.fontBody} onChange={e => update('fontBody', e.target.value)} className="form-input">
-                                        {BODY_FONTS.map(f => <option key={f} value={f}>{f}</option>)}
+                                    <select value={form.fontBody} onChange={e => update('fontBody', e.target.value)} className="form-input" style={{ fontFamily: `'${form.fontBody}', sans-serif` }}>
+                                        {BODY_FONTS.map(f => <option key={f} value={f} style={{ fontFamily: `'${f}', sans-serif` }}>{f}</option>)}
                                     </select>
+                                </div>
+                            </div>
+                            <div style={{ marginTop: 16, padding: 16, background: '#ffffff', borderRadius: 12, border: '1px solid #e8eaed', textAlign: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                                <p style={{ fontSize: 10, color: '#9aa0a6', textTransform: 'uppercase', tracking: '0.1em', marginBottom: 8, fontWeight: 600 }}>Vista previa de fuentes combinadas</p>
+                                <div style={{ fontFamily: `'${form.fontDisplay}', cursive`, fontSize: 32, color: hslColor(form.primaryHue, form.primarySat, 24), marginBottom: 4 }}>
+                                    {form.name || 'Festejado(a)'}
+                                </div>
+                                <div style={{ fontFamily: `'${form.fontBody}', sans-serif`, fontSize: 14, color: '#3c4043', lineHeight: 1.6 }}>
+                                    Te invitamos a celebrar con nosotros este día tan especial.
                                 </div>
                             </div>
                         </>}

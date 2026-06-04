@@ -252,6 +252,20 @@ function createInvitation(data) {
         'utf-8'
     )
 
+    // Write uploaded photos if any
+    if (data.photos && Array.isArray(data.photos)) {
+        for (const photo of data.photos) {
+            if (photo.name && photo.data) {
+                const base64Data = photo.data.split(';base64,').pop()
+                fs.writeFileSync(
+                    path.join(imgDir, photo.name),
+                    base64Data,
+                    'base64'
+                )
+            }
+        }
+    }
+
     // 5. Generate thin index.jsx (uses shared DynamicInvitation)
     const indexContent = [
         "import config from './config.json'",
