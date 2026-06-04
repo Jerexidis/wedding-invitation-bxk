@@ -324,11 +324,22 @@ function deleteInvitation(slug) {
 function updateRegistry(slug, title) {
     let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
 
+    // Read config to get targetDate
+    let targetDate = null
+    try {
+        const configPath = path.join(INVITATIONS_SRC, slug, 'config.json')
+        if (fs.existsSync(configPath)) {
+            const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+            targetDate = config.countdown?.targetDate
+        }
+    } catch(e) {}
+
+    const dateLine = targetDate ? `\n        eventDate: '${targetDate}',` : ''
     const newEntry = `    {
         slug: '${slug}',
         title: '${title}',
         component: lazy(() => import('./${slug}/index.jsx')),
-        enabled: true,
+        enabled: true,${dateLine}
     },`
 
     const arrayEndIndex = content.indexOf('\n]')

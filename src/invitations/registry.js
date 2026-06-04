@@ -16,14 +16,16 @@ const invitations = [
         slug: 'kassandra-brian',
         title: 'Nuestra Boda | Kassandra & Brian',
         component: lazy(() => import('./kassandra-brian/index.jsx')),
-        isDefault: true,
         enabled: true,
+        eventDate: '2026-05-30T16:00:00',
     },
     {
         slug: 'melani-marisol',
         title: 'XV Años | Melani Marisol',
         component: lazy(() => import('./melani-marisol/index.jsx')),
         enabled: true,
+        isDemo: true,
+        eventDate: '2026-05-02T19:00:00',
     },
 
     {
@@ -31,6 +33,7 @@ const invitations = [
         title: 'Celebración | despedida-kass-brian',
         component: lazy(() => import('./despedida-kass-brian/index.jsx')),
         enabled: true,
+        eventDate: '2026-05-16T19:00:00',
     },
 
     {
@@ -38,18 +41,21 @@ const invitations = [
         title: 'Celebración | Isabella',
         component: lazy(() => import('./isabella/index.jsx')),
         enabled: true,
+        eventDate: '2026-06-27T13:00:00',
     },
     {
         slug: 'erick-shady-bermejo',
         title: 'Primera Comunión y 10 Años | Erick Shady Bermejo',
         component: lazy(() => import('./erick-shady-bermejo/index.jsx')),
         enabled: true,
+        eventDate: '2026-06-27T12:00:00',
     },
     {
         slug: 'alexa-y-santiago',
         title: 'Celebración | Alexa y Santiago',
         component: lazy(() => import('./alexa-y-santiago/index.jsx')),
         enabled: true,
+        eventDate: '2026-06-27T13:00:00',
     },
 
     {
@@ -57,6 +63,7 @@ const invitations = [
         title: 'XV Años | Victoria Rojas',
         component: lazy(() => import('./victoria-rojas/index.jsx')),
         enabled: true,
+        eventDate: '2026-07-25T12:00:00',
     },
 
 ]

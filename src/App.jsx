@@ -3,6 +3,7 @@ import { Routes, Route, useParams } from 'react-router-dom'
 import { getDefaultInvitation, getInvitationBySlug } from './invitations/registry'
 
 const RsvpDashboard = lazy(() => import('./components/RsvpDashboard'))
+const Showcase = lazy(() => import('./components/Showcase'))
 
 // Admin panel solo disponible en dev (el archivo no existe en producción)
 let AdminPanel = null
@@ -83,7 +84,7 @@ function App() {
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-slate-400 text-lg">Cargando...</div></div>}>
             <Routes>
-                <Route path="/" element={<DefaultInvitation />} />
+                <Route path="/" element={<Showcase />} />
                 <Route path="/i/:slug" element={<InvitationBySlug />} />
                 <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
                 {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
