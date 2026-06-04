@@ -75,15 +75,15 @@
         "photos": [
             {
                 "src": "1.jpeg",
-                "caption": "Mi Primera Comunión"
-            },
-            {
-                "src": "2.jpeg",
-                "caption": "El Sacramento"
+                "caption": "“Creciendo con fe y amor"
             },
             {
                 "src": "3.jpeg",
-                "caption": "La Celebración"
+                "caption": "Todo comenzó con una pequeña sonrisa"
+            },
+            {
+                "src": "2.jpeg",
+                "caption": "Hoy celebro 10 años de momentos inolvidables"
             }
         ]
     },
