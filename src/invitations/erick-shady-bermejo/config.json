@@ -120,8 +120,8 @@
         ]
     },
     "rsvp": {
-        "mode": "supabase",
-        "whatsappNumber": "",
+        "mode": "mixed",
+        "whatsappNumber": "524492868510",
         "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s) a la Primera Comunión de Erick Shady. 🎉",
         "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
         "deadline": "Por favor confirma tu asistencia",

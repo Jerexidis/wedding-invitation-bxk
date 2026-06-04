@@ -22,27 +22,54 @@ const RSVP = ({ data, slug, basePath }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const buildWhatsAppUrl = () => {
+        let message = data.whatsappConfirmMessage
+            .replace('{name}', formData.name)
+            .replace('{guests}', formData.guests);
+        
+        if (formData.message?.trim()) {
+            message += `\n\nMensaje: "${formData.message.trim()}"`;
+        }
+        return `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(message)}`;
+    };
+
+    const saveToDatabase = async () => {
+        const { addConfirmation } = await import('../../utils/rsvpStore');
+        await addConfirmation(slug, {
+            name: formData.name,
+            guests: parseInt(formData.guests),
+            message: formData.message,
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (data.mode === 'whatsapp') {
-            const message = data.whatsappConfirmMessage
-                .replace('{name}', formData.name)
-                .replace('{guests}', formData.guests);
-            window.location.href = `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.location.href = buildWhatsAppUrl();
         } else if (data.mode === 'supabase') {
             setSubmitting(true);
             try {
-                const { addConfirmation } = await import('../../utils/rsvpStore');
-                await addConfirmation(slug, {
-                    name: formData.name,
-                    guests: parseInt(formData.guests),
-                    message: formData.message,
-                });
+                await saveToDatabase();
                 setSubmitted(true);
             } catch (err) {
                 console.error('Error submitting RSVP:', err);
                 alert('Hubo un error al enviar tu confirmación. Inténtalo de nuevo.');
+            } finally {
+                setSubmitting(false);
+            }
+        } else if (data.mode === 'mixed') {
+            setSubmitting(true);
+            try {
+                await saveToDatabase();
+                setSubmitted(true);
+                setTimeout(() => {
+                    window.open(buildWhatsAppUrl(), '_blank');
+                }, 800);
+            } catch (err) {
+                console.error('Error submitting RSVP:', err);
+                window.open(buildWhatsAppUrl(), '_blank');
+                setSubmitted(true);
             } finally {
                 setSubmitting(false);
             }
@@ -90,12 +117,12 @@ const RSVP = ({ data, slug, basePath }) => {
                         <input type="number" name="guests" min="1" max="10" placeholder="N° de Personas" value={formData.guests} onChange={handleInputChange} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all shadow-sm" />
                     </div>
 
-                    {data.mode === 'supabase' && (
+                    {(data.mode === 'supabase' || data.mode === 'mixed') && (
                         <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
                     )}
 
                     <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">
-                        {submitting ? 'Enviando...' : data.mode === 'whatsapp' ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
+                        {submitting ? 'Enviando...' : (data.mode === 'whatsapp' || data.mode === 'mixed') ? (<>Confirmar por WhatsApp <WhatsAppIcon /></>) : (<>Confirmar Asistencia <Send size={18} /></>)}
                     </button>
                 </form>
 

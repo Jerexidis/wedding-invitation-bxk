@@ -57,7 +57,7 @@ const invitations = [
         component: lazy(() => import('./erick-shady-bermejo/index.jsx')),
         enabled: true,
         eventType: 'primera-comunion',
-        rsvpMode: 'supabase',
+        rsvpMode: 'mixed',
         eventDate: '2026-06-27T12:00:00',
     },
     {
