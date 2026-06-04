@@ -20,7 +20,9 @@ const Itinerary = ({ data, basePath }) => {
                     }} />
                 ))}
             </div>
-            <img src={`${basePath}/img/tiana-sketch.png`} alt="" className="absolute bottom-10 -left-10 w-64 md:w-80 opacity-70 pointer-events-none select-none drop-shadow-2xl" style={{ transform: 'scaleX(-1)' }} />
+            {data.decorationImage && (
+                <img src={`${basePath}/img/${data.decorationImage}`} alt="" className="absolute bottom-10 -left-10 w-64 md:w-80 opacity-70 pointer-events-none select-none drop-shadow-2xl" style={{ transform: 'scaleX(-1)' }} />
+            )}
 
             <div className="max-w-md mx-auto relative z-10">
                 <p className="text-inv-firefly/70 text-sm uppercase tracking-[0.3em] mb-2">Programa del evento</p>
