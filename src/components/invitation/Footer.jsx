@@ -1,4 +1,4 @@
-const Footer = ({ data, basePath }) => {
+const Footer = ({ data = {}, basePath }) => {
     return (
         <footer className="relative py-12 bg-inv-cream text-center border-t border-inv-lily/30 overflow-hidden">
             <div className="max-w-md mx-auto px-6 relative z-10">

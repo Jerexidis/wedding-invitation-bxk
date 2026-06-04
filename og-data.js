@@ -36,6 +36,11 @@ export const ogData = {
         description: 'Te invito a celebrar mi Primera Comunión. ¡Toca aquí para confirmar tu asistencia!',
         image: '/invitations/isabella/img/og-preview.jpg',
     },
+    'erick-shady-bermejo': {
+        title: 'Primera Comunión | Erick Shady Bermejo 🕊️',
+        description: 'Te invito a celebrar mi Primera Comunión y 10 Años. ¡Toca aquí para confirmar tu asistencia!',
+        image: '/invitations/erick-shady-bermejo/img/og-preview.png',
+    },
     'alexa-y-santiago': {
         title: 'Primera Comunión | Alexa y Santiago 🕊️',
         description: 'Te invitamos a celebrar nuestra Primera Comunión. ¡Toca aquí para confirmar tu asistencia!',

@@ -40,6 +40,12 @@ const invitations = [
         enabled: true,
     },
     {
+        slug: 'erick-shady-bermejo',
+        title: 'Primera Comunión y 10 Años | Erick Shady Bermejo',
+        component: lazy(() => import('./erick-shady-bermejo/index.jsx')),
+        enabled: true,
+    },
+    {
         slug: 'alexa-y-santiago',
         title: 'Celebración | Alexa y Santiago',
         component: lazy(() => import('./alexa-y-santiago/index.jsx')),

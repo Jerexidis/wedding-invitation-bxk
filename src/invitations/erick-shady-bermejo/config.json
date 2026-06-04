@@ -1,0 +1,137 @@
+{
+    "slug": "erick-shady-bermejo",
+    "eventType": "primera-comunion",
+    "title": "Primera Comunión y 10 Años | Erick Shady Bermejo",
+    "theme": {
+        "primaryHue": 75,
+        "primarySat": 35,
+        "accentHue": 40,
+        "fontBody": "Poppins",
+        "fontDisplay": "Cormorant Garamond"
+    },
+    "hero": {
+        "subtitle": "Primera Comunión y 10 Años",
+        "name": "Erick Shady Bermejo",
+        "date": "SÁBADO, 27 DE JUNIO DE 2026",
+        "backgroundImage": "hero.png",
+        "song": "communion.mp3"
+    },
+    "seo": {
+        "shareImage": "og-preview.png"
+    },
+    "intro": {
+        "message": "Con la bendición de Dios y la guía del Espíritu Santo",
+        "label": "Mis Papás",
+        "parent1": "Erick Bermejo",
+        "parent2": "Cinthia Rosales",
+        "closingMessage": "Te invitan a celebrar conmigo el día que recibo a Jesús en mi corazón por primera vez y celebro mis 10 años."
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mi Padrino",
+        "subtitle": "Con el cariño y guía espiritual de",
+        "padrino1": "Manuel Hernández"
+    },
+    "countdown": {
+        "targetDate": "2026-06-27T12:00:00",
+        "displayDate": "sábado, 27 de junio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "Primera Comunión y 10 Años | Erick Shady Bermejo",
+        "description": "¡Celebra conmigo este día tan especial!",
+        "location": "Salón El Corral, Calle Cristóbal Colón 724, Fraccionamiento Cedros, Aguascalientes, Ags.",
+        "startDateTime": "20260627T120000",
+        "endDateTime": "20260627T235900",
+        "outlookStart": "2026-06-27T12:00:00",
+        "outlookEnd": "2026-06-27T23:59:00",
+        "icsFilename": "erick_shady.ics",
+        "icsProdId": "Primera Comunión | Erick Shady Bermejo"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Templo Soledad de María",
+            "address": "Casa Blanca y Michoacán, Fraccionamiento México, Aguascalientes, Ags.",
+            "time": "12:00",
+            "mapLink": "https://maps.google.com/?q=Templo+Soledad+de+Maria+Aguascalientes"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Salón El Corral",
+            "address": "Calle Cristóbal Colón 724, Fraccionamiento Cedros, Aguascalientes, Ags.",
+            "time": "16:00",
+            "mapLink": "https://maps.app.goo.gl/tbywfxqsg1sX9BqEA"
+        }
+    ],
+    "dressCode": {
+        "enabled": false,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": []
+    },
+    "gifts": {
+        "enabled": false,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Lluvia de Sobres",
+        "envelopeDescription": "Tradición de regalar efectivo en sobres.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": true,
+        "items": [
+            {
+                "time": "12:00 PM",
+                "event": "Ceremonia Religiosa",
+                "icon": "church",
+                "description": "Templo Soledad de María"
+            },
+            {
+                "time": "4:00 PM",
+                "event": "Recepción",
+                "icon": "party",
+                "description": "Salón El Corral"
+            },
+            {
+                "time": "5:00 PM",
+                "event": "Comida",
+                "icon": "food",
+                "description": "¡A disfrutar del banquete!"
+            },
+            {
+                "time": "8:00 PM",
+                "event": "Toro Mecánico",
+                "icon": "party",
+                "description": "¡Momento de diversión!"
+            },
+            {
+                "time": "9:00 PM",
+                "event": "Banda",
+                "icon": "music",
+                "description": "¡Música y baile!"
+            }
+        ]
+    },
+    "rsvp": {
+        "mode": "supabase",
+        "whatsappNumber": "",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s) a la Primera Comunión de Erick Shady. 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Erick Shady Bermejo",
+        "subtitle": "Primera Comunión y 10 Años • sábado, 27 de junio"
+    },
+    "rsvpKey": "erick10"
+}
