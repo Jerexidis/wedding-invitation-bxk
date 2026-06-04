@@ -20,7 +20,7 @@
         "message": "Con la bendición de Dios",
         "label": "Mis Papás",
         "parent1": "Teresita Jasso Rodríguez",
-        "parent2": "Victor Rojas Villalpando",
+        "parent2": "Victor Manuel Rojas Villalpando",
         "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años"
     },
     "padrinos": {
@@ -90,10 +90,6 @@
                 "caption": "👑 Un día para recordar siempre."
             },
             {
-                "src": "carrete_5.jpeg",
-                "caption": "La niña que fui, la mujer que seré."
-            },
-            {
                 "src": "carrete_6.jpeg",
                 "caption": "🩷 Quince primaveras de felicidad."
             }
@@ -126,6 +122,5 @@
     "footer": {
         "name": "Victoria Rojas",
         "subtitle": "XV Años • sábado, 25 de julio"
-    },
-    "rsvpKey": "a7lexf"
+    }
 }

@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
-import { exec } from 'child_process'
+import { execFile } from 'child_process'
 
 const INVITATIONS_SRC = path.resolve('src/invitations')
 const INVITATIONS_PUBLIC = path.resolve('public/invitations')
 const REGISTRY_PATH = path.resolve('src/invitations/registry.js')
 const OG_DATA_PATH = path.resolve('og-data.js')
-const BASE_TEMPLATE = path.resolve('src/invitations/melani-marisol')
+const RSVP_KEYS_PATH = path.resolve('plugins/rsvp-keys.json')
 
 /**
  * Vite plugin that adds admin API endpoints (dev mode only).
@@ -137,6 +137,7 @@ export default function devAdminPlugin() {
                             return
                         }
                         if (data.config) {
+                            delete data.config.rsvpKey
                             fs.writeFileSync(configPath, JSON.stringify(data.config, null, 4), 'utf-8')
                         }
                         res.setHeader('Content-Type', 'application/json')
@@ -171,6 +172,7 @@ export default function devAdminPlugin() {
 // ─── READ REGISTRY ──────────────────────────────────────────────
 function readRegistry() {
     const content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
+    const rsvpKeys = readRsvpKeys()
     const entries = []
     const regex = /\{\s*slug:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],/g
     let match
@@ -200,10 +202,32 @@ function readRegistry() {
             rsvpMode: config?.rsvp?.mode || null,
             eventType: config?.eventType || null,
             eventDate: config?.countdown?.targetDate || null,
-            rsvpKey: config?.rsvpKey || null,
+            rsvpKey: rsvpKeys[slug] || config?.rsvpKey || null,
         })
     }
     return entries
+}
+
+function readRsvpKeys() {
+    try {
+        if (!fs.existsSync(RSVP_KEYS_PATH)) return {}
+        return JSON.parse(fs.readFileSync(RSVP_KEYS_PATH, 'utf-8'))
+    } catch {
+        return {}
+    }
+}
+
+function writeRsvpKey(slug, key) {
+    const keys = readRsvpKeys()
+    keys[slug] = key
+    fs.writeFileSync(RSVP_KEYS_PATH, JSON.stringify(keys, null, 4), 'utf-8')
+}
+
+function removeRsvpKey(slug) {
+    const keys = readRsvpKeys()
+    if (!keys[slug]) return
+    delete keys[slug]
+    fs.writeFileSync(RSVP_KEYS_PATH, JSON.stringify(keys, null, 4), 'utf-8')
 }
 
 // ─── CREATE INVITATION ──────────────────────────────────────────
@@ -234,8 +258,8 @@ function createInvitation(data) {
 
     // 2. Auto-generate RSVP access key
     const rsvpKey = Math.random().toString(36).substring(2, 8)
-    config.rsvpKey = rsvpKey
     config.slug = slug
+    delete config.rsvpKey
 
     // 3. Write config.json
     fs.writeFileSync(
@@ -244,7 +268,8 @@ function createInvitation(data) {
         'utf-8'
     )
 
-    // 4. Write rsvp-access.json to public (hash only — clave cruda queda solo en config.json)
+    // 4. Write rsvp-access.json to public. The raw key stays in a dev-only plugin file.
+    writeRsvpKey(slug, rsvpKey)
     const rsvpKeyHash = crypto.createHash('sha256').update(rsvpKey).digest('hex')
     fs.writeFileSync(
         path.join(publicDir, 'rsvp-access.json'),
@@ -311,6 +336,7 @@ function deleteInvitation(slug) {
         fs.rmSync(publicDir, { recursive: true, force: true })
     }
     removeFromRegistry(slug)
+    removeRsvpKey(slug)
 
     // Limpiar og-data.js
     try {
@@ -324,22 +350,28 @@ function deleteInvitation(slug) {
 function updateRegistry(slug, title) {
     let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
 
-    // Read config to get targetDate
+    // Read config to keep showcase/admin metadata in sync.
     let targetDate = null
+    let eventType = null
+    let rsvpMode = null
     try {
         const configPath = path.join(INVITATIONS_SRC, slug, 'config.json')
         if (fs.existsSync(configPath)) {
             const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
             targetDate = config.countdown?.targetDate
+            eventType = config.eventType
+            rsvpMode = config.rsvp?.mode
         }
     } catch(e) {}
 
+    const eventTypeLine = eventType ? `\n        eventType: '${eventType}',` : ''
+    const rsvpModeLine = rsvpMode ? `\n        rsvpMode: '${rsvpMode}',` : ''
     const dateLine = targetDate ? `\n        eventDate: '${targetDate}',` : ''
     const newEntry = `    {
         slug: '${slug}',
         title: '${title}',
         component: lazy(() => import('./${slug}/index.jsx')),
-        enabled: true,${dateLine}
+        enabled: true,${eventTypeLine}${rsvpModeLine}${dateLine}
     },`
 
     const arrayEndIndex = content.indexOf('\n]')
@@ -429,46 +461,47 @@ function toggleInvitation(slug) {
 // ─── GIT DEPLOY ─────────────────────────────────────────────────
 function gitDeploy(commitMsg) {
     const PROJECT_ROOT = path.resolve('.')
-    return new Promise((resolve, reject) => {
-        // Stage all changes, commit, and push
-        exec(
-            `git add . && git commit -m "${commitMsg.replace(/"/g, '\\"')}" && git push`,
-            { cwd: PROJECT_ROOT, timeout: 60000 },
-            (error, stdout, stderr) => {
-                if (error) {
-                    // If nothing to commit, that's not a real error
-                    if (stderr?.includes('nothing to commit') || stdout?.includes('nothing to commit')) {
-                        resolve({ deployed: false, message: 'No hay cambios para publicar' })
-                        return
-                    }
-                    reject(new Error(stderr || error.message))
-                    return
-                }
-                resolve({ deployed: true, message: 'Cambios publicados exitosamente', output: stdout })
+    const message = String(commitMsg || 'deploy: update invitations').replace(/[\r\n]/g, ' ').trim()
+
+    return runGit(['add', '.'], PROJECT_ROOT)
+        .then(() => runGit(['commit', '-m', message], PROJECT_ROOT))
+        .then((commitResult) => runGit(['push'], PROJECT_ROOT).then((pushResult) => ({
+            deployed: true,
+            message: 'Cambios publicados exitosamente',
+            output: `${commitResult.stdout}${pushResult.stdout}`,
+        })))
+        .catch((error) => {
+            const output = `${error.stdout || ''}${error.stderr || ''}`
+            if (output.includes('nothing to commit')) {
+                return { deployed: false, message: 'No hay cambios para publicar' }
             }
-        )
-    })
+            throw new Error(output || error.message)
+        })
 }
 
 // ─── DEPLOY STATUS ──────────────────────────────────────────────
 function getDeployStatus() {
     const PROJECT_ROOT = path.resolve('.')
+    return runGit(['status', '--porcelain'], PROJECT_ROOT, 10000).then(({ stdout }) => {
+        const changes = stdout.trim().split('\n').filter(Boolean)
+        return {
+            hasChanges: changes.length > 0,
+            changeCount: changes.length,
+            files: changes.slice(0, 20), // Limit to 20 for display
+        }
+    })
+}
+
+function runGit(args, cwd, timeout = 60000) {
     return new Promise((resolve, reject) => {
-        exec(
-            'git status --porcelain',
-            { cwd: PROJECT_ROOT, timeout: 10000 },
-            (error, stdout) => {
-                if (error) {
-                    reject(new Error(error.message))
-                    return
-                }
-                const changes = stdout.trim().split('\n').filter(Boolean)
-                resolve({
-                    hasChanges: changes.length > 0,
-                    changeCount: changes.length,
-                    files: changes.slice(0, 20), // Limit to 20 for display
-                })
+        execFile('git', args, { cwd, timeout }, (error, stdout, stderr) => {
+            if (error) {
+                error.stdout = stdout
+                error.stderr = stderr
+                reject(error)
+                return
             }
-        )
+            resolve({ stdout, stderr })
+        })
     })
 }

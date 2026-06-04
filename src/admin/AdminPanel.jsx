@@ -264,9 +264,9 @@ export default function AdminPanel() {
 
                                             <div className="inv-detail-actions">
                                                 <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>
-                                                <a href={`/i/${inv.slug}`} target="_blank" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>
+                                                <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>
                                                 {inv.hasConfig && <button onClick={() => { setEditSlug(inv.slug); setView('edit') }} className="btn btn-action-full"><Settings size={14} /> Configuración</button>}
-                                                {inv.rsvpMode === 'supabase' && <a href={`/i/${inv.slug}/rsvp`} target="_blank" className="btn btn-action-full"><ExternalLink size={14} /> RSVP Dashboard</a>}
+                                                {inv.rsvpMode === 'supabase' && <a href={`/i/${inv.slug}/rsvp`} target="_blank" rel="noreferrer" className="btn btn-action-full"><ExternalLink size={14} /> RSVP Dashboard</a>}
                                                 {inv.rsvpKey && <button onClick={() => copyRsvpLink(inv.slug, inv.rsvpKey)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace RSVP</button>}
                                                 {!inv.isDefault && inv.slug !== 'melani-marisol' && <button onClick={() => handleDelete(inv.slug)} className="btn btn-action-full btn-danger"><Trash2 size={14} /> Eliminar</button>}
                                             </div>

@@ -17,6 +17,8 @@ const invitations = [
         title: 'Nuestra Boda | Kassandra & Brian',
         component: lazy(() => import('./kassandra-brian/index.jsx')),
         enabled: true,
+        eventType: 'boda',
+        rsvpMode: 'whatsapp',
         eventDate: '2026-05-30T16:00:00',
     },
     {
@@ -25,6 +27,8 @@ const invitations = [
         component: lazy(() => import('./melani-marisol/index.jsx')),
         enabled: true,
         isDemo: true,
+        eventType: 'xv',
+        rsvpMode: 'whatsapp',
         eventDate: '2026-05-02T19:00:00',
     },
 
@@ -33,6 +37,8 @@ const invitations = [
         title: 'Celebración | despedida-kass-brian',
         component: lazy(() => import('./despedida-kass-brian/index.jsx')),
         enabled: true,
+        eventType: 'despedida',
+        rsvpMode: 'whatsapp',
         eventDate: '2026-05-16T19:00:00',
     },
 
@@ -41,6 +47,8 @@ const invitations = [
         title: 'Celebración | Isabella',
         component: lazy(() => import('./isabella/index.jsx')),
         enabled: true,
+        eventType: 'primera-comunion',
+        rsvpMode: 'supabase',
         eventDate: '2026-06-27T13:00:00',
     },
     {
@@ -48,6 +56,8 @@ const invitations = [
         title: 'Primera Comunión y 10 Años | Erick Shady Bermejo',
         component: lazy(() => import('./erick-shady-bermejo/index.jsx')),
         enabled: true,
+        eventType: 'primera-comunion',
+        rsvpMode: 'supabase',
         eventDate: '2026-06-27T12:00:00',
     },
     {
@@ -55,6 +65,8 @@ const invitations = [
         title: 'Celebración | Alexa y Santiago',
         component: lazy(() => import('./alexa-y-santiago/index.jsx')),
         enabled: true,
+        eventType: 'primera-comunion',
+        rsvpMode: 'supabase',
         eventDate: '2026-06-27T13:00:00',
     },
 
@@ -63,6 +75,8 @@ const invitations = [
         title: 'XV Años | Victoria Rojas',
         component: lazy(() => import('./victoria-rojas/index.jsx')),
         enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'mixed',
         eventDate: '2026-07-25T12:00:00',
     },
 

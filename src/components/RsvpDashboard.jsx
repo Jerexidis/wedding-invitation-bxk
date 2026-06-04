@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { getConfirmations, removeConfirmation } from '../utils/rsvpStore'
-import { jsPDF } from 'jspdf'
-import autoTable from 'jspdf-autotable'
-import html2canvas from 'html2canvas'
+
+const escapeHtml = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 
 const RsvpDashboard = () => {
     const { slug } = useParams()
-    const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const [confirmations, setConfirmations] = useState([])
     const [loading, setLoading] = useState(true)
@@ -46,8 +49,7 @@ const RsvpDashboard = () => {
             try {
                 const res = await fetch(`/invitations/${slug}/rsvp-access.json`)
                 if (!res.ok) {
-                    // No access file = no protection (backwards compatible)
-                    setAuthorized(true)
+                    setAuthError('No se encontró configuración de acceso para este dashboard.')
                     setAuthChecking(false)
                     return
                 }
@@ -56,6 +58,11 @@ const RsvpDashboard = () => {
                 // Detectar formato: nuevo {hash} vs viejo {key}
                 const hashed = !!data.hash
                 const storedValue = data.hash || data.key
+                if (!storedValue) {
+                    setAuthError('La configuración de acceso de este dashboard no es válida.')
+                    setAuthChecking(false)
+                    return
+                }
 
                 // Check URL param first
                 const urlKey = searchParams.get('key')
@@ -84,8 +91,7 @@ const RsvpDashboard = () => {
                 setIsHashMode(hashed)
                 setAuthChecking(false)
             } catch {
-                // If fetch fails, allow access (backwards compatible)
-                setAuthorized(true)
+                setAuthError('No se pudo verificar el acceso. Intenta de nuevo más tarde.')
                 setAuthChecking(false)
             }
         }
@@ -219,9 +225,9 @@ const RsvpDashboard = () => {
     const exportDOC = () => {
         const headersHTML = '<tr><th style="text-align:left;padding:8px;border:1px solid #ddd;">Nombre</th><th style="padding:8px;border:1px solid #ddd;">Personas</th><th style="text-align:left;padding:8px;border:1px solid #ddd;">Mensaje</th><th style="text-align:left;padding:8px;border:1px solid #ddd;">Fecha</th></tr>'
         const rowsHTML = confirmations.map(c => `<tr>
-            <td style="padding:8px;border:1px solid #ddd;">${c.name || ''}</td>
+            <td style="padding:8px;border:1px solid #ddd;">${escapeHtml(c.name)}</td>
             <td style="padding:8px;border:1px solid #ddd;text-align:center;">${c.guests || 1}</td>
-            <td style="padding:8px;border:1px solid #ddd;">${c.message || '—'}</td>
+            <td style="padding:8px;border:1px solid #ddd;">${escapeHtml(c.message || '—')}</td>
             <td style="padding:8px;border:1px solid #ddd;">${formatDate(c.created_at)} ${formatTime(c.created_at)}</td>
         </tr>`).join('')
 
@@ -248,7 +254,11 @@ const RsvpDashboard = () => {
         URL.revokeObjectURL(url)
     }
 
-    const exportPDF = () => {
+    const exportPDF = async () => {
+        const [{ jsPDF }, { default: autoTable }] = await Promise.all([
+            import('jspdf'),
+            import('jspdf-autotable'),
+        ])
         const doc = new jsPDF()
         doc.text('Lista de Invitados Confirmados', 14, 15)
         const tableData = confirmations.map(c => [
@@ -268,6 +278,7 @@ const RsvpDashboard = () => {
     }
 
     const exportJPG = async () => {
+        const { default: html2canvas } = await import('html2canvas')
         const container = document.createElement('div')
         container.style.position = 'absolute'
         container.style.left = '-9999px'
@@ -296,9 +307,9 @@ const RsvpDashboard = () => {
         confirmations.forEach(c => {
             html += `
                 <tr style="border-bottom: 1px solid #f1f3f4;">
-                    <td style="padding: 14px 16px; font-weight: 500; color: #202124;">${c.name || ''}</td>
+                    <td style="padding: 14px 16px; font-weight: 500; color: #202124;">${escapeHtml(c.name)}</td>
                     <td style="padding: 14px 16px; color: #1a73e8; font-weight: 600; text-align: center;">${c.guests || 1}</td>
-                    <td style="padding: 14px 16px; color: #5f6368;">${c.message || '—'}</td>
+                    <td style="padding: 14px 16px; color: #5f6368;">${escapeHtml(c.message || '—')}</td>
                     <td style="padding: 14px 16px; color: #80868b; font-size: 13px;">${formatDate(c.created_at)}</td>
                 </tr>
             `

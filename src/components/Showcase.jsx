@@ -36,6 +36,12 @@ const getEventMeta = (eventType) => {
                 bg: 'bg-rose-50 text-rose-700 border-rose-100',
                 icon: <Sparkles size={14} className="text-rose-600" />
             }
+        case 'despedida':
+            return {
+                label: 'Despedida',
+                bg: 'bg-pink-50 text-pink-700 border-pink-100',
+                icon: <Heart size={14} className="text-pink-600" />
+            }
         default:
             return {
                 label: 'Celebración',
@@ -76,7 +82,6 @@ export default function Showcase() {
             <main className="max-w-6xl mx-auto px-6 pb-28">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {activeInvitations.filter(inv => {
-                        if (inv.isDemo) return true
                         if (inv.eventDate) {
                             return new Date(inv.eventDate) < new Date()
                         }
@@ -127,7 +132,7 @@ export default function Showcase() {
                                             <Eye size={14} /> Ver Demo
                                         </Link>
                                         
-                                        {inv.rsvpMode === 'supabase' && (
+                                        {(inv.rsvpMode === 'supabase' || inv.rsvpMode === 'mixed') && (
                                             <Link 
                                                 to={`/i/${inv.slug}/rsvp`} 
                                                 className="inline-flex items-center gap-1.5 text-[0.7rem] font-medium text-slate-400 hover:text-slate-600 transition-colors"

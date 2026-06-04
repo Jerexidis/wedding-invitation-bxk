@@ -32,10 +32,6 @@ export default defineConfig({
          * Si la app cambia pero jspdf no, el visitor no re-descarga jspdf.
          */
         manualChunks: {
-          // Librerías de exportación (solo se usan en RsvpDashboard)
-          'vendor-export': ['jspdf', 'jspdf-autotable', 'html2canvas'],
-          // Cliente de Supabase
-          'vendor-supabase': ['@supabase/supabase-js'],
           // React + router (cambian pocas veces)
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           // Íconos (cambios muy raros)

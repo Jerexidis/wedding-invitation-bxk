@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const Gallery = ({ data, basePath }) => {
-    const initialPhotos = (data?.photos || []).map(p => ({ src: `${basePath}/img/${p.src}`, caption: p.caption }));
+    const initialPhotos = useMemo(
+        () => (data?.photos || []).map(p => ({ src: `${basePath}/img/${p.src}`, caption: p.caption })),
+        [basePath, data?.photos]
+    );
     const [photos, setPhotos] = useState(initialPhotos);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    // No photos yet — don't render
-    if (!data?.photos?.length) return null;
+    useEffect(() => {
+        setPhotos(initialPhotos);
+    }, [initialPhotos]);
 
     useEffect(() => {
+        if (!photos.length) return undefined;
         const interval = setInterval(() => {
             if (isAnimating) return;
             setIsAnimating(true);
@@ -23,7 +28,10 @@ const Gallery = ({ data, basePath }) => {
             }, 600);
         }, 2500);
         return () => clearInterval(interval);
-    }, [isAnimating]);
+    }, [isAnimating, photos.length]);
+
+    // No photos yet — don't render
+    if (!data?.photos?.length) return null;
 
     return (
         <section className="relative py-20 px-6 bg-gradient-to-b from-inv-cream to-inv-light text-center overflow-hidden">
