@@ -9,6 +9,12 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "invite": "node scripts/invitation-tools.mjs",
+    "invite:validate": "node scripts/invitation-tools.mjs validate --all",
+    "invite:preflight": "node scripts/invitation-tools.mjs preflight --all",
+    "invite:assets": "node scripts/invitation-tools.mjs assets",
+    "invite:optimize": "node scripts/invitation-tools.mjs optimize",
+    "publish:check": "node scripts/invitation-tools.mjs preflight --all && vite build",
     "deploy": "git add . && git commit -m \"deploy: update\" && git push"
   },
   "dependencies": {

@@ -69,7 +69,7 @@
     "dressCode": {
         "enabled": true,
         "type": "Formal",
-        "image": "dresscode-icon.png"
+        "image": ""
     },
     "gallery": {
         "photos": [

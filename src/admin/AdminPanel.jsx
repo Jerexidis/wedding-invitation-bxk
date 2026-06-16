@@ -6,14 +6,20 @@ import './AdminPanel.css'
 const API = '/api/invitations'
 const EVENT_LABELS = { xv: 'XV Años', boda: 'Boda', bautizo: 'Bautizo', cumple: 'Cumpleaños' }
 const RSVP_LABELS = { whatsapp: 'WhatsApp', supabase: 'Dashboard', none: 'Sin RSVP' }
+const slugify = (str) => str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-')
 
 export default function AdminPanel() {
     const [invitations, setInvitations] = useState([])
     const [loading, setLoading] = useState(true)
     const [view, setView] = useState('list')
     const [editSlug, setEditSlug] = useState(null)
+    const [quickSlug, setQuickSlug] = useState(null)
     const [toast, setToast] = useState(null)
     const [selectedSlug, setSelectedSlug] = useState(null)
+    const [cloneDialog, setCloneDialog] = useState(null)
+    const [renameDialog, setRenameDialog] = useState(null)
+    const [reportDialog, setReportDialog] = useState(null)
+    const [actionLoading, setActionLoading] = useState('')
 
     // Deploy state
     const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [] })
@@ -83,6 +89,90 @@ export default function AdminPanel() {
         } catch (err) { showToast(err.message, 'error') }
     }
 
+    const openCloneDialog = (inv) => {
+        setCloneDialog({
+            sourceSlug: inv.slug,
+            newSlug: `${inv.slug}-copia`,
+            title: `${inv.title} copia`,
+        })
+    }
+
+    const handleClone = async () => {
+        if (!cloneDialog?.sourceSlug || !cloneDialog?.newSlug) return
+        setActionLoading('clone')
+        try {
+            const res = await fetch(`${API}/${cloneDialog.sourceSlug}/clone`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ newSlug: slugify(cloneDialog.newSlug), title: cloneDialog.title || undefined }),
+            })
+            const json = await res.json()
+            if (json.ok) {
+                showToast(`Invitacion clonada: ${json.path}`)
+                setCloneDialog(null)
+                setSelectedSlug(json.slug)
+                fetchInvitations()
+                fetchDeployStatus()
+            }
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+        setActionLoading('')
+    }
+
+    const openRenameDialog = (inv) => {
+        setRenameDialog({ oldSlug: inv.slug, newSlug: inv.slug })
+    }
+
+    const handleRename = async () => {
+        if (!renameDialog?.oldSlug || !renameDialog?.newSlug) return
+        const newSlug = slugify(renameDialog.newSlug)
+        if (renameDialog.oldSlug === newSlug) {
+            showToast('Escribe un slug diferente', 'error')
+            return
+        }
+        if (!confirm(`Cambiar /i/${renameDialog.oldSlug} a /i/${newSlug}?`)) return
+        setActionLoading('rename')
+        try {
+            const res = await fetch(`${API}/${renameDialog.oldSlug}/rename`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ newSlug }),
+            })
+            const json = await res.json()
+            if (json.ok) {
+                showToast(`Link actualizado: ${json.path}`)
+                setRenameDialog(null)
+                setSelectedSlug(json.slug)
+                fetchInvitations()
+                fetchDeployStatus()
+            }
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+        setActionLoading('')
+    }
+
+    const showValidationReport = async (slug) => {
+        setActionLoading(`validate:${slug}`)
+        try {
+            const res = await fetch(`${API}/${slug}/validate`)
+            const json = await res.json()
+            if (json.ok) setReportDialog({ type: 'validate', title: `Validacion - ${slug}`, report: json.report })
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+        setActionLoading('')
+    }
+
+    const showAssetReport = async (slug) => {
+        setActionLoading(`assets:${slug}`)
+        try {
+            const res = await fetch(`${API}/${slug}/assets`)
+            const json = await res.json()
+            if (json.ok) setReportDialog({ type: 'assets', title: `Assets - ${slug}`, report: json.report })
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+        setActionLoading('')
+    }
+
     const handleDeploy = async () => {
         setDeploying(true)
         try {
@@ -125,6 +215,96 @@ export default function AdminPanel() {
     return (
         <div className="admin admin-no-sidebar">
             {toast && <div className={`admin-toast ${toast.type}`}>{toast.type !== 'error' && <Check size={14} />}{toast.msg}</div>}
+
+            {cloneDialog && (
+                <div className="deploy-overlay" onClick={() => actionLoading !== 'clone' && setCloneDialog(null)}>
+                    <div className="deploy-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon"><Copy size={22} /></div>
+                            <h3>Clonar invitacion</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => setCloneDialog(null)} disabled={actionLoading === 'clone'}><X size={18} /></button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            <div className="form-group">
+                                <label className="form-label">Invitacion base</label>
+                                <input className="form-input" value={cloneDialog.sourceSlug} disabled />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Nuevo slug / link</label>
+                                <input className="form-input" value={cloneDialog.newSlug} onChange={e => setCloneDialog(d => ({ ...d, newSlug: e.target.value }))} />
+                                <p className="form-hint">Quedara como /i/{slugify(cloneDialog.newSlug || '')}</p>
+                            </div>
+                            <div className="form-group" style={{ marginBottom: 0 }}>
+                                <label className="form-label">Titulo inicial</label>
+                                <input className="form-input" value={cloneDialog.title} onChange={e => setCloneDialog(d => ({ ...d, title: e.target.value }))} />
+                            </div>
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-secondary" onClick={() => setCloneDialog(null)} disabled={actionLoading === 'clone'}>Cancelar</button>
+                            <button className="btn btn-primary" onClick={handleClone} disabled={actionLoading === 'clone'}>
+                                {actionLoading === 'clone' ? <><Loader2 size={14} className="animate-spin" /> Clonando...</> : <><Copy size={14} /> Clonar</>}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {renameDialog && (
+                <div className="deploy-overlay" onClick={() => actionLoading !== 'rename' && setRenameDialog(null)}>
+                    <div className="deploy-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon"><ExternalLink size={22} /></div>
+                            <h3>Cambiar link</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => setRenameDialog(null)} disabled={actionLoading === 'rename'}><X size={18} /></button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            <div className="deploy-warning">
+                                <AlertTriangle size={16} />
+                                <span>Esto renombra carpetas locales y actualiza config/registry. Revisa links compartidos antes de publicar.</span>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Slug actual</label>
+                                <input className="form-input" value={renameDialog.oldSlug} disabled />
+                            </div>
+                            <div className="form-group" style={{ marginBottom: 0 }}>
+                                <label className="form-label">Nuevo slug</label>
+                                <input className="form-input" value={renameDialog.newSlug} onChange={e => setRenameDialog(d => ({ ...d, newSlug: e.target.value }))} />
+                                <p className="form-hint">Nuevo link: /i/{slugify(renameDialog.newSlug || '')}</p>
+                            </div>
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-secondary" onClick={() => setRenameDialog(null)} disabled={actionLoading === 'rename'}>Cancelar</button>
+                            <button className="btn btn-primary" onClick={handleRename} disabled={actionLoading === 'rename'}>
+                                {actionLoading === 'rename' ? <><Loader2 size={14} className="animate-spin" /> Actualizando...</> : <><ExternalLink size={14} /> Cambiar link</>}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {reportDialog && (
+                <div className="deploy-overlay" onClick={() => setReportDialog(null)}>
+                    <div className="deploy-dialog report-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className={`deploy-dialog-icon ${reportDialog.report?.ok === false ? 'report-icon-warn' : ''}`}>
+                                {reportDialog.report?.ok === false ? <AlertTriangle size={22} /> : <Check size={22} />}
+                            </div>
+                            <h3>{reportDialog.title}</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => setReportDialog(null)}><X size={18} /></button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            {reportDialog.type === 'validate' ? (
+                                <ReportList report={reportDialog.report} />
+                            ) : (
+                                <AssetReport report={reportDialog.report} />
+                            )}
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-primary" onClick={() => setReportDialog(null)}>Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Deploy Confirmation Dialog */}
             {showDeployDialog && (
@@ -200,6 +380,7 @@ export default function AdminPanel() {
 
                 {view === 'create' && <WizardForm onBack={goBack} showToast={showToast} />}
                 {view === 'edit' && <EditConfig slug={editSlug} onBack={goBack} showToast={showToast} />}
+                {view === 'quick-edit' && <QuickTextEditor slug={quickSlug} onBack={goBack} showToast={showToast} />}
                 {view === 'list' && <>
                     <div className="admin-header">
                         <h2>Invitaciones</h2>
@@ -265,6 +446,15 @@ export default function AdminPanel() {
                                             <div className="inv-detail-actions">
                                                 <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>
                                                 <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>
+                                                <button onClick={() => openCloneDialog(inv)} className="btn btn-action-full"><Copy size={14} /> Clonar</button>
+                                                {!inv.isDefault && <button onClick={() => openRenameDialog(inv)} className="btn btn-action-full"><ExternalLink size={14} /> Cambiar link</button>}
+                                                <button onClick={() => showValidationReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `validate:${inv.slug}`}>
+                                                    {actionLoading === `validate:${inv.slug}` ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Validar
+                                                </button>
+                                                <button onClick={() => showAssetReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `assets:${inv.slug}`}>
+                                                    {actionLoading === `assets:${inv.slug}` ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />} Assets
+                                                </button>
+                                                {inv.hasConfig && <button onClick={() => { setQuickSlug(inv.slug); setView('quick-edit') }} className="btn btn-action-full"><FileText size={14} /> Editor rapido</button>}
                                                 {inv.hasConfig && <button onClick={() => { setEditSlug(inv.slug); setView('edit') }} className="btn btn-action-full"><Settings size={14} /> Configuración</button>}
                                                 {inv.rsvpMode === 'supabase' && <a href={`/i/${inv.slug}/rsvp`} target="_blank" rel="noreferrer" className="btn btn-action-full"><ExternalLink size={14} /> RSVP Dashboard</a>}
                                                 {inv.rsvpKey && <button onClick={() => copyRsvpLink(inv.slug, inv.rsvpKey)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace RSVP</button>}
@@ -286,6 +476,422 @@ export default function AdminPanel() {
             </main>
         </div>
     )
+}
+
+function ReportList({ report }) {
+    const errors = report?.errors || []
+    const warnings = report?.warnings || []
+    const tips = report?.tips || []
+    return (
+        <div className="report-body">
+            <div className={`report-status ${errors.length ? 'bad' : warnings.length ? 'warn' : 'good'}`}>
+                {errors.length ? `${errors.length} error(es)` : warnings.length ? `${warnings.length} aviso(s)` : 'Lista para revisar build'}
+            </div>
+            {errors.length > 0 && <ReportSection title="Errores" items={errors} kind="error" />}
+            {warnings.length > 0 && <ReportSection title="Avisos" items={warnings} kind="warning" />}
+            {tips.length > 0 && <ReportSection title="Tips" items={tips} kind="tip" />}
+        </div>
+    )
+}
+
+function ReportSection({ title, items, kind }) {
+    return (
+        <div className="report-section">
+            <h4>{title}</h4>
+            <ul>
+                {items.map((item, index) => <li key={`${kind}-${index}`}>{item}</li>)}
+            </ul>
+        </div>
+    )
+}
+
+function AssetReport({ report }) {
+    const files = report?.files || []
+    const largeImages = report?.largeImages || []
+    const largeAudio = report?.largeAudio || []
+    return (
+        <div className="report-body">
+            <div className="asset-summary">
+                <div><span>Total</span><strong>{report?.totalKb || 0} KB</strong></div>
+                <div><span>Imagenes grandes</span><strong>{largeImages.length}</strong></div>
+                <div><span>Audios grandes</span><strong>{largeAudio.length}</strong></div>
+            </div>
+            {(largeImages.length > 0 || largeAudio.length > 0) && (
+                <ReportSection
+                    title="Conviene optimizar"
+                    kind="warning"
+                    items={[...largeImages, ...largeAudio].map(file => `${file.path} (${file.kb} KB)`)}
+                />
+            )}
+            <div className="report-section">
+                <h4>Archivos mas pesados</h4>
+                <ul>
+                    {files.slice(0, 12).map((file) => <li key={file.path}>{file.path} ({file.kb} KB)</li>)}
+                    {files.length === 0 && <li>No se encontraron assets multimedia.</li>}
+                </ul>
+            </div>
+        </div>
+    )
+}
+
+function QuickTextEditor({ slug, onBack, showToast }) {
+    const [config, setConfig] = useState(null)
+    const [saving, setSaving] = useState(false)
+    const [form, setForm] = useState(null)
+
+    useEffect(() => {
+        fetch(`${API}/${slug}`).then(r => r.json()).then(json => {
+            if (!json.ok) return
+            const cfg = json.config
+            setConfig(cfg)
+            setForm(configToQuickForm(cfg))
+        })
+    }, [slug])
+
+    const update = (key, value) => setForm(prev => ({ ...prev, [key]: value }))
+    const updateEvent = (index, key, value) => setForm(prev => ({
+        ...prev,
+        events: prev.events.map((event, i) => i === index ? { ...event, [key]: value } : event),
+    }))
+    const updatePadrinoGroup = (index, key, value) => setForm(prev => ({
+        ...prev,
+        padrinoGroups: prev.padrinoGroups.map((group, i) => i === index ? { ...group, [key]: value } : group),
+    }))
+
+    const handleSave = async () => {
+        setSaving(true)
+        try {
+            const nextConfig = quickFormToConfig(config, form)
+            const res = await fetch(`${API}/${slug}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ config: nextConfig }),
+            })
+            const json = await res.json()
+            if (json.ok) {
+                showToast('Editor rapido guardado con backup')
+                onBack()
+            } else {
+                showToast(json.error, 'error')
+            }
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setSaving(false)
+    }
+
+    if (!config || !form) {
+        return (
+            <div className="admin-content">
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}><Loader2 className="animate-spin" size={28} style={{ color: '#9aa0a6' }} /></div>
+            </div>
+        )
+    }
+
+    return (
+        <>
+            <div className="admin-header">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <button onClick={onBack} className="btn-icon"><ChevronLeft size={18} /></button>
+                    <h2>Editor rapido - <span style={{ color: '#1a73e8' }}>{slug}</span></h2>
+                </div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                    <a href={`/i/${slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary"><Eye size={14} /> Vista previa</a>
+                    <button onClick={onBack} className="btn btn-secondary">Cancelar</button>
+                    <button onClick={handleSave} disabled={saving} className="btn btn-primary">
+                        {saving ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Guardar
+                    </button>
+                </div>
+            </div>
+            <div className="admin-content quick-editor">
+                <div className="quick-grid">
+                    <section className="card">
+                        <div className="card-header"><h3>Portada y fecha</h3></div>
+                        <div className="card-body">
+                            <TextInput label="Titulo interno" value={form.title} onChange={v => update('title', v)} />
+                            <TextInput label="Subtitulo portada" value={form.heroSubtitle} onChange={v => update('heroSubtitle', v)} />
+                            <TextInput label="Nombre principal" value={form.heroName} onChange={v => update('heroName', v)} />
+                            <div className="form-row">
+                                <TextInput type="date" label="Fecha del evento" value={form.eventDate} onChange={v => update('eventDate', v)} />
+                                <TextInput type="time" label="Hora principal" value={form.eventTime} onChange={v => update('eventTime', v)} />
+                            </div>
+                            <TextInput type="number" label="Duracion calendario (horas)" value={form.durationHours} onChange={v => update('durationHours', v)} min="1" max="24" />
+                            <CheckboxInput label="Sincronizar footer con la fecha" checked={form.syncFooterDate} onChange={v => update('syncFooterDate', v)} />
+                        </div>
+                    </section>
+
+                    <section className="card">
+                        <div className="card-header"><h3>Introduccion</h3></div>
+                        <div className="card-body">
+                            <TextArea label="Mensaje" value={form.introMessage} onChange={v => update('introMessage', v)} />
+                            <TextInput label="Etiqueta familia" value={form.introLabel} onChange={v => update('introLabel', v)} />
+                            <TextInput label="Nombre 1" value={form.parent1} onChange={v => update('parent1', v)} />
+                            <TextInput label="Nombre 2" value={form.parent2} onChange={v => update('parent2', v)} />
+                            <TextArea label="Mensaje final" value={form.closingMessage} onChange={v => update('closingMessage', v)} />
+                        </div>
+                    </section>
+
+                    <section className="card">
+                        <div className="card-header"><h3>Padrinos</h3></div>
+                        <div className="card-body">
+                            <TextInput label="Titulo seccion" value={form.padrinosLabel} onChange={v => update('padrinosLabel', v)} />
+                            <TextInput label="Subtitulo" value={form.padrinosSubtitle} onChange={v => update('padrinosSubtitle', v)} />
+                            {form.padrinoGroups.length > 0 ? form.padrinoGroups.map((group, index) => (
+                                <div className="quick-subcard" key={index}>
+                                    <TextInput label={`Grupo ${index + 1}`} value={group.label} onChange={v => updatePadrinoGroup(index, 'label', v)} />
+                                    <TextInput label="Nombre 1" value={group.padrino1} onChange={v => updatePadrinoGroup(index, 'padrino1', v)} />
+                                    <TextInput label="Nombre 2" value={group.padrino2} onChange={v => updatePadrinoGroup(index, 'padrino2', v)} />
+                                </div>
+                            )) : (
+                                <div className="quick-subcard">
+                                    <TextInput label="Padrino" value={form.padrino1} onChange={v => update('padrino1', v)} />
+                                    <TextInput label="Madrina" value={form.padrino2} onChange={v => update('padrino2', v)} />
+                                </div>
+                            )}
+                        </div>
+                    </section>
+
+                    <section className="card">
+                        <div className="card-header"><h3>Eventos y lugares</h3></div>
+                        <div className="card-body">
+                            {form.events.map((event, index) => (
+                                <div className="quick-subcard" key={index}>
+                                    <TextInput label={`Evento ${index + 1} - titulo`} value={event.title} onChange={v => updateEvent(index, 'title', v)} />
+                                    <TextInput label="Lugar" value={event.location} onChange={v => updateEvent(index, 'location', v)} />
+                                    <TextArea label="Direccion" value={event.address} onChange={v => updateEvent(index, 'address', v)} />
+                                    <div className="form-row">
+                                        <TextInput type="time" label="Hora" value={event.time} onChange={v => updateEvent(index, 'time', v)} />
+                                        <TextInput label="Link mapa" value={event.mapLink} onChange={v => updateEvent(index, 'mapLink', v)} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="card">
+                        <div className="card-header"><h3>RSVP y footer</h3></div>
+                        <div className="card-body">
+                            <TextInput label="WhatsApp" value={form.whatsappNumber} onChange={v => update('whatsappNumber', onlyDigits(v))} />
+                            <TextArea label="Mensaje confirmacion WhatsApp" value={form.whatsappConfirmMessage} onChange={v => update('whatsappConfirmMessage', v)} />
+                            <TextArea label="Mensaje declinar WhatsApp" value={form.whatsappDeclineMessage} onChange={v => update('whatsappDeclineMessage', v)} />
+                            <TextInput label="Texto limite RSVP" value={form.rsvpDeadline} onChange={v => update('rsvpDeadline', v)} />
+                            <TextInput label="Footer nombre" value={form.footerName} onChange={v => update('footerName', v)} />
+                            <TextInput label="Footer subtitulo" value={form.footerSubtitle} onChange={v => update('footerSubtitle', v)} disabled={form.syncFooterDate} />
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </>
+    )
+}
+
+function TextInput({ label, value, onChange, type = 'text', ...props }) {
+    return (
+        <div className="form-group">
+            <label className="form-label">{label}</label>
+            <input type={type} value={value ?? ''} onChange={e => onChange(e.target.value)} className="form-input" {...props} />
+        </div>
+    )
+}
+
+function TextArea({ label, value, onChange }) {
+    return (
+        <div className="form-group">
+            <label className="form-label">{label}</label>
+            <textarea value={value ?? ''} onChange={e => onChange(e.target.value)} rows={3} className="form-input" />
+        </div>
+    )
+}
+
+function CheckboxInput({ label, checked, onChange }) {
+    return (
+        <div className="toggle-row">
+            <label className="toggle">
+                <input type="checkbox" checked={Boolean(checked)} onChange={e => onChange(e.target.checked)} />
+                <span className="toggle-slider" />
+            </label>
+            <span className="toggle-label">{label}</span>
+        </div>
+    )
+}
+
+function configToQuickForm(config) {
+    const eventDateTime = splitDateTime(config.countdown?.targetDate || config.calendar?.outlookStart)
+    const durationHours = getDurationHours(config.calendar)
+    const events = Array.isArray(config.events) ? config.events.map(event => ({
+        title: event.title || '',
+        location: event.location || '',
+        address: event.address || '',
+        time: event.time || '',
+        mapLink: event.mapLink || '',
+    })) : []
+    const groups = Array.isArray(config.padrinos?.groups) ? config.padrinos.groups.map(group => ({
+        label: group.label || '',
+        padrino1: group.padrino1 || '',
+        padrino2: group.padrino2 || '',
+    })) : []
+
+    return {
+        title: config.title || '',
+        heroSubtitle: config.hero?.subtitle || '',
+        heroName: config.hero?.name || '',
+        eventDate: eventDateTime.date,
+        eventTime: eventDateTime.time,
+        durationHours,
+        syncFooterDate: true,
+        introMessage: config.intro?.message || '',
+        introLabel: config.intro?.label || '',
+        parent1: config.intro?.parent1 || '',
+        parent2: config.intro?.parent2 || '',
+        closingMessage: config.intro?.closingMessage || '',
+        padrinosLabel: config.padrinos?.label || '',
+        padrinosSubtitle: config.padrinos?.subtitle || '',
+        padrino1: config.padrinos?.padrino1 || '',
+        padrino2: config.padrinos?.padrino2 || '',
+        padrinoGroups: groups,
+        events,
+        whatsappNumber: config.rsvp?.whatsappNumber || '',
+        whatsappConfirmMessage: config.rsvp?.whatsappConfirmMessage || '',
+        whatsappDeclineMessage: config.rsvp?.whatsappDeclineMessage || '',
+        rsvpDeadline: config.rsvp?.deadline || '',
+        footerName: config.footer?.name || '',
+        footerSubtitle: config.footer?.subtitle || '',
+    }
+}
+
+function quickFormToConfig(config, form) {
+    const next = JSON.parse(JSON.stringify(config))
+    const start = buildLocalDate(form.eventDate, form.eventTime)
+    const duration = Math.max(1, Number(form.durationHours) || 7)
+    const end = new Date(start.getTime() + duration * 60 * 60 * 1000)
+    const displayDate = start.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' })
+    const displayYear = String(start.getFullYear())
+    const heroDate = start.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()
+
+    next.title = form.title
+    next.hero = {
+        ...(next.hero || {}),
+        subtitle: form.heroSubtitle,
+        name: form.heroName,
+        date: heroDate,
+    }
+    next.countdown = {
+        ...(next.countdown || {}),
+        targetDate: `${form.eventDate}T${form.eventTime}:00`,
+        displayDate,
+        displayYear,
+    }
+    next.calendar = {
+        ...(next.calendar || {}),
+        title: form.title,
+        location: buildCalendarLocation(form.events),
+        startDateTime: formatCalendarDate(start),
+        endDateTime: formatCalendarDate(end),
+        outlookStart: formatOutlookDate(start),
+        outlookEnd: formatOutlookDate(end),
+        icsFilename: next.calendar?.icsFilename || `${next.slug}.ics`,
+        icsProdId: form.title,
+    }
+    next.intro = {
+        ...(next.intro || {}),
+        message: form.introMessage,
+        label: form.introLabel,
+        parent1: form.parent1,
+        parent2: form.parent2,
+        closingMessage: form.closingMessage,
+    }
+    next.padrinos = {
+        ...(next.padrinos || {}),
+        label: form.padrinosLabel,
+        subtitle: form.padrinosSubtitle,
+        padrino1: form.padrino1,
+        padrino2: form.padrino2,
+    }
+    if (form.padrinoGroups.length > 0) {
+        next.padrinos.groups = form.padrinoGroups.map(group => ({
+            label: group.label,
+            padrino1: group.padrino1,
+            ...(group.padrino2 ? { padrino2: group.padrino2 } : {}),
+        }))
+    }
+    next.events = form.events.map((event, index) => ({
+        ...(next.events?.[index] || {}),
+        title: event.title,
+        location: event.location,
+        address: event.address,
+        time: event.time,
+        mapLink: event.mapLink,
+    }))
+    next.rsvp = {
+        ...(next.rsvp || {}),
+        whatsappNumber: form.whatsappNumber,
+        whatsappConfirmMessage: form.whatsappConfirmMessage,
+        whatsappDeclineMessage: form.whatsappDeclineMessage,
+        deadline: form.rsvpDeadline,
+    }
+    next.footer = {
+        ...(next.footer || {}),
+        name: form.footerName || form.heroName,
+        subtitle: form.syncFooterDate ? `${eventTypeLabel(next.eventType)} - ${displayDate}` : form.footerSubtitle,
+    }
+    return next
+}
+
+function splitDateTime(value) {
+    const fallback = new Date()
+    if (!value || Number.isNaN(Date.parse(value))) {
+        return { date: toDateInput(fallback), time: '19:00' }
+    }
+    const match = String(value).match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/)
+    if (match) return { date: match[1], time: match[2] }
+    const date = new Date(value)
+    return { date: toDateInput(date), time: toTimeInput(date) }
+}
+
+function getDurationHours(calendar) {
+    if (!calendar?.outlookStart || !calendar?.outlookEnd) return 7
+    const start = Date.parse(calendar.outlookStart)
+    const end = Date.parse(calendar.outlookEnd)
+    if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return 7
+    return Math.max(1, Math.round((end - start) / (60 * 60 * 1000)))
+}
+
+function buildLocalDate(date, time) {
+    return new Date(`${date || toDateInput(new Date())}T${time || '19:00'}:00`)
+}
+
+function formatCalendarDate(date) {
+    return `${date.getFullYear()}${pad2(date.getMonth() + 1)}${pad2(date.getDate())}T${pad2(date.getHours())}${pad2(date.getMinutes())}00`
+}
+
+function formatOutlookDate(date) {
+    return `${toDateInput(date)}T${toTimeInput(date)}:00`
+}
+
+function toDateInput(date) {
+    return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`
+}
+
+function toTimeInput(date) {
+    return `${pad2(date.getHours())}:${pad2(date.getMinutes())}`
+}
+
+function buildCalendarLocation(events) {
+    const event = events[1] || events[0]
+    if (!event) return ''
+    return [event.location, event.address].filter(Boolean).join(', ')
+}
+
+function eventTypeLabel(type) {
+    return EVENT_LABELS[type] || { 'primera-comunion': 'Primera Comunion', despedida: 'Celebracion', otro: 'Celebracion' }[type] || 'Celebracion'
+}
+
+function onlyDigits(value) {
+    return String(value || '').replace(/\D/g, '')
+}
+
+function pad2(value) {
+    return String(value).padStart(2, '0')
 }
 
 function EditConfig({ slug, onBack, showToast }) {

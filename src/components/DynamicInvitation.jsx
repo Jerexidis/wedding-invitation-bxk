@@ -82,7 +82,7 @@ export default function DynamicInvitation({ config }) {
     }, [config.slug, config.title, config.seo, config.hero, basePath])
 
     return (
-        <div className="min-h-screen bg-inv-cream text-inv-text font-inv-body selection:bg-inv-primary/30 overflow-x-hidden" style={themeVars}>
+        <div className={`min-h-screen bg-inv-cream text-inv-text font-inv-body selection:bg-inv-primary/30 overflow-x-hidden invitation-${config.slug}`} style={themeVars}>
             <Hero data={config.hero} basePath={basePath} />
             <Intro data={config.intro} basePath={basePath} />
             {config.padrinos?.enabled && (

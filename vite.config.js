@@ -5,39 +5,35 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const plugins = [react()]
-
-// Dev-only admin plugin (local, not in git)
-try {
-  const { default: devAdminPlugin } = await import('./plugins/devAdminPlugin.js')
-  plugins.push(devAdminPlugin())
-} catch {
-  // Plugin not found — production build, skip
-}
-
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins,
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
+export default defineConfig(async ({ command }) => {
+  const plugins = [react()]
+
+  if (command === 'serve') {
+    try {
+      const { default: devAdminPlugin } = await import('./plugins/devAdminPlugin.js')
+      plugins.push(devAdminPlugin())
+    } catch {
+      // Local admin API is optional in production builds.
+    }
+  }
+
+  return {
+    plugins,
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+      },
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        /**
-         * Manual chunking para vendors pesados.
-         * Beneficio: el browser los cachea por separado al código de la app.
-         * Si la app cambia pero jspdf no, el visitor no re-descarga jspdf.
-         */
-        manualChunks: {
-          // React + router (cambian pocas veces)
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          // Íconos (cambios muy raros)
-          'vendor-icons': ['lucide-react'],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-icons': ['lucide-react'],
+          },
         },
       },
     },
-  },
+  }
 })

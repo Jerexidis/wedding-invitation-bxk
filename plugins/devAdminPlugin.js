@@ -2,6 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import { execFile } from 'child_process'
+import {
+    analyzeAssets,
+    cloneInvitation as cloneLocalInvitation,
+    optimizeInvitation,
+    renameInvitation as renameLocalInvitation,
+    validateInvitation,
+} from '../scripts/invitation-tools.mjs'
 
 const INVITATIONS_SRC = path.resolve('src/invitations')
 const INVITATIONS_PUBLIC = path.resolve('public/invitations')
@@ -103,6 +110,89 @@ export default function devAdminPlugin() {
                     return
                 }
 
+                // POST /api/invitations/:slug/clone
+                const cloneMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/clone$/)
+                if (req.method === 'POST' && cloneMatch) {
+                    try {
+                        const slug = cloneMatch[1]
+                        const data = await parseBody(req)
+                        const result = cloneLocalInvitation(slug, data.newSlug, { title: data.title })
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // PATCH /api/invitations/:slug/rename
+                const renameMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/rename$/)
+                if (req.method === 'PATCH' && renameMatch) {
+                    try {
+                        const slug = renameMatch[1]
+                        const data = await parseBody(req)
+                        const result = renameLocalInvitation(slug, data.newSlug)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // GET /api/invitations/:slug/validate
+                const validateMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/validate$/)
+                if (req.method === 'GET' && validateMatch) {
+                    try {
+                        const slug = validateMatch[1]
+                        const report = await validateInvitation(slug)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, report }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // GET /api/invitations/:slug/assets
+                const assetsMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/assets$/)
+                if (req.method === 'GET' && assetsMatch) {
+                    try {
+                        const slug = assetsMatch[1]
+                        const report = await analyzeAssets(slug)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, report }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                // POST /api/invitations/:slug/optimize
+                const optimizeMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/optimize$/)
+                if (req.method === 'POST' && optimizeMatch) {
+                    try {
+                        const slug = optimizeMatch[1]
+                        const data = await parseBody(req)
+                        const report = await optimizeInvitation(slug, { write: Boolean(data.write) })
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, report }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 const slugMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)$/)
 
                 // GET /api/invitations/:slug — Get config
@@ -138,6 +228,7 @@ export default function devAdminPlugin() {
                         }
                         if (data.config) {
                             delete data.config.rsvpKey
+                            backupConfig(slug, configPath)
                             fs.writeFileSync(configPath, JSON.stringify(data.config, null, 4), 'utf-8')
                         }
                         res.setHeader('Content-Type', 'application/json')
@@ -344,6 +435,14 @@ function deleteInvitation(slug) {
     } catch (e) {
         console.warn(`[Admin] No se pudo limpiar og-data.js para "${slug}":`, e.message)
     }
+}
+
+function backupConfig(slug, configPath) {
+    if (!fs.existsSync(configPath)) return
+    const backupDir = path.join(INVITATIONS_SRC, slug, '.backups')
+    fs.mkdirSync(backupDir, { recursive: true })
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-')
+    fs.copyFileSync(configPath, path.join(backupDir, `config.${stamp}.json`))
 }
 
 // ─── REGISTRY HELPERS ───────────────────────────────────────────
