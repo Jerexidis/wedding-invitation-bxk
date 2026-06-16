@@ -80,6 +80,16 @@ const invitations = [
         eventDate: '2026-07-25T12:00:00',
     },
 
+    {
+        slug: 'michel-mtz',
+        title: 'XV Años | Michel Mtz Valdez',
+        component: lazy(() => import('./michel-mtz/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-05-02T19:00:00',
+    },
+
 ]
 
 // Solo invitaciones activas

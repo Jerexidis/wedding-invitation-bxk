@@ -1,0 +1,153 @@
+{
+    "slug": "michel-mtz",
+    "eventType": "xv",
+    "title": "XV Años | Michel Mtz Valdez",
+    "theme": {
+        "primaryHue": 160,
+        "primarySat": 50,
+        "accentHue": 45,
+        "fontBody": "Montserrat",
+        "fontDisplay": "Great Vibes"
+    },
+    "hero": {
+        "subtitle": "✨ Mis XV Años ✨",
+        "name": "Melani Marisol",
+        "date": "2 DE MAYO 2026",
+        "backgroundImage": "hero-bg.png",
+        "song": "Ma-Belle-Evangeline.mp3"
+    },
+    "intro": {
+        "message": "Con la bendición de Dios y de mis papás",
+        "label": "Mis Papás",
+        "parent1": "José Alberto Medina García",
+        "parent2": "Catalina Palacios Romero",
+        "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años de su hija"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Jorge Luis Reyes Roque",
+        "photo1": "",
+        "padrino2": "María del Refugio Torres Marmolejo",
+        "photo2": ""
+    },
+    "countdown": {
+        "targetDate": "2026-05-02T19:00:00",
+        "displayDate": "sábado, 2 de mayo",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "XV Años de Melani Marisol",
+        "description": "¡Celebra los XV Años de Melani Marisol con nosotros!",
+        "location": "Quinta Sarai, Av. Siglo XXI KM 3.5, Aguascalientes",
+        "startDateTime": "20260502T190000",
+        "endDateTime": "20260503T020000",
+        "outlookStart": "2026-05-02T19:00:00",
+        "outlookEnd": "2026-05-03T02:00:00",
+        "icsFilename": "xv-michel-mtz.ics",
+        "icsProdId": "XV Melani"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Santa María Estrella de la Evangelización",
+            "address": "Calle Alfa Col. La Estrella, Aguascalientes, Ags.",
+            "time": "7:00 PM",
+            "mapLink": "https://maps.app.goo.gl/kDFwgahtGoUxw8yd9"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Quinta Sarai",
+            "address": "Av. Siglo XXI KM 3.5",
+            "time": "8:00 PM",
+            "mapLink": "https://maps.app.goo.gl/YEdgpgBVP1a6hrjU8"
+        }
+    ],
+    "dressCode": {
+        "enabled": true,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": [
+            {
+                "src": "img1.jpg",
+                "caption": "La Princesa"
+            },
+            {
+                "src": "img2.jpg",
+                "caption": "Mis XV"
+            },
+            {
+                "src": "img3.jpg",
+                "caption": "En familia"
+            },
+            {
+                "src": "img4.jpg",
+                "caption": "¡Feliz!"
+            }
+        ]
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Lluvia de Sobres",
+        "envelopeDescription": "Es una tradición de ahora regalar efectivo en sobres que estarán a la entrada de la fiesta para colocarse en un buzón.",
+        "link": "",
+        "linkText": ""
+    },
+    "itinerary": {
+        "enabled": true,
+        "decorationImage": "tiana-sketch.png",
+        "items": [
+            {
+                "time": "7:00 PM",
+                "event": "Ceremonia Religiosa",
+                "icon": "church",
+                "description": "Santa María Estrella de la Evangelización"
+            },
+            {
+                "time": "8:00 PM",
+                "event": "Recepción",
+                "icon": "party",
+                "description": "Quinta Sarai"
+            },
+            {
+                "time": "9:00 PM",
+                "event": "Vals",
+                "icon": "music",
+                "description": "Momento Especial"
+            },
+            {
+                "time": "9:30 PM",
+                "event": "Cena",
+                "icon": "food",
+                "description": "Banquete en Quinta Sarai"
+            }
+        ]
+    },
+    "rsvp": {
+        "mode": "whatsapp",
+        "whatsappNumber": "524691761149",
+        "whatsappConfirmMessage": "🐸👑 ¡Hola! Soy {name}. Confirmo mi asistencia a los XV Años de Melani Marisol para {guests} persona(s). ¡Nos vemos en la fiesta! 🎉✨",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir a los XV Años de Melani Marisol, pero le deseo lo mejor en esta hermosa celebración. ¡Muchas felicidades! 💚",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": true,
+            "number": "524495915005",
+            "text": "¡Felices XV años Melani! Te deseo lo mejor en tu día. 🎉👑",
+            "label": "¿Quieres enviarle un mensaje a la festejada?",
+            "buttonText": "Enviar mensaje a Melani 💚"
+        }
+    },
+    "footer": {
+        "name": "Melani Marisol",
+        "subtitle": "XV Años • 2 de Mayo 2026",
+        "emojis": ["🐸", "👑", "🪷"]
+    }
+}
