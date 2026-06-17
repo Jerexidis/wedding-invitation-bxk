@@ -129,9 +129,47 @@ export default function MichelMtzInvitation() {
                 .michel-mtz-invitation .padrinos-wrapper section > div:first-child + div {
                     display: none;
                 }
-                /* Match Padrinos font size to parents (text-2xl / text-3xl) */
+                /* Avoid parents' names wrapping to 2 lines on small screens */
+                .michel-mtz-invitation .intro-wrapper .rounded-3xl {
+                    padding-left: 1.25rem !important;
+                    padding-right: 1.25rem !important;
+                }
+                .michel-mtz-invitation .intro-wrapper p.font-inv-display {
+                    font-size: 1.25rem !important;
+                }
+                @media (min-width: 375px) {
+                    .michel-mtz-invitation .intro-wrapper p.font-inv-display {
+                        font-size: 1.35rem !important;
+                    }
+                }
+                @media (min-width: 410px) {
+                    .michel-mtz-invitation .intro-wrapper p.font-inv-display {
+                        font-size: 1.5rem !important;
+                    }
+                    .michel-mtz-invitation .intro-wrapper .rounded-3xl {
+                        padding-left: 2rem !important;
+                        padding-right: 2rem !important;
+                    }
+                }
+                @media (min-width: 768px) {
+                    .michel-mtz-invitation .intro-wrapper p.font-inv-display {
+                        font-size: 1.875rem !important;
+                    }
+                }
+
+                /* Match Padrinos font size to parents and scale responsively */
                 .michel-mtz-invitation .padrinos-wrapper p.font-inv-display {
-                    font-size: 1.5rem !important;
+                    font-size: 1.25rem !important;
+                }
+                @media (min-width: 375px) {
+                    .michel-mtz-invitation .padrinos-wrapper p.font-inv-display {
+                        font-size: 1.35rem !important;
+                    }
+                }
+                @media (min-width: 410px) {
+                    .michel-mtz-invitation .padrinos-wrapper p.font-inv-display {
+                        font-size: 1.5rem !important;
+                    }
                 }
                 @media (min-width: 768px) {
                     .michel-mtz-invitation .padrinos-wrapper p.font-inv-display {
