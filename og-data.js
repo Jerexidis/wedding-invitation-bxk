@@ -26,6 +26,11 @@ export const ogData = {
         description: 'Estás cordialmente invitado(a) a celebrar mis XV años. ¡Toca aquí para ver la invitación!',
         image: '/invitations/melani-marisol/img/og-preview-v5.jpg',
     },
+    'michel-mtz': {
+        title: 'Mis XV Años — Michel Guadalupe 🐸✨',
+        description: 'Estás cordialmente invitado(a) a celebrar mis XV años. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/michel-mtz/img/og-preview.png',
+    },
     'despedida-kass-brian': {
         title: 'Despedida de Solteros | Kass & Brian 🎉',
         description: '¡Estás invitad@ a nuestra Despedida de Solteros! 16 de mayo 2026. ¡No faltes!',

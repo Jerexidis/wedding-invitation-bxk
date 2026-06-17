@@ -87,7 +87,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'whatsapp',
-        eventDate: '2026-05-02T19:00:00',
+        eventDate: '2026-06-27T19:00:00',
     },
 
 ]

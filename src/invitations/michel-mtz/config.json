@@ -16,6 +16,9 @@
         "backgroundImage": "hero-bg.png",
         "song": "Ma-Belle-Evangeline.mp3"
     },
+    "seo": {
+        "shareImage": "og-preview.png"
+    },
     "intro": {
         "message": "Con la bendición de Dios y de mis papás",
         "label": "Mis Papás",
@@ -50,14 +53,6 @@
     },
     "events": [
         {
-            "icon": "church",
-            "title": "Ceremonia Religiosa",
-            "location": "Santa María Estrella de la Evangelización",
-            "address": "Calle Alfa Col. La Estrella, Aguascalientes, Ags.",
-            "time": "7:00 PM",
-            "mapLink": "https://maps.app.goo.gl/kDFwgahtGoUxw8yd9"
-        },
-        {
             "icon": "party",
             "title": "Recepción",
             "location": "Salon Santa María",
@@ -74,20 +69,16 @@
     "gallery": {
         "photos": [
             {
-                "src": "img1.jpg",
+                "src": "1.webp",
                 "caption": "La Princesa"
             },
             {
-                "src": "img2.jpg",
-                "caption": "Mis XV"
+                "src": "2.webp",
+                "caption": "Mis Momentos"
             },
             {
-                "src": "img3.jpg",
+                "src": "3.webp",
                 "caption": "En familia"
-            },
-            {
-                "src": "img4.jpg",
-                "caption": "¡Feliz!"
             }
         ]
     },
@@ -106,14 +97,8 @@
         "decorationImage": "tiana-sketch.png",
         "items": [
             {
-                "time": "7:00 PM",
-                "event": "Ceremonia Religiosa",
-                "icon": "church",
-                "description": "Santa María Estrella de la Evangelización"
-            },
-            {
                 "time": "8:00 PM",
-                "event": "Recepción",
+                "event": "Salon Santa Maria",
                 "icon": "party",
                 "description": "Quinta Sarai"
             },
@@ -127,7 +112,7 @@
                 "time": "9:30 PM",
                 "event": "Cena",
                 "icon": "food",
-                "description": "Banquete en Quinta Sarai"
+                "description": "Banquete en Salon Santa Maria"
             }
         ]
     },
