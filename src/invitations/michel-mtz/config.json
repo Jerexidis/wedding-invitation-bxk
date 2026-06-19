@@ -101,22 +101,22 @@
         "decorationImage": "tiana-sketch.png",
         "items": [
             {
-                "time": "8:00 PM",
+                "time": "5:00 PM",
                 "event": "Salon Santa Maria",
                 "icon": "party",
                 "description": ""
             },
             {
-                "time": "9:00 PM",
-                "event": "Vals",
-                "icon": "music",
-                "description": "Momento Especial"
-            },
-            {
-                "time": "9:30 PM",
-                "event": "Cena",
+                "time": "6:00 PM",
+                "event": "Banquete",
                 "icon": "food",
                 "description": "Banquete en Salon Santa Maria"
+            },
+            {
+                "time": "7:00 PM",
+                "event": "Vals",
+                "icon": "music",
+                "description": "Momento especial"
             }
         ]
     },
