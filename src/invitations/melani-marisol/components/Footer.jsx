@@ -35,7 +35,7 @@ const Footer = () => {
                     Melani Marisol
                 </p>
                 <p className="text-rana-gray text-sm mb-4">
-                    XV Años • 2 de Mayo 2026
+                    XV Años • 21 de Noviembre 2026
                 </p>
 
                 <a

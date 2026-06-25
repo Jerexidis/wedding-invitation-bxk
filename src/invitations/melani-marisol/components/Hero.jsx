@@ -145,7 +145,7 @@ const Hero = () => {
                     <div className="w-16 h-[1px] bg-rana-accent/60" />
                 </div>
                 <p className="text-base md:text-lg tracking-[0.2em] font-light text-rana-lily">
-                    2 DE MAYO 2026
+                    21 DE NOVIEMBRE 2026
                 </p>
             </div>
 

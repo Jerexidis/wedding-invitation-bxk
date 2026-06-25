@@ -3,7 +3,7 @@
     "eventType": "despedida",
     "title": "Despedida de Solteros | Kass & Brian",
     "seo": {
-        "description": "¡Estás invitad@ a nuestra Despedida de Solteros! 🎉 Kass & Brian — 16 de mayo 2026. ¡No faltes!",
+        "description": "¡Estás invitad@ a nuestra Despedida de Solteros! 🎉 Kass & Brian — 17 de octubre 2026. ¡No faltes!",
         "shareImage": "share-preview.png"
     },
     "theme": {
@@ -16,7 +16,7 @@
     "hero": {
         "subtitle": "¡Despedida de Solteros!",
         "name": "Kass & Brian",
-        "date": "16 DE MAYO DE 2026",
+        "date": "17 DE OCTUBRE DE 2026",
         "backgroundImage": "hero-pareja.png",
         "song": ""
     },
@@ -35,18 +35,18 @@
         "padrino2": ""
     },
     "countdown": {
-        "targetDate": "2026-05-16T19:00:00",
-        "displayDate": "sábado, 16 de mayo",
+        "targetDate": "2026-10-17T19:00:00",
+        "displayDate": "sábado, 17 de octubre",
         "displayYear": "2026"
     },
     "calendar": {
         "title": "Despedida de Kass & Brian",
         "description": "¡Ven a celebrar con nosotros nuestra despedida de solteros!",
         "location": "Casa de Rebeca",
-        "startDateTime": "20260516T180000",
-        "endDateTime": "20260516T235900",
-        "outlookStart": "2026-05-16T18:00:00",
-        "outlookEnd": "2026-05-16T23:59:00",
+        "startDateTime": "20261017T180000",
+        "endDateTime": "20261017T235900",
+        "outlookStart": "2026-10-17T18:00:00",
+        "outlookEnd": "2026-10-17T23:59:00",
         "icsFilename": "despedida-kass-brian.ics",
         "icsProdId": "Despedida | Kass & Brian"
     },
@@ -87,13 +87,13 @@
         "whatsappNumber": "524491234567",
         "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia a la despedida para {guests} persona(s). 🎉",
         "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir a la despedida.",
-        "deadline": "Por favor confirma tu asistencia a más tardar el 1 de mayo",
+        "deadline": "Por favor confirma tu asistencia a más tardar el 10 de octubre",
         "directMessage": {
             "enabled": false
         }
     },
     "footer": {
         "name": "Kass & Brian",
-        "subtitle": "Despedida de Solteros • sábado, 16 de mayo"
+        "subtitle": "Despedida de Solteros • sábado, 17 de octubre"
     }
 }

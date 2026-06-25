@@ -3,9 +3,8 @@ import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { useCountdown } from '../../../hooks/useCountdown';
 import Confetti from '../../../components/Confetti';
 
-// Fecha del evento — centralizada para consistencia
-// TODO: Restaurar a '2026-05-30T16:00:00' después de testear
-const EVENT_DATE = '2026-05-30T16:00:00';
+// Fecha futura ficticia para mantener activo el contador del portafolio.
+const EVENT_DATE = '2026-12-12T16:00:00';
 
 const Hero = () => {
     const audioRef = useRef(null);

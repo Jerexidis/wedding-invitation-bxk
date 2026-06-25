@@ -37,15 +37,15 @@ const AddToCalendar = () => {
         title: "Boda Kassandra & Brian",
         description: "¡Celebra nuestra boda con nosotros!",
         location: "Quinta Maria Jardin de Eventos",
-        start: "20260530T160000",
-        end: "20260530T230000",
+        start: "20261212T160000",
+        end: "20261212T230000",
     };
 
     // URLs de calendarios
     const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start}/${event.end}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
 
-    const outlookStart = "2026-05-30T16:00:00";
-    const outlookEnd = "2026-05-30T23:00:00";
+    const outlookStart = "2026-12-12T16:00:00";
+    const outlookEnd = "2026-12-12T23:00:00";
     const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(event.title)}&body=${encodeURIComponent(event.description)}&startdt=${outlookStart}&enddt=${outlookEnd}&location=${encodeURIComponent(event.location)}`;
 
     const openAppleCalendar = () => {

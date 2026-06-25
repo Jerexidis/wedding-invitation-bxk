@@ -3,7 +3,7 @@ import { useCountdown } from '../../../hooks/useCountdown';
 import Confetti from '../../../components/Confetti';
 
 // Fecha de la boda — usamos el hook compartido en lugar de lógica inline
-const WEDDING_DATE = '2026-05-30T16:00:00';
+const WEDDING_DATE = '2026-12-12T16:00:00';
 
 const Countdown = () => {
     const { days, hours, minutes, seconds, isTime } = useCountdown(WEDDING_DATE);
@@ -35,7 +35,7 @@ const Countdown = () => {
 
                 {!isTime && (
                     <div className="mb-8 animate-fade-in">
-                        <p className="text-xl md:text-3xl text-slate-700 font-serif mb-2">Sábado, 30 de Mayo</p>
+                        <p className="text-xl md:text-3xl text-slate-700 font-serif mb-2">Sábado, 12 de Diciembre</p>
                         <p className="text-lg text-slate-500 uppercase tracking-widest">2026</p>
                     </div>
                 )}

@@ -6,7 +6,7 @@ const Countdown = () => {
     const [isTime, setIsTime] = useState(false);
 
     useEffect(() => {
-        const eventDate = new Date("May 2, 2026 19:00:00").getTime();
+        const eventDate = new Date("November 21, 2026 19:00:00").getTime();
 
         const updateTimer = () => {
             const now = new Date().getTime();
@@ -81,7 +81,7 @@ const Countdown = () => {
 
                 {!isTime && (
                     <div className="mb-8 animate-fade-in">
-                        <p className="text-xl md:text-3xl text-rana-dark font-serif mb-2">Sábado, 2 de Mayo</p>
+                        <p className="text-xl md:text-3xl text-rana-dark font-serif mb-2">Sábado, 21 de Noviembre</p>
                         <p className="text-lg text-rana-gray uppercase tracking-widest">2026</p>
                     </div>
                 )}

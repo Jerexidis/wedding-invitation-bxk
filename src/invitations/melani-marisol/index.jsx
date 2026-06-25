@@ -5,7 +5,6 @@ import Padrinos from './components/Padrinos'
 import Countdown from './components/Countdown'
 import Events from './components/Events'
 import DressCode from './components/DressCode'
-import Gallery from './components/Gallery'
 import Gifts from './components/Gifts'
 import Itinerary from './components/Itinerary'
 import RSVP from './components/RSVP'
@@ -20,7 +19,6 @@ function MelaniMarisol() {
             <Countdown />
             <Events />
             <DressCode />
-            <Gallery />
             <Gifts />
             <Itinerary />
             <RSVP />

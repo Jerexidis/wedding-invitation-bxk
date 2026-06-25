@@ -20,14 +20,14 @@ const AddToCalendar = () => {
         title: "XV Años de Melani Marisol",
         description: "¡Celebra los XV Años de Melani Marisol con nosotros!",
         location: "Quinta Sarai, Av. Siglo XXI KM 3.5, Aguascalientes",
-        start: "20260502T190000",
-        end: "20260503T020000",
+        start: "20261121T190000",
+        end: "20261122T020000",
     };
 
     const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start}/${event.end}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
 
-    const outlookStart = "2026-05-02T19:00:00";
-    const outlookEnd = "2026-05-03T02:00:00";
+    const outlookStart = "2026-11-21T19:00:00";
+    const outlookEnd = "2026-11-22T02:00:00";
     const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(event.title)}&body=${encodeURIComponent(event.description)}&startdt=${outlookStart}&enddt=${outlookEnd}&location=${encodeURIComponent(event.location)}`;
 
     const openAppleCalendar = () => {
