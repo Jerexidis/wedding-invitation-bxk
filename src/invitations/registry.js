@@ -90,6 +90,16 @@ const invitations = [
         eventDate: '2026-06-27T19:00:00',
     },
 
+    {
+        slug: 'maria-loyola',
+        title: 'XV Años | María José Loyola Lopéz',
+        component: lazy(() => import('./maria-loyola/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'mixed',
+        eventDate: '2026-07-25T18:00:00',
+    },
+
 ]
 
 // Solo invitaciones activas

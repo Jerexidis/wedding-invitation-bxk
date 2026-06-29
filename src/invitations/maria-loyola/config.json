@@ -1,0 +1,159 @@
+{
+    "slug": "maria-loyola",
+    "eventType": "xv",
+    "title": "XV Años | María José Loyola Lopéz",
+    "theme": {
+        "primaryHue": 15,
+        "primarySat": 70,
+        "accentHue": 20,
+        "fontBody": "Montserrat",
+        "fontDisplay": "Great Vibes"
+    },
+    "hero": {
+        "subtitle": "✨ Mis XV Años ✨",
+        "name": "María José",
+        "date": "25 DE JULIO DE 2026",
+        "backgroundImage": "victoria_hero_bg.png",
+        "song": "No Crezcas Mas - Karaoke Pista Original - Tercer Cielo.mp3"
+    },
+    "intro": {
+        "message": "Con la bendición de Dios",
+        "label": "Mis Papás",
+        "parent1": "Elisa Fabiola Noreth Lechuga Fuentes",
+        "parent2": "Horeb Israel Loyola Lopéz",
+        "parent2Deceased": true,
+        "closingMessage": "Tienen el honor de invitarte a celebrar los XV Años"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Clemente Ponce Ibarra",
+        "photo1": "",
+        "padrino2": "Martha A. Zapata Glez",
+        "photo2": ""
+    },
+    "countdown": {
+        "targetDate": "2026-07-25T18:00:00",
+        "displayDate": "sábado, 25 de julio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "XV Años | María José Loyola Lopéz",
+        "description": "¡Celebra con nosotros!",
+        "location": "Nuestra Señora del Refugio",
+        "startDateTime": "20260725T180000",
+        "endDateTime": "20260726T020000",
+        "outlookStart": "2026-07-25T18:00:00",
+        "outlookEnd": "2026-07-26T02:00:00",
+        "icsFilename": "maria-loyola.ics",
+        "icsProdId": "XV Años | María José Loyola Lopéz"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Nuestra Señora del Refugio",
+            "address": "H. Colegio Militar #330, Col. del Trabajo",
+            "time": "6:00 pm",
+            "mapLink": ""
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Salón la Toscana",
+            "address": "Albéniz 215, Santa Anita Segunda Sección",
+            "time": "7:00 pm",
+            "mapLink": ""
+        }
+    ],
+    "dressCode": {
+        "enabled": true,
+        "type": "Formal",
+        "restriction": "No llevar color salmón",
+        "image": ""
+    },
+    "gallery": {
+        "photos": [
+            {
+                "src": "carrete_1.jpeg",
+                "caption": "✨ Brillando a mi manera."
+            },
+            {
+                "src": "carrete_2.jpeg",
+                "caption": "🌷 Entre sueños y sonrisas."
+            },
+            {
+                "src": "carrete_3.jpeg",
+                "caption": "💫 Mi historia continúa."
+            },
+            {
+                "src": "carrete_4.jpeg",
+                "caption": "👑 Un día para recordar siempre."
+            },
+            {
+                "src": "carrete_6.jpeg",
+                "caption": "🩷 Quince primaveras de felicidad."
+            }
+        ]
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Mesa de Regalos",
+        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Lluvia de Sobres",
+        "envelopeDescription": "Tu cariño en un sobre será un hermoso detalle.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": true,
+        "items": [
+            {
+                "icon": "church",
+                "time": "6:00 PM",
+                "event": "Misa",
+                "description": "Nuestra Señora del Refugio"
+            },
+            {
+                "icon": "party",
+                "time": "7:00 PM",
+                "event": "Recepción",
+                "description": "Salón la Toscana"
+            },
+            {
+                "icon": "music",
+                "time": "8:15 PM",
+                "event": "Vals y Brindis",
+                "description": "Momento especial"
+            },
+            {
+                "icon": "food",
+                "time": "8:45 PM",
+                "event": "Cena",
+                "description": "Banquete"
+            },
+            {
+                "icon": "party",
+                "time": "9:30 PM",
+                "event": "Cabina de Fotos y Baile",
+                "description": "¡A celebrar!"
+            }
+        ]
+    },
+    "rsvp": {
+        "mode": "mixed",
+        "whatsappNumber": "528180861564",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "María José Loyola Lopéz",
+        "subtitle": "XV Años • sábado, 25 de julio"
+    }
+}
