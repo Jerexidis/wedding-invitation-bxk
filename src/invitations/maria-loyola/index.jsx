@@ -104,11 +104,11 @@ export default function MariaLoyolaInvitation() {
             {/* Custom Styles for María José Loyola Coral & Cornsilk Theme */}
             <style>{`
                 /* Replace the default ✦ character in dividers with a beautiful modern floral emoji */
-                .maria-loyola-invitation .text-inv-accent.text-sm {
+                .maria-loyola-invitation .text-inv-accent.text-sm:not(p) {
                     visibility: hidden;
                     position: relative;
                 }
-                .maria-loyola-invitation .text-inv-accent.text-sm::after {
+                .maria-loyola-invitation .text-inv-accent.text-sm:not(p)::after {
                     content: "🌸";
                     visibility: visible;
                     position: absolute;
