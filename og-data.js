@@ -56,4 +56,9 @@ export const ogData = {
         description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
         image: '/invitations/victoria-rojas/img/og-preview.jpg',
     },
+    'maria-loyola': {
+        title: 'XV Años | María José Loyola Lopéz ✨',
+        description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/maria-loyola/img/og-preview.jpg',
+    },
 }

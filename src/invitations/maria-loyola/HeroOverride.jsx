@@ -68,20 +68,6 @@ const HeroOverride = ({ data, basePath }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#46231C]/90 via-[#64372D]/35 to-[#FAEFCA]/15" />
             </div>
 
-            <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none">
-                <FloatingLily
-                    basePath={basePath}
-                    variant="cream"
-                    className="absolute -left-14 top-[9%] w-44 sm:w-56 md:w-72 opacity-80 -rotate-12"
-                />
-                <FloatingLily
-                    basePath={basePath}
-                    variant="coral"
-                    delay="-1.4s"
-                    className="absolute -right-10 bottom-[18%] w-36 sm:w-48 md:w-60 opacity-75 rotate-12"
-                />
-            </div>
-
             {/* Main Content */}
             <div className="relative z-10 text-white animate-fade-in space-y-4 px-6 pb-24 md:pb-16 text-center">
 
