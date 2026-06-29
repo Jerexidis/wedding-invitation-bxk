@@ -92,7 +92,7 @@ const invitations = [
 
     {
         slug: 'maria-loyola',
-        title: 'XV Años | María José Loyola Lopéz',
+        title: 'XV Años | María José Loyola Lechuga',
         component: lazy(() => import('./maria-loyola/index.jsx')),
         enabled: true,
         eventType: 'xv',

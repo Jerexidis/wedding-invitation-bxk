@@ -1,7 +1,7 @@
 {
     "slug": "maria-loyola",
     "eventType": "xv",
-    "title": "XV Años | María José Loyola Lopéz",
+    "title": "XV Años | María José Loyola Lechuga",
     "theme": {
         "primaryHue": 15,
         "primarySat": 70,
@@ -39,7 +39,7 @@
         "displayYear": "2026"
     },
     "calendar": {
-        "title": "XV Años | María José Loyola Lopéz",
+        "title": "XV Años | María José Loyola Lechuga",
         "description": "¡Celebra con nosotros!",
         "location": "Nuestra Señora del Refugio",
         "startDateTime": "20260725T180000",
@@ -47,7 +47,7 @@
         "outlookStart": "2026-07-25T18:00:00",
         "outlookEnd": "2026-07-26T02:00:00",
         "icsFilename": "maria-loyola.ics",
-        "icsProdId": "XV Años | María José Loyola Lopéz"
+        "icsProdId": "XV Años | María José Loyola Lechuga"
     },
     "events": [
         {
@@ -56,7 +56,7 @@
             "location": "Nuestra Señora del Refugio",
             "address": "H. Colegio Militar #330, Col. del Trabajo",
             "time": "6:00 pm",
-            "mapLink": ""
+            "mapLink": "https://maps.app.goo.gl/WXJ8HCrGnDa993Mf7"
         },
         {
             "icon": "party",
@@ -64,7 +64,7 @@
             "location": "Salón la Toscana",
             "address": "Albéniz 215, Santa Anita Segunda Sección",
             "time": "7:00 pm",
-            "mapLink": ""
+            "mapLink": "https://maps.app.goo.gl/CAqz8XugwmmoHqDo8"
         }
     ],
     "dressCode": {
@@ -83,7 +83,7 @@
             {
                 "src": "10.avif",
                 "caption": "",
-                "position": "center 20%"
+                "position": "center 15%"
             },
             {
                 "src": "9.avif",
@@ -96,46 +96,46 @@
                 "position": "center 15%"
             },
             {
-                "src": "7.avif",
-                "caption": "",
-                "position": "center 20%"
-            },
-            {
-                "src": "6.avif",
+                "src": "5.avif",
                 "caption": "",
                 "position": "center 15%"
             },
             {
-                "src": "5.avif",
+                "src": "6.avif",
+                "caption": "",
+                "position": "center 20%"
+            },
+            {
+                "src": "7.avif",
                 "caption": "",
                 "position": "center 15%"
             },
             {
                 "src": "4.avif",
                 "caption": "",
-                "position": "center 15%"
+                "position": "center 20%"
             },
             {
                 "src": "3.avif",
                 "caption": "",
-                "position": "center 15%"
+                "position": "center 20%"
             },
             {
                 "src": "2.avif",
                 "caption": "",
-                "position": "center 20%"
+                "position": "center 15%"
             },
             {
                 "src": "1.avif",
                 "caption": "",
-                "position": "center 25%"
+                "position": "center 20%"
             }
         ]
     },
     "gifts": {
         "enabled": true,
-        "title": "Mesa de Regalos",
-        "message": "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:",
+        "title": "Regalo o lluvia de sobre",
+        "message": "",
         "type": "envelope",
         "envelopeText": "Lluvia de Sobres",
         "envelopeDescription": "Tu cariño en un sobre será un hermoso detalle.",
@@ -188,7 +188,7 @@
         }
     },
     "footer": {
-        "name": "María José Loyola Lopéz",
+        "name": "María José Loyola Lechuga",
         "subtitle": "XV Años • sábado, 25 de julio"
     }
 }

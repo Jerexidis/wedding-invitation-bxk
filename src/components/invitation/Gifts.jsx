@@ -10,7 +10,7 @@ const Gifts = ({ data, basePath }) => {
                     <Gift className="w-8 h-8 text-inv-primary" />
                 </div>
                 <h3 className="text-3xl md:text-4xl font-inv-display text-inv-primary mb-4">{data.title}</h3>
-                <p className="text-inv-gray mb-8 max-w-md mx-auto">{data.message}</p>
+                {data.message && <p className="text-inv-gray mb-8 max-w-md mx-auto">{data.message}</p>}
                 <div className="bg-gradient-to-br from-inv-cream to-inv-light p-8 rounded-3xl border border-inv-lily/50 max-w-md mx-auto shadow-sm">
                     <div className="flex flex-col items-center justify-center gap-4">
                         {data.type === 'link' && data.link ? (
