@@ -14,7 +14,7 @@
         "name": "María José",
         "date": "25 DE JULIO DE 2026",
         "backgroundImage": "maria_hero_bg.png",
-        "song": "No Crezcas Mas - Karaoke Pista Original - Tercer Cielo.mp3"
+        "song": "Corazon.webm"
     },
     "intro": {
         "message": "Con la bendición de Dios",
@@ -76,24 +76,59 @@
     "gallery": {
         "photos": [
             {
-                "src": "carrete_1.jpeg",
-                "caption": "✨ Brillando a mi manera."
+                "src": "11.avif",
+                "caption": "",
+                "position": "center 15%"
             },
             {
-                "src": "carrete_2.jpeg",
-                "caption": "🌷 Entre sueños y sonrisas."
+                "src": "10.avif",
+                "caption": "",
+                "position": "center 20%"
             },
             {
-                "src": "carrete_3.jpeg",
-                "caption": "💫 Mi historia continúa."
+                "src": "9.avif",
+                "caption": "",
+                "position": "center 15%"
             },
             {
-                "src": "carrete_4.jpeg",
-                "caption": "👑 Un día para recordar siempre."
+                "src": "8.avif",
+                "caption": "",
+                "position": "center 15%"
             },
             {
-                "src": "carrete_6.jpeg",
-                "caption": "🩷 Quince primaveras de felicidad."
+                "src": "7.avif",
+                "caption": "",
+                "position": "center 20%"
+            },
+            {
+                "src": "6.avif",
+                "caption": "",
+                "position": "center 15%"
+            },
+            {
+                "src": "5.avif",
+                "caption": "",
+                "position": "center 15%"
+            },
+            {
+                "src": "4.avif",
+                "caption": "",
+                "position": "center 15%"
+            },
+            {
+                "src": "3.avif",
+                "caption": "",
+                "position": "center 15%"
+            },
+            {
+                "src": "2.avif",
+                "caption": "",
+                "position": "center 20%"
+            },
+            {
+                "src": "1.avif",
+                "caption": "",
+                "position": "center 25%"
             }
         ]
     },

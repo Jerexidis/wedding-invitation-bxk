@@ -19,7 +19,7 @@ const CountdownOverride = ({ data, calendar, basePath }) => {
                 </div>
 
                 {!isTime && (
-                    <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-10">
+                    <div className="flex flex-nowrap justify-center gap-2 md:gap-6 mb-10">
                         <TimerBox value={days} label="Días" />
                         <TimerBox value={hours} label="Horas" />
                         <TimerBox value={minutes} label="Minutos" />
@@ -40,9 +40,9 @@ const CountdownOverride = ({ data, calendar, basePath }) => {
 
 const TimerBox = ({ value, label }) => (
     <div className="flex flex-col items-center">
-        <div className="w-24 h-24 md:w-28 md:h-28 bg-white/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center shadow-md transform hover:scale-105 transition-transform duration-300 border border-inv-lily/30">
-            <span className="text-3xl md:text-4xl font-bold leading-none text-inv-accent-warm">{value < 10 ? `0${value}` : value}</span>
-            <span className="text-[0.6rem] uppercase tracking-wider mt-1.5 text-inv-gray font-medium">{label}</span>
+        <div className="w-[72px] h-[72px] md:w-28 md:h-28 bg-white/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center shadow-md transform hover:scale-105 transition-transform duration-300 border border-inv-lily/30">
+            <span className="text-2xl md:text-4xl font-bold leading-none text-inv-accent-warm">{value < 10 ? `0${value}` : value}</span>
+            <span className="text-[0.5rem] md:text-[0.6rem] uppercase tracking-wider mt-1 text-inv-gray font-medium">{label}</span>
         </div>
     </div>
 );

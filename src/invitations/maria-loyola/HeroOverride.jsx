@@ -1,41 +1,37 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, ChevronDown } from 'lucide-react';
-import { FloralDivider } from './FloralDecorations';
+import { FloralDivider, FloatingLily } from './FloralDecorations';
 
 const HeroOverride = ({ data, basePath }) => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [progress, setProgress] = useState(0);
-    const [needsInteraction, setNeedsInteraction] = useState(false);
 
+    // Sync isPlaying state with actual audio play/pause events
+    // This fixes the bug where the envelope starts the audio but the button still shows "play"
     useEffect(() => {
-        if (!data.song || !audioRef.current) return;
-        const playPromise = audioRef.current.play();
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => setIsPlaying(true))
-                .catch(() => setNeedsInteraction(true));
-        }
-    }, [data.song]);
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handlePlay = () => setIsPlaying(true);
+        const handlePause = () => setIsPlaying(false);
+
+        audio.addEventListener('play', handlePlay);
+        audio.addEventListener('pause', handlePause);
+
+        return () => {
+            audio.removeEventListener('play', handlePlay);
+            audio.removeEventListener('pause', handlePause);
+        };
+    }, []);
 
     const toggleMusic = () => {
         if (!audioRef.current) return;
         if (isPlaying) {
             audioRef.current.pause();
-            setIsPlaying(false);
         } else {
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        setIsPlaying(true);
-                        setNeedsInteraction(false);
-                    })
-                    .catch(() => {
-                        setIsPlaying(false);
-                    });
-            }
+            audioRef.current.play().catch(() => {});
         }
     };
 
@@ -56,17 +52,9 @@ const HeroOverride = ({ data, basePath }) => {
         }
     };
 
-    // Arrays of gold elements for floating particles (stars and flowers)
-    const floatingAssets = [
-        'gold_element_7.png',  // Heart
-        'gold_element_11.png', // Disco
-        'flower_single.png',   // Gold single flower
-        'gold_element_8.png'   // Another Star
-    ];
-
     return (
         <header className="relative min-h-[100dvh] w-full flex flex-col items-center justify-center text-center">
-            {/* Background Image with elegant Champagne Overlay */}
+            {/* Background Image with elegant Coral Overlay */}
             <div className="absolute inset-0 z-0 will-change-transform">
                 <img
                     src={`${basePath}/img/${data.backgroundImage}`}
@@ -80,55 +68,22 @@ const HeroOverride = ({ data, basePath }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#46231C]/90 via-[#64372D]/35 to-[#FAEFCA]/15" />
             </div>
 
-            {/* Floating modern gold elements & flowers */}
-            <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-                {[...Array(7)].map((_, i) => {
-                    const asset = floatingAssets[i % floatingAssets.length];
-                    const size = asset === 'flower_single.png' ? 36 + (i % 3) * 8 : 30 + (i % 3) * 6;
-                    return (
-                        <img
-                            key={i}
-                            src={`${basePath}/img/${asset}`}
-                            className="absolute object-contain opacity-85 select-none pointer-events-none"
-                            style={{
-                                width: `${size}px`,
-                                height: `${size}px`,
-                                left: `${(i * 12 + 8) % 100}%`,
-                                top: `${(i * 17 + 12) % 100}%`,
-                                animation: `floatingPetal ${8 + (i % 4)}s ease-in-out ${(i % 3) * 1.2}s infinite alternate`,
-                                filter: asset.includes('gold') || asset.includes('flower') ? 'drop-shadow(0 2px 4px rgba(218, 171, 107, 0.4))' : 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))'
-                            }}
-                            alt="particle"
-                        />
-                    );
-                })}
-            </div>
-
-            {/* Gold flower trio peaking from the side border next to the name */}
-            <div className="absolute -right-12 md:-right-24 top-[45%] md:top-[18%] z-10 pointer-events-none select-none overflow-visible">
-                {/* Glow behind the side flower */}
-                <div className="absolute inset-0 bg-[#F7E7CE] opacity-20 blur-3xl rounded-full scale-75 translate-x-12"></div>
-                <img
-                    src={`${basePath}/img/flower_trio.png?v=2`}
-                    className="w-44 h-44 md:w-80 md:h-80 object-contain rotate-[-15deg] drop-shadow-[0_4px_20px_rgba(218,171,107,0.4)] animate-float relative z-10"
-                    alt="Flores de Oro Lateral"
+            <div className="absolute inset-0 z-[1] overflow-hidden pointer-events-none">
+                <FloatingLily
+                    basePath={basePath}
+                    variant="cream"
+                    className="absolute -left-14 top-[9%] w-44 sm:w-56 md:w-72 opacity-80 -rotate-12"
                 />
-            </div>
-
-            {/* Gold single flower peaking from the left border in Hero */}
-            <div className="absolute -left-10 md:-left-20 top-[10%] md:top-[8%] z-10 pointer-events-none select-none overflow-visible">
-                {/* Glow behind the side flower */}
-                <div className="absolute inset-0 bg-[#F7E7CE] opacity-20 blur-3xl rounded-full scale-75 -translate-x-12"></div>
-                <img
-                    src={`${basePath}/img/flower_single.png?v=2`}
-                    className="w-32 h-32 md:w-60 md:h-60 object-contain rotate-[15deg] drop-shadow-[0_4px_20px_rgba(218,171,107,0.4)] animate-float relative z-10"
-                    alt="Flor de Oro Lateral Izquierda"
+                <FloatingLily
+                    basePath={basePath}
+                    variant="coral"
+                    delay="-1.4s"
+                    className="absolute -right-10 bottom-[18%] w-36 sm:w-48 md:w-60 opacity-75 rotate-12"
                 />
             </div>
 
             {/* Main Content */}
             <div className="relative z-10 text-white animate-fade-in space-y-4 px-6 pb-24 md:pb-16 text-center">
-
 
                 <p className="text-sm md:text-base uppercase tracking-[0.4em] font-semibold text-[#F88363] drop-shadow-md" style={{ textShadow: '0 1px 8px rgba(248, 131, 99, 0.4)' }}>
                     {data.subtitle}
@@ -142,12 +97,12 @@ const HeroOverride = ({ data, basePath }) => {
                 </h1>
 
                 <div className="flex items-center justify-center gap-4 mt-2">
-                    <div className="w-16 h-[1px] bg-[#F88363]/50" />
-                    <FloralDivider size="small" className="text-[#F88363]" />
-                    <div className="w-16 h-[1px] bg-[#F88363]/50" />
+                    <div className="w-16 h-[1px] bg-white/40" />
+                    <FloralDivider size="small" className="text-white/70" />
+                    <div className="w-16 h-[1px] bg-white/40" />
                 </div>
 
-                <p className="text-base md:text-lg tracking-[0.25em] font-medium text-[#F88363]" style={{ textShadow: '0 1px 10px rgba(248, 131, 99, 0.35)' }}>
+                <p className="text-base md:text-lg tracking-[0.25em] font-medium text-white drop-shadow-md" style={{ textShadow: '0 1px 10px rgba(0, 0, 0, 0.3)' }}>
                     {data.date}
                 </p>
             </div>
@@ -184,8 +139,8 @@ const HeroOverride = ({ data, basePath }) => {
             )}
 
             {/* Scroll Indicator */}
-            <div className={`absolute ${data.song ? 'bottom-24' : 'bottom-8'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-20 text-[#F88363]`}>
-                <span className="text-xs uppercase tracking-[0.25em] font-medium" style={{ textShadow: '0 1px 6px rgba(248, 131, 99, 0.3)' }}>Desliza</span>
+            <div className={`absolute ${data.song ? 'bottom-24' : 'bottom-8'} left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-20 text-white/80`}>
+                <span className="text-xs uppercase tracking-[0.25em] font-medium drop-shadow-md">Desliza</span>
                 <ChevronDown size={24} />
             </div>
 

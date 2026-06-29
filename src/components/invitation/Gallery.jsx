@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 
 const Gallery = ({ data, basePath }) => {
     const initialPhotos = useMemo(
-        () => (data?.photos || []).map(p => ({ src: `${basePath}/img/${p.src}`, caption: p.caption })),
+        () => (data?.photos || []).map(p => ({ src: `${basePath}/img/${p.src}`, caption: p.caption, position: p.position })),
         [basePath, data?.photos]
     );
     const [photos, setPhotos] = useState(initialPhotos);
@@ -45,8 +45,8 @@ const Gallery = ({ data, basePath }) => {
                             let rotation = index % 2 === 0 ? '-rotate-2' : 'rotate-3';
                             if (isTop && isAnimating) rotation = '-translate-x-[150%] -translate-y-[20%] -rotate-[30deg] opacity-0';
                             return (
-                                <div key={photo.caption} className={`absolute top-0 left-0 w-full h-full bg-white p-3 pb-12 shadow-xl rounded-sm transform-gpu transition-[transform,opacity] duration-[600ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] will-change-transform ${rotation}`} style={{ zIndex: index, transformOrigin: 'bottom center', boxShadow: '0 4px 20px rgba(26, 60, 52, 0.15), 0 1px 4px rgba(0,0,0,0.1)' }}>
-                                    <img src={photo.src} alt={photo.caption} loading="lazy" decoding="async" className="w-full h-[80%] object-cover bg-inv-lily/30 border border-inv-lily/20" />
+                                <div key={photo.src} className={`absolute top-0 left-0 w-full h-full bg-white p-3 pb-12 shadow-xl rounded-sm transform-gpu transition-[transform,opacity] duration-[600ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] will-change-transform ${rotation}`} style={{ zIndex: index, transformOrigin: 'bottom center', boxShadow: '0 4px 20px rgba(26, 60, 52, 0.15), 0 1px 4px rgba(0,0,0,0.1)' }}>
+                                    <img src={photo.src} alt={photo.caption} loading="eager" decoding="async" className="w-full h-[80%] object-cover bg-inv-lily/30 border border-inv-lily/20" style={{ objectPosition: photo.position || 'center' }} />
                                     <p className="font-inv-display text-xl text-inv-primary mt-3 transform -rotate-1">{photo.caption}</p>
                                 </div>
                             );

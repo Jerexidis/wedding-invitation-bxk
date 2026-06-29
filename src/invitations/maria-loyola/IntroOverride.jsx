@@ -1,5 +1,5 @@
 import React from 'react';
-import { FloralDivider } from './FloralDecorations';
+import { FloralDivider, FloatingLily } from './FloralDecorations';
 
 const IntroOverride = ({ data, basePath }) => {
     return (
@@ -7,6 +7,12 @@ const IntroOverride = ({ data, basePath }) => {
 
             {/* Modern background elements: A large gold flower on the left and a gold bow on the right */}
             <div className="absolute inset-0 pointer-events-none select-none z-0">
+                <FloatingLily
+                    basePath={basePath}
+                    variant="blush"
+                    delay="-0.8s"
+                    className="absolute -right-20 -bottom-8 w-64 md:w-80 opacity-45 rotate-6"
+                />
                 {/* Large white/gold flower behind cards */}
                 <img
                     src={`${basePath}/img/flower_single.png?v=2`}

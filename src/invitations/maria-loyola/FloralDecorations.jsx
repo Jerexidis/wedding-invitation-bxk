@@ -1,5 +1,27 @@
 import React from 'react';
 
+const floatingLilyFiles = {
+    cream: 'floating_lily_cream.png',
+    coral: 'floating_lily_coral.png',
+    blush: 'floating_lily_blush.png',
+};
+
+export const FloatingLily = ({
+    basePath,
+    variant = 'blush',
+    className = '',
+    delay = '0s',
+}) => (
+    <img
+        src={`${basePath}/img/${floatingLilyFiles[variant] || floatingLilyFiles.blush}`}
+        className={`pointer-events-none select-none object-contain drop-shadow-[0_12px_18px_rgba(100,55,45,0.16)] animate-float ${className}`}
+        style={{ animationDelay: delay }}
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+    />
+);
+
 // Elegante corona floral circular para la sección Hero, reemplazando la corona de princesa.
 export const FloralWreath = ({ className, size = 120 }) => (
     <svg width={size} height={size} viewBox="0 0 120 120" className={className} fill="none" stroke="currentColor" strokeWidth="1.2">
