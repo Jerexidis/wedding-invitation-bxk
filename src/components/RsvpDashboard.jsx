@@ -636,7 +636,9 @@ const RsvpDashboard = () => {
                                                         )}
                                                     </td>
                                                     <td>
-                                                        <span className="rsvp-message-text">{c.message || '—'}</span>
+                                                        <span className={`rsvp-message-text ${slug === 'victoria-rojas' ? 'rsvp-message-scroll-victoria' : ''}`}>
+                                                            {c.message || '—'}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <div className="rsvp-date-cell">
@@ -1138,6 +1140,27 @@ const cssStyles = `
         white-space: pre-wrap;
         word-break: break-word;
         display: block;
+    }
+    .rsvp-message-scroll-victoria {
+        white-space: nowrap !important;
+        overflow-x: auto !important;
+        max-width: 220px !important;
+        scrollbar-width: thin;
+    }
+    .rsvp-message-scroll-victoria::-webkit-scrollbar {
+        height: 3px;
+    }
+    .rsvp-message-scroll-victoria::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .rsvp-message-scroll-victoria::-webkit-scrollbar-thumb {
+        background: #dadce0;
+        border-radius: 2px;
+    }
+    @media (max-width: 768px) {
+        .rsvp-message-scroll-victoria {
+            max-width: 130px !important;
+        }
     }
     .rsvp-date-cell {
         display: flex;
