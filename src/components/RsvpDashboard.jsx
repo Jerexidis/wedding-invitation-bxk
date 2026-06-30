@@ -144,8 +144,14 @@ const RsvpDashboard = () => {
     }
 
     const handleGuestsChange = async (id, newCount) => {
-        const val = parseInt(newCount);
-        if (isNaN(val) || val < 0) return;
+        let val = parseInt(newCount);
+        
+        if (slug === 'maria-loyola') {
+            if (isNaN(val) || val < 1) val = 1;
+            if (val > 6) val = 6;
+        } else {
+            if (isNaN(val) || val < 0) return;
+        }
         
         setUpdatingGuests(prev => ({ ...prev, [id]: true }));
         try {
@@ -572,10 +578,11 @@ const RsvpDashboard = () => {
                                                     </td>
                                                     <td>
                                                         {slug === 'maria-loyola' ? (
-                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                                                 <input
                                                                     type="number"
-                                                                    min="0"
+                                                                    min="1"
+                                                                    max="6"
                                                                     value={c.guests}
                                                                     onChange={(e) => {
                                                                         const val = e.target.value;
@@ -590,8 +597,8 @@ const RsvpDashboard = () => {
                                                                     }}
                                                                     disabled={updatingGuests[c.id]}
                                                                     style={{
-                                                                        width: '64px',
-                                                                        padding: '6px 8px',
+                                                                        width: '56px',
+                                                                        padding: '6px 4px',
                                                                         border: '1px solid #dadce0',
                                                                         borderRadius: '8px',
                                                                         textAlign: 'center',
@@ -602,7 +609,27 @@ const RsvpDashboard = () => {
                                                                         transition: 'all 0.15s'
                                                                     }}
                                                                 />
-                                                                {updatingGuests[c.id] && <div className="rsvp-mini-loader"></div>}
+                                                                <button
+                                                                    onClick={() => handleGuestsChange(c.id, c.guests)}
+                                                                    disabled={updatingGuests[c.id]}
+                                                                    style={{
+                                                                        padding: '6px 10px',
+                                                                        backgroundColor: '#1a73e8',
+                                                                        color: '#ffffff',
+                                                                        border: 'none',
+                                                                        borderRadius: '8px',
+                                                                        cursor: 'pointer',
+                                                                        fontWeight: 'bold',
+                                                                        fontSize: '12px',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        transition: 'background-color 0.15s'
+                                                                    }}
+                                                                    title="Confirmar cantidad"
+                                                                >
+                                                                    {updatingGuests[c.id] ? '...' : '✓'}
+                                                                </button>
                                                             </div>
                                                         ) : (
                                                             <span className="rsvp-guests-badge">{c.guests}</span>
