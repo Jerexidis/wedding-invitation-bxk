@@ -454,6 +454,7 @@ function RSVP({ config }) {
                         <textarea
                             value={form.note}
                             placeholder="Opcional"
+                            maxLength={98}
                             onChange={(event) => setForm({ ...form, note: event.target.value })}
                         />
                     </label>

@@ -65,14 +65,14 @@ const RSVPOverride = ({ data, slug, basePath }) => {
                 // 1. Save to database first
                 await saveToDatabase();
                 setSubmitted(true);
-                // 2. Then open WhatsApp after a short delay so the user sees the success state
+                // 2. Redirect to WhatsApp
                 setTimeout(() => {
-                    window.open(buildWhatsAppUrl(), '_blank');
+                    window.location.href = buildWhatsAppUrl();
                 }, 800);
             } catch (err) {
                 console.error('Error submitting RSVP:', err);
                 // Even if DB fails, still send to WhatsApp
-                window.open(buildWhatsAppUrl(), '_blank');
+                window.location.href = buildWhatsAppUrl();
                 setSubmitted(true);
             } finally {
                 setSubmitting(false);
@@ -119,7 +119,7 @@ const RSVPOverride = ({ data, slug, basePath }) => {
                     </div>
 
                     <div>
-                        <textarea name="message" placeholder="Mensaje para la Quinceañera (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
+                        <textarea name="message" placeholder="Mensaje para la Quinceañera (opcional)" value={formData.message} onChange={handleInputChange} rows={3} maxLength={98} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
                     </div>
 
                     <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">

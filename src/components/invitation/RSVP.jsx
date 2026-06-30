@@ -64,11 +64,11 @@ const RSVP = ({ data, slug, basePath }) => {
                 await saveToDatabase();
                 setSubmitted(true);
                 setTimeout(() => {
-                    window.open(buildWhatsAppUrl(), '_blank');
+                    window.location.href = buildWhatsAppUrl();
                 }, 800);
             } catch (err) {
                 console.error('Error submitting RSVP:', err);
-                window.open(buildWhatsAppUrl(), '_blank');
+                window.location.href = buildWhatsAppUrl();
                 setSubmitted(true);
             } finally {
                 setSubmitting(false);
@@ -118,7 +118,7 @@ const RSVP = ({ data, slug, basePath }) => {
                     </div>
 
                     {(data.mode === 'supabase' || data.mode === 'mixed') && (
-                        <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
+                        <textarea name="message" placeholder="Mensaje (opcional)" value={formData.message} onChange={handleInputChange} rows={3} maxLength={98} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
                     )}
 
                     <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60 text-xs sm:text-sm md:text-base">

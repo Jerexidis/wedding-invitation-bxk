@@ -59,14 +59,14 @@ const RSVPOverride = ({ data, slug, basePath }) => {
                 // 1. Save to database first
                 await saveToDatabase();
                 setSubmitted(true);
-                // 2. Then open WhatsApp after a short delay so the user sees the success state
+                // 2. Redirect to WhatsApp
                 setTimeout(() => {
-                    window.open(buildWhatsAppUrl(), '_blank');
+                    window.location.href = buildWhatsAppUrl();
                 }, 800);
             } catch (err) {
                 console.error('Error submitting RSVP:', err);
                 // Even if DB fails, still send to WhatsApp
-                window.open(buildWhatsAppUrl(), '_blank');
+                window.location.href = buildWhatsAppUrl();
                 setSubmitted(true);
             } finally {
                 setSubmitting(false);
