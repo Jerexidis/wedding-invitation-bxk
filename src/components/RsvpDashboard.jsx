@@ -159,7 +159,7 @@ const RsvpDashboard = () => {
             setConfirmations(prev => prev.map(c => c.id === id ? { ...c, guests: val } : c));
         } catch (err) {
             console.error('Error updating guests:', err);
-            alert('Error al actualizar el número de invitados');
+            alert(err.message || 'Error al actualizar el número de invitados');
         } finally {
             setUpdatingGuests(prev => ({ ...prev, [id]: false }));
         }

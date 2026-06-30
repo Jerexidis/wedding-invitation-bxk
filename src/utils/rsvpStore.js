@@ -30,6 +30,9 @@ export async function updateConfirmationGuests(id, guests) {
         .select()
 
     if (error) throw error
+    if (!data || data.length === 0) {
+        throw new Error('No se actualizó ningún registro. Es posible que falte la política UPDATE en Supabase para usuarios anónimos.')
+    }
     return data[0]
 }
 
