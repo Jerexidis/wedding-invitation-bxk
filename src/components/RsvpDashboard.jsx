@@ -1134,10 +1134,9 @@ const cssStyles = `
     .rsvp-message-text {
         color: #5f6368;
         font-size: 0.8125rem;
-        max-width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        max-width: 300px;
+        white-space: pre-wrap;
+        word-break: break-word;
         display: block;
     }
     .rsvp-date-cell {
