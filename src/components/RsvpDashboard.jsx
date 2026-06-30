@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { getConfirmations, removeConfirmation } from '../utils/rsvpStore'
+import { getConfirmations, removeConfirmation, updateConfirmationGuests } from '../utils/rsvpStore'
 
 const escapeHtml = (value) => String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -17,6 +17,7 @@ const RsvpDashboard = () => {
     const [deleting, setDeleting] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
     const [showExportMenu, setShowExportMenu] = useState(false)
+    const [updatingGuests, setUpdatingGuests] = useState({})
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -142,7 +143,28 @@ const RsvpDashboard = () => {
         }
     }
 
-    const totalGuests = confirmations.reduce((sum, c) => sum + (c.guests || 1), 0)
+    const handleGuestsChange = async (id, newCount) => {
+        const val = parseInt(newCount);
+        if (isNaN(val) || val < 0) return;
+        
+        setUpdatingGuests(prev => ({ ...prev, [id]: true }));
+        try {
+            await updateConfirmationGuests(id, val);
+            setConfirmations(prev => prev.map(c => c.id === id ? { ...c, guests: val } : c));
+        } catch (err) {
+            console.error('Error updating guests:', err);
+            alert('Error al actualizar el número de invitados');
+        } finally {
+            setUpdatingGuests(prev => ({ ...prev, [id]: false }));
+        }
+    };
+
+    const totalGuests = confirmations.reduce((sum, c) => {
+        if (slug === 'maria-loyola') {
+            return sum + (Number(c.guests) || 0)
+        }
+        return sum + (c.guests || 1)
+    }, 0)
 
     const filtered = confirmations.filter(c =>
         c.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -549,7 +571,42 @@ const RsvpDashboard = () => {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <span className="rsvp-guests-badge">{c.guests}</span>
+                                                        {slug === 'maria-loyola' ? (
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                <input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    value={c.guests}
+                                                                    onChange={(e) => {
+                                                                        const val = e.target.value;
+                                                                        setConfirmations(prev => prev.map(item => item.id === c.id ? { ...item, guests: val } : item));
+                                                                    }}
+                                                                    onBlur={(e) => handleGuestsChange(c.id, e.target.value)}
+                                                                    onKeyDown={(e) => {
+                                                                        if (e.key === 'Enter') {
+                                                                            handleGuestsChange(c.id, e.target.value);
+                                                                            e.target.blur();
+                                                                        }
+                                                                    }}
+                                                                    disabled={updatingGuests[c.id]}
+                                                                    style={{
+                                                                        width: '64px',
+                                                                        padding: '6px 8px',
+                                                                        border: '1px solid #dadce0',
+                                                                        borderRadius: '8px',
+                                                                        textAlign: 'center',
+                                                                        fontWeight: '600',
+                                                                        color: '#1a73e8',
+                                                                        background: updatingGuests[c.id] ? '#f1f3f4' : '#fff',
+                                                                        outline: 'none',
+                                                                        transition: 'all 0.15s'
+                                                                    }}
+                                                                />
+                                                                {updatingGuests[c.id] && <div className="rsvp-mini-loader"></div>}
+                                                            </div>
+                                                        ) : (
+                                                            <span className="rsvp-guests-badge">{c.guests}</span>
+                                                        )}
                                                     </td>
                                                     <td>
                                                         <span className="rsvp-message-text">{c.message || '—'}</span>

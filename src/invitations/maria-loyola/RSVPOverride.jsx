@@ -8,38 +8,32 @@ const WhatsAppIcon = ({ className = "w-5 h-5", size }) => (
 );
 
 const RSVPOverride = ({ data, slug, basePath }) => {
-    const [formData, setFormData] = useState({ name: '', guests: 1, message: '' });
+    const [formData, setFormData] = useState({ name: '' });
+    const [attendance, setAttendance] = useState('yes');
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
     const handleNameChange = (e) => {
         const value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
-        setFormData(prev => ({ ...prev, name: value }));
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData({ name: value });
     };
 
     const buildWhatsAppUrl = () => {
-        let messageText = data.whatsappConfirmMessage
-            .replace('{name}', formData.name)
-            .replace('{guests}', formData.guests);
-        
-        if (formData.message.trim()) {
-            messageText += `\n\nMensaje para la Quinceañera: "${formData.message.trim()}"`;
-        }
+        const template = attendance === 'yes'
+            ? data.whatsappConfirmMessage
+            : data.whatsappDeclineMessage;
+        const messageText = template.replace('{name}', formData.name);
         
         return `https://wa.me/${data.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
     };
 
     const saveToDatabase = async () => {
         const { addConfirmation } = await import('../../utils/rsvpStore');
+        const dbMessage = attendance === 'yes' ? '🟢 Sí asisto' : '🔴 No asisto';
         await addConfirmation(slug, {
             name: formData.name,
-            guests: parseInt(formData.guests),
-            message: formData.message,
+            guests: 0,
+            message: dbMessage,
         });
     };
 
@@ -97,6 +91,39 @@ const RSVPOverride = ({ data, slug, basePath }) => {
         );
     }
 
+    const btnStyle = {
+        padding: '14px 16px',
+        borderRadius: '12px',
+        fontWeight: '700',
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        transition: 'all 0.2s ease',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '0.875rem',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        cursor: 'pointer'
+    };
+
+    const activeStyle = {
+        ...btnStyle,
+        backgroundColor: '#B4503C',
+        color: '#ffffff',
+        borderColor: '#B4503C',
+        boxShadow: '0 4px 12px rgba(180, 80, 60, 0.2)',
+        transform: 'scale(1.02)'
+    };
+
+    const inactiveStyle = {
+        ...btnStyle,
+        backgroundColor: '#ffffff',
+        color: '#64372D',
+        borderColor: 'rgba(180, 80, 60, 0.2)',
+        opacity: 0.7
+    };
+
     return (
         <section className="py-24 px-4 bg-gradient-to-b from-inv-dark to-inv-dark/90 text-white relative overflow-hidden">
             <div className="max-w-lg mx-auto relative z-10 bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg p-8 md:p-12 rounded-3xl border border-white/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
@@ -111,15 +138,27 @@ const RSVPOverride = ({ data, slug, basePath }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                     <div>
-                        <input type="text" name="name" required placeholder="Nombre Completo" value={formData.name} onChange={handleNameChange} pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+" title="Solo se permiten letras" className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all shadow-sm" />
+                        <input type="text" name="name" required placeholder="Nombre de la Familia (Ej: Familia González)" value={formData.name} onChange={handleNameChange} pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+" title="Solo se permiten letras" className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all shadow-sm" />
                     </div>
 
-                    <div>
-                        <input type="number" name="guests" min="1" max="10" placeholder="N° de Personas" value={formData.guests} onChange={handleInputChange} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all shadow-sm" />
-                    </div>
-
-                    <div>
-                        <textarea name="message" placeholder="Mensaje para la Quinceañera (opcional)" value={formData.message} onChange={handleInputChange} rows={3} className="w-full px-5 py-4 bg-white/10 backdrop-blur-md border border-white/30 rounded-xl focus:outline-none focus:border-white focus:bg-white/20 focus:ring-1 focus:ring-white/50 text-white placeholder-white/70 transition-all resize-none shadow-sm" />
+                    <div className="space-y-2">
+                        <label className="block text-xs uppercase tracking-[0.2em] font-bold text-white/80" style={{ color: '#64372D' }}>¿Asistirán al evento?</label>
+                        <div className="grid grid-cols-2 gap-4">
+                            <button
+                                type="button"
+                                onClick={() => setAttendance('yes')}
+                                style={attendance === 'yes' ? activeStyle : inactiveStyle}
+                            >
+                                🟢 Sí asisto
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setAttendance('no')}
+                                style={attendance === 'no' ? activeStyle : inactiveStyle}
+                            >
+                                🔴 No asisto
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" disabled={submitting} className="w-full py-4 bg-white hover:bg-white/90 text-inv-dark rounded-xl font-bold tracking-widest uppercase transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-md border border-white disabled:opacity-60">

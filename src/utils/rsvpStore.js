@@ -4,9 +4,29 @@ import { supabase } from './supabase'
  * Agrega una confirmación de asistencia para una invitación.
  */
 export async function addConfirmation(slug, { name, guests, message }) {
+    const parsedGuests = Number(guests);
     const { data, error } = await supabase
         .from('rsvp')
-        .insert([{ slug, name, guests: Number(guests) || 1, message: message || '' }])
+        .insert([{ 
+            slug, 
+            name, 
+            guests: isNaN(parsedGuests) ? 1 : parsedGuests, 
+            message: message || '' 
+        }])
+        .select()
+
+    if (error) throw error
+    return data[0]
+}
+
+/**
+ * Actualiza el número de invitados de una confirmación.
+ */
+export async function updateConfirmationGuests(id, guests) {
+    const { data, error } = await supabase
+        .from('rsvp')
+        .update({ guests: Number(guests) })
+        .eq('id', id)
         .select()
 
     if (error) throw error
@@ -44,5 +64,10 @@ export async function removeConfirmation(id) {
  */
 export async function getTotalGuests(slug) {
     const confirmations = await getConfirmations(slug)
-    return confirmations.reduce((sum, c) => sum + (c.guests || 1), 0)
+    return confirmations.reduce((sum, c) => {
+        if (slug === 'maria-loyola') {
+            return sum + (Number(c.guests) || 0)
+        }
+        return sum + (c.guests || 1)
+    }, 0)
 }

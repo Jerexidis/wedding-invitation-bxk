@@ -179,9 +179,9 @@
     },
     "rsvp": {
         "mode": "mixed",
-        "whatsappNumber": "528180861564",
-        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
-        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "whatsappNumber": "524499851353",
+        "whatsappConfirmMessage": "¡Hola! Confirmo la asistencia de la Familia {name}. 🎉",
+        "whatsappDeclineMessage": "¡Hola! Lamentablemente la Familia {name} no podrá asistir. 😔",
         "deadline": "Por favor confirma tu asistencia",
         "directMessage": {
             "enabled": false
