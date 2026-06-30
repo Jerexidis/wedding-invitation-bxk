@@ -22,7 +22,7 @@ import Footer from './invitation/Footer'
  *
  * Un fix aquí = todas las invitaciones arregladas.
  */
-export default function DynamicInvitation({ config }) {
+export default function DynamicInvitation({ config, hideGallery = false }) {
     const basePath = `/invitations/${config.slug}`
     const themeVars = buildThemeVars(config.theme)
 
@@ -93,7 +93,9 @@ export default function DynamicInvitation({ config }) {
             {config.dressCode?.enabled && (
                 <DressCode data={config.dressCode} basePath={basePath} />
             )}
-            <Gallery data={config.gallery} basePath={basePath} />
+            {!hideGallery && config.gallery?.enabled !== false && (
+                <Gallery data={config.gallery} basePath={basePath} />
+            )}
             <Gifts data={config.gifts} basePath={basePath} />
             {config.itinerary?.enabled && (
                 <Itinerary data={config.itinerary} basePath={basePath} />

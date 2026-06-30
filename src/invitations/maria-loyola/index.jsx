@@ -17,7 +17,7 @@ import Itinerary from '../../components/invitation/Itinerary'
 import FooterOverride from './FooterOverride'
 import { FloatingLily } from './FloralDecorations'
 
-export default function MariaLoyolaInvitation() {
+export default function MariaLoyolaInvitation({ hideGallery = false }) {
     const basePath = `/invitations/${config.slug}`
     const [envelopeOpen, setEnvelopeOpen] = useState(false);
     const [envelopeExit, setEnvelopeExit] = useState(false);
@@ -381,7 +381,7 @@ export default function MariaLoyolaInvitation() {
             )}
 
             {/* Gallery Section */}
-            <Gallery data={config.gallery} basePath={basePath} />
+            {!hideGallery && <Gallery data={config.gallery} basePath={basePath} />}
 
             {/* Gifts Section (Wrapped with custom gold background stickers) */}
             <div className="relative overflow-hidden bg-white z-10">

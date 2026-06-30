@@ -925,38 +925,49 @@
 
 .story-footer {
     background: var(--story-cream);
-    padding: 4.5rem 1.2rem;
+    padding: 1.55rem 1.2rem 1.35rem;
     position: relative;
     text-align: center;
 }
 
-.story-footer > p {
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.3rem;
-    line-height: 1.15;
-    margin: .8rem 0;
+.story-footer > .story-sun {
+    height: 2.4rem;
+    margin: 0;
+    vertical-align: top;
+    width: 2.4rem;
 }
 
-.story-footer > p em { color: var(--story-purple); font-size: 1.55rem; }
+.story-footer > .story-sun::before { inset: .1rem; }
+.story-footer > .story-sun::after { inset: .72rem; border-width: 1px; }
+.story-footer > .story-sun i { height: .9rem; width: .9rem; }
+
+.story-footer > p {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: .85rem;
+    line-height: 1.15;
+    margin: .35rem 0;
+}
+
+.story-footer > p em { color: var(--story-purple); font-size: 1rem; }
 
 .story-footer h2 {
     color: var(--story-plum);
     font-family: "Italiana", Georgia, serif;
-    font-size: 2.6rem;
+    font-size: 1.5rem;
     font-weight: 400;
-    margin: 1.5rem 0 .4rem;
+    margin: .55rem 0 .15rem;
 }
 
 .story-footer > span {
     display: block;
-    font-size: .62rem;
+    font-size: .52rem;
     letter-spacing: .18em;
-    margin-bottom: 2.2rem;
+    margin-bottom: .7rem;
 }
 
 .story-footer > a {
     color: var(--story-purple);
-    font-size: .58rem;
+    font-size: .5rem;
     letter-spacing: .13em;
     text-decoration: none;
     text-transform: uppercase;

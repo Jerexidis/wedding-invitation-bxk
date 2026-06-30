@@ -600,6 +600,52 @@
     width: 8rem;
 }
 
+.party-footer {
+    background: var(--party-paper);
+    border-top: 1px solid rgba(36, 34, 38, .18);
+    padding: 2rem 1.25rem 1.6rem;
+    text-align: center;
+}
+
+.party-footer p {
+    color: var(--party-pink-dark);
+    font-family: "Bodoni Moda", Georgia, serif;
+    font-size: .9rem;
+    font-style: italic;
+    margin: 0 0 .35rem;
+}
+
+.party-footer p span {
+    color: var(--party-yellow);
+    font-size: .72rem;
+}
+
+.party-footer h2 {
+    font-family: "Archivo Black", Impact, sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: -.04em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.party-footer small {
+    display: block;
+    font-size: .54rem;
+    letter-spacing: .1em;
+    margin-top: .3rem;
+    text-transform: uppercase;
+}
+
+.party-footer a {
+    color: var(--party-ink);
+    display: inline-block;
+    font-size: .5rem;
+    letter-spacing: .12em;
+    margin-top: .85rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
 @keyframes party-scroll {
     0% { opacity: 0; transform: translateY(0); }
     30% { opacity: 1; }
@@ -608,7 +654,26 @@
 
 @media (min-width: 760px) {
     .party-hero {
-        min-height: 980px;
+        min-height: 100svh;
+        padding-bottom: 5rem;
+        padding-top: 3.5rem;
+    }
+
+    .party-hero__content {
+        max-width: 48rem;
+    }
+
+    .party-portrait-wrap {
+        height: clamp(13rem, 35vh, 19rem);
+    }
+
+    .party-cutout-title {
+        flex-wrap: nowrap;
+        max-width: 46rem;
+    }
+
+    .party-cutout-title span {
+        font-size: clamp(1.15rem, 2.5vw, 1.85rem);
     }
 
     .party-section {
@@ -626,6 +691,26 @@
 
     .party-form {
         padding: 2.2rem;
+    }
+}
+
+@media (min-width: 760px) and (max-height: 760px) {
+    .party-hero {
+        padding-bottom: 4.25rem;
+        padding-top: 2.25rem;
+    }
+
+    .party-portrait-wrap {
+        height: clamp(11rem, 31vh, 14rem);
+    }
+
+    .party-name {
+        font-size: clamp(2.2rem, 7vh, 3.2rem);
+        margin-top: -.8rem;
+    }
+
+    .party-hero__note {
+        margin-top: .45rem;
     }
 }
 

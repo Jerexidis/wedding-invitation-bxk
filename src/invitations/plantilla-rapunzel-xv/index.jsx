@@ -428,7 +428,7 @@ function Footer({ config }) {
     )
 }
 
-export default function RapunzelXVTemplate() {
+export default function RapunzelXVTemplate({ hideGallery = false }) {
     const rootRef = useRef(null)
 
     useEffect(() => {
@@ -499,7 +499,7 @@ export default function RapunzelXVTemplate() {
             <Countdown config={STORY_CONFIG} />
             <Events config={STORY_CONFIG} />
             <DressCode config={STORY_CONFIG} />
-            <Gallery config={STORY_CONFIG} />
+            {!hideGallery && <Gallery config={STORY_CONFIG} />}
             <Gifts config={STORY_CONFIG} />
             <Itinerary config={STORY_CONFIG} />
             <RSVP config={STORY_CONFIG} />

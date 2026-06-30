@@ -33,6 +33,13 @@ const getEventMeta = (eventType) => {
                 accent: 'from-[#D96A86] to-[#C9A38B]',
                 icon: <Heart size={14} />,
             }
+        case 'cumpleanos':
+            return {
+                label: 'Cumpleaños',
+                chip: 'bg-[#EAF2FF] text-[#295A91] border-[#C9DDF8]',
+                accent: 'from-[#EE4D87] to-[#185DA7]',
+                icon: <Sparkles size={14} />,
+            }
         default:
             return {
                 label: 'Evento',
@@ -53,10 +60,18 @@ const formatEventDate = (date) => {
 }
 
 export default function Showcase() {
-    const expiredInvitations = activeInvitations.filter((inv) => {
-        if (!inv.eventDate) return false
-        return new Date(inv.eventDate) < new Date()
-    })
+    const portfolioInvitations = activeInvitations
+        .filter((inv) => {
+            if (inv.portfolioPriority) return true
+            if (!inv.eventDate) return false
+            return new Date(inv.eventDate) < new Date()
+        })
+        .sort((a, b) => {
+            const aPriority = a.portfolioPriority ?? Number.MAX_SAFE_INTEGER
+            const bPriority = b.portfolioPriority ?? Number.MAX_SAFE_INTEGER
+            if (aPriority !== bPriority) return aPriority - bPriority
+            return new Date(b.eventDate || 0) - new Date(a.eventDate || 0)
+        })
 
     return (
         <div className="min-h-screen bg-[#FBFAF8] text-[#1F1F1F] font-sans selection:bg-[#E7A2B1]/30">
@@ -100,15 +115,15 @@ export default function Showcase() {
                             </div>
                         </div>
 
-                        {expiredInvitations[0] && (() => {
-                            const featured = expiredInvitations[0]
+                        {portfolioInvitations[0] && (() => {
+                            const featured = portfolioInvitations[0]
                             const meta = ogData[featured.slug] || {}
                             const coverImg = meta.image || `/invitations/${featured.slug}/img/hero.png`
                             const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉/g, '').trim() || featured.title
 
                             return (
                                 <Link
-                                    to={`/i/${featured.slug}`}
+                                    to={`/i/${featured.slug}?portfolio=1`}
                                     className="group hidden lg:block rounded-lg border border-[#EFE8E2] bg-white p-3 shadow-[0_28px_80px_rgba(31,31,31,0.10)] transition hover:-translate-y-1 hover:border-[#E0C9C4]"
                                 >
                                     <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-[#F6EFEA]">
@@ -147,17 +162,17 @@ export default function Showcase() {
                         </h2>
                     </div>
                     <p className="max-w-md text-sm leading-6 text-[#7B7F86]">
-                        Solo mostramos invitaciones cuya fecha ya expiró, como portafolio de experiencias terminadas.
+                        Demos de diseño y celebraciones terminadas reunidas como portafolio de experiencias.
                     </p>
                 </div>
 
-                {expiredInvitations.length === 0 ? (
+                {portfolioInvitations.length === 0 ? (
                     <div className="rounded-lg border border-[#EFE8E2] bg-white p-10 text-center shadow-sm">
-                        <p className="text-lg font-medium">Aún no hay invitaciones expiradas para mostrar.</p>
+                        <p className="text-lg font-medium">Aún no hay invitaciones para mostrar.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                        {expiredInvitations.map((inv, index) => {
+                        {portfolioInvitations.map((inv, index) => {
                             const meta = ogData[inv.slug] || {}
                             const eventMeta = getEventMeta(inv.eventType)
                             const coverImg = meta.image || `/invitations/${inv.slug}/img/hero.png`
@@ -204,7 +219,7 @@ export default function Showcase() {
 
                                         <div className="mt-6 flex items-center justify-between gap-3">
                                             <Link
-                                                to={`/i/${inv.slug}`}
+                                                to={`/i/${inv.slug}?portfolio=1`}
                                                 className="inline-flex items-center gap-2 rounded-full bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#D96A86]"
                                             >
                                                 <Eye size={16} />

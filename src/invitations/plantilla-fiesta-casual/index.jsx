@@ -239,6 +239,17 @@ function RSVP({ config }) {
     )
 }
 
+function Footer({ config }) {
+    return (
+        <footer className="party-footer">
+            <p><span>✦</span> Gracias por ser parte <span>✦</span></p>
+            <h2>{config.name} · {config.age}</h2>
+            <small>{config.dateLabel} · {config.timeLabel}</small>
+            <a href="https://invita-ya.com" target="_blank" rel="noreferrer">Invita-Ya.com</a>
+        </footer>
+    )
+}
+
 export default function CasualPartyTemplate() {
     const pageRef = useRef(null)
 
@@ -319,6 +330,7 @@ export default function CasualPartyTemplate() {
             <Countdown config={PARTY_CONFIG} />
             <Location config={PARTY_CONFIG} />
             <RSVP config={PARTY_CONFIG} />
+            <Footer config={PARTY_CONFIG} />
         </main>
     )
 }

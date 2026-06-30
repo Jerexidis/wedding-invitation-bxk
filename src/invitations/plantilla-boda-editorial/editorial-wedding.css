@@ -696,9 +696,10 @@
 }
 
 .wed-gallery__stack {
-    height: 30rem;
+    aspect-ratio: 4 / 5;
+    height: auto;
     margin: 0 auto;
-    max-width: 20rem;
+    width: min(82vw, 21rem);
     position: relative;
 }
 
@@ -708,7 +709,7 @@
     inset: 0;
     margin: 0;
     opacity: .44;
-    padding: .6rem .6rem 3.1rem;
+    padding: .6rem .6rem 2.8rem;
     position: absolute;
     transform: translateX(calc((var(--i) - 1) * 16px)) rotate(calc((var(--i) - 1) * 5deg)) scale(.93);
     transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .35s;
@@ -721,14 +722,16 @@
 }
 
 .wed-gallery img {
+    display: block;
     filter: grayscale(1);
-    height: 100%;
+    height: calc(100% - 2.2rem);
     object-fit: cover;
+    object-position: center;
     width: 100%;
 }
 
 .wed-gallery figcaption {
-    bottom: .55rem;
+    bottom: .5rem;
     color: var(--wed-red);
     font-family: "Mrs Saint Delafield", cursive;
     font-size: 1.8rem;
@@ -736,6 +739,28 @@
     position: absolute;
     right: 0;
     text-align: center;
+}
+
+@media (max-width: 420px) {
+    .wed-gallery {
+        min-height: 780px;
+    }
+
+    .wed-gallery__stack {
+        width: min(78vw, 19rem);
+    }
+
+    .wed-gallery figure {
+        padding: .5rem .5rem 2.55rem;
+    }
+
+    .wed-gallery img {
+        height: calc(100% - 1.95rem);
+    }
+
+    .wed-gallery figcaption {
+        font-size: 1.55rem;
+    }
 }
 
 .wed-gallery__controls {
@@ -955,23 +980,23 @@
 
 .wed-footer {
     background: var(--wed-paper);
-    padding: 5rem 1rem;
+    padding: 2.4rem 1rem 1.8rem;
     text-align: center;
 }
 
 .wed-footer > p {
-    font: 500 .57rem "DM Mono", monospace;
+    font: 500 .5rem "DM Mono", monospace;
     letter-spacing: .12em;
-    margin: 0 0 1rem;
+    margin: 0 0 .6rem;
     text-transform: uppercase;
 }
 
 .wed-footer h2 {
     font-family: "Italiana", Georgia, serif;
-    font-size: clamp(2.5rem, 11vw, 4.5rem);
+    font-size: clamp(1.8rem, 8vw, 3rem);
     font-weight: 400;
     letter-spacing: -.06em;
-    margin: 0 0 .8rem;
+    margin: 0 0 .4rem;
 }
 
 .wed-footer h2 i {
@@ -982,14 +1007,14 @@
 
 .wed-footer > span {
     display: block;
-    font: 500 .58rem "DM Mono", monospace;
+    font: 500 .5rem "DM Mono", monospace;
     letter-spacing: .16em;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .wed-footer a {
     color: var(--wed-red);
-    font: 500 .52rem "DM Mono", monospace;
+    font: 500 .48rem "DM Mono", monospace;
     letter-spacing: .1em;
     text-decoration: none;
     text-transform: uppercase;

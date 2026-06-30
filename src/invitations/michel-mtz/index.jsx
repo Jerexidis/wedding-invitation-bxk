@@ -34,7 +34,7 @@ const FloatingCharacter = ({ src, alt, className, delay = 0 }) => (
     />
 )
 
-export default function MichelMtzInvitation() {
+export default function MichelMtzInvitation({ hideGallery = false }) {
     const basePath = `/invitations/${config.slug}`
     const themeVars = {
         ...buildThemeVars(config.theme),
@@ -249,13 +249,15 @@ export default function MichelMtzInvitation() {
             )}
 
             {/* ─── Gallery Section ──────────────────────────────────── */}
-            <div className="relative overflow-hidden">
-                {/* Frog silhouette — bottom left */}
-                <Watermark src={img('frog-silhouette.png')} className="-bottom-4 -left-4 w-28 md:w-36 opacity-[0.04]" />
-                {/* Lotus silhouette — top right */}
-                <Watermark src={img('lotus-silhouette.png')} className="-top-4 -right-4 w-28 md:w-36 opacity-[0.04]" />
-                <Gallery data={config.gallery} basePath={basePath} />
-            </div>
+            {!hideGallery && (
+                <div className="relative overflow-hidden">
+                    {/* Frog silhouette — bottom left */}
+                    <Watermark src={img('frog-silhouette.png')} className="-bottom-4 -left-4 w-28 md:w-36 opacity-[0.04]" />
+                    {/* Lotus silhouette — top right */}
+                    <Watermark src={img('lotus-silhouette.png')} className="-top-4 -right-4 w-28 md:w-36 opacity-[0.04]" />
+                    <Gallery data={config.gallery} basePath={basePath} />
+                </div>
+            )}
 
             {/* ─── Gifts Section ────────────────────────────────────── */}
             <div className="relative overflow-hidden bg-white z-10">

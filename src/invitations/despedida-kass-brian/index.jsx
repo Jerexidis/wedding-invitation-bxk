@@ -11,7 +11,7 @@ import Gallery from '../../components/invitation/Gallery'
 import GiftsOverride from './GiftsOverride'
 import Footer from '../../components/invitation/Footer'
 
-export default function DespedidaKassBrian() {
+export default function DespedidaKassBrian({ hideGallery = false }) {
     const basePath = `/invitations/${config.slug}`
     const themeVars = buildThemeVars(config.theme)
 
@@ -96,7 +96,7 @@ export default function DespedidaKassBrian() {
             <EventsOverride data={config.events} basePath={basePath} />
 
             {/* Gallery */}
-            <Gallery data={config.gallery} basePath={basePath} />
+            {!hideGallery && <Gallery data={config.gallery} basePath={basePath} />}
 
             {/* Gifts — custom with cleaning products image */}
             <GiftsOverride data={config.gifts} basePath={basePath} />

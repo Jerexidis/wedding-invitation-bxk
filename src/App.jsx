@@ -1,9 +1,25 @@
-import React, { Suspense, lazy } from 'react'
-import { Routes, Route, useParams } from 'react-router-dom'
+import React, { Suspense, lazy, useEffect, useLayoutEffect } from 'react'
+import { Routes, Route, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { getDefaultInvitation, getInvitationBySlug } from './invitations/registry'
 
 const RsvpDashboard = lazy(() => import('./components/RsvpDashboard'))
 const Showcase = lazy(() => import('./components/Showcase'))
+
+function ScrollToTop() {
+    const { pathname, search } = useLocation()
+
+    useEffect(() => {
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual'
+        }
+    }, [])
+
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname, search])
+
+    return null
+}
 
 // Admin panel solo disponible en dev (el archivo no existe en producción)
 let AdminPanel = null
@@ -36,12 +52,17 @@ function DefaultInvitation() {
 /* Carga una invitación por su slug (ruta /i/:slug) */
 function InvitationBySlug() {
     const { slug } = useParams()
+    const [searchParams] = useSearchParams()
     const invitation = getInvitationBySlug(slug)
     if (!invitation) return <NotFound />
     const Component = invitation.component
+    const portfolioMode = searchParams.get('portfolio') === '1'
+    // Protección por defecto: una demo pública no recibe la galería.
+    // La única excepción posible debe declararse explícitamente en el registro.
+    const hideGallery = portfolioMode && invitation.portfolioGalleryAllowed !== true
     return (
         <ErrorBoundary slug={slug}>
-            <Component />
+            <Component portfolioMode={portfolioMode} hideGallery={hideGallery} />
         </ErrorBoundary>
     )
 }
@@ -82,15 +103,18 @@ function RsvpBySlug() {
 
 function App() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-slate-400 text-lg">Cargando...</div></div>}>
-            <Routes>
-                <Route path="/" element={<Showcase />} />
-                <Route path="/i/:slug" element={<InvitationBySlug />} />
-                <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
-                {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Suspense>
+        <>
+            <ScrollToTop />
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-slate-400 text-lg">Cargando...</div></div>}>
+                <Routes>
+                    <Route path="/" element={<Showcase />} />
+                    <Route path="/i/:slug" element={<InvitationBySlug />} />
+                    <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
+                    {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Suspense>
+        </>
     )
 }
 

@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-const Gallery = ({ data, basePath }) => {
+const Gallery = ({ data, basePath, allowInPortfolio = false }) => {
+    const [searchParams] = useSearchParams();
+    const isPortfolioProtected = searchParams.get('portfolio') === '1' && !allowInPortfolio;
     const initialPhotos = useMemo(
         () => (data?.photos || []).map(p => ({ src: `${basePath}/img/${p.src}`, caption: p.caption, position: p.position })),
         [basePath, data?.photos]
@@ -13,7 +16,7 @@ const Gallery = ({ data, basePath }) => {
     }, [initialPhotos]);
 
     useEffect(() => {
-        if (!photos.length) return undefined;
+        if (isPortfolioProtected || !photos.length) return undefined;
         const interval = setInterval(() => {
             if (isAnimating) return;
             setIsAnimating(true);
@@ -28,10 +31,11 @@ const Gallery = ({ data, basePath }) => {
             }, 600);
         }, 2500);
         return () => clearInterval(interval);
-    }, [isAnimating, photos.length]);
+    }, [isAnimating, isPortfolioProtected, photos.length]);
 
-    // No photos yet — don't render
-    if (!data?.photos?.length) return null;
+    // Portfolio mode omits the gallery before any <img> is rendered.
+    // This protects guest photos by default; explicit exceptions must opt in.
+    if (isPortfolioProtected || !data?.photos?.length) return null;
 
     return (
         <section className="relative py-20 px-6 bg-gradient-to-b from-inv-cream to-inv-light text-center overflow-hidden">

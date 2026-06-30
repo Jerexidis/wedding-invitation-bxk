@@ -11,6 +11,21 @@
  */
 
 export const ogData = {
+    'plantilla-boda-editorial': {
+        title: 'Plantilla de boda | Editorial rojo',
+        description: 'Boda editorial en blanco y negro con acentos rojo vino, fotografías y confirmación interactiva.',
+        image: '/invitations/plantilla-boda-editorial/img/hero-couple.webp',
+    },
+    'plantilla-rapunzel-xv': {
+        title: 'Plantilla XV | Cuento de los faroles',
+        description: 'Una invitación de XV años inspirada en faroles, torre, flores y una aventura de cuento.',
+        image: '/invitations/plantilla-rapunzel-xv/img/hero-storybook.webp',
+    },
+    'plantilla-fiesta-casual': {
+        title: 'Plantilla | Fiesta casual',
+        description: 'Una invitación casual con collage editorial, disco, brillos y confirmación por WhatsApp.',
+        image: '/invitations/plantilla-fiesta-casual/img/party-collage-frame.png',
+    },
     'kassandra-brian': {
         title: 'Invitación de Kassandra & Brian 💕',
         description: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',

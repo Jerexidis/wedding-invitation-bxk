@@ -479,7 +479,7 @@ function Footer({ config }) {
     )
 }
 
-export default function EditorialWeddingTemplate() {
+export default function EditorialWeddingTemplate({ hideGallery = false }) {
     const rootRef = useRef(null)
 
     useEffect(() => {
@@ -551,7 +551,7 @@ export default function EditorialWeddingTemplate() {
             <Events config={WEDDING_CONFIG} />
             <DressCode config={WEDDING_CONFIG} />
             <Notes config={WEDDING_CONFIG} />
-            <Gallery config={WEDDING_CONFIG} />
+            {!hideGallery && <Gallery config={WEDDING_CONFIG} />}
             <Gifts config={WEDDING_CONFIG} />
             <Itinerary config={WEDDING_CONFIG} />
             <RSVP config={WEDDING_CONFIG} />

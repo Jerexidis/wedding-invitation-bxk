@@ -10,6 +10,11 @@ import { lazy } from 'react'
  *
  * Para desactivar una invitación sin borrarla del registro:
  * - Cambia enabled: false (no será accesible por URL ni aparecerá en el panel)
+ *
+ * Privacidad del portafolio:
+ * - Las invitaciones abiertas desde el landing reciben hideGallery: true.
+ * - Solo usa portfolioGalleryAllowed: true cuando exista autorización expresa
+ *   para publicar las fotografías de la galería.
  */
 const invitations = [
     {
@@ -18,6 +23,7 @@ const invitations = [
         component: lazy(() => import('./plantilla-boda-editorial/index.jsx')),
         enabled: true,
         isDemo: true,
+        portfolioPriority: 1,
         eventType: 'boda',
         rsvpMode: 'whatsapp',
         eventDate: '2027-10-16T17:00:00-06:00',
@@ -28,6 +34,7 @@ const invitations = [
         component: lazy(() => import('./plantilla-rapunzel-xv/index.jsx')),
         enabled: true,
         isDemo: true,
+        portfolioPriority: 2,
         eventType: 'xv',
         rsvpMode: 'whatsapp',
         eventDate: '2027-03-20T18:00:00-06:00',
@@ -38,6 +45,7 @@ const invitations = [
         component: lazy(() => import('./plantilla-fiesta-casual/index.jsx')),
         enabled: true,
         isDemo: true,
+        portfolioPriority: 3,
         eventType: 'cumpleanos',
         rsvpMode: 'whatsapp',
         eventDate: '2026-12-13T21:00:00-06:00',
@@ -49,6 +57,7 @@ const invitations = [
         enabled: true,
         eventType: 'boda',
         rsvpMode: 'whatsapp',
+        portfolioGalleryAllowed: true,
         eventDate: '2026-05-30T16:00:00',
     },
     {

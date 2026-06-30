@@ -16,7 +16,7 @@ import Gallery from '../../components/invitation/Gallery'
 import Gifts from '../../components/invitation/Gifts'
 import FooterOverride from './FooterOverride'
 
-export default function VictoriaRojasInvitation() {
+export default function VictoriaRojasInvitation({ hideGallery = false }) {
     const basePath = `/invitations/${config.slug}`
     const [envelopeOpen, setEnvelopeOpen] = useState(false);
     const [envelopeExit, setEnvelopeExit] = useState(false);
@@ -313,7 +313,7 @@ export default function VictoriaRojasInvitation() {
             )}
 
             {/* Gallery Section */}
-            <Gallery data={config.gallery} basePath={basePath} />
+            {!hideGallery && <Gallery data={config.gallery} basePath={basePath} />}
 
             {/* Gifts Section (Wrapped with custom gold background stickers) */}
             <div className="relative overflow-hidden bg-white z-10">
