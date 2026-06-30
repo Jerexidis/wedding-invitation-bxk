@@ -13,6 +13,36 @@ import { lazy } from 'react'
  */
 const invitations = [
     {
+        slug: 'plantilla-boda-editorial',
+        title: 'Plantilla Boda | Editorial Rojo',
+        component: lazy(() => import('./plantilla-boda-editorial/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        eventType: 'boda',
+        rsvpMode: 'whatsapp',
+        eventDate: '2027-10-16T17:00:00-06:00',
+    },
+    {
+        slug: 'plantilla-rapunzel-xv',
+        title: 'Plantilla XV | Cuento de los Faroles',
+        component: lazy(() => import('./plantilla-rapunzel-xv/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        eventType: 'xv',
+        rsvpMode: 'whatsapp',
+        eventDate: '2027-03-20T18:00:00-06:00',
+    },
+    {
+        slug: 'plantilla-fiesta-casual',
+        title: 'Plantilla | Fiesta Casual',
+        component: lazy(() => import('./plantilla-fiesta-casual/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        eventType: 'cumpleanos',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-12-13T21:00:00-06:00',
+    },
+    {
         slug: 'kassandra-brian',
         title: 'Nuestra Boda | Kassandra & Brian',
         component: lazy(() => import('./kassandra-brian/index.jsx')),

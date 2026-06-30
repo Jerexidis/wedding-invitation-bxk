@@ -1,0 +1,1014 @@
+:root {
+    --wed-paper: #f5eee8;
+    --wed-paper-dark: #e7ddd6;
+    --wed-red: #9f1427;
+    --wed-red-dark: #760c1b;
+    --wed-ink: #191718;
+    --wed-gray: #747071;
+    --wed-white: #fffdf9;
+}
+
+.wed-template {
+    background: var(--wed-paper);
+    color: var(--wed-ink);
+    font-family: "Manrope", sans-serif;
+    overflow: clip;
+    position: relative;
+}
+
+.wed-template *,
+.wed-template *::before,
+.wed-template *::after {
+    box-sizing: border-box;
+}
+
+.wed-thread {
+    border-left: 2px solid var(--wed-red);
+    border-radius: 50%;
+    height: 92%;
+    left: calc(50% + 9.5rem);
+    opacity: .16;
+    pointer-events: none;
+    position: absolute;
+    top: 3%;
+    transform: rotate(1deg);
+    width: 3rem;
+    z-index: 1;
+}
+
+.wed-hero {
+    align-items: center;
+    background: #cfcfcf;
+    display: flex;
+    justify-content: center;
+    min-height: 100svh;
+    overflow: hidden;
+    padding: 3rem 1rem 6rem;
+    position: relative;
+}
+
+.wed-hero__photo {
+    background: url("/invitations/plantilla-boda-editorial/img/hero-couple.webp") center / cover no-repeat;
+    filter: contrast(1.03);
+    inset: -6% 0;
+    position: absolute;
+    z-index: 0;
+}
+
+.wed-hero__wash {
+    background:
+        linear-gradient(180deg, rgba(17, 17, 17, .1), rgba(255, 255, 255, .02) 55%, rgba(18, 16, 17, .56)),
+        linear-gradient(90deg, rgba(255, 255, 255, .1), transparent 30%, rgba(0, 0, 0, .08));
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.wed-hero__panel {
+    background: rgba(245, 238, 232, .93);
+    border: 1px solid rgba(25, 23, 24, .13);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, .15);
+    max-width: 21.5rem;
+    padding: 3.6rem 1.25rem 3rem;
+    position: relative;
+    text-align: center;
+    width: 89%;
+    z-index: 3;
+}
+
+.wed-hero__panel::before {
+    border: 1px solid var(--wed-red);
+    content: "";
+    inset: .65rem;
+    opacity: .22;
+    pointer-events: none;
+    position: absolute;
+}
+
+.wed-hero__eyebrow,
+.wed-heading > p {
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.wed-hero__eyebrow {
+    margin: 0 0 1.4rem;
+}
+
+.wed-hero h1 {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(3.7rem, 16vw, 6rem);
+    font-weight: 400;
+    letter-spacing: -.07em;
+    line-height: .72;
+    margin: 0;
+}
+
+.wed-hero h1 i {
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: .76em;
+    font-weight: 400;
+    line-height: .7;
+    transform: rotate(-9deg);
+}
+
+.wed-hero__date {
+    align-items: center;
+    display: flex;
+    font: 500 .66rem "DM Mono", monospace;
+    gap: .55rem;
+    justify-content: center;
+    letter-spacing: .12em;
+    margin: 1.8rem 0 1.1rem;
+}
+
+.wed-hero__date::before,
+.wed-hero__date::after {
+    background: var(--wed-red);
+    content: "";
+    height: 1px;
+    width: 1.4rem;
+}
+
+.wed-hero__phrase {
+    font-family: "Italiana", Georgia, serif;
+    font-size: .83rem;
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 16rem;
+}
+
+.wed-handwriting {
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 2.2rem;
+    line-height: .8;
+    opacity: .74;
+    position: absolute;
+    transform: rotate(-5deg);
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.wed-handwriting--hero {
+    left: -2rem;
+    top: 19%;
+}
+
+.wed-scroll {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    bottom: 1.25rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font: 500 .58rem "DM Mono", monospace;
+    gap: .3rem;
+    letter-spacing: .15em;
+    position: absolute;
+    text-transform: uppercase;
+    z-index: 4;
+}
+
+.wed-scroll svg {
+    animation: wed-bounce 1.7s ease-in-out infinite;
+}
+
+.wed-bow {
+    height: 5rem;
+    position: absolute;
+    width: 5rem;
+    z-index: 4;
+}
+
+.wed-bow::before {
+    border: 9px solid var(--wed-red);
+    border-radius: 65% 35% 55% 45%;
+    content: "";
+    height: 2.4rem;
+    left: .15rem;
+    position: absolute;
+    top: .35rem;
+    transform: rotate(29deg);
+    width: 2.7rem;
+}
+
+.wed-bow::after {
+    border: 9px solid var(--wed-red);
+    border-radius: 35% 65% 45% 55%;
+    content: "";
+    height: 2.4rem;
+    position: absolute;
+    right: .15rem;
+    top: .35rem;
+    transform: rotate(-27deg);
+    width: 2.7rem;
+}
+
+.wed-bow i,
+.wed-bow b {
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 4.3rem solid var(--wed-red);
+    bottom: -2.1rem;
+    height: 0;
+    left: 1.3rem;
+    position: absolute;
+    transform: rotate(12deg);
+    width: 0;
+}
+
+.wed-bow b {
+    left: auto;
+    right: 1.3rem;
+    transform: rotate(-14deg);
+}
+
+.wed-bow--hero {
+    right: -1rem;
+    top: 11%;
+    transform: rotate(17deg);
+}
+
+.wed-section {
+    min-height: 84svh;
+    padding: 7rem 1.35rem;
+    position: relative;
+}
+
+.wed-container {
+    margin: 0 auto;
+    max-width: 61rem;
+    position: relative;
+    z-index: 2;
+}
+
+.wed-heading {
+    margin: 0 auto 3rem;
+    position: relative;
+    text-align: center;
+}
+
+.wed-heading--left { text-align: left; }
+
+.wed-heading > p {
+    color: var(--wed-red);
+    margin: 0 0 .8rem;
+}
+
+.wed-heading h2 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(3rem, 12vw, 5.8rem);
+    font-weight: 400;
+    letter-spacing: -.06em;
+    line-height: .88;
+    margin: 0;
+}
+
+.wed-heading h2 em {
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 1.12em;
+    font-weight: 400;
+}
+
+.wed-heading > span {
+    color: var(--wed-red);
+    display: block;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 2.2rem;
+    line-height: .7;
+    margin: .5rem 0 0;
+    transform: rotate(-3deg);
+}
+
+.wed-heading--light > p { color: #ffbdc6; }
+.wed-heading--light h2 { color: white; }
+.wed-heading--light h2 em,
+.wed-heading--light > span { color: #ff9cac; }
+
+.wed-story {
+    align-items: center;
+    background: var(--wed-paper);
+    display: flex;
+}
+
+.wed-story::before,
+.wed-countdown::before,
+.wed-notes::before,
+.wed-gifts::before {
+    background-image: radial-gradient(rgba(25, 23, 24, .1) .65px, transparent .65px);
+    background-size: 5px 5px;
+    content: "";
+    inset: 0;
+    opacity: .36;
+    position: absolute;
+}
+
+.wed-story__grid {
+    display: grid;
+    gap: 3rem;
+}
+
+.wed-story__copy {
+    font-family: "Italiana", Georgia, serif;
+    font-size: 1.12rem;
+    line-height: 1.7;
+    margin: 0 0 1rem;
+    max-width: 31rem;
+}
+
+.wed-signature {
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 2.4rem;
+    margin: 0;
+}
+
+.wed-story__photo {
+    background: white;
+    box-shadow: 0 18px 40px rgba(30, 20, 22, .13);
+    margin: 0 auto;
+    max-width: 21rem;
+    padding: .7rem .7rem 3.2rem;
+    position: relative;
+    transform: rotate(2deg);
+}
+
+.wed-story__photo::before {
+    background: rgba(218, 204, 190, .65);
+    content: "";
+    height: 1.4rem;
+    left: 40%;
+    position: absolute;
+    top: -.8rem;
+    transform: rotate(-4deg);
+    width: 4.8rem;
+}
+
+.wed-story__photo img {
+    display: block;
+    filter: grayscale(1);
+    width: 100%;
+}
+
+.wed-story__photo figcaption {
+    bottom: .7rem;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 1.8rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+.wed-families,
+.wed-dress,
+.wed-gallery,
+.wed-rsvp {
+    align-items: center;
+    background: var(--wed-ink);
+    color: white;
+    display: flex;
+}
+
+.wed-family-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.wed-family-grid article {
+    border: 1px solid rgba(255, 255, 255, .22);
+    padding: 2.2rem 1.2rem;
+    position: relative;
+    text-align: center;
+}
+
+.wed-family-grid article > span {
+    color: var(--wed-red);
+    font: 500 .65rem "DM Mono", monospace;
+    left: .8rem;
+    position: absolute;
+    top: .7rem;
+}
+
+.wed-family-grid svg { color: #f4a7b3; margin-bottom: .7rem; }
+
+.wed-family-grid h3 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    font-weight: 400;
+    margin: 0;
+}
+
+.wed-family-grid p {
+    color: #aaa5a7;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 1.5rem;
+    margin: .5rem 0 0;
+}
+
+.wed-countdown {
+    background: var(--wed-paper);
+}
+
+.wed-calendar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 0 auto 2.7rem;
+    max-width: 42rem;
+}
+
+.wed-calendar div {
+    border: 1px solid rgba(25, 23, 24, .35);
+    border-right: 0;
+    padding: .7rem .15rem 1rem;
+    position: relative;
+    text-align: center;
+}
+
+.wed-calendar div:last-child { border-right: 1px solid rgba(25, 23, 24, .35); }
+
+.wed-calendar span {
+    display: block;
+    font: 400 .46rem "DM Mono", monospace;
+}
+
+.wed-calendar strong {
+    display: block;
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(2rem, 9vw, 4rem);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.wed-calendar .is-date::after {
+    border: 3px solid var(--wed-red);
+    border-radius: 48% 52% 45% 55%;
+    content: "";
+    inset: .28rem -.1rem .18rem;
+    position: absolute;
+    transform: rotate(-8deg);
+}
+
+.wed-timer {
+    display: grid;
+    gap: .4rem;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto 1.7rem;
+    max-width: 37rem;
+}
+
+.wed-timer div {
+    background: var(--wed-ink);
+    color: white;
+    padding: 1rem .2rem .75rem;
+    text-align: center;
+}
+
+.wed-timer strong {
+    display: block;
+    font: 400 clamp(1.7rem, 7vw, 3rem) "DM Mono", monospace;
+    letter-spacing: -.08em;
+}
+
+.wed-timer span {
+    display: block;
+    font: 400 .48rem "DM Mono", monospace;
+    margin-top: .35rem;
+    text-transform: uppercase;
+}
+
+.wed-countdown__date {
+    font-family: "Italiana", Georgia, serif;
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+}
+
+.wed-button {
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    font: 500 .62rem "DM Mono", monospace;
+    gap: .55rem;
+    justify-content: center;
+    letter-spacing: .08em;
+    margin: 1.4rem auto 0;
+    padding: 1rem 1.15rem;
+    text-transform: uppercase;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.wed-button:hover { transform: translateY(-2px); }
+
+.wed-button--ink {
+    background: var(--wed-ink);
+    color: white;
+}
+
+.wed-button--red {
+    background: var(--wed-red);
+    color: white;
+    width: 100%;
+}
+
+.wed-events {
+    background: var(--wed-white);
+}
+
+.wed-event-list {
+    border-top: 1px solid var(--wed-ink);
+    margin: 0 auto;
+    max-width: 45rem;
+}
+
+.wed-event-list article {
+    align-items: center;
+    border-bottom: 1px solid var(--wed-ink);
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: 1.5rem 2.5rem 1fr 2rem;
+    padding: 1.55rem .25rem;
+}
+
+.wed-event-list__number {
+    color: var(--wed-red);
+    font: 500 .58rem "DM Mono", monospace;
+}
+
+.wed-event-list__icon {
+    align-items: center;
+    background: var(--wed-red);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    height: 2.45rem;
+    justify-content: center;
+    width: 2.45rem;
+}
+
+.wed-event-list article p {
+    color: var(--wed-red);
+    font: 500 .54rem "DM Mono", monospace;
+    letter-spacing: .1em;
+    margin: 0 0 .2rem;
+    text-transform: uppercase;
+}
+
+.wed-event-list h3 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(1.25rem, 5vw, 1.8rem);
+    font-weight: 400;
+    margin: 0;
+}
+
+.wed-event-list address {
+    color: var(--wed-gray);
+    font-size: .62rem;
+    font-style: normal;
+    line-height: 1.45;
+    margin-top: .35rem;
+}
+
+.wed-event-list a {
+    align-items: center;
+    border: 1px solid var(--wed-ink);
+    border-radius: 50%;
+    color: var(--wed-ink);
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    width: 2rem;
+}
+
+.wed-dress {
+    background:
+        linear-gradient(rgba(22, 20, 21, .86), rgba(22, 20, 21, .94)),
+        url("/invitations/plantilla-boda-editorial/img/city-walk.webp") center / cover;
+    overflow: hidden;
+}
+
+.wed-dress__card {
+    background: var(--wed-paper);
+    color: var(--wed-ink);
+    margin: 0 auto;
+    max-width: 31rem;
+    padding: 2.4rem 1.5rem;
+    text-align: center;
+}
+
+.wed-dress__card > span {
+    color: var(--wed-red);
+    font: 500 .56rem "DM Mono", monospace;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.wed-dress__card h3 {
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 4.1rem;
+    font-weight: 400;
+    line-height: .85;
+    margin: .55rem 0 .8rem;
+}
+
+.wed-palette {
+    display: flex;
+    gap: .3rem;
+    justify-content: center;
+    margin: 1.1rem 0;
+}
+
+.wed-palette i {
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #bcb2ac;
+    height: 1.75rem;
+    width: 1.75rem;
+}
+
+.wed-dress__card > p {
+    color: var(--wed-gray);
+    font-size: .65rem;
+    margin: 0;
+}
+
+.wed-bow--dress {
+    left: -1.2rem;
+    top: 19%;
+    transform: rotate(-17deg);
+}
+
+.wed-notes {
+    background: var(--wed-paper);
+}
+
+.wed-note-list {
+    margin: 0 auto;
+    max-width: 42rem;
+}
+
+.wed-note-list article {
+    align-items: start;
+    border: 1px solid rgba(159, 20, 39, .42);
+    border-radius: 52% 48% 45% 55% / 18% 20% 16% 21%;
+    display: grid;
+    gap: .85rem;
+    grid-template-columns: 1.7rem 1.7rem 1fr;
+    margin-bottom: 1rem;
+    padding: 1.4rem 1rem;
+}
+
+.wed-note-list article > span {
+    color: var(--wed-red);
+    font: 500 .62rem "DM Mono", monospace;
+}
+
+.wed-note-list article > svg { color: var(--wed-red); }
+
+.wed-note-list h3 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0 0 .35rem;
+}
+
+.wed-note-list p {
+    color: var(--wed-gray);
+    font-size: .67rem;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.wed-gallery {
+    min-height: 920px;
+}
+
+.wed-gallery__stack {
+    height: 30rem;
+    margin: 0 auto;
+    max-width: 20rem;
+    position: relative;
+}
+
+.wed-gallery figure {
+    background: var(--wed-paper);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+    inset: 0;
+    margin: 0;
+    opacity: .44;
+    padding: .6rem .6rem 3.1rem;
+    position: absolute;
+    transform: translateX(calc((var(--i) - 1) * 16px)) rotate(calc((var(--i) - 1) * 5deg)) scale(.93);
+    transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .35s;
+}
+
+.wed-gallery figure.is-active {
+    opacity: 1;
+    transform: translateX(0) rotate(-1.5deg) scale(1);
+    z-index: 4;
+}
+
+.wed-gallery img {
+    filter: grayscale(1);
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.wed-gallery figcaption {
+    bottom: .55rem;
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 1.8rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+.wed-gallery__controls {
+    display: flex;
+    gap: .45rem;
+    justify-content: center;
+    margin-top: 1.8rem;
+}
+
+.wed-gallery__controls button {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    color: #777;
+    cursor: pointer;
+    font: 500 .58rem "DM Mono", monospace;
+    padding: .3rem;
+}
+
+.wed-gallery__controls button.is-active {
+    border-color: #ff9cac;
+    color: #ff9cac;
+}
+
+.wed-gifts {
+    align-items: center;
+    background: var(--wed-paper);
+    display: flex;
+}
+
+.wed-envelope {
+    background: var(--wed-red);
+    color: white;
+    margin: 4rem auto 0;
+    max-width: 31rem;
+    padding: 3.4rem 1.5rem 2.2rem;
+    position: relative;
+    text-align: center;
+}
+
+.wed-envelope__flap {
+    border-bottom: 4rem solid transparent;
+    border-left: min(15.5rem, 44vw) solid transparent;
+    border-right: min(15.5rem, 44vw) solid transparent;
+    border-top: 4rem solid #b92c3d;
+    height: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateY(-1px);
+}
+
+.wed-envelope > svg {
+    position: relative;
+    z-index: 2;
+}
+
+.wed-envelope h3 {
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1;
+    margin: .8rem 0;
+    position: relative;
+}
+
+.wed-envelope p {
+    font-size: .68rem;
+    line-height: 1.65;
+    margin: 0 auto 1.2rem;
+    max-width: 24rem;
+}
+
+.wed-envelope > span {
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 1.7rem;
+}
+
+.wed-itinerary {
+    background: var(--wed-white);
+}
+
+.wed-timeline {
+    margin: 0 auto;
+    max-width: 36rem;
+    position: relative;
+}
+
+.wed-timeline::before {
+    background: var(--wed-red);
+    bottom: 1rem;
+    content: "";
+    left: 4rem;
+    position: absolute;
+    top: 1rem;
+    width: 1px;
+}
+
+.wed-timeline article {
+    align-items: center;
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: 3rem 2rem 1fr;
+    margin-bottom: 1.2rem;
+}
+
+.wed-timeline time {
+    font-family: "DM Mono", monospace;
+    font-size: .8rem;
+    text-align: right;
+}
+
+.wed-timeline time small {
+    display: block;
+    font-size: .45rem;
+    text-transform: uppercase;
+}
+
+.wed-timeline article > span {
+    align-items: center;
+    background: var(--wed-red);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    height: 2.05rem;
+    justify-content: center;
+    position: relative;
+    width: 2.05rem;
+    z-index: 2;
+}
+
+.wed-timeline article > div {
+    align-items: center;
+    border-bottom: 1px solid rgba(25, 23, 24, .28);
+    display: flex;
+    gap: .75rem;
+    padding: .8rem 0;
+}
+
+.wed-timeline b {
+    color: var(--wed-red);
+    font: 500 .52rem "DM Mono", monospace;
+}
+
+.wed-timeline h3 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.wed-rsvp {
+    background:
+        linear-gradient(rgba(24, 21, 22, .9), rgba(24, 21, 22, .96)),
+        url("/invitations/plantilla-boda-editorial/img/home-dance.webp") center / cover;
+}
+
+.wed-form {
+    background: var(--wed-paper);
+    color: var(--wed-ink);
+    margin: 0 auto;
+    max-width: 35rem;
+    padding: 1.6rem;
+}
+
+.wed-form label > span {
+    display: block;
+    font: 500 .57rem "DM Mono", monospace;
+    letter-spacing: .08em;
+    margin-bottom: .45rem;
+    text-transform: uppercase;
+}
+
+.wed-form input,
+.wed-form select,
+.wed-form textarea {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--wed-ink);
+    border-radius: 0;
+    color: var(--wed-ink);
+    font: .82rem "Manrope", sans-serif;
+    min-height: 3rem;
+    outline: 0;
+    padding: .6rem .2rem;
+    resize: vertical;
+    width: 100%;
+}
+
+.wed-form input:focus,
+.wed-form select:focus,
+.wed-form textarea:focus {
+    border-color: var(--wed-red);
+}
+
+.wed-form textarea {
+    min-height: 5rem;
+    padding-top: 1rem;
+}
+
+.wed-form__row {
+    display: grid;
+    gap: .85rem;
+    grid-template-columns: 1.5fr .7fr;
+    margin: 1.15rem 0;
+}
+
+.wed-form__hint {
+    color: var(--wed-gray);
+    font-size: .57rem;
+    margin: .7rem 0 0;
+    text-align: center;
+}
+
+.wed-footer {
+    background: var(--wed-paper);
+    padding: 5rem 1rem;
+    text-align: center;
+}
+
+.wed-footer > p {
+    font: 500 .57rem "DM Mono", monospace;
+    letter-spacing: .12em;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+}
+
+.wed-footer h2 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(2.5rem, 11vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: -.06em;
+    margin: 0 0 .8rem;
+}
+
+.wed-footer h2 i {
+    color: var(--wed-red);
+    font-family: "Mrs Saint Delafield", cursive;
+    font-weight: 400;
+}
+
+.wed-footer > span {
+    display: block;
+    font: 500 .58rem "DM Mono", monospace;
+    letter-spacing: .16em;
+    margin-bottom: 2rem;
+}
+
+.wed-footer a {
+    color: var(--wed-red);
+    font: 500 .52rem "DM Mono", monospace;
+    letter-spacing: .1em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+@keyframes wed-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+@media (min-width: 760px) {
+    .wed-hero { min-height: 980px; }
+    .wed-section { min-height: 760px; }
+    .wed-story__grid { align-items: center; grid-template-columns: 1fr .8fr; }
+    .wed-family-grid { grid-template-columns: 1fr 1fr; }
+    .wed-form { padding: 2.2rem; }
+    .wed-gallery { min-height: 930px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wed-scroll svg { animation: none; }
+}
