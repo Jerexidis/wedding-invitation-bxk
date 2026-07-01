@@ -268,3 +268,50 @@
         height: 5.5rem;
     }
 }
+
+@media (max-width: 640px) {
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .flex.flex-wrap {
+        gap: 0.5rem !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 {
+        width: 5rem !important;
+        height: 5rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 span:first-child {
+        font-size: 1.6rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 span:last-child {
+        font-size: 0.55rem !important;
+        margin-top: 0.15rem !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .flex.flex-wrap {
+        gap: 0.35rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 {
+        width: 4.25rem !important;
+        height: 4.25rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 span:first-child {
+        font-size: 1.35rem !important;
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24 span:last-child {
+        font-size: 0.5rem !important;
+        margin-top: 0.1rem !important;
+    }
+}
+
