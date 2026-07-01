@@ -209,6 +209,23 @@
     box-shadow: 4px 5px 0 rgba(72, 36, 15, .2);
 }
 
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(5) .bg-white {
+    background: #f3dfb6 !important;
+    border: 1px solid #8a552b;
+    box-shadow:
+        0 18px 35px rgba(50, 24, 10, .28),
+        inset 0 0 0 3px rgba(255, 244, 218, .5) !important;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(5) img {
+    border-color: #9a6537;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(5) p,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(5) h2 {
+    color: var(--western-brown);
+}
+
 .jose-western-theme .invitation-jose-raul footer {
     background:
         linear-gradient(rgba(31, 16, 8, .96), rgba(21, 11, 6, .98)),
@@ -314,4 +331,3 @@
         margin-top: 0.1rem !important;
     }
 }
-

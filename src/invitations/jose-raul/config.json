@@ -78,7 +78,30 @@
         "image": "dresscode-icon.png"
     },
     "gallery": {
-        "photos": []
+        "photos": [
+            {
+                "src": "gallery-01.webp"
+                
+            },
+            {
+                "src": "gallery-02.webp"
+            },
+            {
+                "src": "gallery-03.webp"
+            },
+            {
+                "src": "gallery-04.webp"
+            },
+            {
+                "src": "gallery-05.webp"
+            },
+            {
+                "src": "gallery-07.webp"
+            },
+            {
+                "src": "gallery-06.webp"
+            }
+        ]
     },
     "gifts": {
         "enabled": false,
