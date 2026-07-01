@@ -76,4 +76,9 @@ export const ogData = {
         description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
         image: '/invitations/maria-loyola/img/og-preview.jpg',
     },
+    'jose-raul': {
+        title: 'XV Años | José Raúl 🤠',
+        description: 'Estás invitado a una gran fiesta vaquera para celebrar los XV años de José Raúl.',
+        image: '/invitations/jose-raul/img/hero-bg-v2.webp',
+    },
 }

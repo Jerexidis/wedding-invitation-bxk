@@ -1,0 +1,270 @@
+.jose-western-theme {
+    --western-ink: #25150c;
+    --western-brown: #5a2f17;
+    --western-leather: #7a421f;
+    --western-tan: #d8ad72;
+    --western-paper: #ead2a4;
+    --western-brass: #c98a27;
+    --western-dark: #1c1009;
+    background: var(--western-dark);
+}
+
+.jose-western-theme .invitation-jose-raul {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(224, 181, 115, .22), transparent 24rem),
+        #d1a568;
+    color: var(--western-ink);
+}
+
+.jose-western-theme .invitation-jose-raul header {
+    min-height: 100svh;
+}
+
+.jose-western-theme .invitation-jose-raul header > div:first-child > img {
+    filter: saturate(.82) contrast(1.08);
+    object-position: center;
+}
+
+.jose-western-theme .invitation-jose-raul header > div:first-child > div:last-child {
+    background:
+        linear-gradient(180deg, rgba(16, 8, 4, .38), transparent 23%, transparent 68%, rgba(15, 8, 4, .72)),
+        radial-gradient(circle at center, transparent 30%, rgba(19, 10, 5, .16) 78%);
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 {
+    color: var(--western-ink) !important;
+    max-width: 42rem;
+    padding-bottom: 8rem;
+    padding-top: 4rem;
+    text-shadow: none;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > div:first-child {
+    background: url("/invitations/jose-raul/img/western-hat.webp") center / contain no-repeat;
+    height: clamp(6.5rem, 18vw, 9.5rem);
+    margin-bottom: .25rem;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > div:first-child svg {
+    display: none;
+}
+
+.jose-western-theme .invitation-jose-raul header h1 {
+    color: var(--western-brown) !important;
+    font-size: clamp(3.1rem, 13vw, 6.8rem);
+    letter-spacing: .01em;
+    line-height: 1;
+    paint-order: stroke fill;
+    -webkit-text-stroke: 1px rgba(255, 231, 183, .5);
+    text-shadow: 2px 3px 0 rgba(64, 31, 13, .18) !important;
+    text-transform: uppercase;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > p:first-of-type {
+    color: #693916 !important;
+    font-family: "Roboto Slab", serif;
+    font-size: clamp(.62rem, 2.5vw, .82rem);
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-shadow: none;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > p:last-of-type {
+    color: #4b2915 !important;
+    font-family: "Roboto Slab", serif;
+    font-size: clamp(.72rem, 3vw, 1rem);
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > div:nth-of-type(2) div {
+    background: var(--western-brown);
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > div:nth-of-type(2) svg {
+    display: none;
+}
+
+.jose-western-theme .invitation-jose-raul header .relative.z-10 > div:nth-of-type(2)::after {
+    color: var(--western-brass);
+    content: "★";
+    font-size: 1.15rem;
+}
+
+.jose-western-theme .invitation-jose-raul header > div:nth-child(2) {
+    display: none;
+}
+
+.jose-western-theme .invitation-jose-raul header > div:last-of-type {
+    color: #f3d69f;
+    text-shadow: 0 2px 5px #000;
+}
+
+.jose-western-theme .invitation-jose-raul > section {
+    isolation: isolate;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(odd) {
+    background:
+        linear-gradient(rgba(235, 207, 155, .94), rgba(213, 170, 105, .96)),
+        repeating-linear-gradient(0deg, transparent 0 28px, rgba(77, 40, 18, .08) 29px 30px);
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(even) {
+    background:
+        linear-gradient(rgba(30, 16, 8, .94), rgba(54, 29, 13, .96)),
+        repeating-linear-gradient(90deg, #2b160b 0 90px, #3a1e0e 91px 94px);
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(1)::after,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(3)::after {
+    background: url("/invitations/jose-raul/img/western-hat.webp") center / contain no-repeat;
+    content: "";
+    height: 10rem;
+    opacity: .12;
+    pointer-events: none;
+    position: absolute;
+    right: -2.5rem;
+    top: 1rem;
+    transform: rotate(12deg);
+    width: 10rem;
+    z-index: -1;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(2)::after,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(4)::after {
+    aspect-ratio: 2.22 / 1;
+    background: url("/invitations/jose-raul/img/western-props.webp") center / contain no-repeat;
+    content: "";
+    display: block;
+    filter: drop-shadow(0 12px 10px rgba(0, 0, 0, .3));
+    margin: 2.25rem auto -1.5rem;
+    max-width: 32rem;
+    opacity: .88;
+    pointer-events: none;
+    width: min(88%, 32rem);
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(1) svg,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(2) > div.absolute svg {
+    display: none;
+}
+
+.jose-western-theme .invitation-jose-raul h2,
+.jose-western-theme .invitation-jose-raul h3 {
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.jose-western-theme .invitation-jose-raul .rounded-3xl,
+.jose-western-theme .invitation-jose-raul .rounded-2xl,
+.jose-western-theme .invitation-jose-raul .rounded-xl {
+    border-radius: .3rem !important;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(1) .bg-white\/70,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(4) .bg-white\/80 {
+    background:
+        linear-gradient(rgba(247, 226, 184, .95), rgba(225, 188, 128, .95)) !important;
+    border: 2px solid #74401f !important;
+    box-shadow:
+        inset 0 0 0 4px rgba(115, 62, 29, .12),
+        8px 10px 0 rgba(70, 34, 14, .15) !important;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(2) {
+    color: #f2d39b;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(2) .rounded-3xl {
+    background: rgba(92, 47, 20, .58) !important;
+    border: 2px solid rgba(202, 139, 48, .65) !important;
+    box-shadow:
+        inset 0 0 0 4px rgba(31, 15, 7, .5),
+        0 14px 35px rgba(0, 0, 0, .34) !important;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .w-24,
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .md\:w-28 {
+    background: linear-gradient(145deg, #543019, #2a170d) !important;
+    border: 2px solid #bb7c25 !important;
+    box-shadow: 4px 5px 0 rgba(67, 32, 12, .24) !important;
+    color: #f3d292;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(3) .text-inv-accent-warm {
+    color: #f0bd62;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(4) .rounded-full {
+    background: #5b3018 !important;
+    border: 2px solid #bd7c29 !important;
+    color: #f2cf8f;
+}
+
+.jose-western-theme .invitation-jose-raul > section:nth-of-type(4) a {
+    background: #5b3018 !important;
+    border: 1px solid #d19a48;
+    border-radius: .2rem !important;
+    box-shadow: 4px 5px 0 rgba(72, 36, 15, .2);
+}
+
+.jose-western-theme .invitation-jose-raul footer {
+    background:
+        linear-gradient(rgba(31, 16, 8, .96), rgba(21, 11, 6, .98)),
+        repeating-linear-gradient(90deg, #2b160b 0 90px, #3a1e0e 91px 94px);
+    border-color: #70411f;
+    color: #d8b47b;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+}
+
+.jose-western-theme .invitation-jose-raul footer svg {
+    display: none;
+}
+
+.jose-western-theme .invitation-jose-raul footer > div::before {
+    color: var(--western-brass);
+    content: "★";
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: .25rem;
+}
+
+.jose-western-theme .invitation-jose-raul footer p,
+.jose-western-theme .invitation-jose-raul footer a {
+    color: #dfba7a;
+}
+
+@media (max-width: 430px) {
+    .jose-western-theme .invitation-jose-raul header .relative.z-10 {
+        padding-bottom: 7rem;
+        padding-top: 2rem;
+    }
+
+    .jose-western-theme .invitation-jose-raul header .relative.z-10 > div:first-child {
+        height: 6.2rem;
+    }
+
+    .jose-western-theme .invitation-jose-raul header h1 {
+        font-size: clamp(2.75rem, 13vw, 4rem);
+    }
+
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(2)::after,
+    .jose-western-theme .invitation-jose-raul > section:nth-of-type(4)::after {
+        margin-bottom: -1rem;
+        margin-top: 1.5rem;
+        width: 94%;
+    }
+}
+
+@media (max-height: 700px) and (min-width: 700px) {
+    .jose-western-theme .invitation-jose-raul header .relative.z-10 {
+        padding-bottom: 5rem;
+        padding-top: 1.5rem;
+    }
+
+    .jose-western-theme .invitation-jose-raul header .relative.z-10 > div:first-child {
+        height: 5.5rem;
+    }
+}

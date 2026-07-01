@@ -139,6 +139,16 @@ const invitations = [
         eventDate: '2026-07-25T18:00:00',
     },
 
+    {
+        slug: 'jose-raul',
+        title: 'XV Años | José Raul',
+        component: lazy(() => import('./jose-raul/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'none',
+        eventDate: '2026-08-15T14:00:00',
+    },
+
 ]
 
 // Solo invitaciones activas

@@ -48,7 +48,7 @@ export const DISPLAY_FONTS = [
     'Great Vibes', 'Playfair Display', 'Cormorant Garamond', 'Dancing Script',
     'Parisienne', 'Alex Brush', 'Sacramento', 'Tangerine', 'Allura',
     'Cinzel', 'Marcellus', 'Libre Baskerville', 'EB Garamond', 'Lora',
-    'Merriweather', 'Crimson Text',
+    'Merriweather', 'Crimson Text', 'Rye',
 ];
 
 export const BODY_FONTS = [
