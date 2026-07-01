@@ -27,8 +27,16 @@
         "enabled": true,
         "label": "Mis Padrinos",
         "subtitle": "Con el cariño de",
-        "padrino1": "Eduardo Alvarez",
-        "padrino2": "Viridiana Hernández Rgl."
+        "groups": [
+            {
+                "padrino1": "Eduardo Alvarez",
+                "padrino2": "Viridiana Hernández Rgl."
+            },
+            {
+                "padrino1": "J. Manuel Ruiz",
+                "padrino2": "Nayeli Hernández Rgl"
+            }
+        ]
     },
     "countdown": {
         "targetDate": "2026-08-15T14:00:00",
