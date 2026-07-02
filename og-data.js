@@ -82,8 +82,7 @@ export const ogData = {
         image: '/invitations/jose-raul/img/hero-bg-v2.webp',
     },
     'maia-sofia-duran-avila': {
-        title: 'Mis XV Años | Maia Sofía ✨',
-        description: 'Acompáñame a celebrar mis XV años el viernes 24 de julio de 2026. ¡Toca aquí para ver la invitación!',
+        title: 'Mis XV Años | Maia Sofía ',
         image: '/invitations/maia-sofia-duran-avila/img/og-preview.jpg',
     },
 }

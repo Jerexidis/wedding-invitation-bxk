@@ -7,6 +7,7 @@
     --maia-gold: #bd829a;
     --maia-paper: #f2e6ea;
     --maia-cream: #fbf8f6;
+    --maia-orchid: url('/invitations/maia-sofia-duran-avila/img/flores.jpeg');
     background: var(--maia-cream);
     color: var(--maia-ink);
     font-family: "Manrope", sans-serif;
@@ -137,11 +138,42 @@
 }
 
 .maia-name {
-    background: #fffdfc;
+    background: rgba(255, 253, 252, .55);
+    backdrop-filter: blur(28px) saturate(1.2);
+    -webkit-backdrop-filter: blur(28px) saturate(1.2);
     min-height: 780px;
     overflow: hidden;
     padding: 7rem clamp(1.5rem, 8vw, 8rem);
     position: relative;
+}
+
+.maia-name::before {
+    content: "";
+    position: absolute;
+    top: -5%;
+    right: -8%;
+    width: clamp(260px, 42vw, 480px);
+    height: clamp(380px, 58vw, 640px);
+    background: var(--maia-orchid) center / contain no-repeat;
+    mix-blend-mode: multiply;
+    opacity: .22;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.maia-name::after {
+    content: "";
+    position: absolute;
+    bottom: -5%;
+    left: -6%;
+    width: clamp(200px, 34vw, 380px);
+    height: clamp(300px, 48vw, 520px);
+    background: var(--maia-orchid) center / contain no-repeat;
+    mix-blend-mode: multiply;
+    opacity: .15;
+    pointer-events: none;
+    transform: scaleX(-1) rotate(15deg);
+    z-index: 1;
 }
 
 .maia-name h2 {
@@ -192,8 +224,11 @@
 }
 
 .maia-family {
-    background: #fffdfc;
+    background: rgba(255, 253, 252, .45);
+    backdrop-filter: blur(24px) saturate(1.15);
+    -webkit-backdrop-filter: blur(24px) saturate(1.15);
     color: var(--maia-ink);
+    position: relative;
 }
 
 .maia-heading {
@@ -279,8 +314,41 @@
 }
 
 .maia-family__panels {
-    background: #fffdfc;
+    background: rgba(255, 253, 252, .4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     display: grid;
+    overflow: hidden;
+    position: relative;
+}
+
+.maia-family__panels::before {
+    content: "";
+    position: absolute;
+    top: -6%;
+    left: -5%;
+    width: clamp(220px, 36vw, 400px);
+    height: clamp(320px, 50vw, 540px);
+    background: var(--maia-orchid) center / contain no-repeat;
+    mix-blend-mode: multiply;
+    opacity: .18;
+    pointer-events: none;
+    transform: scaleX(-1);
+    z-index: 0;
+}
+
+.maia-family__panels::after {
+    content: "";
+    position: absolute;
+    bottom: -8%;
+    right: -5%;
+    width: clamp(220px, 36vw, 400px);
+    height: clamp(320px, 50vw, 540px);
+    background: var(--maia-orchid) center / contain no-repeat;
+    mix-blend-mode: multiply;
+    opacity: .18;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .maia-family-card {
@@ -289,6 +357,20 @@
     padding: 4.5rem clamp(1.5rem, 7vw, 6rem);
     position: relative;
     text-align: left;
+    z-index: 1;
+}
+
+
+.maia-family-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3.5rem;
+    height: 1px;
+    background: var(--maia-gold);
+    opacity: .35;
 }
 
 .maia-family-card > span {

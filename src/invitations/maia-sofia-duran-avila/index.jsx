@@ -222,7 +222,6 @@ function Locations() {
                         <article key={location.kind} className="maia-location" data-reveal>
                             <div className="maia-location__image">
                                 <img src={location.image} alt={location.name} loading="lazy" />
-                                <span>0{index + 1}</span>
                             </div>
                             <div className="maia-location__copy">
                                 <Icon size={22} strokeWidth={1.4} />
@@ -262,8 +261,12 @@ function Hashtag() {
         <section className="maia-hashtag">
             <div className="maia-hashtag__photo" data-parallax />
             <div className="maia-hashtag__content" data-reveal>
-                <p>Ayúdame a guardar las memorias de este día</p>
-                <span>Comparte tus fotos y videos usando</span>
+                <p>Ayúdame a guardar memorias de este día</p>
+                <span>
+                    Comparte conmigo todas tus fotografías del evento
+                    usando el siguiente hashtag en todas tus publicaciones
+                    de Facebook e Instagram
+                </span>
                 <h2>#maia</h2>
             </div>
         </section>
