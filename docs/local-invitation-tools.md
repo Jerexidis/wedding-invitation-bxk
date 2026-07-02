@@ -27,6 +27,20 @@ Clone an invitation:
 npm run invite -- clone victoria-rojas victoria-rojas-demo --title "XV Años | Demo"
 ```
 
+Preview a custom artistic starter without writing files:
+
+```bash
+npm run invite:starter -- --slug evento-demo --title "Evento Demo" --event-type boda --reference plantilla-boda-editorial
+```
+
+Create the unregistered local draft after reviewing the file plan:
+
+```bash
+npm run invite:starter -- --slug evento-demo --title "Evento Demo" --event-type boda --reference plantilla-boda-editorial --write
+```
+
+The starter never edits `registry.js`, `og-data.js`, or production routes.
+
 Rename a slug/link:
 
 ```bash
@@ -37,6 +51,18 @@ Validate all invitations:
 
 ```bash
 npm run invite:validate
+```
+
+Validate config-based invitations against the formal schema:
+
+```bash
+npm run invite:schema
+```
+
+Compare registry, config, public folders, and Open Graph without rewriting them:
+
+```bash
+npm run invite:consistency
 ```
 
 Validate one invitation:
@@ -80,6 +106,18 @@ Verify an existing production build does not contain local admin tooling:
 
 ```bash
 npm run production:boundary
+```
+
+Run browser smoke tests against every active invitation:
+
+```bash
+npm run test:routes
+```
+
+Run the complete local release gate:
+
+```bash
+npm run release:check
 ```
 
 ## Notes

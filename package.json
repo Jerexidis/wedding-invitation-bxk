@@ -11,13 +11,18 @@
     "preview": "vite preview",
     "invite": "node scripts/invitation-tools.mjs",
     "invite:validate": "node scripts/invitation-tools.mjs validate --all",
+    "invite:schema": "node scripts/invitation-schema.mjs --all",
+    "invite:consistency": "node scripts/invitation-consistency.mjs",
     "invite:preflight": "node scripts/invitation-tools.mjs preflight --all",
     "invite:assets": "node scripts/invitation-tools.mjs assets",
     "invite:optimize": "node scripts/invitation-tools.mjs optimize",
+    "invite:starter": "node scripts/invitation-starter.mjs",
     "context:refresh": "node scripts/invitation-inventory.mjs refresh",
     "context:check": "node scripts/invitation-inventory.mjs check",
     "production:boundary": "node scripts/check-production-boundary.mjs",
-    "publish:check": "node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check && vite build && node scripts/check-production-boundary.mjs",
+    "test:routes": "playwright test",
+    "release:check": "npm run publish:check && npm run test:routes",
+    "publish:check": "node scripts/invitation-schema.mjs --all && node scripts/invitation-consistency.mjs && node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check && vite build && node scripts/check-production-boundary.mjs",
     "deploy": "git add . && git commit -m \"deploy: update\" && git push"
   },
   "dependencies": {
@@ -29,10 +34,11 @@
     "lucide-react": "^0.563.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^7.13.1",
+    "react-router-dom": "^7.18.1",
     "vite": "^5.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -42,7 +48,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.16",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18"
   }

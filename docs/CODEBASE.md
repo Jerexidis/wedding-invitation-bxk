@@ -185,11 +185,16 @@ When adding or renaming an invitation, keep these aligned:
 npm run dev                 # Vite app and local /admin API
 npm run build               # production build
 npm run lint                # ESLint
+npm run invite:schema       # formal schema validation for config invitations
+npm run invite:consistency  # read-only registry/config/OG comparison
 npm run invite:validate     # validate all invitations
 npm run invite:preflight    # validation plus asset checks
+npm run invite:starter      # dry-run custom artistic scaffold
 npm run context:check       # fail if the compact inventory is stale
 npm run context:refresh     # regenerate the compact inventory
 npm run publish:check       # required pre-publish check + production build
+npm run test:routes         # browser smoke tests for active invitations
+npm run release:check       # publish checks plus browser smoke tests
 ```
 
 Targeted invitation tools:

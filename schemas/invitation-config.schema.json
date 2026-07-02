@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://invita-ya.local/schemas/invitation-config.schema.json",
+  "title": "Invita-Ya invitation configuration",
+  "type": "object",
+  "required": [
+    "slug",
+    "eventType",
+    "title",
+    "theme",
+    "hero",
+    "intro",
+    "countdown",
+    "calendar",
+    "events",
+    "dressCode",
+    "gallery",
+    "gifts",
+    "itinerary",
+    "rsvp",
+    "footer"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "eventType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "theme": {
+      "type": "object",
+      "required": ["fontBody", "fontDisplay"],
+      "properties": {
+        "fontBody": { "type": "string", "minLength": 1 },
+        "fontDisplay": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "hero": {
+      "type": "object",
+      "required": ["name", "date", "backgroundImage"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "date": { "type": "string", "minLength": 1 },
+        "backgroundImage": { "type": "string", "minLength": 1 },
+        "song": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "shareImage": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "intro": { "$ref": "#/$defs/section" },
+    "countdown": {
+      "type": "object",
+      "required": ["targetDate"],
+      "properties": {
+        "targetDate": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "calendar": {
+      "type": "object",
+      "required": ["title", "startDateTime", "endDateTime"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "startDateTime": { "type": "string", "minLength": 1 },
+        "endDateTime": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["title", "time", "location"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1 },
+          "time": { "type": "string", "minLength": 1 },
+          "location": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "padrinos": { "$ref": "#/$defs/optionalSection" },
+    "dressCode": { "$ref": "#/$defs/optionalSection" },
+    "gallery": {
+      "type": "object",
+      "required": ["photos"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["src"],
+            "properties": {
+              "src": { "type": "string", "minLength": 1 },
+              "caption": { "type": "string" },
+              "position": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "gifts": { "$ref": "#/$defs/optionalSection" },
+    "itinerary": { "$ref": "#/$defs/optionalSection" },
+    "rsvp": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["whatsapp", "supabase", "mixed", "none"]
+        },
+        "whatsappNumber": { "type": "string" },
+        "deadline": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "footer": { "$ref": "#/$defs/section" }
+  },
+  "$defs": {
+    "section": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "optionalSection": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
