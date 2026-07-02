@@ -18,6 +18,7 @@ An editorial quinceañera invitation rooted in Maia's forest and river portraits
 - Palette: warm white, blush, dusty rose, mauve, soft lilac, ink
 - Typography: Italiana for ceremony, Mrs Saint Delafield for Maia's signature, Manrope for details
 - Composition: alternating cinematic photography and quiet, minimal paper sections
+- Dress code: use Maia's standing portrait by the tree, with the information card anchored low so her face stays unobstructed
 - Avoid: green as a design color, generic princess motifs, saturated backgrounds
 
 ## Structure

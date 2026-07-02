@@ -634,28 +634,31 @@
 }
 
 .maia-dress {
-    min-height: 760px;
+    align-items: flex-end;
+    display: flex;
+    justify-content: center;
+    min-height: 920px;
+    padding: 0 1rem 2rem;
     position: relative;
 }
 
 .maia-dress__image {
     background:
         linear-gradient(rgba(54, 39, 46, .12), rgba(54, 39, 46, .48)),
-        var(--maia-river-photo) center / cover;
+        var(--maia-dress-photo) 63% center / cover;
     inset: 0;
     position: absolute;
 }
 
 .maia-dress__card {
     background: rgba(255, 252, 251, .95);
-    left: 50%;
     max-width: 25rem;
     padding: 3rem 1.6rem;
-    position: absolute;
+    position: relative;
     text-align: center;
-    top: 50%;
-    transform: translate(-50%, -50%) !important;
-    width: calc(100% - 3rem);
+    transform: none !important;
+    width: 100%;
+    z-index: 1;
 }
 
 .maia-dress__card > p {

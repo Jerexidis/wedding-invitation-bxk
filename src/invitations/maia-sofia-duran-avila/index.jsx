@@ -18,6 +18,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import riverPhoto from './assets/maia-rio.webp'
 import treePhoto from './assets/maia-arbol.webp'
 import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
+import dressPhoto from './assets/maia-dress-v2.webp'
 import chapelPhoto from './assets/capilla.webp'
 import venuePhoto from './assets/monte-olimpo.webp'
 import ogPreview from './assets/og-preview.jpg'
@@ -466,6 +467,7 @@ export default function MaiaSofiaInvitation({ portfolioMode = false }) {
                 '--maia-tree-photo': `url("${treePhoto}")`,
                 '--maia-river-photo': `url("${riverPhoto}")`,
                 '--maia-river-portrait': `url("${riverPortraitPhoto}")`,
+                '--maia-dress-photo': `url("${dressPhoto}")`,
             }}
         >
             <MusicControl />
