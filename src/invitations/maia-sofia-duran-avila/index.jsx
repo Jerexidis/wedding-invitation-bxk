@@ -21,6 +21,7 @@ import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
 import chapelPhoto from './assets/capilla.webp'
 import venuePhoto from './assets/monte-olimpo.webp'
 import ogPreview from './assets/og-preview.jpg'
+import finalPhoto from './assets/maia-final.jpg'
 import './invitation.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -364,6 +365,7 @@ function Locations() {
 function DressCode() {
     return (
         <section className="maia-dress">
+            <div className="maia-dress__image" />
             <div className="maia-dress__card" data-reveal>
                 <p>Dress code</p>
                 <div className="maia-dress__line" />
@@ -590,6 +592,7 @@ export default function MaiaSofiaInvitation({ portfolioMode = false }) {
                 '--maia-tree-photo': `url("${treePhoto}")`,
                 '--maia-river-photo': `url("${riverPhoto}")`,
                 '--maia-river-portrait': `url("${riverPortraitPhoto}")`,
+                '--maia-dress-photo': `url("${finalPhoto}")`,
             }}
         >
             <MusicControl />
