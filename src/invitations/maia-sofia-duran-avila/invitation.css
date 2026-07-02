@@ -749,24 +749,18 @@
 }
 
 .maia-dress {
-    align-items: flex-end;
+    align-items: center;
+    background: var(--maia-paper);
     display: flex;
     justify-content: center;
-    min-height: 920px;
-    padding: 0 1rem 2rem;
+    padding: 5rem 1.2rem;
     position: relative;
 }
 
-.maia-dress__image {
-    background:
-        linear-gradient(rgba(54, 39, 46, .12), rgba(54, 39, 46, .48)),
-        var(--maia-dress-photo) 63% center / cover;
-    inset: 0;
-    position: absolute;
-}
-
 .maia-dress__card {
-    background: rgba(255, 252, 251, .95);
+    background: var(--maia-cream);
+    border: 1px solid rgba(41, 35, 39, .12);
+    box-shadow: 0 12px 36px rgba(41, 35, 39, 0.05);
     max-width: 25rem;
     padding: 3rem 1.6rem;
     position: relative;
@@ -953,7 +947,8 @@
 }
 
 .maia-rsvp input,
-.maia-rsvp select {
+.maia-rsvp select,
+.maia-rsvp textarea {
     appearance: none;
     background: transparent;
     border: 0;
@@ -964,6 +959,12 @@
     outline: 0;
     padding: .6rem .15rem;
     width: 100%;
+}
+
+.maia-rsvp textarea {
+    min-height: 4.5rem;
+    resize: none;
+    font-family: inherit;
 }
 
 .maia-rsvp select option {

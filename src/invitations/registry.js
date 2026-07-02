@@ -155,7 +155,7 @@ const invitations = [
         component: lazy(() => import('./maia-sofia-duran-avila/index.jsx')),
         enabled: true,
         eventType: 'xv',
-        rsvpMode: 'whatsapp',
+        rsvpMode: 'mixed',
         eventDate: '2026-07-24T19:00:00-06:00',
     },
 

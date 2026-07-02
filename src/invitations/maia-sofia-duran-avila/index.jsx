@@ -18,7 +18,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import riverPhoto from './assets/maia-rio.webp'
 import treePhoto from './assets/maia-arbol.webp'
 import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
-import dressPhoto from './assets/maia-dress-v2.webp'
 import chapelPhoto from './assets/capilla.webp'
 import venuePhoto from './assets/monte-olimpo.webp'
 import ogPreview from './assets/og-preview.jpg'
@@ -365,7 +364,6 @@ function Locations() {
 function DressCode() {
     return (
         <section className="maia-dress">
-            <div className="maia-dress__image" />
             <div className="maia-dress__card" data-reveal>
                 <p>Dress code</p>
                 <div className="maia-dress__line" />
@@ -401,45 +399,93 @@ function Gifts() {
 function RSVP() {
     const [name, setName] = useState('')
     const [guests, setGuests] = useState('1')
+    const [message, setMessage] = useState('')
+    const [submitted, setSubmitted] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
 
-    const submit = (event) => {
+    const submit = async (event) => {
         event.preventDefault()
-        const message = `¡Hola! Soy ${name}. Confirmo mi asistencia a los XV años de Maia Sofía para ${guests} persona(s).`
-        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+        setSubmitting(true)
+        const waMessage = `¡Hola! Soy ${name}. Confirmo mi asistencia a los XV años de Maia Sofía para ${guests} persona(s).${message.trim() ? `\n\nMensaje: "${message.trim()}"` : ''}`
+
+        try {
+            const { addConfirmation } = await import('../../utils/rsvpStore')
+            await addConfirmation('maia-sofia-duran-avila', {
+                name,
+                guests: parseInt(guests),
+                message: message.trim(),
+            })
+            setSubmitted(true)
+            setTimeout(() => {
+                window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener,noreferrer')
+            }, 800)
+        } catch (err) {
+            console.error('Error saving RSVP:', err)
+            // En caso de error, abrimos WhatsApp de todas formas para no bloquear al usuario
+            window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener,noreferrer')
+            setSubmitted(true)
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (
         <section className="maia-rsvp">
             <div className="maia-rsvp__content">
-                <SectionTitle eyebrow="RSVP" light>
-                    ¿Me acompañas<br /><em>a celebrar?</em>
-                </SectionTitle>
-                <p data-reveal>
-                    Tu asistencia es muy importante para nosotros.<br />
-                    Confirma por WhatsApp.
-                </p>
-                <form onSubmit={submit} data-reveal>
-                    <label>
-                        <span>Nombre completo</span>
-                        <input
-                            required
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
-                            placeholder="Escribe tu nombre"
-                        />
-                    </label>
-                    <label>
-                        <span>Número de asistentes</span>
-                        <select value={guests} onChange={(event) => setGuests(event.target.value)}>
-                            {[1, 2, 3, 4, 5, 6].map((number) => (
-                                <option key={number} value={number}>{number}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <button className="maia-button maia-button--light" type="submit">
-                        <MessageCircle size={17} /> Confirmar asistencia
-                    </button>
-                </form>
+                {submitted ? (
+                    <div className="maia-rsvp__success animate-fade-in" style={{ padding: '3.5rem 1.5rem', textAlign: 'center' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '50%', marginBottom: '1.5rem', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                            <Heart size={40} className="animate-pulse" fill="currentColor" style={{ color: 'var(--maia-moss)' }} />
+                        </div>
+                        <h2 style={{ fontFamily: 'Italiana, Georgia, serif', fontSize: '2.5rem', fontWeight: '400', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>¡Muchas gracias!</h2>
+                        <p style={{ color: '#ddd7c8', fontFamily: 'Italiana, Georgia, serif', fontSize: '1.1rem', lineHeight: '1.65' }}>Tu confirmación ha sido registrada exitosamente.</p>
+                        <p style={{ fontSize: '0.75rem', marginTop: '1.5rem', opacity: 0.7, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Redirigiendo a WhatsApp...</p>
+                    </div>
+                ) : (
+                    <>
+                        <SectionTitle eyebrow="RSVP" light>
+                            ¿Me acompañas<br /><em>a celebrar?</em>
+                        </SectionTitle>
+                        <p data-reveal>
+                            Tu asistencia es muy importante para nosotros.<br />
+                            Confirma por WhatsApp.
+                        </p>
+                        <form onSubmit={submit} data-reveal>
+                            <label>
+                                <span>Nombre completo</span>
+                                <input
+                                    required
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
+                                    placeholder="Escribe tu nombre"
+                                />
+                            </label>
+                            <label>
+                                <span>Número de asistentes</span>
+                                <select value={guests} onChange={(event) => setGuests(event.target.value)}>
+                                    {[1, 2, 3, 4, 5, 6].map((number) => (
+                                        <option key={number} value={number}>{number}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label>
+                                <span>Mensaje (opcional)</span>
+                                <textarea
+                                    value={message}
+                                    onChange={(event) => setMessage(event.target.value)}
+                                    placeholder="Escribe un mensaje para mí"
+                                    maxLength={100}
+                                />
+                                <div style={{ fontSize: '0.62rem', textAlign: 'right', color: 'rgba(255, 255, 255, 0.5)', marginTop: '0.35rem', letterSpacing: '0.05em' }}>
+                                    {message.length} / 100 caracteres
+                                </div>
+                            </label>
+                            <button className="maia-button maia-button--light" type="submit" disabled={submitting}>
+                                <MessageCircle size={17} /> {submitting ? 'Enviando...' : 'Confirmar asistencia'}
+                            </button>
+                        </form>
+                    </>
+                )}
             </div>
         </section>
     )
@@ -544,7 +590,6 @@ export default function MaiaSofiaInvitation({ portfolioMode = false }) {
                 '--maia-tree-photo': `url("${treePhoto}")`,
                 '--maia-river-photo': `url("${riverPhoto}")`,
                 '--maia-river-portrait': `url("${riverPortraitPhoto}")`,
-                '--maia-dress-photo': `url("${dressPhoto}")`,
             }}
         >
             <MusicControl />

@@ -419,7 +419,7 @@
       "eventDate": "2026-07-24T19:00:00-06:00",
       "portfolioGalleryAllowed": false,
       "services": {
-        "rsvp": "whatsapp",
+        "rsvp": "mixed",
         "gallery": true,
         "audio": true,
         "calendar": true
@@ -432,10 +432,10 @@
       ],
       "designBrief": "src/invitations/maia-sofia-duran-avila/DESIGN.md",
       "assets": {
-        "files": 5,
+        "files": 6,
         "images": 2,
         "audio": 1,
-        "bytes": 1572016,
+        "bytes": 1572099,
         "megabytes": 1.5
       }
     }
