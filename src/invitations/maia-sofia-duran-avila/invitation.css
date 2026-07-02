@@ -191,21 +191,6 @@
     margin: 0;
 }
 
-.maia-watercolor {
-    height: 39rem;
-    position: absolute;
-    right: -1rem;
-    top: -1rem;
-    width: 31rem;
-    z-index: 1;
-}
-
-.maia-watercolor img {
-    height: 100%;
-    object-fit: contain;
-    width: 100%;
-}
-
 .maia-family {
     background: #fffdfc;
     color: var(--maia-ink);
@@ -274,16 +259,18 @@
 }
 
 .maia-family__portrait > p {
+    background: rgba(42, 31, 36, .46);
+    bottom: clamp(1.5rem, 5vw, 4rem);
     color: white;
     font-family: "Italiana", Georgia, serif;
     font-size: clamp(1.05rem, 2.5vw, 1.6rem);
     left: clamp(1.5rem, 8vw, 8rem);
     line-height: 1.35;
     margin: 0;
-    max-width: 18rem;
+    max-width: 19rem;
+    padding: .85rem 1rem;
     position: absolute;
-    text-align: center;
-    top: 30%;
+    text-align: left;
     z-index: 2;
 }
 
@@ -293,12 +280,13 @@
 
 .maia-family__panels {
     background: #fffdfc;
+    display: grid;
 }
 
 .maia-family-card {
-    min-height: 820px;
+    min-height: 460px;
     overflow: hidden;
-    padding: 12rem clamp(1.5rem, 10vw, 9rem) 6rem;
+    padding: 4.5rem clamp(1.5rem, 7vw, 6rem);
     position: relative;
     text-align: left;
 }
@@ -311,7 +299,7 @@
 .maia-family-card > p {
     font-family: "Italiana", Georgia, serif;
     font-size: .94rem;
-    margin: 9rem 0 1rem;
+    margin: 2.5rem 0 1rem;
 }
 
 .maia-family-card h3 {
@@ -335,17 +323,10 @@
 }
 
 .maia-family-card__heart {
+    bottom: 3rem;
     color: var(--maia-gold);
     left: 51%;
     position: absolute;
-    top: 52%;
-}
-
-.maia-family-card .maia-watercolor {
-    right: 1rem;
-    top: 2rem;
-    transform: scale(.52);
-    transform-origin: top right;
 }
 
 .maia-family-card--reverse {
@@ -359,12 +340,6 @@
 .maia-family-card--reverse b {
     margin-left: 0;
     margin-right: 5rem;
-}
-
-.maia-family-card--reverse .maia-watercolor {
-    left: 1rem;
-    right: auto;
-    transform-origin: top left;
 }
 
 .maia-date {
@@ -663,66 +638,6 @@
     margin-top: 1rem;
 }
 
-.maia-gallery {
-    background: var(--maia-forest);
-    color: var(--maia-cream);
-    padding: 6rem 1.1rem;
-}
-
-.maia-gallery__grid {
-    display: grid;
-    gap: .8rem;
-    grid-template-columns: .92fr 1.08fr;
-    margin: 0 auto;
-    max-width: 58rem;
-}
-
-.maia-gallery__photo {
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-}
-
-.maia-gallery__photo--1 {
-    grid-row: span 2;
-}
-
-.maia-gallery__photo--3 img {
-    filter: grayscale(1);
-}
-
-.maia-gallery__photo img {
-    height: 100%;
-    min-height: 15rem;
-    object-fit: cover;
-    width: 100%;
-}
-
-.maia-gallery__photo--1 img {
-    min-height: 31rem;
-}
-
-.maia-gallery figcaption {
-    background: rgba(54, 39, 46, .84);
-    bottom: .65rem;
-    color: var(--maia-gold);
-    font-family: "Italiana", Georgia, serif;
-    font-size: .8rem;
-    left: .65rem;
-    padding: .5rem;
-    position: absolute;
-}
-
-.maia-gallery__quote {
-    color: #f1dce4;
-    font-family: "Italiana", Georgia, serif;
-    font-size: clamp(1.3rem, 5vw, 2rem);
-    line-height: 1.45;
-    margin: 3.2rem auto 0;
-    max-width: 34rem;
-    text-align: center;
-}
-
 .maia-gifts {
     align-items: center;
     background: var(--maia-paper);
@@ -910,15 +825,6 @@
     color: rgba(255, 255, 255, .52);
 }
 
-.maia-rsvp__phone {
-    color: #d4c7a5;
-    display: inline-block;
-    font-size: .68rem;
-    letter-spacing: .18em;
-    margin-top: 1.4rem;
-    text-decoration: none;
-}
-
 .maia-footer {
     background: var(--maia-paper);
     padding: 4rem 1rem;
@@ -943,9 +849,21 @@
 }
 
 .maia-footer span {
+    display: block;
     font-size: .55rem;
     font-weight: 600;
     letter-spacing: .25em;
+}
+
+.maia-footer a {
+    color: var(--maia-forest);
+    display: inline-block;
+    font-size: .52rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    margin-top: 2rem;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 @keyframes maia-hero-in {
@@ -959,6 +877,14 @@
 }
 
 @media (min-width: 740px) {
+    .maia-family__panels {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .maia-family-card + .maia-family-card {
+        border-left: 1px solid #eadde2;
+    }
+
     .maia-locations__list {
         grid-template-columns: 1fr 1fr;
     }
@@ -1017,25 +943,19 @@
         margin: 0 auto;
     }
 
-    .maia-watercolor {
-        right: -9rem;
-        transform: scale(.72);
-        transform-origin: top right;
-    }
-
     .maia-family__portrait {
         height: 680px;
     }
 
     .maia-family__portrait > p {
-        left: 1.2rem;
-        max-width: 15rem;
-        top: 20%;
+        bottom: 1.5rem;
+        left: 1rem;
+        max-width: 12.5rem;
     }
 
     .maia-family-card {
-        min-height: 800px;
-        padding: 9rem 1.5rem 4rem;
+        min-height: 430px;
+        padding: 3.7rem 1.5rem 5rem;
     }
 
     .maia-family-card__heart {
@@ -1044,13 +964,6 @@
         top: auto;
     }
 
-    .maia-gallery__photo img {
-        min-height: 11rem;
-    }
-
-    .maia-gallery__photo--1 img {
-        min-height: 23rem;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {

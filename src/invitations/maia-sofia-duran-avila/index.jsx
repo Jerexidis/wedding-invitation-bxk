@@ -16,24 +16,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import heroPhoto from './assets/maia-hero.webp'
 import riverPhoto from './assets/maia-rio.webp'
 import treePhoto from './assets/maia-arbol.webp'
-import blackAndWhitePhoto from './assets/maia-byn.webp'
 import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
 import chapelPhoto from './assets/capilla.webp'
 import venuePhoto from './assets/monte-olimpo.webp'
 import ogPreview from './assets/og-preview.jpg'
-import watercolorFlowers from './assets/flowers-watercolor-v1.webp'
 import './invitation.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const EVENT_DATE = '2026-07-24T19:00:00-06:00'
 const WHATSAPP = '524493666177'
-
-const photos = [
-    { src: treePhoto, alt: 'Maia Sofía entre los árboles' },
-    { src: riverPortraitPhoto, alt: 'Maia Sofía junto al río' },
-    { src: blackAndWhitePhoto, alt: 'Retrato en blanco y negro de Maia Sofía' },
-]
 
 const locations = [
     {
@@ -119,18 +111,9 @@ function Hero() {
     )
 }
 
-function WatercolorFlowers({ small = false }) {
-    return (
-        <div className={`maia-watercolor${small ? ' maia-watercolor--small' : ''}`} aria-hidden="true">
-            <img src={watercolorFlowers} alt="" />
-        </div>
-    )
-}
-
 function NameReveal() {
     return (
         <section className="maia-name" id="maia-name">
-            <WatercolorFlowers />
             <h2 data-reveal>Maia Sofía</h2>
             <div className="maia-name__invitation" data-reveal>
                 <span>En compañía de</span>
@@ -147,14 +130,13 @@ function Family() {
             <div className="maia-family__portrait">
                 <img src={heroPhoto} alt="Retrato de Maia Sofía" loading="lazy" data-parallax />
                 <p data-reveal>
-                    La sonrisa es mía,<br />
-                    el motivo eres tú.<br />
-                    <strong>¡Feliz que celebremos juntos mi día especial!</strong>
+                    Hoy celebro mis sueños,<br />
+                    mi historia y la alegría<br />
+                    <strong>de compartir este momento contigo.</strong>
                 </p>
             </div>
             <div className="maia-family__panels">
                 <article className="maia-family-card" data-reveal>
-                    <WatercolorFlowers small />
                     <span>Mis padres</span>
                     <p>Con la bendición de Dios y de</p>
                     <h3>Alberto Durán Valverde</h3>
@@ -163,7 +145,6 @@ function Family() {
                     <Heart className="maia-family-card__heart" size={30} strokeWidth={1.15} />
                 </article>
                 <article className="maia-family-card maia-family-card--reverse" data-reveal>
-                    <WatercolorFlowers small />
                     <span>Mis padrinos</span>
                     <p>Y la compañía de</p>
                     <h3>César Iván Flores Trigos</h3>
@@ -289,29 +270,6 @@ function Hashtag() {
     )
 }
 
-function Gallery({ hideGallery }) {
-    if (hideGallery) return null
-
-    return (
-        <section className="maia-gallery">
-            <SectionTitle eyebrow="Una etapa inolvidable" light>
-                Mis recuerdos,<br /><em>mi historia</em>
-            </SectionTitle>
-            <div className="maia-gallery__grid">
-                {photos.map((photo, index) => (
-                    <figure key={photo.src} className={`maia-gallery__photo maia-gallery__photo--${index + 1}`} data-reveal>
-                        <img src={photo.src} alt={photo.alt} loading="lazy" />
-                        <figcaption>0{index + 1}</figcaption>
-                    </figure>
-                ))}
-            </div>
-            <p className="maia-gallery__quote" data-reveal>
-                Que esta noche quede guardada<br />en el corazón de todos.
-            </p>
-        </section>
-    )
-}
-
 function Gifts() {
     return (
         <section className="maia-gifts">
@@ -371,13 +329,12 @@ function RSVP() {
                         <MessageCircle size={17} /> Confirmar asistencia
                     </button>
                 </form>
-                <a className="maia-rsvp__phone" href={`tel:+${WHATSAPP}`}>449 366 6177</a>
             </div>
         </section>
     )
 }
 
-export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery = false }) {
+export default function MaiaSofiaInvitation({ portfolioMode = false }) {
     const rootRef = useRef(null)
 
     useEffect(() => {
@@ -484,7 +441,6 @@ export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery
             <DateAndCountdown />
             <Locations />
             <DressCode />
-            <Gallery hideGallery={hideGallery} />
             <Gifts />
             <Hashtag />
             <RSVP />
@@ -492,6 +448,7 @@ export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery
                 <p>Con cariño</p>
                 <h2>Maia Sofía</h2>
                 <span>24 · JULIO · 2026</span>
+                <a href="https://invita-ya.com" target="_blank" rel="noreferrer">Hecho con Invita-Ya.com</a>
             </footer>
         </main>
     )

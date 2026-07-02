@@ -15,7 +15,7 @@
   "services": {
     "audio": false,
     "calendar": true,
-    "gallery": true,
+    "gallery": false,
     "rsvp": "whatsapp",
     "seo": true
   }

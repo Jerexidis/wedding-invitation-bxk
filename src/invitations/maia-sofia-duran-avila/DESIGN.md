@@ -17,7 +17,7 @@ An editorial quinceañera invitation rooted in Maia's forest and river portraits
 - Mood: poised, intimate, romantic, editorial
 - Palette: warm white, blush, dusty rose, mauve, soft lilac, ink
 - Typography: Italiana for ceremony, Mrs Saint Delafield for Maia's signature, Manrope for details
-- Composition: alternating cinematic photography and quiet paper sections
+- Composition: alternating cinematic photography and quiet, minimal paper sections
 - Avoid: green as a design color, generic princess motifs, saturated backgrounds
 
 ## Structure
@@ -28,10 +28,9 @@ An editorial quinceañera invitation rooted in Maia's forest and river portraits
 4. Date, countdown, and calendar action
 5. Ceremony and reception
 6. Dress code
-7. Editorial portrait gallery
-8. Gift guidance
-9. Event hashtag `#maia`
-10. WhatsApp RSVP
+7. Gift guidance
+8. Event hashtag `#maia`
+9. WhatsApp RSVP
 
 ## Motion
 
