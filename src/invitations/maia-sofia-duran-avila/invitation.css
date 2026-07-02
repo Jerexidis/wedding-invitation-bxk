@@ -753,7 +753,7 @@
     background: var(--maia-paper);
     display: flex;
     justify-content: center;
-    padding: 5rem 1.2rem;
+    padding: 3rem 1.2rem;
     position: relative;
 }
 
@@ -762,7 +762,7 @@
     border: 1px solid rgba(41, 35, 39, .12);
     box-shadow: 0 12px 36px rgba(41, 35, 39, 0.05);
     max-width: 25rem;
-    padding: 3rem 1.6rem;
+    padding: 2.2rem 1.6rem;
     position: relative;
     text-align: center;
     transform: none !important;
@@ -782,7 +782,7 @@
 .maia-dress__line {
     background: var(--maia-gold);
     height: 1px;
-    margin: 1.5rem auto;
+    margin: 1rem auto;
     width: 3rem;
 }
 
@@ -798,7 +798,7 @@
     display: flex;
     gap: 1.15rem;
     justify-content: center;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
 }
 
 .maia-dress__colors > div {
@@ -833,7 +833,7 @@
     display: block;
     font-size: .58rem;
     line-height: 1.55;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
 }
 
 .maia-gifts {
