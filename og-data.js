@@ -83,6 +83,7 @@ export const ogData = {
     },
     'maia-sofia-duran-avila': {
         title: 'Mis XV Años | Maia Sofía ',
+        description:"",
         image: '/invitations/maia-sofia-duran-avila/img/og-preview.jpg',
     },
 }
