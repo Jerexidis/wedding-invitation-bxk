@@ -417,12 +417,12 @@ function RSVP() {
             })
             setSubmitted(true)
             setTimeout(() => {
-                window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener,noreferrer')
+                window.location.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
             }, 800)
         } catch (err) {
             console.error('Error saving RSVP:', err)
             // En caso de error, abrimos WhatsApp de todas formas para no bloquear al usuario
-            window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener,noreferrer')
+            window.location.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
             setSubmitted(true)
         } finally {
             setSubmitting(false)
