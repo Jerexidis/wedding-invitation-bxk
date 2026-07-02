@@ -88,6 +88,39 @@ function MusicControl() {
     const audioRef = useRef(null)
     const [playing, setPlaying] = useState(false)
 
+    useEffect(() => {
+        const audio = audioRef.current
+        if (!audio) return undefined
+
+        let waitingForInteraction = true
+
+        function removeInteractionListeners() {
+            if (!waitingForInteraction) return
+            document.removeEventListener('pointerdown', playAfterInteraction, true)
+            document.removeEventListener('keydown', playAfterInteraction, true)
+            waitingForInteraction = false
+        }
+
+        async function playAfterInteraction(event) {
+            if (event.target instanceof Element && event.target.closest('.maia-music')) {
+                removeInteractionListeners()
+                return
+            }
+
+            try {
+                await audio.play()
+                removeInteractionListeners()
+            } catch {
+                setPlaying(false)
+            }
+        }
+
+        document.addEventListener('pointerdown', playAfterInteraction, true)
+        document.addEventListener('keydown', playAfterInteraction, true)
+        audio.play().then(removeInteractionListeners).catch(() => {})
+        return removeInteractionListeners
+    }, [])
+
     const toggle = async () => {
         const audio = audioRef.current
         if (!audio) return
@@ -107,7 +140,8 @@ function MusicControl() {
             <audio
                 ref={audioRef}
                 src={AUDIO}
-                preload="metadata"
+                preload="auto"
+                autoPlay
                 loop
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
