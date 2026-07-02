@@ -13,7 +13,7 @@
     "invitation.css"
   ],
   "services": {
-    "audio": false,
+    "audio": true,
     "calendar": true,
     "gallery": false,
     "rsvp": "whatsapp",

@@ -8,12 +8,13 @@ import {
     Heart,
     MapPin,
     MessageCircle,
+    Music2,
     Navigation,
+    Pause,
     Sparkles,
 } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import heroPhoto from './assets/maia-hero.webp'
 import riverPhoto from './assets/maia-rio.webp'
 import treePhoto from './assets/maia-arbol.webp'
 import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
@@ -26,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const EVENT_DATE = '2026-07-24T19:00:00-06:00'
 const WHATSAPP = '524493666177'
+const AUDIO = '/invitations/maia-sofia-duran-avila/audio/once-upon-a-dream.mp3'
 
 const locations = [
     {
@@ -81,6 +83,47 @@ function SectionTitle({ eyebrow, children, light = false }) {
     )
 }
 
+function MusicControl() {
+    const audioRef = useRef(null)
+    const [playing, setPlaying] = useState(false)
+
+    const toggle = async () => {
+        const audio = audioRef.current
+        if (!audio) return
+        if (audio.paused) {
+            try {
+                await audio.play()
+            } catch {
+                setPlaying(false)
+            }
+        } else {
+            audio.pause()
+        }
+    }
+
+    return (
+        <>
+            <audio
+                ref={audioRef}
+                src={AUDIO}
+                preload="metadata"
+                loop
+                onPlay={() => setPlaying(true)}
+                onPause={() => setPlaying(false)}
+            />
+            <button
+                className={`maia-music${playing ? ' is-playing' : ''}`}
+                type="button"
+                onClick={toggle}
+                aria-label={playing ? 'Pausar música' : 'Reproducir música'}
+            >
+                {playing ? <Pause size={16} /> : <Music2 size={16} />}
+                <span>{playing ? 'Pausar' : 'Música'}</span>
+            </button>
+        </>
+    )
+}
+
 function Hero() {
     return (
         <header className="maia-hero">
@@ -128,7 +171,7 @@ function Family() {
     return (
         <section className="maia-family">
             <div className="maia-family__portrait">
-                <img src={heroPhoto} alt="Retrato de Maia Sofía" loading="lazy" data-parallax />
+                <img src={treePhoto} alt="Maia Sofía sentada entre las ramas de un árbol" loading="lazy" data-parallax />
                 <p data-reveal>
                     Hoy celebro mis sueños,<br />
                     mi historia y la alegría<br />
@@ -249,25 +292,12 @@ function DressCode() {
                 <p>Dress code</p>
                 <div className="maia-dress__line" />
                 <span>Por favor, evita</span>
-                <strong>Blanco y tonos rosa,<br />claros o intensos</strong>
+                <div className="maia-dress__colors" aria-label="Colores reservados para la quinceañera">
+                    <div><i className="is-white" /><b>Blanco</b></div>
+                    <div><i className="is-blush" /><b>Rosa claro</b></div>
+                    <div><i className="is-pink" /><b>Rosa intenso</b></div>
+                </div>
                 <small>Estos colores están reservados para la quinceañera.</small>
-            </div>
-        </section>
-    )
-}
-
-function Hashtag() {
-    return (
-        <section className="maia-hashtag">
-            <div className="maia-hashtag__photo" data-parallax />
-            <div className="maia-hashtag__content" data-reveal>
-                <p>Ayúdame a guardar memorias de este día</p>
-                <span>
-                    Comparte conmigo todas tus fotografías del evento
-                    usando el siguiente hashtag en todas tus publicaciones
-                    de Facebook e Instagram
-                </span>
-                <h2>#maia</h2>
             </div>
         </section>
     )
@@ -282,8 +312,8 @@ function Gifts() {
                 <p>Mesa de regalos</p>
                 <h2>Tu presencia<br />es mi mejor regalo</h2>
                 <span>
-                    Si deseas tener un detalle conmigo, recibimos tarjetas de regalo de
-                    <strong> Amazon, Liverpool o Zara</strong>, así como obsequio en sobre.
+                    Si deseas tener un detalle conmigo, puedes obsequiar una
+                    <strong> tarjeta de regalo de tu preferencia</strong> o un sobre con dinero.
                 </span>
             </div>
         </section>
@@ -438,6 +468,7 @@ export default function MaiaSofiaInvitation({ portfolioMode = false }) {
                 '--maia-river-portrait': `url("${riverPortraitPhoto}")`,
             }}
         >
+            <MusicControl />
             <Hero />
             <NameReveal />
             <Family />
@@ -445,7 +476,6 @@ export default function MaiaSofiaInvitation({ portfolioMode = false }) {
             <Locations />
             <DressCode />
             <Gifts />
-            <Hashtag />
             <RSVP />
             <footer className="maia-footer">
                 <p>Con cariño</p>

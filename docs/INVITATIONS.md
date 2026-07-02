@@ -20,7 +20,7 @@ the minimum invitation-specific files needed for a task.
 | `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 12.21 MB |
 | `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 18.14 MB |
 | `jose-raul` | shared-config | xv | none | 3 files | 5.03 MB |
-| `maia-sofia-duran-avila` | standalone-custom | xv | whatsapp | 4 files | 0.22 MB |
+| `maia-sofia-duran-avila` | standalone-custom | xv | whatsapp | 4 files | 1.42 MB |
 
 ## Targeted context
 

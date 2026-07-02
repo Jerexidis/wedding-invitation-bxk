@@ -29,13 +29,13 @@ An editorial quinceañera invitation rooted in Maia's forest and river portraits
 5. Ceremony and reception
 6. Dress code
 7. Gift guidance
-8. Event hashtag `#maia`
-9. WhatsApp RSVP
+8. WhatsApp RSVP
 
 ## Motion
 
 - GSAP hero entrance
 - GSAP reveal and subtle photographic parallax on scroll
+- Minimal fixed music control for `Once Upon a Dream`
 - Reduced-motion support
 
 ## Preserve
