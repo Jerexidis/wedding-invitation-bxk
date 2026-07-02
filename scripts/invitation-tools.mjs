@@ -134,12 +134,29 @@ export async function validateInvitation(slug) {
     const srcDir = path.join(SRC_ROOT, slug)
     const publicDir = path.join(PUBLIC_ROOT, slug)
     const config = readConfig(slug)
+    const manifest = readManifest(slug)
     const registryEntry = readRegistryEntry(slug)
 
     if (!fs.existsSync(srcDir)) report.errors.push(`Missing source folder: src/invitations/${slug}`)
     if (!fs.existsSync(path.join(srcDir, 'index.jsx'))) report.errors.push('Missing index.jsx')
     if (!fs.existsSync(publicDir)) report.warnings.push(`Missing public folder: public/invitations/${slug}`)
     if (!config) {
+        if (manifest?.status === 'draft' && manifest?.registered === false) {
+            if (manifest.slug !== slug) {
+                report.errors.push(`invitation.manifest.json slug is "${manifest.slug}", expected "${slug}"`)
+            }
+            if (!manifest.title) report.errors.push('Missing invitation.manifest.json title')
+            if (!manifest.eventType) report.warnings.push('Missing invitation.manifest.json eventType')
+            if (registryEntry) report.warnings.push('Draft manifest is unregistered but registry.js contains an entry')
+            const hasDraftPreview = fs.existsSync(path.join(srcDir, 'assets', 'og-preview.jpg'))
+                || fs.existsSync(path.join(publicDir, 'img', 'og-preview.jpg'))
+            if (manifest.services?.seo && !hasDraftPreview) {
+                report.warnings.push('Draft enables SEO but og-preview.jpg is missing')
+            }
+            report.warnings.push('Custom draft is intentionally unregistered; publication checks were skipped')
+            await validateAssetHealth(slug, report)
+            return finishReport(report)
+        }
         report.warnings.push('Legacy invitation without config.json; only folder and registry checks were run')
         if (!registryEntry) report.errors.push('Missing registry.js entry')
         return finishReport(report)
@@ -296,6 +313,16 @@ function readConfig(slug) {
     if (!fs.existsSync(configPath)) return null
     try {
         return JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+    } catch {
+        return null
+    }
+}
+
+function readManifest(slug) {
+    const manifestPath = path.join(SRC_ROOT, slug, 'invitation.manifest.json')
+    if (!fs.existsSync(manifestPath)) return null
+    try {
+        return JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
     } catch {
         return null
     }

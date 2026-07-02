@@ -1,0 +1,424 @@
+import { useEffect, useState } from 'react'
+import {
+    CalendarPlus,
+    ChevronDown,
+    Church,
+    Clock3,
+    Gift,
+    Heart,
+    MapPin,
+    MessageCircle,
+    Navigation,
+    Sparkles,
+} from 'lucide-react'
+import heroPhoto from './assets/maia-hero.webp'
+import riverPhoto from './assets/maia-rio.webp'
+import treePhoto from './assets/maia-arbol.webp'
+import blackAndWhitePhoto from './assets/maia-byn.webp'
+import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
+import chapelPhoto from './assets/capilla.webp'
+import venuePhoto from './assets/monte-olimpo.webp'
+import ogPreview from './assets/og-preview.jpg'
+import './invitation.css'
+
+const EVENT_DATE = '2026-07-24T19:00:00-06:00'
+const WHATSAPP = '524493666177'
+
+const photos = [
+    { src: treePhoto, alt: 'Maia Sofía entre los árboles' },
+    { src: riverPortraitPhoto, alt: 'Maia Sofía junto al río' },
+    { src: blackAndWhitePhoto, alt: 'Retrato en blanco y negro de Maia Sofía' },
+]
+
+const locations = [
+    {
+        kind: 'Ceremonia religiosa',
+        name: 'Capilla del Sagrado Corazón',
+        detail: 'Los Fresnos · Aguascalientes, Ags.',
+        time: '7:00 pm',
+        image: chapelPhoto,
+        maps: 'https://maps.app.goo.gl/75G1BrN8zqgmyd1fA',
+        icon: Church,
+    },
+    {
+        kind: 'Recepción',
+        name: 'Salón Monte Olimpo',
+        detail: 'Av. Rosas Guadalupanas · Hacienda Nueva, Ags.',
+        time: '8:30 pm',
+        image: venuePhoto,
+        maps: 'https://www.google.com/maps/search/?api=1&query=Salon+de+Eventos+Monte+Olimpo+Hacienda+Nueva+Aguascalientes',
+        icon: Sparkles,
+    },
+]
+
+const calculateTime = () => {
+    const distance = new Date(EVENT_DATE).getTime() - Date.now()
+    if (distance <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, arrived: true }
+    return {
+        days: Math.floor(distance / 86400000),
+        hours: Math.floor((distance / 3600000) % 24),
+        minutes: Math.floor((distance / 60000) % 60),
+        seconds: Math.floor((distance / 1000) % 60),
+        arrived: false,
+    }
+}
+
+function useCountdown() {
+    const [time, setTime] = useState(calculateTime)
+
+    useEffect(() => {
+        const timer = window.setInterval(() => setTime(calculateTime()), 1000)
+        return () => window.clearInterval(timer)
+    }, [])
+
+    return time
+}
+
+function SectionTitle({ eyebrow, children, light = false }) {
+    return (
+        <header className={`maia-heading${light ? ' maia-heading--light' : ''}`} data-reveal>
+            <p>{eyebrow}</p>
+            <h2>{children}</h2>
+            <i aria-hidden="true" />
+        </header>
+    )
+}
+
+function Hero() {
+    return (
+        <header className="maia-hero">
+            <picture>
+                <source media="(max-width: 480px)" srcSet={riverPortraitPhoto} />
+                <img src={heroPhoto} alt="" className="maia-hero__photo" />
+            </picture>
+            <div className="maia-hero__shade" />
+            <div className="maia-hero__copy">
+                <p>Una noche para recordar</p>
+                <h1>Mis <span>XV</span></h1>
+                <blockquote>
+                    Hay momentos que soñamos toda la vida.<br />
+                    Gracias por ser parte del mío.
+                </blockquote>
+                <span className="maia-hero__date">24 · 07 · 2026</span>
+            </div>
+            <button
+                className="maia-scroll"
+                type="button"
+                onClick={() => document.querySelector('#maia-name')?.scrollIntoView({ behavior: 'smooth' })}
+                aria-label="Descubrir la invitación"
+            >
+                <span>Descubre</span>
+                <ChevronDown size={18} />
+            </button>
+        </header>
+    )
+}
+
+function NameReveal() {
+    return (
+        <section className="maia-name" id="maia-name">
+            <div className="maia-name__botanical" aria-hidden="true">
+                <span /><span /><span /><span />
+            </div>
+            <p data-reveal>Con mucha ilusión, quiero compartir contigo</p>
+            <h2 data-reveal>
+                <span>Maia</span>
+                <span>Sofía</span>
+            </h2>
+            <div className="maia-name__seal" data-reveal>
+                <Heart size={15} strokeWidth={1.4} />
+                <span>XV</span>
+            </div>
+            <p className="maia-name__closing" data-reveal>
+                el inicio de un nuevo capítulo
+            </p>
+        </section>
+    )
+}
+
+function Family() {
+    return (
+        <section className="maia-family">
+            <div className="maia-family__photo">
+                <img src={riverPhoto} alt="Maia Sofía en un paisaje natural" loading="lazy" />
+            </div>
+            <div className="maia-family__content">
+                <SectionTitle eyebrow="Con la bendición de Dios" light>
+                    Y el amor de<br /><em>mi familia</em>
+                </SectionTitle>
+                <div className="maia-family__grid">
+                    <article data-reveal>
+                        <span>Mis papás</span>
+                        <h3>Alberto Durán Valverde</h3>
+                        <b>&</b>
+                        <h3>Marisol Ávila Mercado</h3>
+                    </article>
+                    <article data-reveal>
+                        <span>Mis padrinos</span>
+                        <h3>César Iván Flores Trigos</h3>
+                        <b>&</b>
+                        <h3>Luisa Tristán Damián</h3>
+                    </article>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+function DateAndCountdown() {
+    const time = useCountdown()
+    const units = [
+        ['Días', time.days],
+        ['Horas', time.hours],
+        ['Min', time.minutes],
+        ['Seg', time.seconds],
+    ]
+
+    const addToCalendar = () => {
+        const url = new URL('https://calendar.google.com/calendar/render')
+        url.searchParams.set('action', 'TEMPLATE')
+        url.searchParams.set('text', 'XV años de Maia Sofía')
+        url.searchParams.set('dates', '20260725T010000Z/20260725T070000Z')
+        url.searchParams.set('details', 'Acompáñame a celebrar mis XV años.')
+        url.searchParams.set('location', 'Capilla del Sagrado Corazón Los Fresnos, Aguascalientes')
+        window.open(url.toString(), '_blank', 'noopener,noreferrer')
+    }
+
+    return (
+        <section className="maia-date">
+            <div className="maia-date__paper">
+                <p className="maia-date__month" data-reveal>Julio</p>
+                <div className="maia-date__calendar" data-reveal>
+                    <span>Viernes</span>
+                    <strong>24</strong>
+                    <span>2026</span>
+                </div>
+                <p className="maia-date__phrase" data-reveal>
+                    “Los momentos compartidos con quienes amamos se vuelven recuerdos para siempre.”
+                </p>
+                <button className="maia-button maia-button--outline" type="button" onClick={addToCalendar}>
+                    <CalendarPlus size={16} /> Agregar al calendario
+                </button>
+            </div>
+            <div className="maia-date__count">
+                <p>{time.arrived ? 'Hoy celebramos' : 'Faltan'}</p>
+                {!time.arrived && (
+                    <div className="maia-counter">
+                        {units.map(([label, value]) => (
+                            <div key={label}>
+                                <strong>{String(value).padStart(2, '0')}</strong>
+                                <span>{label}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}
+
+function Locations() {
+    return (
+        <section className="maia-locations">
+            <SectionTitle eyebrow="Celebremos juntos">
+                Los lugares de<br /><em>mi gran día</em>
+            </SectionTitle>
+            <div className="maia-locations__list">
+                {locations.map((location, index) => {
+                    const Icon = location.icon
+                    return (
+                        <article key={location.kind} className="maia-location" data-reveal>
+                            <div className="maia-location__image">
+                                <img src={location.image} alt={location.name} loading="lazy" />
+                                <span>0{index + 1}</span>
+                            </div>
+                            <div className="maia-location__copy">
+                                <Icon size={22} strokeWidth={1.4} />
+                                <p>{location.kind}</p>
+                                <h3>{location.name}</h3>
+                                <time><Clock3 size={14} /> {location.time}</time>
+                                <address><MapPin size={14} /> {location.detail}</address>
+                                <a href={location.maps} target="_blank" rel="noreferrer">
+                                    Ver ubicación <Navigation size={15} />
+                                </a>
+                            </div>
+                        </article>
+                    )
+                })}
+            </div>
+        </section>
+    )
+}
+
+function DressCode() {
+    return (
+        <section className="maia-dress">
+            <div className="maia-dress__image" />
+            <div className="maia-dress__card" data-reveal>
+                <p>Dress code</p>
+                <h2>Formal</h2>
+                <div className="maia-dress__line" />
+                <span>Agradecemos evitar</span>
+                <strong>Blanco y tonos rosa,<br />claros o intensos</strong>
+                <small>Estos colores están reservados para la quinceañera.</small>
+            </div>
+        </section>
+    )
+}
+
+function Gallery({ hideGallery }) {
+    if (hideGallery) return null
+
+    return (
+        <section className="maia-gallery">
+            <SectionTitle eyebrow="Una etapa inolvidable" light>
+                Mis recuerdos,<br /><em>mi historia</em>
+            </SectionTitle>
+            <div className="maia-gallery__grid">
+                {photos.map((photo, index) => (
+                    <figure key={photo.src} className={`maia-gallery__photo maia-gallery__photo--${index + 1}`} data-reveal>
+                        <img src={photo.src} alt={photo.alt} loading="lazy" />
+                        <figcaption>0{index + 1}</figcaption>
+                    </figure>
+                ))}
+            </div>
+            <p className="maia-gallery__quote" data-reveal>
+                Que esta noche quede guardada<br />en el corazón de todos.
+            </p>
+        </section>
+    )
+}
+
+function Gifts() {
+    return (
+        <section className="maia-gifts">
+            <div className="maia-gifts__envelope" data-reveal>
+                <div className="maia-gifts__flap" />
+                <Gift size={25} strokeWidth={1.4} />
+                <p>Mesa de regalos</p>
+                <h2>Tu presencia<br />es mi mejor regalo</h2>
+                <span>
+                    Si deseas tener un detalle conmigo, recibimos tarjetas de regalo de
+                    <strong> Amazon, Liverpool o Zara</strong>, así como obsequio en sobre.
+                </span>
+            </div>
+        </section>
+    )
+}
+
+function RSVP() {
+    const [name, setName] = useState('')
+    const [guests, setGuests] = useState('1')
+
+    const submit = (event) => {
+        event.preventDefault()
+        const message = `¡Hola! Soy ${name}. Confirmo mi asistencia a los XV años de Maia Sofía para ${guests} persona(s).`
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+    }
+
+    return (
+        <section className="maia-rsvp">
+            <div className="maia-rsvp__content">
+                <SectionTitle eyebrow="RSVP" light>
+                    ¿Me acompañas<br /><em>a celebrar?</em>
+                </SectionTitle>
+                <p data-reveal>
+                    Tu asistencia es muy importante para nosotros.<br />
+                    Confirma por WhatsApp.
+                </p>
+                <form onSubmit={submit} data-reveal>
+                    <label>
+                        <span>Nombre completo</span>
+                        <input
+                            required
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                            placeholder="Escribe tu nombre"
+                        />
+                    </label>
+                    <label>
+                        <span>Número de asistentes</span>
+                        <select value={guests} onChange={(event) => setGuests(event.target.value)}>
+                            {[1, 2, 3, 4, 5, 6].map((number) => (
+                                <option key={number} value={number}>{number}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <button className="maia-button maia-button--light" type="submit">
+                        <MessageCircle size={17} /> Confirmar asistencia
+                    </button>
+                </form>
+                <a className="maia-rsvp__phone" href={`tel:+${WHATSAPP}`}>449 366 6177</a>
+            </div>
+        </section>
+    )
+}
+
+export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery = false }) {
+    useEffect(() => {
+        const previousTitle = document.title
+        document.title = 'Mis XV | Maia Sofía Durán Ávila'
+
+        const description = 'Acompáñame a celebrar mis XV años el viernes 24 de julio de 2026.'
+        const image = new URL(ogPreview, window.location.origin).href
+        const upsertMeta = (property, content) => {
+            let element = document.querySelector(`meta[property="${property}"]`) || document.querySelector(`meta[name="${property}"]`)
+            if (!element) {
+                element = document.createElement('meta')
+                element.setAttribute(property.startsWith('og:') ? 'property' : 'name', property)
+                document.head.appendChild(element)
+            }
+            element.setAttribute('content', content)
+        }
+
+        upsertMeta('description', description)
+        upsertMeta('og:title', 'Mis XV | Maia Sofía')
+        upsertMeta('og:description', description)
+        upsertMeta('og:image', image)
+        upsertMeta('og:type', 'website')
+
+        const observer = new IntersectionObserver(
+            (entries) => entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible')
+                    observer.unobserve(entry.target)
+                }
+            }),
+            { threshold: 0.14 },
+        )
+
+        document.querySelectorAll('.maia-invitation [data-reveal]').forEach((element) => observer.observe(element))
+
+        return () => {
+            observer.disconnect()
+            document.title = previousTitle
+        }
+    }, [])
+
+    return (
+        <main
+            className="maia-invitation"
+            data-portfolio={portfolioMode ? 'true' : 'false'}
+            style={{
+                '--maia-tree-photo': `url("${treePhoto}")`,
+                '--maia-river-photo': `url("${riverPhoto}")`,
+                '--maia-river-portrait': `url("${riverPortraitPhoto}")`,
+            }}
+        >
+            <Hero />
+            <NameReveal />
+            <Family />
+            <DateAndCountdown />
+            <Locations />
+            <DressCode />
+            <Gallery hideGallery={hideGallery} />
+            <Gifts />
+            <RSVP />
+            <footer className="maia-footer">
+                <p>Con cariño</p>
+                <h2>Maia Sofía</h2>
+                <span>24 · JULIO · 2026</span>
+            </footer>
+        </main>
+    )
+}
