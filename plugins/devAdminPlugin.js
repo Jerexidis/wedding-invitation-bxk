@@ -348,7 +348,7 @@ function createInvitation(data) {
     fs.mkdirSync(audioDir, { recursive: true })
 
     // 2. Auto-generate RSVP access key
-    const rsvpKey = Math.random().toString(36).substring(2, 8)
+    const rsvpKey = crypto.randomBytes(12).toString('base64url')
     config.slug = slug
     delete config.rsvpKey
 
@@ -359,7 +359,32 @@ function createInvitation(data) {
         'utf-8'
     )
 
-    // 4. Write rsvp-access.json to public. The raw key stays in a dev-only plugin file.
+    // 4. Create a compact design brief for future human/agent context.
+    const designBrief = [
+        `# ${title}`,
+        '',
+        '## Technical profile',
+        '',
+        `- Slug: \`${slug}\``,
+        `- Event type: \`${config.eventType || 'other'}\``,
+        '- Architecture: `shared-config`',
+        '',
+        '## Art direction',
+        '',
+        '<!-- Describe the concept, mood, palette, typography, composition, and references. -->',
+        '',
+        '## Custom decisions',
+        '',
+        '<!-- Record durable overrides, unique sections, animations, and constraints. -->',
+        '',
+        '## Preserve',
+        '',
+        '<!-- List visual or functional details that future edits must not change. -->',
+        '',
+    ].join('\n')
+    fs.writeFileSync(path.join(srcDir, 'DESIGN.md'), designBrief, 'utf-8')
+
+    // 5. Write rsvp-access.json to public. The raw key stays in a dev-only plugin file.
     writeRsvpKey(slug, rsvpKey)
     const rsvpKeyHash = crypto.createHash('sha256').update(rsvpKey).digest('hex')
     fs.writeFileSync(
@@ -382,7 +407,7 @@ function createInvitation(data) {
         }
     }
 
-    // 5. Generate thin index.jsx (uses shared DynamicInvitation)
+    // 6. Generate thin index.jsx (uses shared DynamicInvitation)
     const indexContent = [
         "import config from './config.json'",
         "import DynamicInvitation from '../../components/DynamicInvitation'",
@@ -392,10 +417,10 @@ function createInvitation(data) {
     ].join('\n')
     fs.writeFileSync(path.join(srcDir, 'index.jsx'), indexContent, 'utf-8')
 
-    // 6. Update registry.js
+    // 7. Update registry.js
     updateRegistry(slug, title)
 
-    // 7. Update og-data.js for WhatsApp/Facebook previews
+    // 8. Update og-data.js for WhatsApp/Facebook previews
     try {
         updateOgData(slug, title, config.eventType)
     } catch (e) {

@@ -69,9 +69,25 @@ Run the publish checklist:
 npm run publish:check
 ```
 
+Refresh or verify the compact agent context:
+
+```bash
+npm run context:refresh
+npm run context:check
+```
+
+Verify an existing production build does not contain local admin tooling:
+
+```bash
+npm run production:boundary
+```
+
 ## Notes
 
 - The clone command updates `registry.js` because the SPA router needs a static import for the new invitation.
 - Open Graph metadata is not changed automatically by the clone/rename CLI. Run validation and update `og-data.js` manually when you want share previews.
 - Slugs must use lowercase letters, numbers, and hyphens.
 - RSVP keys are generated with random bytes and stored as hashes in public `rsvp-access.json`.
+- `publish:check` also verifies that generated context is current and that
+  local admin endpoints, source identifiers, and raw-key files are absent from
+  the production output.

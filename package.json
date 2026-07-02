@@ -14,7 +14,10 @@
     "invite:preflight": "node scripts/invitation-tools.mjs preflight --all",
     "invite:assets": "node scripts/invitation-tools.mjs assets",
     "invite:optimize": "node scripts/invitation-tools.mjs optimize",
-    "publish:check": "node scripts/invitation-tools.mjs preflight --all && vite build",
+    "context:refresh": "node scripts/invitation-inventory.mjs refresh",
+    "context:check": "node scripts/invitation-inventory.mjs check",
+    "production:boundary": "node scripts/check-production-boundary.mjs",
+    "publish:check": "node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check && vite build && node scripts/check-production-boundary.mjs",
     "deploy": "git add . && git commit -m \"deploy: update\" && git push"
   },
   "dependencies": {
