@@ -432,11 +432,11 @@
       ],
       "designBrief": "src/invitations/maia-sofia-duran-avila/DESIGN.md",
       "assets": {
-        "files": 4,
-        "images": 1,
+        "files": 5,
+        "images": 2,
         "audio": 1,
-        "bytes": 1484598,
-        "megabytes": 1.42
+        "bytes": 1572016,
+        "megabytes": 1.5
       }
     }
   ]
