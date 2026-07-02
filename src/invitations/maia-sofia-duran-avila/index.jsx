@@ -237,6 +237,9 @@ function Family() {
 
 function DateAndCountdown() {
     const time = useCountdown()
+    const [calendarOpen, setCalendarOpen] = useState(false)
+    const calendarRef = useRef(null)
+
     const units = [
         ['Días', time.days],
         ['Horas', time.hours],
@@ -244,14 +247,37 @@ function DateAndCountdown() {
         ['Seg', time.seconds],
     ]
 
-    const addToCalendar = () => {
-        const url = new URL('https://calendar.google.com/calendar/render')
-        url.searchParams.set('action', 'TEMPLATE')
-        url.searchParams.set('text', 'XV años de Maia Sofía')
-        url.searchParams.set('dates', '20260725T010000Z/20260725T070000Z')
-        url.searchParams.set('details', 'Acompáñame a celebrar mis XV años.')
-        url.searchParams.set('location', 'Capilla del Sagrado Corazón Los Fresnos, Aguascalientes')
-        window.open(url.toString(), '_blank', 'noopener,noreferrer')
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+                setCalendarOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
+    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV años de Maia Sofía')}&dates=20260725T010000Z/20260725T070000Z&details=${encodeURIComponent('Acompáñame a celebrar mis XV años.')}&location=${encodeURIComponent('Capilla del Sagrado Corazón Los Fresnos, Aguascalientes')}`
+
+    const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent('XV años de Maia Sofía')}&body=${encodeURIComponent('Acompáñame a celebrar mis XV años.')}&startdt=2026-07-24T19:00:00&enddt=2026-07-25T01:00:00&location=${encodeURIComponent('Capilla del Sagrado Corazón Los Fresnos, Aguascalientes')}`
+
+    const openAppleCalendar = () => {
+        const icsContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//XV Maia Sofia//ES',
+            'BEGIN:VEVENT',
+            'DTSTART:20260725T010000Z',
+            'DTEND:20260725T070000Z',
+            'SUMMARY:XV años de Maia Sofía',
+            'DESCRIPTION:Acompáñame a celebrar mis XV años.',
+            'LOCATION:Capilla del Sagrado Corazón Los Fresnos, Aguascalientes',
+            'END:VEVENT',
+            'END:VCALENDAR'
+        ].join('\r\n')
+
+        const dataUri = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent)
+        window.open(dataUri, '_blank')
     }
 
     return (
@@ -266,9 +292,26 @@ function DateAndCountdown() {
                 <p className="maia-date__phrase" data-reveal>
                     “Los momentos compartidos con quienes amamos se vuelven recuerdos para siempre.”
                 </p>
-                <button className="maia-button maia-button--outline" type="button" onClick={addToCalendar}>
-                    <CalendarPlus size={16} /> Agregar al calendario
-                </button>
+                <div className="maia-calendar-wrapper" ref={calendarRef}>
+                    <button 
+                        className="maia-button maia-button--outline" 
+                        type="button" 
+                        onClick={() => setCalendarOpen(!calendarOpen)}
+                    >
+                        <CalendarPlus size={16} /> Agregar al calendario <ChevronDown size={14} style={{ transform: calendarOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', marginLeft: '4px' }} />
+                    </button>
+                    <div className={`maia-calendar-dropdown${calendarOpen ? ' is-open' : ''}`}>
+                        <a href={googleUrl} target="_blank" rel="noopener noreferrer" onClick={() => setCalendarOpen(false)} className="maia-calendar-dropdown-item">
+                            Google Calendar
+                        </a>
+                        <a href={outlookUrl} target="_blank" rel="noopener noreferrer" onClick={() => setCalendarOpen(false)} className="maia-calendar-dropdown-item">
+                            Outlook Online
+                        </a>
+                        <button onClick={() => { openAppleCalendar(); setCalendarOpen(false); }} className="maia-calendar-dropdown-item">
+                            Apple Calendar
+                        </button>
+                    </div>
+                </div>
             </div>
             <div className="maia-date__count">
                 <p>{time.arrived ? 'Hoy celebramos' : 'Faltan'}</p>

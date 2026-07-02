@@ -538,6 +538,62 @@
     color: var(--maia-ink);
 }
 
+.maia-calendar-wrapper {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+}
+
+.maia-calendar-dropdown {
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: rgba(255, 252, 251, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(105, 81, 93, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(41, 35, 39, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.maia-calendar-dropdown.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.maia-calendar-dropdown-item {
+    background: transparent;
+    border: 0;
+    color: var(--maia-ink);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.maia-calendar-dropdown-item:hover {
+    background: var(--maia-paper);
+    color: var(--maia-forest);
+}
+
 .maia-button--light {
     background: var(--maia-paper);
     color: var(--maia-ink);
