@@ -596,7 +596,8 @@ export default function AdminPanel() {
                                             )}
 
                                             <div className="inv-detail-actions">
-                                                {inv.isDraft && <div className="draft-note">Este borrador todavía no tiene enlace público. Está listo para desarrollar su diseño personalizado.</div>}
+                                                {inv.isDraft && <div className="draft-note">Este borrador todavía no tiene enlace público. Puedes revisarlo localmente sin enviarlo a producción.</div>}
+                                                {inv.isDraft && <a href={`/admin/drafts/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa local</a>}
                                                 {!inv.isDraft && <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>}
                                                 {!inv.isDraft && <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>}
                                                 {!inv.isDraft && <button onClick={() => openCloneDialog(inv)} className="btn btn-action-full"><Copy size={14} /> Clonar</button>}

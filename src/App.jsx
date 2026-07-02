@@ -23,9 +23,11 @@ function ScrollToTop() {
 
 // Admin panel solo disponible en dev (el archivo no existe en producción)
 let AdminPanel = null
+let DraftPreview = null
 if (import.meta.env.DEV) {
     try {
         AdminPanel = lazy(() => import('./admin/AdminPanel'))
+        DraftPreview = lazy(() => import('./admin/DraftPreview'))
     } catch {
         // Admin not available
     }
@@ -111,6 +113,7 @@ function App() {
                     <Route path="/i/:slug" element={<InvitationBySlug />} />
                     <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
                     {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}
+                    {DraftPreview && <Route path="/admin/drafts/:slug" element={<DraftPreview />} />}
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Suspense>
