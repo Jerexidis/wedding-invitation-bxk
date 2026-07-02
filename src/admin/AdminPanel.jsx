@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, Check, Loader2, FileText, MoreVertical, Upload, CloudOff, EyeOff, Rocket, X, AlertTriangle } from 'lucide-react'
+import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, Check, Loader2, FileText, MoreVertical, Upload, CloudOff, EyeOff, Rocket, X, AlertTriangle, Palette } from 'lucide-react'
 import WizardForm from './WizardForm'
 import './AdminPanel.css'
 
@@ -20,10 +20,12 @@ export default function AdminPanel() {
     const [renameDialog, setRenameDialog] = useState(null)
     const [reportDialog, setReportDialog] = useState(null)
     const [actionLoading, setActionLoading] = useState('')
-    const [quality, setQuality] = useState({ status: 'idle', summary: null, details: [] })
+    const [quality, setQuality] = useState({ status: 'idle', summary: null, issues: [], details: [], workspaceSignature: null })
+    const [customDialog, setCustomDialog] = useState(null)
+    const [creatingCustom, setCreatingCustom] = useState(false)
 
     // Deploy state
-    const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [] })
+    const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [], signature: null })
     const [deploying, setDeploying] = useState(false)
     const [showDeployDialog, setShowDeployDialog] = useState(false)
     const [commitMessage, setCommitMessage] = useState('')
@@ -42,12 +44,27 @@ export default function AdminPanel() {
         try {
             const res = await fetch('/api/deploy/status')
             const json = await res.json()
-            if (json.ok) setDeployStatus({ hasChanges: json.hasChanges, changeCount: json.changeCount, files: json.files || [] })
+            if (json.ok) setDeployStatus({
+                hasChanges: json.hasChanges,
+                changeCount: json.changeCount,
+                files: json.files || [],
+                signature: json.signature || null,
+            })
         } catch (err) { console.error('Deploy status check failed:', err) }
     }, [])
 
     useEffect(() => { fetchInvitations() }, [fetchInvitations])
     useEffect(() => { fetchDeployStatus() }, [fetchDeployStatus])
+    useEffect(() => {
+        if (
+            quality.status === 'ready'
+            && quality.workspaceSignature
+            && deployStatus.signature
+            && quality.workspaceSignature !== deployStatus.signature
+        ) {
+            setQuality((current) => ({ ...current, status: 'stale' }))
+        }
+    }, [deployStatus.signature, quality.status, quality.workspaceSignature])
 
     // Poll deploy status every 15s while on list view
     useEffect(() => {
@@ -175,19 +192,73 @@ export default function AdminPanel() {
     }
 
     const runQualityCheck = async () => {
-        setQuality({ status: 'running', summary: null, details: [] })
+        setQuality({ status: 'running', summary: null, issues: [], details: [], workspaceSignature: null })
         try {
             const res = await fetch('/api/quality/run', { method: 'POST' })
             const json = await res.json()
             setQuality({
                 status: json.ready ? 'ready' : 'failed',
                 summary: json.summary || null,
+                issues: json.issues || [],
                 details: json.details || [],
                 error: json.error || null,
+                workspaceSignature: json.workspaceSignature || null,
             })
+            fetchDeployStatus()
         } catch (err) {
-            setQuality({ status: 'failed', summary: null, details: [], error: err.message })
+            setQuality({ status: 'failed', summary: null, issues: [], details: [], error: err.message, workspaceSignature: null })
         }
+    }
+
+    const openCustomDialog = () => {
+        setCustomDialog({
+            title: '',
+            slug: '',
+            eventType: 'boda',
+            reference: 'plantilla-boda-editorial',
+        })
+    }
+
+    const updateCustomTitle = (title) => {
+        setCustomDialog((current) => ({ ...current, title, slug: slugify(title) }))
+    }
+
+    const createCustomDraft = async () => {
+        if (!customDialog?.title || !customDialog?.slug) {
+            showToast('Escribe el nombre de la invitación', 'error')
+            return
+        }
+        setCreatingCustom(true)
+        try {
+            const res = await fetch('/api/starters', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(customDialog),
+            })
+            const json = await res.json()
+            if (!json.ok) throw new Error(json.error || 'No se pudo crear el borrador')
+            showToast('Borrador personalizado creado')
+            setCustomDialog(null)
+            setSelectedSlug(json.slug)
+            setQuality((current) => ({ ...current, status: 'stale' }))
+            fetchInvitations()
+            fetchDeployStatus()
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setCreatingCustom(false)
+    }
+
+    const openDeployDialog = () => {
+        const reviewIsCurrent = quality.status === 'ready'
+            && quality.workspaceSignature
+            && quality.workspaceSignature === deployStatus.signature
+        if (!reviewIsCurrent) {
+            showToast('Revisa el proyecto antes de publicar', 'error')
+            document.querySelector('.quality-center')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            return
+        }
+        setShowDeployDialog(true)
     }
 
     const handleDeploy = async () => {
@@ -299,6 +370,60 @@ export default function AdminPanel() {
                 </div>
             )}
 
+            {customDialog && (
+                <div className="deploy-overlay" onClick={() => !creatingCustom && setCustomDialog(null)}>
+                    <div className="deploy-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon"><Palette size={22} /></div>
+                            <h3>Nueva invitación personalizada</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => setCustomDialog(null)} disabled={creatingCustom}><X size={18} /></button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            <p className="custom-dialog-intro">
+                                Crea un borrador visual independiente usando otra invitación solo como referencia funcional.
+                                No se publica ni obtiene un enlace hasta que el diseño esté listo.
+                            </p>
+                            <div className="form-group">
+                                <label className="form-label">Nombre del proyecto</label>
+                                <input
+                                    className="form-input"
+                                    value={customDialog.title}
+                                    onChange={e => updateCustomTitle(e.target.value)}
+                                    placeholder="Ej. Boda de Andrea y Luis"
+                                />
+                                {customDialog.slug && <div className="url-preview">Borrador: <code>{customDialog.slug}</code></div>}
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label className="form-label">Tipo de evento</label>
+                                    <select className="form-input" value={customDialog.eventType} onChange={e => setCustomDialog(d => ({ ...d, eventType: e.target.value }))}>
+                                        <option value="boda">Boda</option>
+                                        <option value="xv">XV Años</option>
+                                        <option value="cumpleanos">Cumpleaños</option>
+                                        <option value="primera-comunion">Primera Comunión</option>
+                                        <option value="otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Referencia estructural</label>
+                                    <select className="form-input" value={customDialog.reference} onChange={e => setCustomDialog(d => ({ ...d, reference: e.target.value }))}>
+                                        {invitations.filter(inv => !inv.isDraft).map(inv => (
+                                            <option key={inv.slug} value={inv.slug}>{inv.title}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-secondary" onClick={() => setCustomDialog(null)} disabled={creatingCustom}>Cancelar</button>
+                            <button className="btn btn-primary" onClick={createCustomDraft} disabled={creatingCustom || !customDialog.title || !customDialog.slug}>
+                                {creatingCustom ? <><Loader2 size={14} className="animate-spin" /> Creando…</> : <><Palette size={14} /> Crear borrador</>}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {reportDialog && (
                 <div className="deploy-overlay" onClick={() => setReportDialog(null)}>
                     <div className="deploy-dialog report-dialog" onClick={e => e.stopPropagation()}>
@@ -402,16 +527,24 @@ export default function AdminPanel() {
                     <div className="admin-header">
                         <h2>Invitaciones</h2>
                         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                            <button onClick={() => setShowDeployDialog(true)} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges}>
+                            <button onClick={openDeployDialog} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges}>
                                 <Upload size={15} />
                                 Publicar
                                 {deployStatus.hasChanges && <span className="deploy-badge">{deployStatus.changeCount}</span>}
                             </button>
+                            <button onClick={openCustomDialog} className="btn btn-secondary"><Palette size={15} /> Diseño personalizado</button>
                             <button onClick={() => setView('create')} className="btn btn-primary"><Plus size={15} /> Nueva invitación</button>
                         </div>
                     </div>
                     <div className="admin-content">
-                        <QualityCenter quality={quality} onRun={runQualityCheck} />
+                        <QualityCenter
+                            quality={quality}
+                            onRun={runQualityCheck}
+                            onSelect={(slug) => {
+                                setSelectedSlug(slug)
+                                document.querySelector('.inv-layout')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                            }}
+                        />
                         {loading ? (
                             <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}><Loader2 className="animate-spin" size={28} style={{ color: '#9aa0a6' }} /></div>
                         ) : invitations.length === 0 ? (
@@ -431,6 +564,7 @@ export default function AdminPanel() {
                                                 <span className="inv-row-name">{inv.title}</span>
                                                 <div className="inv-row-meta">
                                                     {inv.isDefault && <span className="badge badge-blue">Landing</span>}
+                                                    {inv.isDraft && <span className="badge badge-purple">Borrador personalizado</span>}
                                                     {!inv.enabled && <span className="badge badge-gray">Inactiva</span>}
                                                     {inv.eventType && <span className={`badge ${inv.eventType === 'xv' ? 'badge-purple' : inv.eventType === 'boda' ? 'badge-orange' : 'badge-gray'}`}>{EVENT_LABELS[inv.eventType] || inv.eventType}</span>}
                                                     {inv.rsvpMode && <span className={`badge ${inv.rsvpMode === 'whatsapp' ? 'badge-green' : inv.rsvpMode === 'supabase' ? 'badge-orange' : 'badge-gray'}`}>{RSVP_LABELS[inv.rsvpMode] || inv.rsvpMode}</span>}
@@ -449,7 +583,7 @@ export default function AdminPanel() {
                                             <h3 className="inv-detail-title">{inv.title}</h3>
 
                                             {/* Toggle visibility */}
-                                            {!inv.isDefault && (
+                                            {!inv.isDefault && !inv.isDraft && (
                                                 <div className="inv-detail-toggle">
                                                     <div className="toggle-row">
                                                         <label className="toggle">
@@ -462,21 +596,22 @@ export default function AdminPanel() {
                                             )}
 
                                             <div className="inv-detail-actions">
-                                                <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>
-                                                <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>
-                                                <button onClick={() => openCloneDialog(inv)} className="btn btn-action-full"><Copy size={14} /> Clonar</button>
-                                                {!inv.isDefault && <button onClick={() => openRenameDialog(inv)} className="btn btn-action-full"><ExternalLink size={14} /> Cambiar link</button>}
-                                                <button onClick={() => showValidationReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `validate:${inv.slug}`}>
+                                                {inv.isDraft && <div className="draft-note">Este borrador todavía no tiene enlace público. Está listo para desarrollar su diseño personalizado.</div>}
+                                                {!inv.isDraft && <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>}
+                                                {!inv.isDraft && <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>}
+                                                {!inv.isDraft && <button onClick={() => openCloneDialog(inv)} className="btn btn-action-full"><Copy size={14} /> Clonar</button>}
+                                                {!inv.isDraft && !inv.isDefault && <button onClick={() => openRenameDialog(inv)} className="btn btn-action-full"><ExternalLink size={14} /> Cambiar link</button>}
+                                                {!inv.isDraft && <button onClick={() => showValidationReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `validate:${inv.slug}`}>
                                                     {actionLoading === `validate:${inv.slug}` ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Validar
-                                                </button>
-                                                <button onClick={() => showAssetReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `assets:${inv.slug}`}>
+                                                </button>}
+                                                {!inv.isDraft && <button onClick={() => showAssetReport(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `assets:${inv.slug}`}>
                                                     {actionLoading === `assets:${inv.slug}` ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />} Assets
-                                                </button>
+                                                </button>}
                                                 {inv.hasConfig && <button onClick={() => { setQuickSlug(inv.slug); setView('quick-edit') }} className="btn btn-action-full"><FileText size={14} /> Editor rapido</button>}
                                                 {inv.hasConfig && <button onClick={() => { setEditSlug(inv.slug); setView('edit') }} className="btn btn-action-full"><Settings size={14} /> Configuración</button>}
                                                 {inv.rsvpMode === 'supabase' && <a href={`/i/${inv.slug}/rsvp`} target="_blank" rel="noreferrer" className="btn btn-action-full"><ExternalLink size={14} /> RSVP Dashboard</a>}
                                                 {inv.rsvpKey && <button onClick={() => copyRsvpLink(inv.slug, inv.rsvpKey)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace RSVP</button>}
-                                                {!inv.isDefault && inv.slug !== 'melani-marisol' && <button onClick={() => handleDelete(inv.slug)} className="btn btn-action-full btn-danger"><Trash2 size={14} /> Eliminar</button>}
+                                                {!inv.isDefault && inv.slug !== 'melani-marisol' && <button onClick={() => handleDelete(inv.slug)} className="btn btn-action-full btn-danger"><Trash2 size={14} /> {inv.isDraft ? 'Eliminar borrador' : 'Eliminar'}</button>}
                                             </div>
                                             {inv.rsvpKey && (
                                                 <div className="inv-detail-key">
@@ -496,10 +631,11 @@ export default function AdminPanel() {
     )
 }
 
-function QualityCenter({ quality, onRun }) {
+function QualityCenter({ quality, onRun, onSelect }) {
     const summary = quality.summary
     const isRunning = quality.status === 'running'
     const isReady = quality.status === 'ready'
+    const isStale = quality.status === 'stale'
     const hasResult = Boolean(summary)
     const cards = hasResult ? [
         {
@@ -528,17 +664,19 @@ function QualityCenter({ quality, onRun }) {
     ] : []
 
     return (
-        <section className={`quality-center ${isReady ? 'quality-ready' : quality.status === 'failed' ? 'quality-failed' : ''}`}>
+        <section className={`quality-center ${isReady ? 'quality-ready' : quality.status === 'failed' ? 'quality-failed' : isStale ? 'quality-stale' : ''}`}>
             <div className="quality-header">
                 <div>
                     <span className="quality-kicker">Centro de calidad</span>
-                    <h3>{isReady ? 'Proyecto listo para publicar' : quality.status === 'failed' ? 'Hay puntos por revisar' : 'Revisa todo con un clic'}</h3>
+                    <h3>{isReady ? 'Proyecto listo para publicar' : isStale ? 'Hay cambios después de la última revisión' : quality.status === 'failed' ? 'Hay puntos por revisar' : 'Revisa todo con un clic'}</h3>
                     <p>
                         {isRunning
                             ? 'Estamos validando configuraciones, producción y todas las invitaciones.'
                             : isReady
                                 ? 'Las comprobaciones importantes terminaron correctamente.'
-                                : 'No necesitas abrir la terminal. Esta revisión no publica ni modifica invitaciones.'}
+                                : isStale
+                                    ? 'Vuelve a revisar antes de publicar para comprobar el estado actual.'
+                                    : 'No necesitas abrir la terminal. Esta revisión no publica ni modifica invitaciones.'}
                     </p>
                 </div>
                 <button className="btn btn-primary quality-run" onClick={onRun} disabled={isRunning}>
@@ -555,6 +693,27 @@ function QualityCenter({ quality, onRun }) {
                                 <span>{card.label}</span>
                                 <strong>{card.value}</strong>
                             </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {quality.issues?.length > 0 && (
+                <div className="quality-issues">
+                    <div className="quality-issues-title">
+                        <strong>Avisos para revisar</strong>
+                        <span>No bloquean la publicación, pero conviene confirmarlos.</span>
+                    </div>
+                    {quality.issues.map((issue, index) => (
+                        <div className="quality-issue" key={`${issue.slug}-${issue.type}-${index}`}>
+                            <AlertTriangle size={15} />
+                            <div>
+                                <strong>{issue.slug}</strong>
+                                <span>{issue.message}</span>
+                            </div>
+                            {issue.type !== 'open-graph' && (
+                                <button className="btn btn-secondary" onClick={() => onSelect(issue.slug)}>Ver invitación</button>
+                            )}
                         </div>
                     ))}
                 </div>

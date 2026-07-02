@@ -55,6 +55,20 @@ export default function devAdminPlugin() {
                     return
                 }
 
+                if (req.method === 'POST' && req.url === '/api/starters') {
+                    try {
+                        const data = await parseBody(req)
+                        const result = await createCustomStarter(data)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 // GET /api/invitations — List all
                 if (req.method === 'GET' && req.url === '/api/invitations') {
                     try {
@@ -295,11 +309,12 @@ function runQualityCheck() {
                 timeout: 300000,
                 maxBuffer: 4 * 1024 * 1024,
             },
-            (error, stdout = '', stderr = '') => {
+            async (error, stdout = '', stderr = '') => {
                 const output = `${stdout}\n${stderr}`
                 const consistency = output.match(/Consistency summary:\s*(\d+) error\(s\),\s*(\d+) warning\(s\)/)
                 const browserTests = [...output.matchAll(/(\d+) passed/g)].at(-1)
                 const schema = output.match(/Schema validation passed for\s*(\d+)/)
+                const workspace = await getDeployStatus()
                 const summary = {
                     schemaPassed: Boolean(schema),
                     configInvitations: Number(schema?.[1] || 0),
@@ -309,6 +324,7 @@ function runQualityCheck() {
                     productionBoundaryClean: output.includes('Production boundary is clean'),
                     browserTestsPassed: Number(browserTests?.[1] || 0),
                 }
+                const issues = parseConsistencyIssues(output)
                 const details = output
                     .split(/\r?\n/)
                     .map((line) => line.trim())
@@ -329,11 +345,76 @@ function runQualityCheck() {
                         && summary.productionBoundaryClean
                         && summary.browserTestsPassed > 0,
                     summary,
+                    issues,
+                    workspaceSignature: workspace.signature,
                     details,
                     error: error ? 'La revisión encontró un problema. Revisa los detalles.' : null,
                 })
             },
         )
+    })
+}
+
+function parseConsistencyIssues(output) {
+    const issues = []
+    let currentSlug = null
+    for (const rawLine of output.split(/\r?\n/)) {
+        const line = rawLine.trim()
+        if (line.startsWith('Consistency summary:')) break
+        const status = line.match(/^(?:OK|WARN|ERROR)\s+([a-z0-9-]+)$/)
+        if (status) {
+            currentSlug = status[1]
+            continue
+        }
+        if (!line.startsWith('warning:') || !currentSlug) continue
+        const raw = line.replace(/^warning:\s*/, '')
+        let type = 'general'
+        let message = raw
+        if (raw.startsWith('title differs:')) {
+            type = 'title'
+            message = 'El título no coincide entre la configuración y el listado.'
+        } else if (raw.startsWith('eventDate differs:')) {
+            type = 'date'
+            message = 'La fecha no coincide entre la configuración y el listado.'
+        } else if (raw.includes('Open Graph entry has no active registry invitation')) {
+            type = 'open-graph'
+            message = 'Existe una vista previa social sin invitación activa.'
+        }
+        issues.push({ slug: currentSlug, type, message })
+    }
+    return issues
+}
+
+function createCustomStarter(data) {
+    const slug = String(data.slug || '').trim()
+    const title = String(data.title || '').trim()
+    const eventType = String(data.eventType || '').trim()
+    const reference = String(data.reference || '').trim()
+    if (reference && !fs.existsSync(path.join(INVITATIONS_SRC, reference))) {
+        return Promise.reject(new Error('La invitación de referencia no existe'))
+    }
+
+    const args = [
+        path.resolve('scripts/invitation-starter.mjs'),
+        '--slug', slug,
+        '--title', title,
+        '--event-type', eventType,
+    ]
+    if (reference) args.push('--reference', reference)
+    args.push('--write')
+
+    return new Promise((resolve, reject) => {
+        execFile(process.execPath, args, { cwd: process.cwd(), timeout: 30000 }, (error, stdout, stderr) => {
+            if (error) {
+                reject(new Error(String(stderr || stdout || error.message).trim()))
+                return
+            }
+            resolve({
+                slug,
+                title,
+                path: path.join('src', 'invitations', slug).replaceAll(path.sep, '/'),
+            })
+        })
     })
 }
 
@@ -371,6 +452,27 @@ function readRegistry() {
             eventDate: config?.countdown?.targetDate || null,
             rsvpKey: rsvpKeys[slug] || config?.rsvpKey || null,
         })
+    }
+    const registered = new Set(entries.map((entry) => entry.slug))
+    for (const directory of fs.readdirSync(INVITATIONS_SRC, { withFileTypes: true })) {
+        if (!directory.isDirectory() || registered.has(directory.name)) continue
+        const manifestPath = path.join(INVITATIONS_SRC, directory.name, 'invitation.manifest.json')
+        if (!fs.existsSync(manifestPath)) continue
+        try {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
+            entries.push({
+                slug: directory.name,
+                title: manifest.title || directory.name,
+                isDefault: false,
+                enabled: false,
+                isDraft: true,
+                hasConfig: false,
+                rsvpMode: manifest.services?.rsvp || 'none',
+                eventType: manifest.eventType || null,
+                eventDate: null,
+                rsvpKey: null,
+            })
+        } catch {}
     }
     return entries
 }
@@ -682,19 +784,41 @@ function gitDeploy(commitMsg) {
 // ─── DEPLOY STATUS ──────────────────────────────────────────────
 function getDeployStatus() {
     const PROJECT_ROOT = path.resolve('.')
-    return runGit(['status', '--porcelain'], PROJECT_ROOT, 10000).then(({ stdout }) => {
+    return Promise.all([
+        runGit(['status', '--porcelain'], PROJECT_ROOT, 10000),
+        runGit(['diff', '--no-ext-diff'], PROJECT_ROOT, 10000),
+        runGit(['diff', '--cached', '--no-ext-diff'], PROJECT_ROOT, 10000),
+    ]).then(([statusResult, diffResult, cachedResult]) => {
+        const stdout = statusResult.stdout
         const changes = stdout.trim().split('\n').filter(Boolean)
+        const untrackedState = changes
+            .filter((line) => line.startsWith('?? '))
+            .map((line) => {
+                const filePath = path.resolve(line.slice(3).trim())
+                try {
+                    const stat = fs.statSync(filePath)
+                    return `${line}:${stat.size}:${stat.mtimeMs}`
+                } catch {
+                    return line
+                }
+            })
+            .join('\n')
+        const signature = crypto
+            .createHash('sha256')
+            .update(`${stdout}\n${diffResult.stdout}\n${cachedResult.stdout}\n${untrackedState}`)
+            .digest('hex')
         return {
             hasChanges: changes.length > 0,
             changeCount: changes.length,
             files: changes.slice(0, 20), // Limit to 20 for display
+            signature,
         }
     })
 }
 
 function runGit(args, cwd, timeout = 60000) {
     return new Promise((resolve, reject) => {
-        execFile('git', args, { cwd, timeout }, (error, stdout, stderr) => {
+        execFile('git', args, { cwd, timeout, maxBuffer: 4 * 1024 * 1024 }, (error, stdout, stderr) => {
             if (error) {
                 error.stdout = stdout
                 error.stderr = stderr
