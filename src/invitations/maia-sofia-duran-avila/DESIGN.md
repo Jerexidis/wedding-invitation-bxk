@@ -5,7 +5,7 @@
 - Slug: `maia-sofia-duran-avila`
 - Event type: `xv`
 - Architecture: `standalone-custom`
-- Status: draft and not registered
+- Status: published and registered
 - Event: Friday, July 24, 2026 at 7:00 pm
 
 ## Concept
@@ -40,7 +40,7 @@ An editorial quinceañera invitation rooted in Maia's forest and river portraits
 
 ## Preserve
 
-- Keep the invitation unregistered until final approval.
+- The invitation is now published and registered.
 - Do not publish the gallery in portfolio mode without explicit authorization.
 - Keep the user's original photographs private to this invitation.
 - Phone: 449 366 6177

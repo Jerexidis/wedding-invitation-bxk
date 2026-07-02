@@ -5,8 +5,8 @@
   "eventType": "xv",
   "eventDate": "2026-07-24T19:00:00-06:00",
   "architecture": "standalone-custom",
-  "status": "draft",
-  "registered": false,
+  "status": "published",
+  "registered": true,
   "functionalReference": "melani-marisol",
   "entry": "index.jsx",
   "styles": [

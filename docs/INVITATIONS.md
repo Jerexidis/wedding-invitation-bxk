@@ -20,6 +20,7 @@ the minimum invitation-specific files needed for a task.
 | `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 12.21 MB |
 | `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 18.14 MB |
 | `jose-raul` | shared-config | xv | none | 3 files | 5.03 MB |
+| `maia-sofia-duran-avila` | standalone-custom | xv | whatsapp | 4 files | 0.14 MB |
 
 ## Targeted context
 
@@ -113,6 +114,14 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `shared-config`
 - Flags: gallery, audio, calendar
 - Source: `src/invitations/jose-raul/config.json`, `src/invitations/jose-raul/index.jsx`, `src/invitations/jose-raul/western-theme.css`
+
+### maia-sofia-duran-avila
+
+- Entry: `src/invitations/maia-sofia-duran-avila/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/maia-sofia-duran-avila/DESIGN.md`
+- Source: `src/invitations/maia-sofia-duran-avila/DESIGN.md`, `src/invitations/maia-sofia-duran-avila/index.jsx`, `src/invitations/maia-sofia-duran-avila/invitation.css`, `src/invitations/maia-sofia-duran-avila/invitation.manifest.json`
 
 ## Refresh
 

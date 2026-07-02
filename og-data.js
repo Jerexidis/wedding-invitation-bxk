@@ -81,4 +81,9 @@ export const ogData = {
         description: 'Estás invitado a una gran fiesta vaquera para celebrar los XV años de José Raúl.',
         image: '/invitations/jose-raul/img/hero-bg-v2.webp',
     },
+    'maia-sofia-duran-avila': {
+        title: 'Mis XV Años | Maia Sofía ✨',
+        description: 'Acompáñame a celebrar mis XV años el viernes 24 de julio de 2026. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/maia-sofia-duran-avila/img/og-preview.jpg',
+    },
 }

@@ -149,6 +149,16 @@ const invitations = [
         eventDate: '2026-08-15T14:00:00',
     },
 
+    {
+        slug: 'maia-sofia-duran-avila',
+        title: 'Mis XV | Maia Sofía Durán Ávila',
+        component: lazy(() => import('./maia-sofia-duran-avila/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-07-24T19:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

@@ -408,6 +408,36 @@
         "bytes": 5274836,
         "megabytes": 5.03
       }
+    },
+    {
+      "slug": "maia-sofia-duran-avila",
+      "title": "Mis XV | Maia Sofía Durán Ávila",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "xv",
+      "eventDate": "2026-07-24T19:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/maia-sofia-duran-avila/DESIGN.md",
+        "src/invitations/maia-sofia-duran-avila/index.jsx",
+        "src/invitations/maia-sofia-duran-avila/invitation.css",
+        "src/invitations/maia-sofia-duran-avila/invitation.manifest.json"
+      ],
+      "designBrief": "src/invitations/maia-sofia-duran-avila/DESIGN.md",
+      "assets": {
+        "files": 3,
+        "images": 1,
+        "audio": 0,
+        "bytes": 146313,
+        "megabytes": 0.14
+      }
     }
   ]
 }
