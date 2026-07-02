@@ -20,6 +20,7 @@ export default function AdminPanel() {
     const [renameDialog, setRenameDialog] = useState(null)
     const [reportDialog, setReportDialog] = useState(null)
     const [actionLoading, setActionLoading] = useState('')
+    const [quality, setQuality] = useState({ status: 'idle', summary: null, details: [] })
 
     // Deploy state
     const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [] })
@@ -171,6 +172,22 @@ export default function AdminPanel() {
             else showToast(json.error, 'error')
         } catch (err) { showToast(err.message, 'error') }
         setActionLoading('')
+    }
+
+    const runQualityCheck = async () => {
+        setQuality({ status: 'running', summary: null, details: [] })
+        try {
+            const res = await fetch('/api/quality/run', { method: 'POST' })
+            const json = await res.json()
+            setQuality({
+                status: json.ready ? 'ready' : 'failed',
+                summary: json.summary || null,
+                details: json.details || [],
+                error: json.error || null,
+            })
+        } catch (err) {
+            setQuality({ status: 'failed', summary: null, details: [], error: err.message })
+        }
     }
 
     const handleDeploy = async () => {
@@ -394,6 +411,7 @@ export default function AdminPanel() {
                         </div>
                     </div>
                     <div className="admin-content">
+                        <QualityCenter quality={quality} onRun={runQualityCheck} />
                         {loading ? (
                             <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}><Loader2 className="animate-spin" size={28} style={{ color: '#9aa0a6' }} /></div>
                         ) : invitations.length === 0 ? (
@@ -475,6 +493,80 @@ export default function AdminPanel() {
                 </>}
             </main>
         </div>
+    )
+}
+
+function QualityCenter({ quality, onRun }) {
+    const summary = quality.summary
+    const isRunning = quality.status === 'running'
+    const isReady = quality.status === 'ready'
+    const hasResult = Boolean(summary)
+    const cards = hasResult ? [
+        {
+            label: 'Configuraciones',
+            value: summary.schemaPassed ? `${summary.configInvitations} correctas` : 'Revisar',
+            good: summary.schemaPassed,
+        },
+        {
+            label: 'Datos conectados',
+            value: summary.consistencyErrors
+                ? `${summary.consistencyErrors} errores`
+                : `${summary.consistencyWarnings} avisos`,
+            good: summary.consistencyErrors === 0,
+            warning: summary.consistencyErrors === 0 && summary.consistencyWarnings > 0,
+        },
+        {
+            label: 'Producción protegida',
+            value: summary.productionBoundaryClean ? 'Administrador excluido' : 'Revisar',
+            good: summary.productionBoundaryClean,
+        },
+        {
+            label: 'Pruebas visuales',
+            value: summary.browserTestsPassed ? `${summary.browserTestsPassed} aprobadas` : 'Revisar',
+            good: summary.browserTestsPassed > 0,
+        },
+    ] : []
+
+    return (
+        <section className={`quality-center ${isReady ? 'quality-ready' : quality.status === 'failed' ? 'quality-failed' : ''}`}>
+            <div className="quality-header">
+                <div>
+                    <span className="quality-kicker">Centro de calidad</span>
+                    <h3>{isReady ? 'Proyecto listo para publicar' : quality.status === 'failed' ? 'Hay puntos por revisar' : 'Revisa todo con un clic'}</h3>
+                    <p>
+                        {isRunning
+                            ? 'Estamos validando configuraciones, producción y todas las invitaciones.'
+                            : isReady
+                                ? 'Las comprobaciones importantes terminaron correctamente.'
+                                : 'No necesitas abrir la terminal. Esta revisión no publica ni modifica invitaciones.'}
+                    </p>
+                </div>
+                <button className="btn btn-primary quality-run" onClick={onRun} disabled={isRunning}>
+                    {isRunning ? <><Loader2 size={15} className="animate-spin" /> Revisando…</> : <><Check size={15} /> Revisar proyecto</>}
+                </button>
+            </div>
+
+            {hasResult && (
+                <div className="quality-grid">
+                    {cards.map((card) => (
+                        <div key={card.label} className={`quality-item ${card.good ? 'good' : 'bad'} ${card.warning ? 'warning' : ''}`}>
+                            <span className="quality-item-icon">{card.good ? <Check size={15} /> : <AlertTriangle size={15} />}</span>
+                            <div>
+                                <span>{card.label}</span>
+                                <strong>{card.value}</strong>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {quality.status === 'failed' && (
+                <div className="quality-details">
+                    <strong>{quality.error || 'La revisión no pudo completarse.'}</strong>
+                    {quality.details?.slice(0, 6).map((detail, index) => <span key={index}>{detail}</span>)}
+                </div>
+            )}
+        </section>
     )
 }
 

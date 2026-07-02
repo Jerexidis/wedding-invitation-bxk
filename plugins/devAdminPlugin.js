@@ -15,6 +15,7 @@ const INVITATIONS_PUBLIC = path.resolve('public/invitations')
 const REGISTRY_PATH = path.resolve('src/invitations/registry.js')
 const OG_DATA_PATH = path.resolve('og-data.js')
 const RSVP_KEYS_PATH = path.resolve('plugins/rsvp-keys.json')
+let qualityCheckPromise = null
 
 /**
  * Vite plugin that adds admin API endpoints (dev mode only).
@@ -37,6 +38,23 @@ export default function devAdminPlugin() {
                 })
 
             server.middlewares.use(async (req, res, next) => {
+                if (req.method === 'POST' && req.url === '/api/quality/run') {
+                    try {
+                        if (!qualityCheckPromise) {
+                            qualityCheckPromise = runQualityCheck()
+                                .finally(() => { qualityCheckPromise = null })
+                        }
+                        const result = await qualityCheckPromise
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify(result))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 // GET /api/invitations — List all
                 if (req.method === 'GET' && req.url === '/api/invitations') {
                     try {
@@ -261,6 +279,64 @@ export default function devAdminPlugin() {
 }
 
 // ─── READ REGISTRY ──────────────────────────────────────────────
+function runQualityCheck() {
+    const hasNpmCli = Boolean(process.env.npm_execpath)
+    const command = hasNpmCli ? process.execPath : (process.platform === 'win32' ? 'npm.cmd' : 'npm')
+    const args = hasNpmCli
+        ? [process.env.npm_execpath, 'run', 'release:check']
+        : ['run', 'release:check']
+    return new Promise((resolve) => {
+        execFile(
+            command,
+            args,
+            {
+                cwd: process.cwd(),
+                env: { ...process.env, NODE_ENV: 'production' },
+                timeout: 300000,
+                maxBuffer: 4 * 1024 * 1024,
+            },
+            (error, stdout = '', stderr = '') => {
+                const output = `${stdout}\n${stderr}`
+                const consistency = output.match(/Consistency summary:\s*(\d+) error\(s\),\s*(\d+) warning\(s\)/)
+                const browserTests = [...output.matchAll(/(\d+) passed/g)].at(-1)
+                const schema = output.match(/Schema validation passed for\s*(\d+)/)
+                const summary = {
+                    schemaPassed: Boolean(schema),
+                    configInvitations: Number(schema?.[1] || 0),
+                    consistencyErrors: Number(consistency?.[1] || 0),
+                    consistencyWarnings: Number(consistency?.[2] || 0),
+                    contextCurrent: output.includes('Invitation context is current'),
+                    productionBoundaryClean: output.includes('Production boundary is clean'),
+                    browserTestsPassed: Number(browserTests?.[1] || 0),
+                }
+                const details = output
+                    .split(/\r?\n/)
+                    .map((line) => line.trim())
+                    .filter((line) =>
+                        line.startsWith('warning:')
+                        || line.startsWith('error:')
+                        || line.includes('failed')
+                        || line.includes('ERROR '),
+                    )
+                    .slice(-30)
+
+                resolve({
+                    ok: !error,
+                    ready: !error
+                        && summary.schemaPassed
+                        && summary.consistencyErrors === 0
+                        && summary.contextCurrent
+                        && summary.productionBoundaryClean
+                        && summary.browserTestsPassed > 0,
+                    summary,
+                    details,
+                    error: error ? 'La revisión encontró un problema. Revisa los detalles.' : null,
+                })
+            },
+        )
+    })
+}
+
 function readRegistry() {
     const content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
     const rsvpKeys = readRsvpKeys()

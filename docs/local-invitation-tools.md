@@ -2,6 +2,16 @@
 
 These tools are local-only. They do not install new packages and they do not deploy by themselves.
 
+## Simple workflow
+
+On Windows, double-click `Abrir-Panel-InvitaYa.cmd`. It starts the local server
+and opens `/admin` automatically. Keep its terminal window open while using the
+panel.
+
+Inside the panel, use **Revisar proyecto** in the **Centro de calidad**. One
+click checks configurations, connected data, production separation, and every
+active invitation in the browser. It does not publish or modify invitations.
+
 ## Admin panel
 
 Run the dev server and open `/admin`:
