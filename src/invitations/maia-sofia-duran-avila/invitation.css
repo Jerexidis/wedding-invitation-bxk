@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Manrope:wght@300;400;500;600&family=Mrs+Saint+Delafield&display=swap");
 
 .maia-invitation {
-    --maia-ink: #17201c;
-    --maia-forest: #263a31;
-    --maia-moss: #6f7b64;
-    --maia-gold: #b79a64;
-    --maia-paper: #eee8dc;
-    --maia-cream: #f7f3e9;
+    --maia-ink: #292327;
+    --maia-forest: #69515d;
+    --maia-moss: #a9788d;
+    --maia-gold: #bd829a;
+    --maia-paper: #f2e6ea;
+    --maia-cream: #fbf8f6;
     background: var(--maia-cream);
     color: var(--maia-ink);
     font-family: "Manrope", sans-serif;
@@ -35,12 +35,6 @@
 .maia-invitation [data-reveal] {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity .8s ease, transform .8s cubic-bezier(.22, 1, .36, 1);
-}
-
-.maia-invitation [data-reveal].is-visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .maia-hero {
@@ -53,16 +47,15 @@
     height: 100%;
     inset: 0;
     object-fit: cover;
-    object-position: 47% center;
+    object-position: center 56%;
     position: absolute;
     width: 100%;
-    animation: maia-hero-in 1.7s cubic-bezier(.2, .7, .2, 1) both;
 }
 
 .maia-hero__shade {
     background:
-        linear-gradient(90deg, rgba(8, 17, 13, .68) 0%, rgba(8, 17, 13, .16) 61%, transparent 100%),
-        linear-gradient(0deg, rgba(8, 17, 13, .46), transparent 42%);
+        linear-gradient(90deg, rgba(38, 27, 32, .6) 0%, rgba(38, 27, 32, .08) 58%, transparent 100%),
+        linear-gradient(0deg, rgba(38, 27, 32, .34), transparent 42%);
     inset: 0;
     position: absolute;
 }
@@ -144,143 +137,78 @@
 }
 
 .maia-name {
-    align-items: center;
-    background: var(--maia-paper);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 760px;
+    background: #fffdfc;
+    min-height: 780px;
     overflow: hidden;
-    padding: 6rem 1.5rem;
+    padding: 7rem clamp(1.5rem, 8vw, 8rem);
     position: relative;
-    text-align: center;
-}
-
-.maia-name::before,
-.maia-name::after {
-    border: 1px solid rgba(38, 58, 49, .25);
-    border-radius: 50%;
-    content: "";
-    height: min(80vw, 33rem);
-    position: absolute;
-    width: min(80vw, 33rem);
-}
-
-.maia-name::after {
-    height: min(66vw, 27rem);
-    width: min(66vw, 27rem);
-}
-
-.maia-name > p {
-    font-size: .56rem;
-    font-weight: 500;
-    letter-spacing: .16em;
-    margin: 0;
-    position: relative;
-    text-transform: uppercase;
-    z-index: 2;
 }
 
 .maia-name h2 {
     color: var(--maia-ink);
     font-family: "Mrs Saint Delafield", cursive;
-    font-size: clamp(5.2rem, 23vw, 11rem);
+    font-size: clamp(6rem, 17vw, 13rem);
     font-weight: 400;
-    letter-spacing: -.04em;
-    line-height: .52;
-    margin: 5rem 0 4.5rem;
+    letter-spacing: -.035em;
+    line-height: .8;
+    margin: 5rem 0 8rem;
     position: relative;
     z-index: 2;
 }
 
-.maia-name h2 span {
+.maia-name__invitation {
+    margin-left: 38%;
+    margin-right: auto;
+    max-width: 24rem;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+
+.maia-name__invitation span,
+.maia-name__invitation strong {
     display: block;
 }
 
-.maia-name h2 span + span {
-    color: var(--maia-forest);
-    margin-left: .34em;
-    margin-top: .22em;
-}
-
-.maia-name__seal {
-    align-items: center;
-    background: var(--maia-forest);
-    border-radius: 50%;
-    color: var(--maia-paper);
-    display: flex;
-    flex-direction: column;
-    height: 4.5rem;
-    justify-content: center;
-    position: relative;
-    width: 4.5rem;
-    z-index: 3;
-}
-
-.maia-name__seal span {
+.maia-name__invitation span {
     font-family: "Italiana", Georgia, serif;
-    font-size: 1.25rem;
+    font-size: .82rem;
 }
 
-.maia-name__closing {
-    margin-top: 1rem !important;
+.maia-name__invitation strong {
+    font-family: "Italiana", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: .08em;
+    margin: .65rem 0 1.4rem;
+    text-transform: uppercase;
 }
 
-.maia-name__botanical {
-    height: 18rem;
-    opacity: .55;
+.maia-name__invitation p {
+    font-family: "Italiana", Georgia, serif;
+    font-size: .9rem;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.maia-watercolor {
+    height: 39rem;
     position: absolute;
-    right: -2rem;
+    right: -1rem;
     top: -1rem;
-    transform: rotate(25deg);
-    width: 8rem;
+    width: 31rem;
+    z-index: 1;
 }
 
-.maia-name__botanical::before {
-    background: var(--maia-moss);
-    content: "";
+.maia-watercolor img {
     height: 100%;
-    left: 50%;
-    position: absolute;
-    transform: rotate(8deg);
-    width: 1px;
-}
-
-.maia-name__botanical span {
-    border: 1px solid var(--maia-moss);
-    border-radius: 100% 0 100% 0;
-    height: 4rem;
-    left: 50%;
-    position: absolute;
-    transform: rotate(35deg);
-    width: 2rem;
-}
-
-.maia-name__botanical span:nth-child(1) { top: 2rem; }
-.maia-name__botanical span:nth-child(2) { left: 24%; top: 5.4rem; transform: scaleX(-1) rotate(35deg); }
-.maia-name__botanical span:nth-child(3) { top: 9rem; }
-.maia-name__botanical span:nth-child(4) { left: 24%; top: 12.4rem; transform: scaleX(-1) rotate(35deg); }
-
-.maia-family {
-    background: var(--maia-forest);
-    color: var(--maia-cream);
-}
-
-.maia-family__photo {
-    height: min(76vw, 620px);
-    min-height: 340px;
-    overflow: hidden;
-}
-
-.maia-family__photo img {
-    height: 100%;
-    object-fit: cover;
-    object-position: center 54%;
+    object-fit: contain;
     width: 100%;
 }
 
-.maia-family__content {
-    padding: 5.5rem 1.4rem 6rem;
+.maia-family {
+    background: #fffdfc;
+    color: var(--maia-ink);
 }
 
 .maia-heading {
@@ -314,8 +242,8 @@
     font-weight: 400;
 }
 
-.maia-heading--light h2 { color: var(--maia-cream); }
-.maia-heading--light h2 em { color: #c5b68f; }
+.maia-heading--light h2 { color: #fff; }
+.maia-heading--light h2 em { color: #e2b5c6; }
 
 .maia-heading > i {
     background: var(--maia-gold);
@@ -325,42 +253,118 @@
     width: 3.5rem;
 }
 
-.maia-family__grid {
-    display: grid;
-    gap: 1px;
-    margin: 0 auto;
-    max-width: 52rem;
+.maia-family__portrait {
+    height: clamp(560px, 72vw, 900px);
+    overflow: hidden;
+    position: relative;
 }
 
-.maia-family__grid article {
-    border: 1px solid rgba(238, 232, 220, .26);
-    min-height: 15rem;
-    padding: 2.2rem 1rem;
+.maia-family__portrait::after {
+    background: linear-gradient(90deg, rgba(37, 27, 32, .54), transparent 48%);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.maia-family__portrait img {
+    height: 112%;
+    object-fit: cover;
+    object-position: center 48%;
+    width: 100%;
+}
+
+.maia-family__portrait > p {
+    color: white;
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.6rem);
+    left: clamp(1.5rem, 8vw, 8rem);
+    line-height: 1.35;
+    margin: 0;
+    max-width: 18rem;
+    position: absolute;
     text-align: center;
+    top: 30%;
+    z-index: 2;
 }
 
-.maia-family__grid article > span {
-    color: var(--maia-gold);
-    display: block;
-    font-size: .54rem;
-    font-weight: 600;
-    letter-spacing: .2em;
-    margin-bottom: 1.4rem;
+.maia-family__portrait > p strong {
+    font-weight: 400;
+}
+
+.maia-family__panels {
+    background: #fffdfc;
+}
+
+.maia-family-card {
+    min-height: 820px;
+    overflow: hidden;
+    padding: 12rem clamp(1.5rem, 10vw, 9rem) 6rem;
+    position: relative;
+    text-align: left;
+}
+
+.maia-family-card > span {
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: clamp(2.8rem, 7vw, 4.8rem);
+}
+
+.maia-family-card > p {
+    font-family: "Italiana", Georgia, serif;
+    font-size: .94rem;
+    margin: 9rem 0 1rem;
+}
+
+.maia-family-card h3 {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(1.35rem, 3.5vw, 2rem);
+    font-weight: 400;
+    letter-spacing: .025em;
+    line-height: 1.25;
+    margin: .55rem 0;
+    max-width: 24rem;
     text-transform: uppercase;
 }
 
-.maia-family__grid h3 {
-    font-family: "Italiana", Georgia, serif;
-    font-size: clamp(1.3rem, 5vw, 1.85rem);
+.maia-family-card b {
+    color: var(--maia-gold);
+    display: block;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 2.6rem;
     font-weight: 400;
-    margin: .5rem 0;
+    margin-left: 5rem;
 }
 
-.maia-family__grid b {
+.maia-family-card__heart {
     color: var(--maia-gold);
-    font-family: "Mrs Saint Delafield", cursive;
-    font-size: 2rem;
-    font-weight: 400;
+    left: 51%;
+    position: absolute;
+    top: 52%;
+}
+
+.maia-family-card .maia-watercolor {
+    right: 1rem;
+    top: 2rem;
+    transform: scale(.52);
+    transform-origin: top right;
+}
+
+.maia-family-card--reverse {
+    text-align: right;
+}
+
+.maia-family-card--reverse h3 {
+    margin-left: auto;
+}
+
+.maia-family-card--reverse b {
+    margin-left: 0;
+    margin-right: 5rem;
+}
+
+.maia-family-card--reverse .maia-watercolor {
+    left: 1rem;
+    right: auto;
+    transform-origin: top left;
 }
 
 .maia-date {
@@ -448,7 +452,7 @@
 
 .maia-date__count {
     background:
-        linear-gradient(rgba(19, 31, 25, .73), rgba(19, 31, 25, .87)),
+        linear-gradient(rgba(54, 39, 46, .72), rgba(54, 39, 46, .88)),
         var(--maia-tree-photo) center 43% / cover;
     color: white;
     padding: 4rem 1rem;
@@ -504,7 +508,7 @@
 
 .maia-location {
     background: var(--maia-cream);
-    box-shadow: 0 20px 50px rgba(23, 32, 28, .08);
+    box-shadow: 0 20px 50px rgba(41, 35, 39, .09);
 }
 
 .maia-location__image {
@@ -600,14 +604,14 @@
 
 .maia-dress__image {
     background:
-        linear-gradient(rgba(18, 29, 23, .18), rgba(18, 29, 23, .53)),
+        linear-gradient(rgba(54, 39, 46, .12), rgba(54, 39, 46, .48)),
         var(--maia-river-photo) center / cover;
     inset: 0;
     position: absolute;
 }
 
 .maia-dress__card {
-    background: rgba(247, 243, 233, .94);
+    background: rgba(255, 252, 251, .95);
     left: 50%;
     max-width: 25rem;
     padding: 3rem 1.6rem;
@@ -618,10 +622,6 @@
     width: calc(100% - 3rem);
 }
 
-.maia-dress__card.is-visible {
-    transform: translate(-50%, -50%) !important;
-}
-
 .maia-dress__card > p {
     color: var(--maia-gold);
     font-size: .58rem;
@@ -629,14 +629,6 @@
     letter-spacing: .22em;
     margin: 0;
     text-transform: uppercase;
-}
-
-.maia-dress__card h2 {
-    font-family: "Mrs Saint Delafield", cursive;
-    font-size: 5rem;
-    font-weight: 400;
-    line-height: .8;
-    margin: 1.3rem 0;
 }
 
 .maia-dress__line {
@@ -657,13 +649,14 @@
 .maia-dress__card > strong {
     display: block;
     font-family: "Italiana", Georgia, serif;
-    font-size: 1.35rem;
+    color: var(--maia-forest);
+    font-size: 1.55rem;
     font-weight: 400;
     line-height: 1.35;
 }
 
 .maia-dress__card > small {
-    color: #606760;
+    color: #73676d;
     display: block;
     font-size: .58rem;
     line-height: 1.55;
@@ -710,7 +703,7 @@
 }
 
 .maia-gallery figcaption {
-    background: rgba(23, 32, 28, .82);
+    background: rgba(54, 39, 46, .84);
     bottom: .65rem;
     color: var(--maia-gold);
     font-family: "Italiana", Georgia, serif;
@@ -721,7 +714,7 @@
 }
 
 .maia-gallery__quote {
-    color: #d8ceb6;
+    color: #f1dce4;
     font-family: "Italiana", Georgia, serif;
     font-size: clamp(1.3rem, 5vw, 2rem);
     line-height: 1.45;
@@ -741,7 +734,7 @@
 
 .maia-gifts__envelope {
     background: var(--maia-cream);
-    border: 1px solid rgba(23, 32, 28, .2);
+    border: 1px solid rgba(41, 35, 39, .18);
     max-width: 35rem;
     padding: 5.5rem 2rem 3rem;
     position: relative;
@@ -752,7 +745,7 @@
     border-bottom: 4.3rem solid transparent;
     border-left: min(17.5rem, 45vw) solid transparent;
     border-right: min(17.5rem, 45vw) solid transparent;
-    border-top: 4.3rem solid #ddd3c1;
+    border-top: 4.3rem solid #e4cdd6;
     height: 0;
     left: 0;
     position: absolute;
@@ -796,9 +789,64 @@
     font-weight: 600;
 }
 
+.maia-hashtag {
+    color: white;
+    min-height: 760px;
+    overflow: hidden;
+    position: relative;
+}
+
+.maia-hashtag::after {
+    background: linear-gradient(rgba(47, 34, 40, .45), rgba(47, 34, 40, .72));
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.maia-hashtag__photo {
+    background: var(--maia-tree-photo) center / cover;
+    height: 112%;
+    inset: -6% 0;
+    position: absolute;
+}
+
+.maia-hashtag__content {
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: min(90%, 38rem);
+    z-index: 2;
+}
+
+.maia-hashtag__content > p {
+    font-family: "Italiana", Georgia, serif;
+    font-size: clamp(1.45rem, 4vw, 2.25rem);
+    line-height: 1.35;
+    margin: 0 auto 1rem;
+}
+
+.maia-hashtag__content > span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.maia-hashtag h2 {
+    color: #f0bfd1;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: clamp(6rem, 18vw, 11rem);
+    font-weight: 400;
+    line-height: .8;
+    margin: 2rem 0 0;
+}
+
 .maia-rsvp {
     background:
-        linear-gradient(rgba(15, 25, 20, .85), rgba(15, 25, 20, .93)),
+        linear-gradient(rgba(47, 34, 40, .84), rgba(47, 34, 40, .94)),
         var(--maia-river-portrait) center 38% / cover;
     color: white;
     min-height: 850px;
@@ -819,7 +867,7 @@
 }
 
 .maia-rsvp form {
-    background: rgba(19, 31, 25, .72);
+    background: rgba(54, 39, 46, .72);
     border: 1px solid rgba(255, 255, 255, .24);
     margin-top: 2rem;
     padding: 1.5rem;
@@ -911,10 +959,6 @@
 }
 
 @media (min-width: 740px) {
-    .maia-family__grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
     .maia-locations__list {
         grid-template-columns: 1fr 1fr;
     }
@@ -925,23 +969,6 @@
 }
 
 @media (min-width: 980px) {
-    .maia-family {
-        display: grid;
-        grid-template-columns: 1.08fr .92fr;
-        min-height: 860px;
-    }
-
-    .maia-family__photo {
-        height: 100%;
-        min-height: 860px;
-    }
-
-    .maia-family__content {
-        align-content: center;
-        display: grid;
-        padding: 5rem 2.5rem;
-    }
-
     .maia-date {
         display: grid;
         grid-template-columns: 1.22fr .78fr;
@@ -972,12 +999,49 @@
 
     .maia-hero__shade {
         background:
-            linear-gradient(90deg, rgba(8, 17, 13, .7) 0%, rgba(8, 17, 13, .17) 85%),
-            linear-gradient(0deg, rgba(8, 17, 13, .5), transparent 48%);
+            linear-gradient(90deg, rgba(47, 34, 40, .68) 0%, rgba(47, 34, 40, .14) 85%),
+            linear-gradient(0deg, rgba(47, 34, 40, .46), transparent 48%);
     }
 
     .maia-name {
-        min-height: 690px;
+        min-height: 760px;
+        padding: 5rem 1.3rem;
+    }
+
+    .maia-name h2 {
+        font-size: clamp(5.2rem, 26vw, 8rem);
+        margin: 8rem 0 10rem;
+    }
+
+    .maia-name__invitation {
+        margin: 0 auto;
+    }
+
+    .maia-watercolor {
+        right: -9rem;
+        transform: scale(.72);
+        transform-origin: top right;
+    }
+
+    .maia-family__portrait {
+        height: 680px;
+    }
+
+    .maia-family__portrait > p {
+        left: 1.2rem;
+        max-width: 15rem;
+        top: 20%;
+    }
+
+    .maia-family-card {
+        min-height: 800px;
+        padding: 9rem 1.5rem 4rem;
+    }
+
+    .maia-family-card__heart {
+        bottom: 3rem;
+        left: 50%;
+        top: auto;
     }
 
     .maia-gallery__photo img {

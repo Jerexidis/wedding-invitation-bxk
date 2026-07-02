@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
     CalendarPlus,
     ChevronDown,
@@ -11,6 +11,8 @@ import {
     Navigation,
     Sparkles,
 } from 'lucide-react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import heroPhoto from './assets/maia-hero.webp'
 import riverPhoto from './assets/maia-rio.webp'
 import treePhoto from './assets/maia-arbol.webp'
@@ -19,7 +21,10 @@ import riverPortraitPhoto from './assets/maia-retrato-rio.webp'
 import chapelPhoto from './assets/capilla.webp'
 import venuePhoto from './assets/monte-olimpo.webp'
 import ogPreview from './assets/og-preview.jpg'
+import watercolorFlowers from './assets/flowers-watercolor-v1.webp'
 import './invitation.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const EVENT_DATE = '2026-07-24T19:00:00-06:00'
 const WHATSAPP = '524493666177'
@@ -89,7 +94,7 @@ function Hero() {
         <header className="maia-hero">
             <picture>
                 <source media="(max-width: 480px)" srcSet={riverPortraitPhoto} />
-                <img src={heroPhoto} alt="" className="maia-hero__photo" />
+                <img src={riverPhoto} alt="" className="maia-hero__photo" data-parallax />
             </picture>
             <div className="maia-hero__shade" />
             <div className="maia-hero__copy">
@@ -114,24 +119,24 @@ function Hero() {
     )
 }
 
+function WatercolorFlowers({ small = false }) {
+    return (
+        <div className={`maia-watercolor${small ? ' maia-watercolor--small' : ''}`} aria-hidden="true">
+            <img src={watercolorFlowers} alt="" />
+        </div>
+    )
+}
+
 function NameReveal() {
     return (
         <section className="maia-name" id="maia-name">
-            <div className="maia-name__botanical" aria-hidden="true">
-                <span /><span /><span /><span />
+            <WatercolorFlowers />
+            <h2 data-reveal>Maia Sofía</h2>
+            <div className="maia-name__invitation" data-reveal>
+                <span>En compañía de</span>
+                <strong>mi familia y seres queridos</strong>
+                <p>Me encantaría que me acompañaras a celebrar este gran día…</p>
             </div>
-            <p data-reveal>Con mucha ilusión, quiero compartir contigo</p>
-            <h2 data-reveal>
-                <span>Maia</span>
-                <span>Sofía</span>
-            </h2>
-            <div className="maia-name__seal" data-reveal>
-                <Heart size={15} strokeWidth={1.4} />
-                <span>XV</span>
-            </div>
-            <p className="maia-name__closing" data-reveal>
-                el inicio de un nuevo capítulo
-            </p>
         </section>
     )
 }
@@ -139,27 +144,33 @@ function NameReveal() {
 function Family() {
     return (
         <section className="maia-family">
-            <div className="maia-family__photo">
-                <img src={riverPhoto} alt="Maia Sofía en un paisaje natural" loading="lazy" />
+            <div className="maia-family__portrait">
+                <img src={heroPhoto} alt="Retrato de Maia Sofía" loading="lazy" data-parallax />
+                <p data-reveal>
+                    La sonrisa es mía,<br />
+                    el motivo eres tú.<br />
+                    <strong>¡Feliz que celebremos juntos mi día especial!</strong>
+                </p>
             </div>
-            <div className="maia-family__content">
-                <SectionTitle eyebrow="Con la bendición de Dios" light>
-                    Y el amor de<br /><em>mi familia</em>
-                </SectionTitle>
-                <div className="maia-family__grid">
-                    <article data-reveal>
-                        <span>Mis papás</span>
-                        <h3>Alberto Durán Valverde</h3>
-                        <b>&</b>
-                        <h3>Marisol Ávila Mercado</h3>
-                    </article>
-                    <article data-reveal>
-                        <span>Mis padrinos</span>
-                        <h3>César Iván Flores Trigos</h3>
-                        <b>&</b>
-                        <h3>Luisa Tristán Damián</h3>
-                    </article>
-                </div>
+            <div className="maia-family__panels">
+                <article className="maia-family-card" data-reveal>
+                    <WatercolorFlowers small />
+                    <span>Mis padres</span>
+                    <p>Con la bendición de Dios y de</p>
+                    <h3>Alberto Durán Valverde</h3>
+                    <b>&</b>
+                    <h3>Marisol Ávila Mercado</h3>
+                    <Heart className="maia-family-card__heart" size={30} strokeWidth={1.15} />
+                </article>
+                <article className="maia-family-card maia-family-card--reverse" data-reveal>
+                    <WatercolorFlowers small />
+                    <span>Mis padrinos</span>
+                    <p>Y la compañía de</p>
+                    <h3>César Iván Flores Trigos</h3>
+                    <b>&</b>
+                    <h3>Luisa Tristán Damián</h3>
+                    <Heart className="maia-family-card__heart" size={30} strokeWidth={1.15} />
+                </article>
             </div>
         </section>
     )
@@ -256,11 +267,23 @@ function DressCode() {
             <div className="maia-dress__image" />
             <div className="maia-dress__card" data-reveal>
                 <p>Dress code</p>
-                <h2>Formal</h2>
                 <div className="maia-dress__line" />
-                <span>Agradecemos evitar</span>
+                <span>Por favor, evita</span>
                 <strong>Blanco y tonos rosa,<br />claros o intensos</strong>
                 <small>Estos colores están reservados para la quinceañera.</small>
+            </div>
+        </section>
+    )
+}
+
+function Hashtag() {
+    return (
+        <section className="maia-hashtag">
+            <div className="maia-hashtag__photo" data-parallax />
+            <div className="maia-hashtag__content" data-reveal>
+                <p>Ayúdame a guardar las memorias de este día</p>
+                <span>Comparte tus fotos y videos usando</span>
+                <h2>#maia</h2>
             </div>
         </section>
     )
@@ -355,6 +378,8 @@ function RSVP() {
 }
 
 export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery = false }) {
+    const rootRef = useRef(null)
+
     useEffect(() => {
         const previousTitle = document.title
         document.title = 'Mis XV | Maia Sofía Durán Ávila'
@@ -377,26 +402,74 @@ export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery
         upsertMeta('og:image', image)
         upsertMeta('og:type', 'website')
 
-        const observer = new IntersectionObserver(
-            (entries) => entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible')
-                    observer.unobserve(entry.target)
-                }
-            }),
-            { threshold: 0.14 },
-        )
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        let context
 
-        document.querySelectorAll('.maia-invitation [data-reveal]').forEach((element) => observer.observe(element))
+        if (reduceMotion) {
+            rootRef.current?.querySelectorAll('[data-reveal]').forEach((element) => {
+                element.style.opacity = '1'
+                element.style.transform = 'none'
+            })
+        } else {
+            context = gsap.context(() => {
+                gsap.fromTo(
+                    '.maia-hero__copy > *',
+                    { autoAlpha: 0, y: 28 },
+                    { autoAlpha: 1, y: 0, duration: 1.05, stagger: .14, ease: 'power3.out', delay: .2 },
+                )
+
+                gsap.fromTo(
+                    '.maia-hero__photo',
+                    { scale: 1.08 },
+                    { scale: 1, duration: 2.2, ease: 'power2.out' },
+                )
+
+                gsap.utils.toArray('[data-reveal]').forEach((element) => {
+                    gsap.fromTo(
+                        element,
+                        { autoAlpha: 0, y: 42 },
+                        {
+                            autoAlpha: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: 'power3.out',
+                            scrollTrigger: {
+                                trigger: element,
+                                start: 'top 88%',
+                                once: true,
+                            },
+                        },
+                    )
+                })
+
+                gsap.utils.toArray('[data-parallax]').forEach((element) => {
+                    gsap.fromTo(
+                        element,
+                        { yPercent: -4 },
+                        {
+                            yPercent: 4,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: element.parentElement,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: .8,
+                            },
+                        },
+                    )
+                })
+            }, rootRef)
+        }
 
         return () => {
-            observer.disconnect()
+            context?.revert()
             document.title = previousTitle
         }
     }, [])
 
     return (
         <main
+            ref={rootRef}
             className="maia-invitation"
             data-portfolio={portfolioMode ? 'true' : 'false'}
             style={{
@@ -413,6 +486,7 @@ export default function MaiaSofiaInvitation({ portfolioMode = false, hideGallery
             <DressCode />
             <Gallery hideGallery={hideGallery} />
             <Gifts />
+            <Hashtag />
             <RSVP />
             <footer className="maia-footer">
                 <p>Con cariño</p>
