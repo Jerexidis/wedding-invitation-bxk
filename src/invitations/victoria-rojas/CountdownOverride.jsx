@@ -14,7 +14,7 @@ const CountdownOverride = ({ data, calendar, basePath }) => {
                 {/* Custom gold flower divider */}
                 <div className="flex items-center justify-center gap-4 mb-10">
                     <div className="w-12 h-[1px] bg-inv-accent/40" />
-                    <img src={`${basePath}/img/flower_single.png?v=2`} className="w-7 h-7 object-contain drop-shadow-[0_2px_6px_rgba(218,171,107,0.3)]" alt="flower icon" />
+                    <img src={`${basePath}/img/flower_single.webp?v=2`} className="w-7 h-7 object-contain drop-shadow-[0_2px_6px_rgba(218,171,107,0.3)]" alt="flower icon" />
                     <div className="w-12 h-[1px] bg-inv-accent/40" />
                 </div>
 

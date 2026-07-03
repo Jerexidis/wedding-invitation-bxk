@@ -352,7 +352,7 @@ export default function VictoriaRojasInvitation({ hideGallery = false }) {
                     <div className="envelope-container relative overflow-hidden">
                         {/* Decorative flowers and sparkles peaking inside the envelope */}
                         <img 
-                            src={`${basePath}/img/flower_single.png?v=2`} 
+                            src={`${basePath}/img/flower_single.webp?v=2`} 
                             className="absolute -left-12 -top-12 w-28 h-28 opacity-[0.14] rotate-45 pointer-events-none select-none" 
                             alt="flower decor" 
                         />

@@ -60,7 +60,7 @@ const PadrinosOverride = ({ data, basePath }) => {
                                 <h3 className="text-white/90 font-inv-display text-2xl md:text-3xl mb-4 tracking-widest">{group.label}</h3>
                             )}
                             <div className="flex items-center justify-center gap-2 mb-2 md:mb-4">
-                                <img src={`${basePath}/img/flower_single.png?v=2`} className="w-5 h-5 object-contain" alt="flower icon" />
+                                <img src={`${basePath}/img/flower_single.webp?v=2`} className="w-5 h-5 object-contain" alt="flower icon" />
                             </div>
 
                             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">

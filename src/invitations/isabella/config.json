@@ -2,6 +2,10 @@
     "slug": "isabella",
     "eventType": "primera-comunion",
     "title": "Primera Comunión | Isabella",
+    "seo": {
+        "description": "Te invito a celebrar mi Primera Comunión. ¡Toca aquí para confirmar tu asistencia!",
+        "shareImage": "og-preview.jpg"
+    },
     "theme": {
         "primaryHue": 30,
         "primarySat": 40,
@@ -13,7 +17,7 @@
         "subtitle": "Primera Comunión",
         "name": "Isabella",
         "date": "27 DE JUNIO DE 2026",
-        "backgroundImage": "hero.png",
+        "backgroundImage": "hero.webp",
         "song": "communion.mp3"
     },
     "intro": {

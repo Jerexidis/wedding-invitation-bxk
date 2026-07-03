@@ -31,11 +31,6 @@ export const ogData = {
         description: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',
         image: '/invitations/kassandra-brian/img/Portada.jpeg',
     },
-    'atziri-belen': {
-        title: 'Mis XV Años — Atziri Belén ✨',
-        description: 'Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!',
-        image: '/invitations/atziri-belen/img/og-preview.jpg',
-    },
     'melani-marisol': {
         title: 'Mis XV Años — Melani Marisol 🐸✨',
         description: 'Estás cordialmente invitado(a) a celebrar mis XV años. ¡Toca aquí para ver la invitación!',
@@ -48,7 +43,7 @@ export const ogData = {
     },
     'despedida-kass-brian': {
         title: 'Despedida de Solteros | Kass & Brian 🎉',
-        description: '¡Estás invitad@ a nuestra Despedida de Solteros! 16 de mayo 2026. ¡No faltes!',
+        description: '¡Estás invitad@ a nuestra Despedida de Solteros! 17 de octubre de 2026. ¡No faltes!',
         image: '/invitations/despedida-kass-brian/img/share-preview.png',
     },
     'isabella': {
@@ -79,7 +74,7 @@ export const ogData = {
     'jose-raul': {
         title: 'XV Años | José Raúl 🤠',
         description: 'Estás invitado a una gran fiesta vaquera para celebrar los XV años de José Raúl.',
-        image: '/invitations/jose-raul/img/hero-bg-v2.webp',
+        image: '/invitations/jose-raul/img/og-preview.jpg',
     },
     'maia-sofia-duran-avila': {
         title: 'Mis XV Años | Maia Sofía ',

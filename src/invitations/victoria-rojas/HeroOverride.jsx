@@ -60,7 +60,7 @@ const HeroOverride = ({ data, basePath }) => {
     const floatingAssets = [
         'gold_element_7.png',  // Heart
         'gold_element_11.png', // Disco
-        'flower_single.png',   // Gold single flower
+        'flower_single.webp',   // Gold single flower
         'gold_element_8.png'   // Another Star
     ];
 
@@ -84,7 +84,7 @@ const HeroOverride = ({ data, basePath }) => {
             <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
                 {[...Array(7)].map((_, i) => {
                     const asset = floatingAssets[i % floatingAssets.length];
-                    const size = asset === 'flower_single.png' ? 36 + (i % 3) * 8 : 30 + (i % 3) * 6;
+                    const size = asset === 'flower_single.webp' ? 36 + (i % 3) * 8 : 30 + (i % 3) * 6;
                     return (
                         <img
                             key={i}
@@ -120,7 +120,7 @@ const HeroOverride = ({ data, basePath }) => {
                 {/* Glow behind the side flower */}
                 <div className="absolute inset-0 bg-[#F7E7CE] opacity-20 blur-3xl rounded-full scale-75 -translate-x-12"></div>
                 <img
-                    src={`${basePath}/img/flower_single.png?v=2`}
+                    src={`${basePath}/img/flower_single.webp?v=2`}
                     className="w-32 h-32 md:w-60 md:h-60 object-contain rotate-[15deg] drop-shadow-[0_4px_20px_rgba(218,171,107,0.4)] animate-float relative z-10"
                     alt="Flor de Oro Lateral Izquierda"
                 />

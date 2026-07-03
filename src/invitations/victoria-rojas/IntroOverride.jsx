@@ -9,7 +9,7 @@ const IntroOverride = ({ data, basePath }) => {
             <div className="absolute inset-0 pointer-events-none select-none z-0">
                 {/* Large white/gold flower behind cards */}
                 <img
-                    src={`${basePath}/img/flower_single.png?v=2`}
+                    src={`${basePath}/img/flower_single.webp?v=2`}
                     className="absolute -left-12 top-1/2 -translate-y-1/2 w-48 h-48 opacity-[0.14] object-contain rotate-12"
                     alt="flower bg"
                 />
@@ -31,7 +31,7 @@ const IntroOverride = ({ data, basePath }) => {
                 {/* Separador floral en lugar de cruz */}
                 <div className="flex items-center justify-center gap-3 mb-4">
                     <div className="w-8 h-[1px] bg-[#E3D5C3]" />
-                    <img src={`${basePath}/img/flower_single.png?v=2`} className="w-6 h-6 object-contain" alt="flower icon" />
+                    <img src={`${basePath}/img/flower_single.webp?v=2`} className="w-6 h-6 object-contain" alt="flower icon" />
                     <div className="w-8 h-[1px] bg-[#E3D5C3]" />
                 </div>
 

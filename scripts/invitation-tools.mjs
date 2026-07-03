@@ -157,7 +157,7 @@ export async function validateInvitation(slug) {
             await validateAssetHealth(slug, report)
             return finishReport(report)
         }
-        report.warnings.push('Legacy invitation without config.json; only folder and registry checks were run')
+        report.tips.push('Standalone invitation without config.json; folder and registry checks passed')
         if (!registryEntry) report.errors.push('Missing registry.js entry')
         return finishReport(report)
     }

@@ -143,6 +143,43 @@ export default function AndreJoelInvitation() {
     const nextPhoto = () => setActivePhoto((current) => (current + 1) % photoGallery.length);
     const prevPhoto = () => setActivePhoto((current) => (current - 1 + photoGallery.length) % photoGallery.length);
 
+    const touchStartX = useRef(0);
+    const touchStartY = useRef(0);
+    const touchEndX = useRef(0);
+    const touchEndY = useRef(0);
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+        touchStartY.current = e.targetTouches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+        touchEndY.current = e.targetTouches[0].clientY;
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+        const diffX = touchStartX.current - touchEndX.current;
+        const diffY = touchStartY.current - touchEndY.current;
+
+        // Solo registrar deslizamiento horizontal si el movimiento horizontal es mayor que el vertical
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            const minSwipeDistance = 50; // distancia mínima en px para registrar un deslizamiento
+            if (diffX > minSwipeDistance) {
+                nextPhoto();
+            } else if (diffX < -minSwipeDistance) {
+                prevPhoto();
+            }
+        }
+
+        // resetear valores
+        touchStartX.current = 0;
+        touchStartY.current = 0;
+        touchEndX.current = 0;
+        touchEndY.current = 0;
+    };
+
     return (
         <div
             className="andre-joel-invitation min-h-screen overflow-x-hidden bg-[#f7fbff] text-[#355164] selection:bg-[#bfd8ea]"
@@ -260,12 +297,21 @@ export default function AndreJoelInvitation() {
                     box-shadow: 0 28px 65px rgba(67, 106, 131, 0.2);
                     overflow: hidden;
                     position: relative;
+                    cursor: pointer;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .gallery-feature:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 32px 75px rgba(67, 106, 131, 0.25);
                 }
                 .gallery-feature img {
                     height: 100%;
                     object-fit: cover;
                     transition: opacity .3s ease, transform .6s ease;
                     width: 100%;
+                }
+                .gallery-feature:hover img {
+                    transform: scale(1.03);
                 }
                 .gallery-caption {
                     background: rgba(255, 255, 255, .94);
@@ -646,7 +692,13 @@ export default function AndreJoelInvitation() {
                                     </div>
 
                                     <div data-section-card>
-                                        <div className="gallery-feature">
+                                        <div
+                                            className="gallery-feature"
+                                            onClick={nextPhoto}
+                                            onTouchStart={handleTouchStart}
+                                            onTouchMove={handleTouchMove}
+                                            onTouchEnd={handleTouchEnd}
+                                        >
                                             <img
                                                 key={photoGallery[activePhoto].url}
                                                 src={photoGallery[activePhoto].url}

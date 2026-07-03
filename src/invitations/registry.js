@@ -73,17 +73,17 @@ const invitations = [
 
     {
         slug: 'despedida-kass-brian',
-        title: 'Celebración | despedida-kass-brian',
+        title: 'Despedida de Solteros | Kass & Brian',
         component: lazy(() => import('./despedida-kass-brian/index.jsx')),
         enabled: true,
         eventType: 'despedida',
         rsvpMode: 'whatsapp',
-        eventDate: '2026-05-16T19:00:00',
+        eventDate: '2026-10-17T19:00:00',
     },
 
     {
         slug: 'isabella',
-        title: 'Celebración | Isabella',
+        title: 'Primera Comunión | Isabella',
         component: lazy(() => import('./isabella/index.jsx')),
         enabled: true,
         eventType: 'primera-comunion',
@@ -126,7 +126,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'whatsapp',
-        eventDate: '2026-06-27T19:00:00',
+        eventDate: '2026-06-27T17:00:00',
     },
 
     {
@@ -141,7 +141,7 @@ const invitations = [
 
     {
         slug: 'jose-raul',
-        title: 'XV Años | José Raul',
+        title: 'XV Años | José Raúl',
         component: lazy(() => import('./jose-raul/index.jsx')),
         enabled: true,
         eventType: 'xv',

@@ -19,7 +19,7 @@ export default function GiftsOverride({ data, basePath }) {
                 <div className="flex justify-center">
                     <div className="relative">
                         <img
-                            src={`${basePath}/img/limpieza.png`}
+                            src={`${basePath}/img/limpieza.webp`}
                             alt="Productos de limpieza y despensa"
                             className="w-64 md:w-72 h-auto object-contain"
                             style={{ mixBlendMode: 'multiply' }}

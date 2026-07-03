@@ -12,14 +12,14 @@ the minimum invitation-specific files needed for a task.
 | `plantilla-fiesta-casual` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.03 MB |
 | `kassandra-brian` | dedicated-components | boda | whatsapp | 10 files | 5.75 MB |
 | `melani-marisol` | dedicated-components | xv | whatsapp | 13 files | 4.83 MB |
-| `despedida-kass-brian` | hybrid-overrides | despedida | whatsapp | 7 files | 4.04 MB |
-| `isabella` | shared-config | primera-comunion | supabase | 2 files | 9.89 MB |
-| `erik-shady-bermejo` | shared-config | primera-comunion | mixed | 2 files | 6.82 MB |
-| `alexa-y-santiago` | shared-config | primera-comunion | supabase | 2 files | 10.11 MB |
-| `victoria-rojas` | hybrid-overrides | xv | mixed | 9 files | 13.97 MB |
-| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 12.21 MB |
-| `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 18.14 MB |
-| `jose-raul` | shared-config | xv | none | 3 files | 5.03 MB |
+| `despedida-kass-brian` | hybrid-overrides | despedida | whatsapp | 7 files | 1.17 MB |
+| `isabella` | shared-config | primera-comunion | supabase | 2 files | 2.63 MB |
+| `erik-shady-bermejo` | shared-config | primera-comunion | mixed | 2 files | 4.40 MB |
+| `alexa-y-santiago` | shared-config | primera-comunion | supabase | 2 files | 2.61 MB |
+| `victoria-rojas` | hybrid-overrides | xv | mixed | 9 files | 8.68 MB |
+| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 6.72 MB |
+| `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 13.26 MB |
+| `jose-raul` | shared-config | xv | none | 3 files | 5.08 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.21 MB |
 

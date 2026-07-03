@@ -53,8 +53,8 @@
     "events": [
         {
             "icon": "party",
-            "title": "Casa de Rebeca",
-            "location": "",
+            "title": "Despedida de Solteros",
+            "location": "Casa de Rebeca",
             "address": "Juan Balderas #308, Soberana Convención",
             "time": "19:00",
             "mapLink": "https://maps.app.goo.gl/ikDejXUNEi87Dd1B8"

@@ -167,12 +167,12 @@
     },
     {
       "slug": "despedida-kass-brian",
-      "title": "Celebración | despedida-kass-brian",
+      "title": "Despedida de Solteros | Kass & Brian",
       "architecture": "hybrid-overrides",
       "enabled": true,
       "demo": false,
       "eventType": "despedida",
-      "eventDate": "2026-05-16T19:00:00",
+      "eventDate": "2026-10-17T19:00:00",
       "portfolioGalleryAllowed": false,
       "services": {
         "rsvp": "whatsapp",
@@ -194,13 +194,13 @@
         "files": 5,
         "images": 4,
         "audio": 0,
-        "bytes": 4241197,
-        "megabytes": 4.04
+        "bytes": 1222286,
+        "megabytes": 1.17
       }
     },
     {
       "slug": "isabella",
-      "title": "Celebración | Isabella",
+      "title": "Primera Comunión | Isabella",
       "architecture": "shared-config",
       "enabled": true,
       "demo": false,
@@ -222,8 +222,8 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10368014,
-        "megabytes": 9.89
+        "bytes": 2761480,
+        "megabytes": 2.63
       }
     },
     {
@@ -250,8 +250,8 @@
         "files": 7,
         "images": 5,
         "audio": 1,
-        "bytes": 7154293,
-        "megabytes": 6.82
+        "bytes": 4609463,
+        "megabytes": 4.4
       }
     },
     {
@@ -278,8 +278,8 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10605230,
-        "megabytes": 10.11
+        "bytes": 2739139,
+        "megabytes": 2.61
       }
     },
     {
@@ -313,8 +313,8 @@
         "files": 30,
         "images": 28,
         "audio": 1,
-        "bytes": 14643460,
-        "megabytes": 13.97
+        "bytes": 9097773,
+        "megabytes": 8.68
       }
     },
     {
@@ -324,7 +324,7 @@
       "enabled": true,
       "demo": false,
       "eventType": "xv",
-      "eventDate": "2026-06-27T19:00:00",
+      "eventDate": "2026-06-27T17:00:00",
       "portfolioGalleryAllowed": false,
       "services": {
         "rsvp": "whatsapp",
@@ -341,8 +341,8 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 12802705,
-        "megabytes": 12.21
+        "bytes": 7048875,
+        "megabytes": 6.72
       }
     },
     {
@@ -376,13 +376,13 @@
         "files": 45,
         "images": 42,
         "audio": 2,
-        "bytes": 19019165,
-        "megabytes": 18.14
+        "bytes": 13900540,
+        "megabytes": 13.26
       }
     },
     {
       "slug": "jose-raul",
-      "title": "XV Años | José Raul",
+      "title": "XV Años | José Raúl",
       "architecture": "shared-config",
       "enabled": true,
       "demo": false,
@@ -402,11 +402,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 14,
-        "images": 12,
+        "files": 15,
+        "images": 13,
         "audio": 1,
-        "bytes": 5274836,
-        "megabytes": 5.03
+        "bytes": 5324801,
+        "megabytes": 5.08
       }
     },
     {

@@ -2,6 +2,10 @@
     "slug": "jose-raul",
     "eventType": "xv",
     "title": "XV Años | José Raúl",
+    "seo": {
+        "description": "Estás invitado a una gran fiesta vaquera para celebrar los XV años de José Raúl.",
+        "shareImage": "og-preview.jpg"
+    },
     "theme": {
         "primaryHue": 26,
         "primarySat": 68,

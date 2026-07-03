@@ -2,6 +2,10 @@
     "slug": "maria-loyola",
     "eventType": "xv",
     "title": "XV Años | María José Loyola Lechuga",
+    "seo": {
+        "description": "Estás invitado(a) a la celebración de mis XV años. ¡Toca aquí para ver la invitación!",
+        "shareImage": "og-preview.jpg"
+    },
     "theme": {
         "primaryHue": 15,
         "primarySat": 70,
