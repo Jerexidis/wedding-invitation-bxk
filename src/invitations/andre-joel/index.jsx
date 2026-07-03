@@ -466,10 +466,10 @@ export default function AndreJoelInvitation() {
                                             className="mx-auto mt-5 max-w-[19rem] text-[0.9rem] leading-6 text-[#56788f] sm:max-w-xl md:max-w-2xl md:text-base md:leading-7"
                                             data-hero-copy
                                         >
-                                            <span className="block">Doy gracias a Dios por haberme dado la vida.</span>
+                                            <span className="block">“Doy gracias a Dios por haberme dado la vida.</span>
                                             <span className="block">A mis papás por esperarme con tanto amor.</span>
                                             <span className="block">A mis padrinos porque me guiarán por el camino de la Fe.</span>
-                                            <span className="block">Y a ustedes por acompañarme en este día tan importante.</span>
+                                            <span className="block">Y a ustedes por acompañarme en este día tan importante.”</span>
                                         </p>
 
                                         <div
@@ -482,7 +482,7 @@ export default function AndreJoelInvitation() {
                                             </div>
                                             <div className="detail-pill">
                                                 <span className="text-[0.68rem] font-black uppercase tracking-[0.25em] text-[#84a6be]">Hora</span>
-                                                <span className="text-sm font-bold text-[#47657a]">{config.events[0]?.time}</span>
+                                                <span className="text-sm font-bold text-[#47657a]">3:30 p. m.</span>
                                             </div>
                                         </div>
                                 </div>
