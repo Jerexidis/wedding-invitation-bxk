@@ -161,6 +161,13 @@ export default function AndreJoelInvitation() {
                     font-family: 'Nunito Sans', sans-serif;
                     background:
                         radial-gradient(circle at top, rgba(184, 214, 232, 0.55), transparent 30%),
+                        repeating-linear-gradient(
+                            90deg,
+                            rgba(190, 224, 243, 0.34) 0,
+                            rgba(190, 224, 243, 0.34) 24px,
+                            rgba(255, 255, 255, 0.5) 24px,
+                            rgba(255, 255, 255, 0.5) 48px
+                        ),
                         linear-gradient(180deg, #edf6fd 0%, #f8fcff 20%, #ffffff 100%);
                 }
                 .baptism-frame {
@@ -179,14 +186,13 @@ export default function AndreJoelInvitation() {
                     pointer-events: none;
                 }
                 .heaven-stripes {
-                    background-image: linear-gradient(
+                    background-image: repeating-linear-gradient(
                         90deg,
-                        rgba(178, 212, 234, 0.32) 0,
-                        rgba(178, 212, 234, 0.32) 12%,
-                        rgba(255, 255, 255, 0) 12%,
-                        rgba(255, 255, 255, 0) 24%
+                        rgba(178, 216, 238, 0.48) 0,
+                        rgba(178, 216, 238, 0.48) 24px,
+                        rgba(255, 255, 255, 0.68) 24px,
+                        rgba(255, 255, 255, 0.68) 48px
                     );
-                    background-size: 180px 180px;
                 }
                 .cloud-card {
                     border-radius: 32px;
@@ -278,11 +284,7 @@ export default function AndreJoelInvitation() {
                     justify-content: center;
                     gap: 0.55rem;
                     text-align: center;
-                    border-radius: 999px;
-                    padding: 0.75rem 1rem;
-                    background: rgba(255,255,255,0.78);
-                    border: 1px solid rgba(166, 203, 225, 0.6);
-                    box-shadow: 0 14px 32px rgba(71, 120, 147, 0.12);
+                    padding: 0.25rem 0.5rem;
                 }
                 .envelope-overlay {
                     position: fixed;
@@ -461,16 +463,13 @@ export default function AndreJoelInvitation() {
                                             {config.hero.name}
                                         </h1>
                                         <p
-                                            className="mx-auto mt-5 max-w-[18rem] text-[0.98rem] leading-7 text-[#56788f] sm:max-w-xl md:max-w-2xl md:text-lg"
+                                            className="mx-auto mt-5 max-w-[19rem] text-[0.9rem] leading-6 text-[#56788f] sm:max-w-xl md:max-w-2xl md:text-base md:leading-7"
                                             data-hero-copy
                                         >
-                                            Dejen que los niños vengan a mí, y no se lo impidan, porque el reino de Dios es de quienes son como ellos.
-                                        </p>
-                                        <p
-                                            className="mt-2 text-xs font-extrabold uppercase tracking-[0.3em] text-[#8cadc3]"
-                                            data-hero-copy
-                                        >
-                                            Marcos 10:14
+                                            <span className="block">Doy gracias a Dios por haberme dado la vida.</span>
+                                            <span className="block">A mis papás por esperarme con tanto amor.</span>
+                                            <span className="block">A mis padrinos porque me guiarán por el camino de la Fe.</span>
+                                            <span className="block">Y a ustedes por acompañarme en este día tan importante.</span>
                                         </p>
 
                                         <div
@@ -546,7 +545,7 @@ export default function AndreJoelInvitation() {
                                             {config.intro.parent2}
                                         </p>
                                     </div>
-                                    <p className="mt-6 max-w-2xl text-base leading-8 text-[#6a889b]">
+                                    <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-7 text-[#6a889b] md:text-base md:leading-8">
                                         {config.intro.closingMessage}. Nos encantará que nos acompañes a vivir este momento de fe, ternura y gratitud.
                                     </p>
                                 </div>
@@ -706,16 +705,19 @@ export default function AndreJoelInvitation() {
                                             Tu presencia es lo más importante para nosotros. Si además deseas consentir a André Joel con un detalle, será recibido con muchísimo cariño y gratitud.
                                         </p>
 
-                                        <div className="mx-auto mt-8 max-w-xl rounded-[30px] bg-gradient-to-br from-[#edf7fd] to-white px-6 py-7 shadow-inner">
-                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4a6a7f] md:text-4xl">
-                                                Gracias por acompañarnos
-                                            </p>
-                                            <p className="mt-3 text-sm leading-7 text-[#7393a8]">
-                                                Cada muestra de afecto hará todavía más especial este día tan esperado para nuestra familia.
-                                            </p>
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="cloud-card mx-auto max-w-5xl px-6 py-8 text-center md:px-10 md:py-10" data-section-card>
+                                <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4a6a7f] md:text-4xl">
+                                    Gracias por acompañarnos
+                                </p>
+                                <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#7393a8]">
+                                    Cada muestra de afecto hará todavía más especial este día tan esperado para nuestra familia.
+                                </p>
                             </div>
                         </section>
                     </main>

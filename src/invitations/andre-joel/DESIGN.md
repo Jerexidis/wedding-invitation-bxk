@@ -12,13 +12,14 @@
 - **Palette**: Sky blues (#D6EAFF → #4A6B8A), soft gold accents (#D4C48A), white
 - **Typography**: Sacramento (display/cursive), Quicksand (body — soft, rounded, child-friendly)
 - **Motifs**: illustrated angel floating from selected corners, floating clouds, sparkling star particles, soft baptism cross
-- **Background**: Pure CSS sky gradient (no hero image dependency), clouds drifting with CSS animations
+- **Background**: Narrow vertical sky-blue and white CSS stripes over a soft sky gradient (no hero image dependency)
 - **Mood**: Tender, celestial, light, joyful
 
 ## Custom decisions
 
 - Hero uses a CSS sky gradient instead of a background image (empty `hero-bg.png`)
 - Keep the baby portrait as the hero focal point; the supplied angel remains a secondary corner decoration and the dove is not used
+- Hero date and time remain typographic details without pill backgrounds
 - Cloud shapes are reusable SVG components with drift animations
 - Envelope entrance screen matches celestial theme with clouds and angel
 - Parents and padrinos use separate, balanced family cards
