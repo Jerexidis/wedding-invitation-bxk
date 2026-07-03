@@ -21,7 +21,7 @@ the minimum invitation-specific files needed for a task.
 | `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 18.14 MB |
 | `jose-raul` | shared-config | xv | none | 3 files | 5.03 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
-| `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 4.59 MB |
+| `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 12.92 MB |
 
 ## Targeted context
 

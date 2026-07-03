@@ -11,22 +11,26 @@
 - **Concept**: Celestial baptism — heavenly, angelic, pure
 - **Palette**: Sky blues (#D6EAFF → #4A6B8A), soft gold accents (#D4C48A), white
 - **Typography**: Sacramento (display/cursive), Quicksand (body — soft, rounded, child-friendly)
-- **Motifs**: SVG angel with halo, floating clouds, sparkling star particles, soft baptism cross
+- **Motifs**: illustrated angel floating from selected corners, floating clouds, sparkling star particles, soft baptism cross
 - **Background**: Pure CSS sky gradient (no hero image dependency), clouds drifting with CSS animations
 - **Mood**: Tender, celestial, light, joyful
 
 ## Custom decisions
 
 - Hero uses a CSS sky gradient instead of a background image (empty `hero-bg.png`)
-- Angel SVG is inline, exported from HeroOverride for reuse across sections
+- Keep the baby portrait as the hero focal point; the supplied angel remains a secondary corner decoration and the dove is not used
 - Cloud shapes are reusable SVG components with drift animations
 - Envelope entrance screen matches celestial theme with clouds and angel
 - Padrinos section uses a darker navy variant for contrast
+- Venue cards retain their real photographs with compact, legible mobile details
+- Countdown stays in one horizontal four-column strip instead of separate boxed tiles
+- Gallery is a curated five-photo viewer with one featured portrait and centered arrows/counter beneath the image; avoid duplicate photos, mini previews, and stacked-card effects
+- `Pretty Little Baby` starts from the envelope-opening gesture and keeps a minimal fixed pause/play control
 - RSVP is conditionally rendered (currently mode: "none")
 
 ## Preserve
 
-- Angel SVG proportions and soft color gradients
+- Baby hero portrait, side-ornament proportions, generous breathing room, and soft color gradients
 - Cloud drift animation timing and layering
 - Celestial blue-to-white gradient direction (top=blue, bottom=white)
 - Soft gold cross as dividers (not the communion chalice variant)

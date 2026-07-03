@@ -1,24 +1,19 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
-import { ArrowLeft, ChevronLeft, ChevronRight, MapPinned } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, MapPinned, Music2, Pause } from 'lucide-react';
 import { injectGoogleFonts } from '../../utils/themeEngine';
 import config from './config.json';
 
 const basePath = `/invitations/${config.slug}`;
+const audioPath = `${basePath}/audio/pretty-little-baby.mp3`;
 
 const photoGallery = [
-    { url: `${basePath}/img/foto1.jpg`, label: 'Su primer mes', note: 'Un comienzo lleno de amor' },
-    { url: `${basePath}/img/foto2.jpg`, label: 'Sus primeras sonrisas', note: 'La alegría que ilumina la casa' },
-    { url: `${basePath}/img/foto3.jpg`, label: 'Un regalo de Dios', note: 'Cada día crece rodeado de cariño' },
-    { url: `${basePath}/img/foto4.jpg`, label: 'Momentos en familia', note: 'Pequeños instantes para atesorar' },
-    { url: `${basePath}/img/foto5.jpg`, label: 'Esperando su gran día', note: 'Con ilusión por celebrar su bautizo' },
-    { url: `${basePath}/img/gallery-6.jpeg`, label: 'Seis meses de ternura', note: 'Descubriendo el mundo' },
-    { url: `${basePath}/img/gallery-7.jpeg`, label: 'Risas que enamoran', note: 'Siempre acompañado de amor' },
-    { url: `${basePath}/img/gallery-8.jpeg`, label: 'Cinco meses de bendición', note: 'Un corazón pequeñito y amado' },
-    { url: `${basePath}/img/gallery-9.jpeg`, label: 'Mirada curiosa', note: 'Cada día es una nueva aventura' },
-    { url: `${basePath}/img/gallery-10.jpeg`, label: 'Hora de comer', note: 'Creciendo fuerte y feliz' },
-    { url: `${basePath}/img/gallery-11.jpeg`, label: 'Nuestro niño cool', note: 'Con estilo y mucha ternura' },
+    { url: `${basePath}/img/gallery-11.jpeg`, label: 'Una mirada que enamora', note: 'Pequeños instantes para atesorar' },
+    { url: `${basePath}/img/gallery-6.jpeg`, label: 'Seis meses de ternura', note: 'Creciendo rodeado de amor' },
+    { url: `${basePath}/img/gallery-7.jpeg`, label: 'Sonrisas que iluminan', note: 'Cada día es una nueva bendición' },
+    { url: `${basePath}/img/gallery-9.jpeg`, label: 'Nuestro pequeño tesoro', note: 'Descubriendo el mundo' },
+    { url: `${basePath}/img/gallery-10.jpeg`, label: 'Momentos cotidianos', note: 'Recuerdos que viven para siempre' },
 ];
 
 const eventPhotos = {
@@ -28,7 +23,6 @@ const eventPhotos = {
 
 const decorationImages = {
     angel: `${basePath}/img/angel-reference-cutout.png`,
-    dove: `${basePath}/img/dove-font-cutout.png`,
     heroBaby: `${basePath}/img/hero-baby-circle.png`,
 };
 
@@ -52,12 +46,11 @@ export default function AndreJoelInvitation() {
     const [envelopeOpen, setEnvelopeOpen] = useState(false);
     const [envelopeExit, setEnvelopeExit] = useState(false);
     const [activePhoto, setActivePhoto] = useState(0);
+    const [musicPlaying, setMusicPlaying] = useState(false);
     const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(config.countdown.targetDate));
 
     const heroRef = useRef(null);
-    const galleryDeckRef = useRef(null);
-    const galleryCardRefs = useRef([]);
-    const angelRefs = useRef([]);
+    const audioRef = useRef(null);
 
     const eventDateLine = useMemo(
         () => `Sábado ${config.hero.date.toLowerCase()}`,
@@ -92,16 +85,6 @@ export default function AndreJoelInvitation() {
         return () => window.clearInterval(timer);
     }, []);
 
-    useEffect(() => {
-        if (!envelopeOpen) return undefined;
-
-        const autoPlay = window.setInterval(() => {
-            setActivePhoto((current) => (current + 1) % photoGallery.length);
-        }, 4500);
-
-        return () => window.clearInterval(autoPlay);
-    }, [envelopeOpen]);
-
     useLayoutEffect(() => {
         if (!envelopeOpen) return undefined;
 
@@ -131,48 +114,30 @@ export default function AndreJoelInvitation() {
                 scrollTrigger: undefined,
             });
 
-            angelRefs.current.forEach((node, index) => {
-                if (!node) return;
-                gsap.to(node, {
-                    y: index % 2 === 0 ? -12 : 12,
-                    x: index % 2 === 0 ? 10 : -10,
-                    duration: 3.2 + index * 0.4,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut',
-                });
-            });
         }, heroRef);
 
         return () => ctx.revert();
     }, [envelopeOpen]);
 
-    useEffect(() => {
-        if (!envelopeOpen || !galleryDeckRef.current) return;
-
-        galleryCardRefs.current.forEach((card, index) => {
-            if (!card) return;
-
-            const offset = index - activePhoto;
-            const absOffset = Math.abs(offset);
-            const direction = offset < 0 ? -1 : 1;
-
-            gsap.to(card, {
-                xPercent: offset * 54,
-                y: absOffset === 0 ? 0 : 18 * absOffset,
-                scale: absOffset === 0 ? 1 : Math.max(0.82, 1 - absOffset * 0.08),
-                rotate: absOffset === 0 ? 0 : direction * -5,
-                opacity: absOffset > 2 ? 0 : 1 - absOffset * 0.22,
-                zIndex: 20 - absOffset,
-                duration: 0.8,
-                ease: 'power3.out',
-            });
-        });
-    }, [activePhoto, envelopeOpen]);
-
     const openInvitation = () => {
+        audioRef.current?.play().catch(() => setMusicPlaying(false));
         setEnvelopeExit(true);
         window.setTimeout(() => setEnvelopeOpen(true), 700);
+    };
+
+    const toggleMusic = async () => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        if (audio.paused) {
+            try {
+                await audio.play();
+            } catch {
+                setMusicPlaying(false);
+            }
+        } else {
+            audio.pause();
+        }
     };
 
     const nextPhoto = () => setActivePhoto((current) => (current + 1) % photoGallery.length);
@@ -183,6 +148,14 @@ export default function AndreJoelInvitation() {
             className="andre-joel-invitation min-h-screen overflow-x-hidden bg-[#f7fbff] text-[#355164] selection:bg-[#bfd8ea]"
             ref={heroRef}
         >
+            <audio
+                ref={audioRef}
+                src={audioPath}
+                preload="auto"
+                loop
+                onPlay={() => setMusicPlaying(true)}
+                onPause={() => setMusicPlaying(false)}
+            />
             <style>{`
                 .andre-joel-invitation {
                     font-family: 'Nunito Sans', sans-serif;
@@ -221,28 +194,83 @@ export default function AndreJoelInvitation() {
                     border: 1px solid rgba(176, 210, 230, 0.5);
                     box-shadow: 0 20px 50px rgba(88, 136, 164, 0.13);
                 }
-                .gallery-stage {
-                    perspective: 1200px;
-                    min-height: 440px;
+                .baby-portrait {
+                    border: 6px solid rgba(255,255,255,.96);
+                    border-radius: 50%;
+                    box-shadow: 0 18px 42px rgba(74,128,161,.2);
+                    height: 8.5rem;
+                    margin: 1.15rem auto 0;
+                    object-fit: cover;
+                    width: 8.5rem;
                 }
-                .gallery-card {
+                .side-ornament {
+                    animation: angelFloat 4.2s ease-in-out infinite;
+                    filter: drop-shadow(0 14px 24px rgba(78,127,154,.16));
+                    opacity: .8;
+                    pointer-events: none;
                     position: absolute;
-                    inset: 0;
-                    margin: auto;
-                    width: min(100%, 310px);
-                    height: 100%;
-                    border-radius: 32px;
+                    top: 45%;
+                    width: clamp(4.2rem, 12vw, 9rem);
+                    z-index: 2;
+                }
+                .side-ornament--left {
+                    left: clamp(-1.2rem, 1vw, 1rem);
+                }
+                .section-angel {
+                    animation: angelFloat 4.8s ease-in-out infinite;
+                    filter: drop-shadow(0 12px 22px rgba(78,127,154,.15));
+                    pointer-events: none;
+                    position: absolute;
+                    width: 6rem;
+                    z-index: 0;
+                }
+                .countdown-strip {
+                    background: linear-gradient(135deg, rgba(238,247,252,.95), rgba(255,255,255,.95));
+                    border: 1px solid rgba(156,197,220,.5);
+                    border-radius: 24px;
+                    display: grid;
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
                     overflow: hidden;
-                    transform-origin: center center;
-                    box-shadow: 0 28px 60px rgba(67, 106, 131, 0.22);
-                    border: 8px solid rgba(255, 255, 255, 0.96);
-                    background: #fff;
                 }
-                .gallery-card::after {
+                .countdown-strip > div {
+                    padding: 1.25rem .25rem;
+                    position: relative;
+                    text-align: center;
+                }
+                .countdown-strip > div + div::before {
+                    background: rgba(134,179,205,.28);
                     content: '';
+                    height: 52%;
+                    left: 0;
                     position: absolute;
-                    inset: 0;
-                    background: linear-gradient(180deg, rgba(255,255,255,0) 42%, rgba(33,62,80,0.78) 100%);
+                    top: 24%;
+                    width: 1px;
+                }
+                .gallery-feature {
+                    aspect-ratio: 4 / 5;
+                    background: #fff;
+                    border: 8px solid rgba(255, 255, 255, 0.96);
+                    border-radius: 34px;
+                    box-shadow: 0 28px 65px rgba(67, 106, 131, 0.2);
+                    overflow: hidden;
+                    position: relative;
+                }
+                .gallery-feature img {
+                    height: 100%;
+                    object-fit: cover;
+                    transition: opacity .3s ease, transform .6s ease;
+                    width: 100%;
+                }
+                .gallery-caption {
+                    background: rgba(255, 255, 255, .94);
+                    border: 1px solid rgba(157, 197, 220, .4);
+                    border-radius: 24px;
+                    margin: -2.5rem auto 0;
+                    max-width: calc(100% - 2rem);
+                    padding: 1.1rem 1.25rem;
+                    position: relative;
+                    text-align: center;
+                    z-index: 2;
                 }
                 .detail-pill {
                     display: inline-flex;
@@ -253,18 +281,6 @@ export default function AndreJoelInvitation() {
                     background: rgba(255,255,255,0.78);
                     border: 1px solid rgba(166, 203, 225, 0.6);
                     box-shadow: 0 14px 32px rgba(71, 120, 147, 0.12);
-                }
-                .angel-bob {
-                    filter: drop-shadow(0 18px 32px rgba(102, 148, 175, 0.18));
-                }
-                .hero-ornament {
-                    pointer-events: none;
-                    user-select: none;
-                    z-index: 10;
-                }
-                .hero-ornament img {
-                    display: block;
-                    height: auto;
                 }
                 .envelope-overlay {
                     position: fixed;
@@ -315,6 +331,10 @@ export default function AndreJoelInvitation() {
                     70% { box-shadow: 0 0 0 22px rgba(143, 190, 219, 0); }
                     100% { box-shadow: 0 0 0 0 rgba(143, 190, 219, 0); }
                 }
+                @keyframes angelFloat {
+                    0%, 100% { transform: translateY(2px) rotate(-1deg); }
+                    50% { transform: translateY(-7px) rotate(1deg); }
+                }
                 @media (max-width: 767px) {
                     .baptism-frame {
                         border-radius: 30px;
@@ -323,35 +343,46 @@ export default function AndreJoelInvitation() {
                         inset: 10px;
                         border-radius: 22px;
                     }
-                    .hero-ornament--angel {
-                        position: absolute;
-                        left: -4px;
-                        bottom: 84px;
+                    .cloud-card {
+                        border-radius: 26px;
                     }
-                    .hero-ornament--dove {
-                        position: absolute;
-                        right: -6px;
-                        bottom: 28px;
+                    .gallery-feature {
+                        border-radius: 26px;
+                    }
+                    .envelope-card {
+                        padding: 1.75rem 1.35rem;
+                    }
+                    .side-ornament {
+                        top: 27%;
+                        width: 4rem;
+                    }
+                    .baby-portrait {
+                        height: 7.5rem;
+                        width: 7.5rem;
                     }
                 }
             `}</style>
 
+            {envelopeOpen && (
+                <button
+                    type="button"
+                    onClick={toggleMusic}
+                    className={`fixed right-3 top-3 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/80 bg-white/85 shadow-lg backdrop-blur-md transition hover:bg-white ${musicPlaying ? 'text-[#48677c]' : 'text-[#86a8c1]'}`}
+                    aria-label={musicPlaying ? 'Pausar música' : 'Reproducir música'}
+                >
+                    {musicPlaying ? <Pause size={16} /> : <Music2 size={16} />}
+                </button>
+            )}
+
             {!envelopeOpen && (
                 <div className={`envelope-overlay ${envelopeExit ? 'exit' : ''}`}>
                     <div className="envelope-card heaven-stripes">
-                        <div
-                            className="absolute -left-6 top-6 opacity-90"
-                            ref={(node) => { angelRefs.current[0] = node; }}
-                        >
-                            <img src={decorationImages.angel} alt="" className="angel-bob w-28" />
-                        </div>
-                        <div
-                            className="absolute -right-4 bottom-6 opacity-80"
-                            ref={(node) => { angelRefs.current[1] = node; }}
-                        >
-                            <img src={decorationImages.dove} alt="" className="angel-bob w-24" />
-                        </div>
-
+                        <img
+                            src={decorationImages.angel}
+                            alt=""
+                            className="absolute left-2 top-3 w-16 opacity-70"
+                            aria-hidden="true"
+                        />
                         <div className="relative z-10 space-y-5 py-4">
                             <p className="text-[0.72rem] font-black uppercase tracking-[0.38em] text-[#729ab5]">
                                 Una celebración muy especial
@@ -381,23 +412,25 @@ export default function AndreJoelInvitation() {
                 <>
                     <button
                         onClick={() => navigate('/')}
-                        className="fixed left-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-4 py-2 text-sm font-bold text-[#48677c] shadow-lg backdrop-blur-md transition hover:bg-white"
+                        className="fixed left-3 top-3 z-50 inline-flex h-10 w-10 items-center justify-center gap-2 rounded-full border border-white/80 bg-white/85 text-sm font-bold text-[#48677c] shadow-lg backdrop-blur-md transition hover:bg-white sm:left-4 sm:top-4 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
+                        aria-label="Regresar"
                     >
                         <ArrowLeft size={16} />
-                        Regresar
+                        <span className="hidden sm:inline">Regresar</span>
                     </button>
 
-                    <header className="relative px-4 pb-16 pt-24 md:px-8 md:pb-24">
+                    <header className="relative px-4 pb-10 pt-16 md:px-8 md:pb-20 md:pt-24">
                         <div className="mx-auto max-w-6xl">
-                            <div className="baptism-frame heaven-stripes overflow-hidden px-6 py-8 md:px-10 md:py-12">
-                                <div className="relative grid items-center gap-10 md:grid-cols-[220px_minmax(0,1fr)_220px]">
-                                    <div className="hero-ornament hero-ornament--angel order-2 flex justify-center md:static md:order-1 md:justify-start">
-                                        <img src={decorationImages.angel} alt="" className="angel-bob w-24 sm:w-28 md:w-52" />
-                                    </div>
-
-                                    <div className="order-1 px-1 text-center md:order-2 md:px-0">
+                            <div className="baptism-frame heaven-stripes overflow-hidden px-5 py-8 md:px-10 md:py-12">
+                                <img
+                                    src={decorationImages.angel}
+                                    alt=""
+                                    className="side-ornament side-ornament--left"
+                                    aria-hidden="true"
+                                />
+                                <div className="relative mx-auto max-w-3xl px-1 text-center md:px-0">
                                         <div
-                                            className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 shadow-sm"
+                                            className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 shadow-sm"
                                             data-hero-badge
                                         >
                                             <span className="h-2 w-2 rounded-full bg-[#86b6d3]" />
@@ -413,17 +446,14 @@ export default function AndreJoelInvitation() {
                                         >
                                             {config.intro.message}
                                         </p>
-                                        <div className="mt-5 flex justify-center" data-hero-copy>
-                                            <div className="overflow-hidden rounded-full border-[6px] border-white bg-white shadow-[0_20px_45px_rgba(77,128,157,0.22)]">
-                                                <img
-                                                    src={decorationImages.heroBaby}
-                                                    alt={config.hero.name}
-                                                    className="h-28 w-28 object-cover sm:h-32 sm:w-32 md:h-40 md:w-40"
-                                                />
-                                            </div>
-                                        </div>
+                                        <img
+                                            src={decorationImages.heroBaby}
+                                            alt={config.hero.name}
+                                            className="baby-portrait"
+                                            data-hero-copy
+                                        />
                                         <h1
-                                            className="mt-5 font-['Parisienne'] text-[3.35rem] leading-none text-[#48677c] sm:text-6xl md:text-8xl"
+                                            className="mt-5 font-['Parisienne'] text-[3.55rem] leading-[0.9] text-[#48677c] sm:text-6xl md:text-8xl"
                                             data-hero-copy
                                         >
                                             {config.hero.name}
@@ -442,7 +472,7 @@ export default function AndreJoelInvitation() {
                                         </p>
 
                                         <div
-                                            className="mx-auto mt-8 flex max-w-xl flex-wrap items-center justify-center gap-3 pb-28 md:pb-0"
+                                            className="mx-auto mt-7 flex max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center"
                                             data-hero-copy
                                         >
                                             <div className="detail-pill">
@@ -454,24 +484,25 @@ export default function AndreJoelInvitation() {
                                                 <span className="text-sm font-bold text-[#47657a]">{config.events[0]?.time}</span>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className="hero-ornament hero-ornament--dove order-3 flex justify-center md:static md:justify-end">
-                                        <img src={decorationImages.dove} alt="" className="angel-bob w-24 sm:w-28 md:w-48" />
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </header>
 
-                    <main className="space-y-6 pb-20">
+                    <main className="space-y-10 pb-16 md:space-y-14 md:pb-20">
                         <section className="px-4 md:px-8">
                             <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-                                <div className="cloud-card p-8 md:p-10" data-section-card>
+                                <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                    <img
+                                        src={decorationImages.angel}
+                                        alt=""
+                                        className="section-angel -bottom-5 -right-4 opacity-20 md:w-28"
+                                        aria-hidden="true"
+                                    />
                                     <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                         Mis papás
                                     </p>
-                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4b6a7f] md:text-5xl">
+                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
                                         Con el amor de nuestra familia
                                     </h2>
                                     <div className="mt-6 space-y-4 text-lg text-[#54758b]">
@@ -488,18 +519,29 @@ export default function AndreJoelInvitation() {
                                     </p>
                                 </div>
 
-                                <div className="cloud-card p-8" data-section-card>
+                                <div className="cloud-card p-6 md:p-8" data-section-card>
                                     <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                         Cuenta regresiva
                                     </p>
                                     <h2 className="mt-3 font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4b6a7f]">
                                         Falta muy poquito
                                     </h2>
-                                    <div className="mt-8 grid grid-cols-2 gap-4">
-                                        <CountdownBox value={timeLeft.dias} label="Días" />
-                                        <CountdownBox value={timeLeft.horas} label="Horas" />
-                                        <CountdownBox value={timeLeft.minutos} label="Minutos" />
-                                        <CountdownBox value={timeLeft.segundos} label="Segundos" />
+                                    <div className="countdown-strip mt-7" aria-label="Cuenta regresiva para el bautizo">
+                                        {[
+                                            { value: timeLeft.dias, label: 'Días' },
+                                            { value: timeLeft.horas, label: 'Horas' },
+                                            { value: timeLeft.minutos, label: 'Min' },
+                                            { value: timeLeft.segundos, label: 'Seg' },
+                                        ].map((item) => (
+                                            <div key={item.label}>
+                                                <p className="text-2xl font-black text-[#4a6b7f] md:text-4xl">
+                                                    {String(item.value).padStart(2, '0')}
+                                                </p>
+                                                <p className="mt-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-[#8aadc3] md:text-[0.68rem]">
+                                                    {item.label}
+                                                </p>
+                                            </div>
+                                        ))}
                                     </div>
 
                                     {config.padrinos?.enabled && (
@@ -522,11 +564,11 @@ export default function AndreJoelInvitation() {
 
                         <section className="px-4 md:px-8">
                             <div className="mx-auto max-w-6xl">
-                                <div className="mb-8 text-center">
+                                <div className="mb-7 text-center">
                                     <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                         Detalles del día
                                     </p>
-                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-5xl font-semibold text-[#49697e]">
+                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.65rem] font-semibold leading-none text-[#49697e] md:text-5xl">
                                         Lugares para celebrar
                                     </h2>
                                 </div>
@@ -537,40 +579,41 @@ export default function AndreJoelInvitation() {
 
                                         return (
                                             <article key={event.title} className="cloud-card overflow-hidden" data-section-card>
-                                                <div className="relative h-64">
+                                                <div className="relative h-48 md:h-64">
                                                     <img
                                                         src={imageSrc}
-                                                        alt={event.title}
+                                                        alt={event.location}
                                                         className="h-full w-full object-cover"
                                                     />
-                                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#213e50]/80 via-[#213e50]/25 to-transparent px-6 pb-5 pt-12">
-                                                        <p className="text-[0.68rem] font-black uppercase tracking-[0.32em] text-white/75">
-                                                            Foto real del lugar
+                                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#213e50]/85 via-[#213e50]/20 to-transparent px-5 pb-4 pt-12 md:px-7 md:pb-5">
+                                                        <p className="text-[0.65rem] font-black uppercase tracking-[0.28em] text-white/75">
+                                                            {event.icon === 'church' ? 'Ceremonia' : 'Recepción'}
                                                         </p>
-                                                        <h3 className="mt-2 font-['Cormorant_Garamond'] text-4xl font-semibold text-white">
+                                                        <h3 className="mt-1 font-['Cormorant_Garamond'] text-3xl font-semibold text-white md:text-4xl">
                                                             {event.title}
                                                         </h3>
                                                     </div>
                                                 </div>
 
-                                                <div className="space-y-4 p-7">
+                                                <div className="space-y-4 p-6 md:p-7">
                                                     <div>
                                                         <p className="text-xl font-bold text-[#48687d]">{event.location}</p>
                                                         <p className="mt-1 text-sm leading-6 text-[#6d8a9c]">{event.address}</p>
                                                     </div>
-                                                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.24em] text-[#81a6bf]">
-                                                        <span className="rounded-full bg-[#edf5fb] px-3 py-1 text-[#4f748d]">{event.time}</span>
-                                                        <span>{event.icon === 'church' ? 'Ceremonia' : 'Recepción'}</span>
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <span className="rounded-full bg-[#edf5fb] px-3 py-2 text-sm font-bold text-[#4f748d]">
+                                                            {event.time} hrs.
+                                                        </span>
+                                                        <a
+                                                            href={event.mapLink}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2 rounded-full bg-[#edf6fc] px-4 py-2 text-sm font-bold text-[#4c718a] transition hover:bg-[#dfeef8]"
+                                                        >
+                                                            <MapPinned size={16} />
+                                                            Ver ubicación
+                                                        </a>
                                                     </div>
-                                                    <a
-                                                        href={event.mapLink}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 rounded-full bg-[#edf6fc] px-4 py-2 text-sm font-bold text-[#4c718a] transition hover:bg-[#dfeef8]"
-                                                    >
-                                                        <MapPinned size={16} />
-                                                        Ver ubicación
-                                                    </a>
                                                 </div>
                                             </article>
                                         );
@@ -580,20 +623,36 @@ export default function AndreJoelInvitation() {
                         </section>
 
                         <section className="px-4 md:px-8">
-                            <div className="mx-auto max-w-6xl overflow-hidden rounded-[36px] bg-gradient-to-br from-[#dff1fc] via-[#eef8ff] to-white px-6 py-10 md:px-10">
-                                <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+                            <div className="mx-auto max-w-6xl overflow-hidden rounded-[30px] bg-gradient-to-br from-[#dff1fc] via-[#eef8ff] to-white px-5 py-8 md:rounded-[36px] md:px-10 md:py-12">
+                                <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
                                     <div data-section-card>
                                         <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                             Galería
                                         </p>
-                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-5xl font-semibold text-[#49697e]">
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.75rem] font-semibold leading-[0.95] text-[#49697e] md:text-5xl">
                                             Recuerdos de André Joel
                                         </h2>
                                         <p className="mt-5 max-w-md text-base leading-8 text-[#638399]">
-                                            Una colección de instantes tiernos para acompañar esta invitación. Toca las flechas o una miniatura para descubrir más momentos.
+                                            Cinco momentos únicos de nuestro pequeño, elegidos con mucho cariño para compartirlos contigo.
                                         </p>
 
-                                        <div className="mt-8 flex items-center gap-3">
+                                    </div>
+
+                                    <div data-section-card>
+                                        <div className="gallery-feature">
+                                            <img
+                                                key={photoGallery[activePhoto].url}
+                                                src={photoGallery[activePhoto].url}
+                                                alt={photoGallery[activePhoto].label}
+                                            />
+                                        </div>
+                                        <div className="gallery-caption">
+                                            <p className="font-['Cormorant_Garamond'] text-2xl font-semibold text-[#49697e]">
+                                                {photoGallery[activePhoto].label}
+                                            </p>
+                                            <p className="mt-1 text-sm text-[#7290a3]">{photoGallery[activePhoto].note}</p>
+                                        </div>
+                                        <div className="mt-6 flex items-center justify-center gap-3">
                                             <button
                                                 type="button"
                                                 onClick={prevPhoto}
@@ -602,6 +661,9 @@ export default function AndreJoelInvitation() {
                                             >
                                                 <ChevronLeft size={18} />
                                             </button>
+                                            <p className="mx-2 text-sm font-bold uppercase tracking-[0.28em] text-[#87aac3]">
+                                                {String(activePhoto + 1).padStart(2, '0')} / {String(photoGallery.length).padStart(2, '0')}
+                                            </p>
                                             <button
                                                 type="button"
                                                 onClick={nextPhoto}
@@ -610,72 +672,26 @@ export default function AndreJoelInvitation() {
                                             >
                                                 <ChevronRight size={18} />
                                             </button>
-                                            <p className="ml-2 text-sm font-bold uppercase tracking-[0.28em] text-[#87aac3]">
-                                                {String(activePhoto + 1).padStart(2, '0')} / {String(photoGallery.length).padStart(2, '0')}
-                                            </p>
                                         </div>
                                     </div>
-
-                                    <div data-section-card>
-                                        <div className="gallery-stage relative" ref={galleryDeckRef}>
-                                            {photoGallery.map((photo, index) => (
-                                                <button
-                                                    key={photo.url}
-                                                    type="button"
-                                                    className="gallery-card text-left"
-                                                    onClick={() => setActivePhoto(index)}
-                                                    ref={(node) => { galleryCardRefs.current[index] = node; }}
-                                                    aria-label={`Ver foto ${photo.label}`}
-                                                >
-                                                    <img src={photo.url} alt={photo.label} className="h-full w-full object-cover" />
-                                                    <div className="absolute inset-x-0 bottom-0 z-10 p-5">
-                                                        <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-white">
-                                                            {photo.label}
-                                                        </p>
-                                                        <p className="mt-1 text-sm text-white/85">{photo.note}</p>
-                                                    </div>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mt-8 grid grid-cols-4 gap-3 md:grid-cols-6 lg:grid-cols-8">
-                                    {photoGallery.slice(0, 8).map((photo, index) => (
-                                        <button
-                                            key={`${photo.url}-thumb`}
-                                            type="button"
-                                            onClick={() => setActivePhoto(index)}
-                                            className={`overflow-hidden rounded-[20px] border-2 transition ${activePhoto === index ? 'border-[#7faac5] shadow-md' : 'border-white/70 opacity-80 hover:opacity-100'}`}
-                                        >
-                                            <img src={photo.url} alt={photo.label} className="h-20 w-full object-cover md:h-24" />
-                                        </button>
-                                    ))}
                                 </div>
                             </div>
                         </section>
 
                         <section className="px-4 md:px-8">
                             <div className="mx-auto max-w-5xl">
-                                <div className="cloud-card relative overflow-hidden p-8 md:p-10" data-section-card>
-                                    <div
-                                        className="absolute left-4 top-6 opacity-80 md:left-8"
-                                        ref={(node) => { angelRefs.current[2] = node; }}
-                                    >
-                                        <img src={decorationImages.angel} alt="" className="angel-bob w-28" />
-                                    </div>
-                                    <div
-                                        className="absolute bottom-4 right-4 opacity-70 md:right-8"
-                                        ref={(node) => { angelRefs.current[3] = node; }}
-                                    >
-                                        <img src={decorationImages.dove} alt="" className="angel-bob w-24" />
-                                    </div>
-
+                                <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                    <img
+                                        src={decorationImages.angel}
+                                        alt=""
+                                        className="section-angel -left-4 -top-5 opacity-20 md:w-28"
+                                        aria-hidden="true"
+                                    />
                                     <div className="relative z-10 mx-auto max-w-2xl text-center">
                                         <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                             Un detalle con cariño
                                         </p>
-                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-5xl font-semibold text-[#49697e]">
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.65rem] font-semibold leading-none text-[#49697e] md:text-5xl">
                                             Se agradece cualquier detalle
                                         </h2>
                                         <p className="mt-5 text-base leading-8 text-[#67879d]">
@@ -710,10 +726,3 @@ export default function AndreJoelInvitation() {
         </div>
     );
 }
-
-const CountdownBox = ({ value, label }) => (
-    <div className="rounded-[28px] bg-white px-5 py-6 text-center shadow-[0_18px_35px_rgba(86,132,159,0.12)]">
-        <p className="text-4xl font-black text-[#4a6b7f] md:text-5xl">{String(value).padStart(2, '0')}</p>
-        <p className="mt-2 text-[0.72rem] font-black uppercase tracking-[0.28em] text-[#8aadc3]">{label}</p>
-    </div>
-);

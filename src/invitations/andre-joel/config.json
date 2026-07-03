@@ -2,6 +2,10 @@
     "slug": "andre-joel",
     "eventType": "bautizo",
     "title": "Bautizo | Andre Joel",
+    "seo": {
+        "description": "Te invitamos a celebrar el bautizo de André Joel. ¡Acompáñanos en este día tan especial!",
+        "shareImage": "og-preview.jpg"
+    },
     "theme": {
         "primaryHue": 205,
         "primarySat": 55,

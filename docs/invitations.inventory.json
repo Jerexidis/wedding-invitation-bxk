@@ -194,7 +194,7 @@
         "files": 5,
         "images": 4,
         "audio": 0,
-        "bytes": 4241198,
+        "bytes": 4241197,
         "megabytes": 4.04
       }
     },
@@ -222,7 +222,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10368015,
+        "bytes": 10368014,
         "megabytes": 9.89
       }
     },
@@ -250,7 +250,7 @@
         "files": 7,
         "images": 5,
         "audio": 1,
-        "bytes": 7154294,
+        "bytes": 7154293,
         "megabytes": 6.82
       }
     },
@@ -278,7 +278,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10605231,
+        "bytes": 10605230,
         "megabytes": 10.11
       }
     },
@@ -341,7 +341,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 12802708,
+        "bytes": 12802705,
         "megabytes": 12.21
       }
     },
@@ -376,7 +376,7 @@
         "files": 45,
         "images": 42,
         "audio": 2,
-        "bytes": 19019168,
+        "bytes": 19019165,
         "megabytes": 18.14
       }
     },
@@ -435,7 +435,7 @@
         "files": 6,
         "images": 2,
         "audio": 1,
-        "bytes": 1572102,
+        "bytes": 1572099,
         "megabytes": 1.5
       }
     },
@@ -464,11 +464,11 @@
       ],
       "designBrief": "src/invitations/andre-joel/DESIGN.md",
       "assets": {
-        "files": 16,
-        "images": 15,
-        "audio": 0,
-        "bytes": 4816983,
-        "megabytes": 4.59
+        "files": 32,
+        "images": 29,
+        "audio": 2,
+        "bytes": 13544729,
+        "megabytes": 12.92
       }
     }
   ]
