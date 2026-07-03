@@ -17,8 +17,8 @@ const photoGallery = [
 ];
 
 const eventPhotos = {
-    church: `${basePath}/img/templo-real.jpg`,
-    party: `${basePath}/img/salon-real.jpg`,
+    church: `${basePath}/img/templo-san-jose.webp`,
+    party: `${basePath}/img/villa-victoria.webp`,
 };
 
 const decorationImages = {
@@ -491,6 +491,36 @@ export default function AndreJoelInvitation() {
 
                     <main className="space-y-10 pb-16 md:space-y-14 md:pb-20">
                         <section className="px-4 md:px-8">
+                            <div className="cloud-card mx-auto grid max-w-6xl items-center gap-6 px-5 py-6 md:grid-cols-[0.65fr_1.35fr] md:px-10 md:py-8" data-section-card>
+                                <div className="text-center md:text-left">
+                                    <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                        Cuenta regresiva
+                                    </p>
+                                    <h2 className="mt-2 font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4b6a7f]">
+                                        Falta muy poquito
+                                    </h2>
+                                </div>
+                                <div className="countdown-strip" aria-label="Cuenta regresiva para el bautizo">
+                                    {[
+                                        { value: timeLeft.dias, label: 'Días' },
+                                        { value: timeLeft.horas, label: 'Horas' },
+                                        { value: timeLeft.minutos, label: 'Min' },
+                                        { value: timeLeft.segundos, label: 'Seg' },
+                                    ].map((item) => (
+                                        <div key={item.label}>
+                                            <p className="text-2xl font-black text-[#4a6b7f] md:text-4xl">
+                                                {String(item.value).padStart(2, '0')}
+                                            </p>
+                                            <p className="mt-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-[#8aadc3] md:text-[0.68rem]">
+                                                {item.label}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
                             <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
                                 <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
                                     <img
@@ -499,13 +529,13 @@ export default function AndreJoelInvitation() {
                                         className="section-angel -bottom-5 -right-4 opacity-20 md:w-28"
                                         aria-hidden="true"
                                     />
-                                    <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                    <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                         Mis papás
                                     </p>
-                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
+                                    <h2 className="mx-auto mt-3 max-w-xl text-center font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
                                         Con el amor de nuestra familia
                                     </h2>
-                                    <div className="mt-6 space-y-4 text-lg text-[#54758b]">
+                                    <div className="mt-6 space-y-4 text-center text-lg text-[#54758b]">
                                         <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#45667d]">
                                             {config.intro.parent1}
                                         </p>
@@ -519,46 +549,25 @@ export default function AndreJoelInvitation() {
                                     </p>
                                 </div>
 
-                                <div className="cloud-card p-6 md:p-8" data-section-card>
-                                    <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
-                                        Cuenta regresiva
-                                    </p>
-                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4b6a7f]">
-                                        Falta muy poquito
-                                    </h2>
-                                    <div className="countdown-strip mt-7" aria-label="Cuenta regresiva para el bautizo">
-                                        {[
-                                            { value: timeLeft.dias, label: 'Días' },
-                                            { value: timeLeft.horas, label: 'Horas' },
-                                            { value: timeLeft.minutos, label: 'Min' },
-                                            { value: timeLeft.segundos, label: 'Seg' },
-                                        ].map((item) => (
-                                            <div key={item.label}>
-                                                <p className="text-2xl font-black text-[#4a6b7f] md:text-4xl">
-                                                    {String(item.value).padStart(2, '0')}
-                                                </p>
-                                                <p className="mt-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-[#8aadc3] md:text-[0.68rem]">
-                                                    {item.label}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    {config.padrinos?.enabled && (
-                                        <div className="mt-8 rounded-[28px] bg-[#eff7fc] p-6">
-                                            <p className="text-[0.68rem] font-black uppercase tracking-[0.32em] text-[#84a8c0]">
-                                                Mis padrinos
-                                            </p>
-                                            <p className="mt-4 font-['Cormorant_Garamond'] text-2xl font-semibold text-[#48687d]">
+                                {config.padrinos?.enabled && (
+                                    <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                        <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                            Mis padrinos
+                                        </p>
+                                        <h2 className="mt-3 text-center font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
+                                            Con cariño y fe
+                                        </h2>
+                                        <div className="mt-7 space-y-4 text-center">
+                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#48687d]">
                                                 {config.padrinos.padrino1}
                                             </p>
-                                            <p className="my-1 text-sm font-black uppercase tracking-[0.25em] text-[#d3bf80]">&</p>
-                                            <p className="font-['Cormorant_Garamond'] text-2xl font-semibold text-[#48687d]">
+                                            <p className="text-sm font-black uppercase tracking-[0.25em] text-[#d3bf80]">&</p>
+                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#48687d]">
                                                 {config.padrinos.padrino2}
                                             </p>
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
                             </div>
                         </section>
 
@@ -583,7 +592,7 @@ export default function AndreJoelInvitation() {
                                                     <img
                                                         src={imageSrc}
                                                         alt={event.location}
-                                                        className="h-full w-full object-cover"
+                                                        className={`h-full w-full object-cover ${event.icon === 'church' ? 'object-center' : 'object-[center_22%]'}`}
                                                     />
                                                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#213e50]/85 via-[#213e50]/20 to-transparent px-5 pb-4 pt-12 md:px-7 md:pb-5">
                                                         <p className="text-[0.65rem] font-black uppercase tracking-[0.28em] text-white/75">
@@ -625,14 +634,14 @@ export default function AndreJoelInvitation() {
                         <section className="px-4 md:px-8">
                             <div className="mx-auto max-w-6xl overflow-hidden rounded-[30px] bg-gradient-to-br from-[#dff1fc] via-[#eef8ff] to-white px-5 py-8 md:rounded-[36px] md:px-10 md:py-12">
                                 <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-                                    <div data-section-card>
+                                    <div className="text-center lg:text-left" data-section-card>
                                         <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                             Galería
                                         </p>
                                         <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.75rem] font-semibold leading-[0.95] text-[#49697e] md:text-5xl">
                                             Recuerdos de André Joel
                                         </h2>
-                                        <p className="mt-5 max-w-md text-base leading-8 text-[#638399]">
+                                        <p className="mx-auto mt-5 max-w-md text-base leading-8 text-[#638399] lg:mx-0">
                                             Cinco momentos únicos de nuestro pequeño, elegidos con mucho cariño para compartirlos contigo.
                                         </p>
 

@@ -21,9 +21,9 @@
 - Keep the baby portrait as the hero focal point; the supplied angel remains a secondary corner decoration and the dove is not used
 - Cloud shapes are reusable SVG components with drift animations
 - Envelope entrance screen matches celestial theme with clouds and angel
-- Padrinos section uses a darker navy variant for contrast
-- Venue cards retain their real photographs with compact, legible mobile details
-- Countdown stays in one horizontal four-column strip instead of separate boxed tiles
+- Parents and padrinos use separate, balanced family cards
+- Venue cards use the supplied Templo de San José and Villa Victoria photographs with compact, legible mobile details
+- Countdown is an independent section immediately after the hero and stays in one horizontal four-column strip
 - Gallery is a curated five-photo viewer with one featured portrait and centered arrows/counter beneath the image; avoid duplicate photos, mini previews, and stacked-card effects
 - `Pretty Little Baby` starts from the envelope-opening gesture and keeps a minimal fixed pause/play control
 - RSVP is conditionally rendered (currently mode: "none")
