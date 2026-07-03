@@ -10,7 +10,7 @@ const audioPath = `${basePath}/audio/pretty-little-baby.mp3`;
 
 const photoGallery = [
     { url: `${basePath}/img/gallery-11.jpeg`, label: 'Una mirada que enamora', note: 'Pequeños instantes para atesorar' },
-    { url: `${basePath}/img/gallery-6.jpeg`, label: 'Seis meses de ternura', note: 'Creciendo rodeado de amor' },
+    { url: `${basePath}/img/gallery-6.jpeg`, label: 'Siete meses de ternura', note: 'Creciendo rodeado de amor' },
     { url: `${basePath}/img/gallery-7.jpeg`, label: 'Sonrisas que iluminan', note: 'Cada día es una nueva bendición' },
     { url: `${basePath}/img/gallery-9.jpeg`, label: 'Nuestro pequeño tesoro', note: 'Descubriendo el mundo' },
     { url: `${basePath}/img/gallery-10.jpeg`, label: 'Momentos cotidianos', note: 'Recuerdos que viven para siempre' },
@@ -275,7 +275,9 @@ export default function AndreJoelInvitation() {
                 .detail-pill {
                     display: inline-flex;
                     align-items: center;
+                    justify-content: center;
                     gap: 0.55rem;
+                    text-align: center;
                     border-radius: 999px;
                     padding: 0.75rem 1rem;
                     background: rgba(255,255,255,0.78);
@@ -496,7 +498,7 @@ export default function AndreJoelInvitation() {
                                     <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                         Cuenta regresiva
                                     </p>
-                                    <h2 className="mt-2 font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4b6a7f]">
+                                    <h2 className="mt-2 font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4b6a7f] md:text-4xl">
                                         Falta muy poquito
                                     </h2>
                                 </div>
@@ -532,7 +534,7 @@ export default function AndreJoelInvitation() {
                                     <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                         Mis papás
                                     </p>
-                                    <h2 className="mx-auto mt-3 max-w-xl text-center font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
+                                    <h2 className="mx-auto mt-3 max-w-xl text-center font-['Cormorant_Garamond'] text-[2.15rem] font-semibold leading-[1.05] text-[#4b6a7f] md:text-5xl">
                                         Con el amor de nuestra familia
                                     </h2>
                                     <div className="mt-6 space-y-4 text-center text-lg text-[#54758b]">
@@ -554,7 +556,7 @@ export default function AndreJoelInvitation() {
                                         <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
                                             Mis padrinos
                                         </p>
-                                        <h2 className="mt-3 text-center font-['Cormorant_Garamond'] text-[2.45rem] font-semibold leading-[1.02] text-[#4b6a7f] md:text-5xl">
+                                        <h2 className="mt-3 text-center font-['Cormorant_Garamond'] text-[2.15rem] font-semibold leading-[1.05] text-[#4b6a7f] md:text-5xl">
                                             Con cariño y fe
                                         </h2>
                                         <div className="mt-7 space-y-4 text-center">
@@ -577,7 +579,7 @@ export default function AndreJoelInvitation() {
                                     <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                         Detalles del día
                                     </p>
-                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.65rem] font-semibold leading-none text-[#49697e] md:text-5xl">
+                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.3rem] font-semibold leading-none text-[#49697e] md:text-5xl">
                                         Lugares para celebrar
                                     </h2>
                                 </div>
@@ -595,10 +597,7 @@ export default function AndreJoelInvitation() {
                                                         className={`h-full w-full object-cover ${event.icon === 'church' ? 'object-center' : 'object-[center_22%]'}`}
                                                     />
                                                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#213e50]/85 via-[#213e50]/20 to-transparent px-5 pb-4 pt-12 md:px-7 md:pb-5">
-                                                        <p className="text-[0.65rem] font-black uppercase tracking-[0.28em] text-white/75">
-                                                            {event.icon === 'church' ? 'Ceremonia' : 'Recepción'}
-                                                        </p>
-                                                        <h3 className="mt-1 font-['Cormorant_Garamond'] text-3xl font-semibold text-white md:text-4xl">
+                                                        <h3 className="font-['Cormorant_Garamond'] text-[1.7rem] font-semibold text-white md:text-4xl">
                                                             {event.title}
                                                         </h3>
                                                     </div>
@@ -638,7 +637,7 @@ export default function AndreJoelInvitation() {
                                         <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                             Galería
                                         </p>
-                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.75rem] font-semibold leading-[0.95] text-[#49697e] md:text-5xl">
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.35rem] font-semibold leading-[0.98] text-[#49697e] md:text-5xl">
                                             Recuerdos de André Joel
                                         </h2>
                                         <p className="mx-auto mt-5 max-w-md text-base leading-8 text-[#638399] lg:mx-0">
@@ -700,7 +699,7 @@ export default function AndreJoelInvitation() {
                                         <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
                                             Un detalle con cariño
                                         </p>
-                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.65rem] font-semibold leading-none text-[#49697e] md:text-5xl">
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.3rem] font-semibold leading-none text-[#49697e] md:text-5xl">
                                             Se agradece cualquier detalle
                                         </h2>
                                         <p className="mt-5 text-base leading-8 text-[#67879d]">
@@ -708,7 +707,7 @@ export default function AndreJoelInvitation() {
                                         </p>
 
                                         <div className="mx-auto mt-8 max-w-xl rounded-[30px] bg-gradient-to-br from-[#edf7fd] to-white px-6 py-7 shadow-inner">
-                                            <p className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#4a6a7f]">
+                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4a6a7f] md:text-4xl">
                                                 Gracias por acompañarnos
                                             </p>
                                             <p className="mt-3 text-sm leading-7 text-[#7393a8]">
@@ -728,6 +727,14 @@ export default function AndreJoelInvitation() {
                             <p className="mt-4 text-sm leading-7 text-[#6d8b9e]">
                                 Gracias por ser parte de este momento tan especial en la vida de nuestro pequeño.
                             </p>
+                            <a
+                                href="https://invita-ya.com"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-6 inline-block border-t border-[#d8e8f2] px-6 pt-5 text-xs font-bold uppercase tracking-[0.24em] text-[#789bb2] transition hover:text-[#49697e]"
+                            >
+                                Hecho con cariño por invita-ya.com
+                            </a>
                         </div>
                     </footer>
                 </>
