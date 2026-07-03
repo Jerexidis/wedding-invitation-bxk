@@ -21,6 +21,7 @@ the minimum invitation-specific files needed for a task.
 | `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 18.14 MB |
 | `jose-raul` | shared-config | xv | none | 3 files | 5.03 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
+| `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 4.59 MB |
 
 ## Targeted context
 
@@ -122,6 +123,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/maia-sofia-duran-avila/DESIGN.md`
 - Source: `src/invitations/maia-sofia-duran-avila/DESIGN.md`, `src/invitations/maia-sofia-duran-avila/index.jsx`, `src/invitations/maia-sofia-duran-avila/invitation.css`, `src/invitations/maia-sofia-duran-avila/invitation.manifest.json`
+
+### andre-joel
+
+- Entry: `src/invitations/andre-joel/index.jsx`
+- Architecture: `hybrid-overrides`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/andre-joel/DESIGN.md`
+- Source: `src/invitations/andre-joel/config.json`, `src/invitations/andre-joel/DESIGN.md`, `src/invitations/andre-joel/FooterOverride.jsx`, `src/invitations/andre-joel/HeroOverride.jsx`, `src/invitations/andre-joel/index.jsx`, `src/invitations/andre-joel/IntroOverride.jsx`
 
 ## Refresh
 

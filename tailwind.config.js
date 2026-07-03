@@ -13,6 +13,9 @@ export default {
                 // Dynamic — invitaciones data-driven
                 'inv-body': 'var(--inv-font-body)',
                 'inv-display': 'var(--inv-font-display)',
+                // Bautizo
+                vibes: ["'Great Vibes'", 'cursive'],
+                playfair: ["'Playfair Display'", 'serif'],
             },
             colors: {
                 // ── Kassandra & Brian (landing — intocable) ──────────────
@@ -57,13 +60,28 @@ export default {
                     firefly: '#FFF59D',
                     swamp: '#263238',
                 },
+                // ── Bautizo — Celestial blue / Soft gold ────────────────
+                bautizo: {
+                    cream:    '#F2F8FB',
+                    light:    '#E0EEF5',
+                    primary:  '#5B8BA0',
+                    dark:     '#2C4A5A',
+                    accent:   '#8BB8CC',
+                    text:     '#3A5568',
+                    gray:     '#7A95A8',
+                },
             },
             animation: {
                 'fade-in': 'fadeIn 1s ease-out forwards',
+                'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
             },
             keyframes: {
                 fadeIn: {
                     '0%':   { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                fadeInUp: {
+                    '0%':   { opacity: '0', transform: 'translateY(30px)' },
                     '100%': { opacity: '1', transform: 'translateY(0)' },
                 },
             },

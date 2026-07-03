@@ -194,7 +194,7 @@
         "files": 5,
         "images": 4,
         "audio": 0,
-        "bytes": 4241197,
+        "bytes": 4241198,
         "megabytes": 4.04
       }
     },
@@ -222,7 +222,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10368014,
+        "bytes": 10368015,
         "megabytes": 9.89
       }
     },
@@ -250,7 +250,7 @@
         "files": 7,
         "images": 5,
         "audio": 1,
-        "bytes": 7154293,
+        "bytes": 7154294,
         "megabytes": 6.82
       }
     },
@@ -278,7 +278,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 10605230,
+        "bytes": 10605231,
         "megabytes": 10.11
       }
     },
@@ -341,7 +341,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 12802705,
+        "bytes": 12802708,
         "megabytes": 12.21
       }
     },
@@ -376,7 +376,7 @@
         "files": 45,
         "images": 42,
         "audio": 2,
-        "bytes": 19019165,
+        "bytes": 19019168,
         "megabytes": 18.14
       }
     },
@@ -435,8 +435,40 @@
         "files": 6,
         "images": 2,
         "audio": 1,
-        "bytes": 1572099,
+        "bytes": 1572102,
         "megabytes": 1.5
+      }
+    },
+    {
+      "slug": "andre-joel",
+      "title": "Bautizo | Andre Joel",
+      "architecture": "hybrid-overrides",
+      "enabled": true,
+      "demo": false,
+      "eventType": "bautizo",
+      "eventDate": "2026-07-18T15:30:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "none",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/andre-joel/config.json",
+        "src/invitations/andre-joel/DESIGN.md",
+        "src/invitations/andre-joel/FooterOverride.jsx",
+        "src/invitations/andre-joel/HeroOverride.jsx",
+        "src/invitations/andre-joel/index.jsx",
+        "src/invitations/andre-joel/IntroOverride.jsx"
+      ],
+      "designBrief": "src/invitations/andre-joel/DESIGN.md",
+      "assets": {
+        "files": 16,
+        "images": 15,
+        "audio": 0,
+        "bytes": 4816983,
+        "megabytes": 4.59
       }
     }
   ]

@@ -159,6 +159,16 @@ const invitations = [
         eventDate: '2026-07-24T19:00:00-06:00',
     },
 
+    {
+        slug: 'andre-joel',
+        title: 'Bautizo | Andre Joel',
+        component: lazy(() => import('./andre-joel/index.jsx')),
+        enabled: true,
+        eventType: 'bautizo',
+        rsvpMode: 'none',
+        eventDate: '2026-07-18T15:30:00',
+    },
+
 ]
 
 // Solo invitaciones activas

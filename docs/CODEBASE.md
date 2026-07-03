@@ -87,6 +87,7 @@ browser SEO metadata.
 
 These use config data but customize layout or replace selected shared sections:
 
+- `andre-joel`
 - `despedida-kass-brian`
 - `maria-loyola`
 - `michel-mtz`

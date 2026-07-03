@@ -1,0 +1,103 @@
+{
+    "slug": "andre-joel",
+    "eventType": "bautizo",
+    "title": "Bautizo | Andre Joel",
+    "theme": {
+        "primaryHue": 205,
+        "primarySat": 55,
+        "accentHue": 45,
+        "fontBody": "Nunito Sans",
+        "fontDisplay": "Cormorant Garamond"
+    },
+    "hero": {
+        "subtitle": "Mi Bautizo",
+        "name": "André Joel",
+        "date": "18 DE JULIO DE 2026",
+        "backgroundImage": "hero-bg.png",
+        "song": ""
+    },
+    "intro": {
+        "message": "Con la bendición de Dios",
+        "label": "Mis Papás",
+        "parent1": "Lessly Berenice Morales Zúñiga",
+        "parent2": "Rodrigo Morales Muñoz",
+        "closingMessage": "Tienen el honor de invitarte al bautizo de su hijo"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Laura Susana Avelar Llamas",
+        "padrino2": "Jorge Adán Ibarra Zúñiga"
+    },
+    "countdown": {
+        "targetDate": "2026-07-18T15:30:00",
+        "displayDate": "sábado, 18 de julio",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "Bautizo | Andre Joel",
+        "description": "¡Celebra con nosotros!",
+        "location": "Salón Villa Victoria, Av Moscatel 171, Bosques del Prado Oriente",
+        "startDateTime": "20260718T213000",
+        "endDateTime": "20260719T043000",
+        "outlookStart": "2026-07-18T21:30:00",
+        "outlookEnd": "2026-07-19T04:30:00",
+        "icsFilename": "andre-joel.ics",
+        "icsProdId": "Bautizo | Andre Joel"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Templo San José",
+            "address": "Lic. Francisco Primo Verdad 205, Zona Centro",
+            "time": "12:00",
+            "mapLink": "https://maps.app.goo.gl/jsT3NQB112c8iCbE7"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Salón Villa Victoria",
+            "address": "Av Moscatel 171, Bosques del Prado Oriente",
+            "time": "15:30",
+            "mapLink": "https://maps.app.goo.gl/9ZaEeMXufgDFK71aA"
+        }
+    ],
+    "dressCode": {
+        "enabled": false,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "photos": []
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Un detalle con cariño",
+        "message": "Tu presencia es lo más importante para nosotros, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Se agradece cualquier detalle",
+        "envelopeDescription": "Será recibido con muchísimo cariño y gratitud.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": false,
+        "items": []
+    },
+    "rsvp": {
+        "mode": "none",
+        "whatsappNumber": "",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia para {guests} persona(s). 🎉",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Por favor confirma tu asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Andre Joel",
+        "subtitle": "Bautizo • sábado, 18 de julio"
+    }
+}

@@ -86,4 +86,9 @@ export const ogData = {
         description:"",
         image: '/invitations/maia-sofia-duran-avila/img/og-preview.jpg',
     },
+    'andre-joel': {
+        title: 'Bautizo | Andre Joel 👶',
+        description: 'Te invitamos a celebrar este día tan especial. ¡Toca aquí para ver la invitación!',
+        image: '/invitations/andre-joel/img/og-preview.jpg',
+    },
 }
