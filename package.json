@@ -20,6 +20,8 @@
     "context:refresh": "node scripts/invitation-inventory.mjs refresh",
     "context:check": "node scripts/invitation-inventory.mjs check",
     "production:boundary": "node scripts/check-production-boundary.mjs",
+    "history:test": "node scripts/publication-history.test.mjs",
+    "og-lifecycle:test": "node scripts/invitation-og-lifecycle.test.mjs",
     "test:routes": "playwright test",
     "release:check": "npm run publish:check && npm run test:routes",
     "publish:check": "node scripts/invitation-schema.mjs --all && node scripts/invitation-consistency.mjs && node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check && vite build && node scripts/check-production-boundary.mjs",

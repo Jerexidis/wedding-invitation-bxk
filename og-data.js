@@ -26,6 +26,11 @@ export const ogData = {
         description: 'Una invitación casual con collage editorial, disco, brillos y confirmación por WhatsApp.',
         image: '/invitations/plantilla-fiesta-casual/img/party-collage-frame.png',
     },
+    'plantilla-bluey-fiesta': {
+        title: 'Plantilla | Fiesta Bluey 🐾',
+        description: 'Una invitación infantil temática de Bluey con animaciones, cuenta regresiva y confirmación por WhatsApp.',
+        image: '/invitations/plantilla-bluey-fiesta/img/hero-bluey-party.png',
+    },
     'kassandra-brian': {
         title: 'Invitación de Kassandra & Brian 💕',
         description: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',

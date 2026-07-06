@@ -16,7 +16,7 @@
     "hero": {
         "subtitle": "¡Despedida de Solteros!",
         "name": "Kass & Brian",
-        "date": "23 DE MAYO DE 2026",
+        "date": "17 DE OCTUBRE DE 2026",
         "backgroundImage": "hero-pareja.png",
         "song": ""
     },
@@ -35,20 +35,20 @@
         "padrino2": ""
     },
     "countdown": {
-        "targetDate": "2026-05-23T19:00:00",
-        "displayDate": "sábado, 23 de mayo",
+        "targetDate": "2026-10-17T19:00:00",
+        "displayDate": "sábado, 17 de octubre",
         "displayYear": "2026"
     },
     "calendar": {
-        "title": "Despedida de Solteros | Kass & Brian",
+        "title": "Despedida de Kass & Brian",
         "description": "¡Ven a celebrar con nosotros nuestra despedida de solteros!",
-        "location": "Casa de Rebeca, Juan Balderas #308, Soberana Convención",
-        "startDateTime": "20260523T190000",
-        "endDateTime": "20260524T010000",
-        "outlookStart": "2026-05-23T19:00:00",
-        "outlookEnd": "2026-05-24T01:00:00",
+        "location": "Casa de Rebeca",
+        "startDateTime": "20261017T180000",
+        "endDateTime": "20261017T235900",
+        "outlookStart": "2026-10-17T18:00:00",
+        "outlookEnd": "2026-10-17T23:59:00",
         "icsFilename": "despedida-kass-brian.ics",
-        "icsProdId": "Despedida de Solteros | Kass & Brian"
+        "icsProdId": "Despedida | Kass & Brian"
     },
     "events": [
         {
@@ -94,6 +94,6 @@
     },
     "footer": {
         "name": "Kass & Brian",
-        "subtitle": "Despedida - sábado, 23 de mayo"
+        "subtitle": "Despedida de Solteros • sábado, 17 de octubre"
     }
 }

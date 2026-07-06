@@ -9,6 +9,16 @@ import {
     renameInvitation as renameLocalInvitation,
     validateInvitation,
 } from '../scripts/invitation-tools.mjs'
+import {
+    activateDraft,
+    getDraftActivationPlan,
+} from '../scripts/invitation-lifecycle.mjs'
+import {
+    beginPublication,
+    getPublicationHistory,
+    recordPublication,
+    restoreLatestPublication,
+} from '../scripts/publication-history.mjs'
 
 const INVITATIONS_SRC = path.resolve('src/invitations')
 const INVITATIONS_PUBLIC = path.resolve('public/invitations')
@@ -113,6 +123,32 @@ export default function devAdminPlugin() {
                 }
 
                 // GET /api/deploy/status — Check for pending changes
+                if (req.method === 'GET' && req.url === '/api/deploy/history') {
+                    try {
+                        const history = getPublicationHistory(process.cwd())
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...history }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
+                if (req.method === 'POST' && req.url === '/api/deploy/undo') {
+                    try {
+                        const result = restoreLatestPublication(process.cwd())
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 409
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 if (req.method === 'GET' && req.url === '/api/deploy/status') {
                     try {
                         const status = await getDeployStatus()
@@ -142,13 +178,41 @@ export default function devAdminPlugin() {
                     return
                 }
 
+                // GET/POST /api/invitations/:slug/activation
+                const activationMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/activation$/)
+                if (req.method === 'GET' && activationMatch) {
+                    try {
+                        const plan = getDraftActivationPlan(activationMatch[1])
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, plan }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+                if (req.method === 'POST' && activationMatch) {
+                    try {
+                        const data = await parseBody(req)
+                        const result = await activateDraft(activationMatch[1], data)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, ...result }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 400
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 // POST /api/invitations/:slug/clone
                 const cloneMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/clone$/)
                 if (req.method === 'POST' && cloneMatch) {
                     try {
                         const slug = cloneMatch[1]
                         const data = await parseBody(req)
-                        const result = cloneLocalInvitation(slug, data.newSlug, { title: data.title })
+                        const result = await cloneLocalInvitation(slug, data.newSlug, { title: data.title })
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify({ ok: true, ...result }))
                     } catch (err) {
@@ -165,7 +229,7 @@ export default function devAdminPlugin() {
                     try {
                         const slug = renameMatch[1]
                         const data = await parseBody(req)
-                        const result = renameLocalInvitation(slug, data.newSlug)
+                        const result = await renameLocalInvitation(slug, data.newSlug)
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify({ ok: true, ...result }))
                     } catch (err) {
@@ -428,7 +492,11 @@ function readRegistry() {
         const slug = match[1]
         const block = content.substring(match.index, content.indexOf('}', match.index))
         const isDefault = block.includes('isDefault: true')
+        const isDemo = block.includes('isDemo: true')
         const enabled = !block.includes('enabled: false')
+        const registryEventType = block.match(/eventType:\s*['"]([^'"]+)['"]/)?.[1] || null
+        const registryRsvpMode = block.match(/rsvpMode:\s*['"]([^'"]+)['"]/)?.[1] || null
+        const registryEventDate = block.match(/eventDate:\s*['"]([^'"]+)['"]/)?.[1] || null
 
         // Read config.json if it exists
         let config = null
@@ -445,11 +513,12 @@ function readRegistry() {
             slug,
             title: match[2],
             isDefault,
+            isDemo,
             enabled,
             hasConfig,
-            rsvpMode: config?.rsvp?.mode || null,
-            eventType: config?.eventType || null,
-            eventDate: config?.countdown?.targetDate || null,
+            rsvpMode: config?.rsvp?.mode || registryRsvpMode,
+            eventType: config?.eventType || registryEventType,
+            eventDate: config?.countdown?.targetDate || registryEventDate,
             rsvpKey: rsvpKeys[slug] || config?.rsvpKey || null,
         })
     }
@@ -764,14 +833,26 @@ function toggleInvitation(slug) {
 function gitDeploy(commitMsg) {
     const PROJECT_ROOT = path.resolve('.')
     const message = String(commitMsg || 'deploy: update invitations').replace(/[\r\n]/g, ' ').trim()
+    const pendingHistory = beginPublication(PROJECT_ROOT, message)
 
     return runGit(['add', '.'], PROJECT_ROOT)
         .then(() => runGit(['commit', '-m', message], PROJECT_ROOT))
-        .then((commitResult) => runGit(['push'], PROJECT_ROOT).then((pushResult) => ({
-            deployed: true,
-            message: 'Cambios publicados exitosamente',
-            output: `${commitResult.stdout}${pushResult.stdout}`,
-        })))
+        .then((commitResult) => runGit(['push'], PROJECT_ROOT).then((pushResult) => {
+            let history = null
+            let historyWarning = null
+            try {
+                history = recordPublication(PROJECT_ROOT, pendingHistory)
+            } catch (error) {
+                historyWarning = `La publicación terminó, pero no se pudo guardar el historial: ${error.message}`
+            }
+            return {
+                deployed: true,
+                message: 'Cambios publicados exitosamente',
+                output: `${commitResult.stdout}${pushResult.stdout}`,
+                history,
+                historyWarning,
+            }
+        }))
         .catch((error) => {
             const output = `${error.stdout || ''}${error.stderr || ''}`
             if (output.includes('nothing to commit')) {

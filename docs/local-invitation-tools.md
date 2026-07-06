@@ -12,6 +12,11 @@ Inside the panel, use **Revisar proyecto** in the **Centro de calidad**. One
 click checks configurations, connected data, production separation, and every
 active invitation in the browser. It does not publish or modify invitations.
 
+Each successful publication made from the panel stores local recovery metadata.
+Use **Historial** to restore the version before the latest publication. Restore
+is blocked when local changes or later commits exist, and it never pushes by
+itself; review the restored changes and publish them through the normal flow.
+
 ## Admin panel
 
 Run the dev server and open `/admin`:
@@ -23,11 +28,14 @@ npm run dev
 Available local actions:
 
 - Create a new invitation with the wizard.
+- Review and prepare a completed custom draft as a local active invitation.
 - Clone an existing invitation.
 - Change an invitation slug/link.
 - Validate an invitation before publishing.
 - Review heavy image/audio assets.
 - Publish with the existing git deploy flow.
+- Review local publication history and restore the previous release as pending
+  local changes.
 
 ## CLI
 
@@ -50,6 +58,11 @@ npm run invite:starter -- --slug evento-demo --title "Evento Demo" --event-type 
 ```
 
 The starter never edits `registry.js`, `og-data.js`, or production routes.
+When the custom design is complete, select it in the panel and use **Preparar
+activación**. The panel requires an event date and an image, generates the
+1200x630 social preview, and updates the local registry, Open Graph data,
+manifest, RSVP access, and generated inventory together. This action never
+commits, pushes, or deploys.
 
 Rename a slug/link:
 
@@ -133,7 +146,9 @@ npm run release:check
 ## Notes
 
 - The clone command updates `registry.js` because the SPA router needs a static import for the new invitation.
-- Open Graph metadata is not changed automatically by the clone/rename CLI. Run validation and update `og-data.js` manually when you want share previews.
+- Clone automatically generates a dedicated 1200x630 `og-preview.jpg` and adds
+  its `og-data.js` entry. Rename automatically moves the OG key and image path.
+  Both operations are available from the panel and CLI.
 - Slugs must use lowercase letters, numbers, and hyphens.
 - RSVP keys are generated with random bytes and stored as hashes in public `rsvp-access.json`.
 - `publish:check` also verifies that generated context is current and that

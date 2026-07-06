@@ -132,11 +132,25 @@ They do not follow the shared `config.json` contract.
 | `og-data.js` | Server-side social preview metadata by slug |
 | `middleware.js` | Vercel bot detection and preview HTML |
 | `scripts/invitation-tools.mjs` | Clone, rename, validate, preflight, assets |
+| `scripts/invitation-lifecycle.mjs` | Draft activation planning, OG generation, and rollback |
+| `scripts/publication-history.mjs` | Local publication history and non-destructive restore |
 | `plugins/devAdminPlugin.js` | Local Vite `/api/*` invitation/admin endpoints |
 | `src/admin/` | Local-only admin and wizard UI |
 
 `src/admin/` and `plugins/` are intentionally ignored by Git. Production builds
 do not include the admin route or Vite admin API.
+
+Custom drafts remain private until the local admin activation flow is confirmed.
+Activation validates the manifest, generates a 1200x630 Open Graph image,
+registers the public route, updates `og-data.js`, marks the manifest as
+published, creates RSVP access when needed, and refreshes the generated
+inventory. It does not commit, push, or deploy. The lifecycle mutation restores
+the touched files if any activation step fails.
+
+Publishing from the local panel records the previous and published Git commits
+under ignored `.invita-history/`. Restoring the latest publication requires a
+clean worktree and no later commit; it writes the previous version back as
+reviewable local changes without resetting Git or pushing automatically.
 
 ## RSVP flow
 
@@ -179,6 +193,10 @@ When adding or renaming an invitation, keep these aligned:
 3. `public/invitations/<slug>/`
 4. `og-data.js`
 5. RSVP access files when using Supabase or mixed mode
+
+The shared clone workflow generates a dedicated 1200x630 OG image and metadata
+entry automatically. The rename workflow updates the OG key and invitation image
+path. These behaviors apply to both the local panel and CLI.
 
 ## Local workflows
 

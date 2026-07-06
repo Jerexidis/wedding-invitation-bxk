@@ -91,6 +91,34 @@
       }
     },
     {
+      "slug": "plantilla-bluey-fiesta",
+      "title": "Plantilla | Fiesta Bluey",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": true,
+      "eventType": "cumpleanos",
+      "eventDate": "2027-08-15T16:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": false,
+        "audio": false,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/plantilla-bluey-fiesta/bluey-template.css",
+        "src/invitations/plantilla-bluey-fiesta/index.jsx"
+      ],
+      "designBrief": null,
+      "assets": {
+        "files": 5,
+        "images": 5,
+        "audio": 0,
+        "bytes": 3646828,
+        "megabytes": 3.48
+      }
+    },
+    {
       "slug": "kassandra-brian",
       "title": "Nuestra Boda | Kassandra & Brian",
       "architecture": "dedicated-components",

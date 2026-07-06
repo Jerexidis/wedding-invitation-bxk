@@ -51,6 +51,17 @@ const invitations = [
         eventDate: '2026-12-13T21:00:00-06:00',
     },
     {
+        slug: 'plantilla-bluey-fiesta',
+        title: 'Plantilla | Fiesta Bluey',
+        component: lazy(() => import('./plantilla-bluey-fiesta/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        portfolioPriority: 4,
+        eventType: 'cumpleanos',
+        rsvpMode: 'whatsapp',
+        eventDate: '2027-08-15T16:00:00-06:00',
+    },
+    {
         slug: 'kassandra-brian',
         title: 'Nuestra Boda | Kassandra & Brian',
         component: lazy(() => import('./kassandra-brian/index.jsx')),

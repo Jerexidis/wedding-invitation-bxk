@@ -1,12 +1,64 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, Check, Loader2, FileText, MoreVertical, Upload, CloudOff, EyeOff, Rocket, X, AlertTriangle, Palette } from 'lucide-react'
+import { Plus, Trash2, ExternalLink, Copy, Settings, Eye, ChevronLeft, ChevronDown, Check, Loader2, FileText, MoreVertical, Upload, CloudOff, EyeOff, Rocket, X, AlertTriangle, Palette, History, RotateCcw, CalendarDays, Archive, Search, Sparkles } from 'lucide-react'
 import WizardForm from './WizardForm'
 import './AdminPanel.css'
 
 const API = '/api/invitations'
-const EVENT_LABELS = { xv: 'XV Años', boda: 'Boda', bautizo: 'Bautizo', cumple: 'Cumpleaños' }
-const RSVP_LABELS = { whatsapp: 'WhatsApp', supabase: 'Dashboard', none: 'Sin RSVP' }
+const EVENT_LABELS = { xv: 'XV Años', boda: 'Boda', bautizo: 'Bautizo', cumple: 'Cumpleaños', cumpleanos: 'Cumpleaños', 'primera-comunion': 'Primera Comunión', despedida: 'Despedida' }
+const RSVP_LABELS = { whatsapp: 'WhatsApp', supabase: 'Dashboard', mixed: 'Dashboard + WhatsApp', none: 'Sin RSVP' }
 const slugify = (str) => str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-')
+const eventTimestamp = (invitation) => {
+    if (!invitation.eventDate) return null
+    const timestamp = Date.parse(invitation.eventDate)
+    return Number.isNaN(timestamp) ? null : timestamp
+}
+const formatEventDate = (eventDate) => {
+    const timestamp = Date.parse(eventDate)
+    if (Number.isNaN(timestamp)) return 'Fecha inválida'
+    return new Intl.DateTimeFormat('es-MX', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    }).format(new Date(timestamp))
+}
+
+function InvitationRow({ invitation: inv, selected, onSelect, isNext = false }) {
+    const timestamp = eventTimestamp(inv)
+    const expired = timestamp !== null && timestamp < Date.now()
+    const daysRemaining = timestamp === null ? null : Math.max(0, Math.ceil((timestamp - Date.now()) / 86400000))
+    return (
+        <button
+            type="button"
+            className={`inv-row ${selected ? 'inv-row-selected' : ''}`}
+            onClick={onSelect}
+        >
+            <span className={`status-dot ${inv.enabled ? 'status-active' : 'status-draft'}`} />
+            <div className="inv-row-info">
+                <div className="inv-row-heading">
+                    <span className="inv-row-name">{inv.title}</span>
+                    {timestamp !== null && (
+                        <span className={`inv-row-date ${expired ? 'is-expired' : ''}`}>
+                            <CalendarDays size={13} />
+                            {formatEventDate(inv.eventDate)}
+                            {!expired && <em>{daysRemaining === 0 ? 'Hoy' : `Faltan ${daysRemaining} días`}</em>}
+                        </span>
+                    )}
+                </div>
+                <div className="inv-row-meta">
+                    {inv.isDefault && <span className="badge badge-blue">Landing</span>}
+                    {isNext && <span className="badge badge-next">Siguiente evento</span>}
+                    {inv.isDemo && <span className="badge badge-demo">Demo</span>}
+                    {inv.isDraft && <span className="badge badge-purple">Borrador personalizado</span>}
+                    {!inv.enabled && <span className="badge badge-gray">Inactiva</span>}
+                    {inv.eventType && <span className={`badge ${inv.eventType === 'xv' ? 'badge-purple' : inv.eventType === 'boda' ? 'badge-orange' : 'badge-gray'}`}>{EVENT_LABELS[inv.eventType] || inv.eventType}</span>}
+                    {inv.rsvpMode && <span className={`badge ${inv.rsvpMode === 'whatsapp' ? 'badge-green' : inv.rsvpMode === 'supabase' ? 'badge-orange' : 'badge-gray'}`}>{RSVP_LABELS[inv.rsvpMode] || inv.rsvpMode}</span>}
+                    {expired && <span className="badge badge-red">Vencida</span>}
+                    <code className="inv-card-url">/i/{inv.slug}</code>
+                </div>
+            </div>
+        </button>
+    )
+}
 
 export default function AdminPanel() {
     const [invitations, setInvitations] = useState([])
@@ -23,12 +75,21 @@ export default function AdminPanel() {
     const [quality, setQuality] = useState({ status: 'idle', summary: null, issues: [], details: [], workspaceSignature: null })
     const [customDialog, setCustomDialog] = useState(null)
     const [creatingCustom, setCreatingCustom] = useState(false)
+    const [activationDialog, setActivationDialog] = useState(null)
 
     // Deploy state
     const [deployStatus, setDeployStatus] = useState({ hasChanges: false, changeCount: 0, files: [], signature: null })
     const [deploying, setDeploying] = useState(false)
     const [showDeployDialog, setShowDeployDialog] = useState(false)
     const [commitMessage, setCommitMessage] = useState('')
+    const [publicationHistory, setPublicationHistory] = useState([])
+    const [showHistoryDialog, setShowHistoryDialog] = useState(false)
+    const [restoringPublication, setRestoringPublication] = useState(false)
+    const [showExpired, setShowExpired] = useState(false)
+    const [showDemos, setShowDemos] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('')
+    const [eventFilter, setEventFilter] = useState('all')
+    const [rsvpFilter, setRsvpFilter] = useState('all')
 
     const fetchInvitations = useCallback(async () => {
         setLoading(true)
@@ -53,8 +114,19 @@ export default function AdminPanel() {
         } catch (err) { console.error('Deploy status check failed:', err) }
     }, [])
 
+    const fetchPublicationHistory = useCallback(async () => {
+        try {
+            const res = await fetch('/api/deploy/history')
+            const json = await res.json()
+            if (json.ok) setPublicationHistory(json.publications || [])
+        } catch (err) {
+            console.error('Publication history check failed:', err)
+        }
+    }, [])
+
     useEffect(() => { fetchInvitations() }, [fetchInvitations])
     useEffect(() => { fetchDeployStatus() }, [fetchDeployStatus])
+    useEffect(() => { fetchPublicationHistory() }, [fetchPublicationHistory])
     useEffect(() => {
         if (
             quality.status === 'ready'
@@ -249,6 +321,49 @@ export default function AdminPanel() {
         setCreatingCustom(false)
     }
 
+    const openActivationDialog = async (slug) => {
+        setActionLoading(`activation-plan:${slug}`)
+        try {
+            const res = await fetch(`${API}/${slug}/activation`)
+            const json = await res.json()
+            if (!json.ok) throw new Error(json.error || 'No se pudo revisar el borrador')
+            setActivationDialog({ ...json.plan.activation, plan: json.plan })
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setActionLoading('')
+    }
+
+    const handleActivateDraft = async () => {
+        if (!activationDialog?.slug) return
+        if (!activationDialog.title || !activationDialog.eventDate || !activationDialog.ogSource) {
+            showToast('Completa título, fecha e imagen social', 'error')
+            return
+        }
+        if (!confirm(`¿Preparar /i/${activationDialog.slug} como invitación activa local? Todavía no se publicará.`)) return
+
+        setActionLoading(`activate:${activationDialog.slug}`)
+        try {
+            const { plan, ...payload } = activationDialog
+            const res = await fetch(`${API}/${activationDialog.slug}/activation`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            })
+            const json = await res.json()
+            if (!json.ok) throw new Error(json.error || 'No se pudo preparar la invitación')
+            showToast(`Invitación preparada localmente: ${json.path}`)
+            setActivationDialog(null)
+            setSelectedSlug(json.slug)
+            setQuality((current) => ({ ...current, status: 'stale' }))
+            fetchInvitations()
+            fetchDeployStatus()
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setActionLoading('')
+    }
+
     const openDeployDialog = () => {
         const reviewIsCurrent = quality.status === 'ready'
             && quality.workspaceSignature
@@ -273,17 +388,41 @@ export default function AdminPanel() {
             if (json.ok) {
                 if (json.deployed) {
                     showToast('✅ Cambios publicados — Vercel iniciará el deploy')
+                    if (json.historyWarning) window.setTimeout(() => showToast(json.historyWarning, 'error'), 500)
                 } else {
                     showToast(json.message || 'No hay cambios para publicar')
                 }
                 setShowDeployDialog(false)
                 setCommitMessage('')
                 fetchDeployStatus()
+                fetchPublicationHistory()
             } else {
                 showToast(json.error || 'Error al publicar', 'error')
             }
         } catch (err) { showToast('Error de conexión: ' + err.message, 'error') }
         setDeploying(false)
+    }
+
+    const handleRestorePublication = async () => {
+        const latest = publicationHistory[0]
+        if (!latest || latest.restoredAt) return
+        if (!confirm(`¿Restaurar localmente la versión anterior a "${latest.message}"? Después deberás revisarla y publicarla.`)) return
+
+        setRestoringPublication(true)
+        try {
+            const res = await fetch('/api/deploy/undo', { method: 'POST' })
+            const json = await res.json()
+            if (!json.ok) throw new Error(json.error || 'No se pudo restaurar la publicación')
+            showToast('Versión anterior restaurada como cambios locales')
+            setShowHistoryDialog(false)
+            setQuality((current) => ({ ...current, status: 'stale' }))
+            fetchInvitations()
+            fetchDeployStatus()
+            fetchPublicationHistory()
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setRestoringPublication(false)
     }
 
     const PROD_BASE = 'https://eventos.invita-ya.com'
@@ -299,6 +438,34 @@ export default function AdminPanel() {
     }
 
     const goBack = () => { setView('list'); fetchInvitations(); fetchDeployStatus() }
+    const now = Date.now()
+    const normalizedSearch = searchQuery.trim().toLocaleLowerCase('es')
+    const filteredInvitations = invitations.filter(invitation => {
+        const matchesSearch = !normalizedSearch
+            || invitation.title.toLocaleLowerCase('es').includes(normalizedSearch)
+            || invitation.slug.toLocaleLowerCase('es').includes(normalizedSearch)
+        const matchesEvent = eventFilter === 'all' || invitation.eventType === eventFilter
+        const matchesRsvp = rsvpFilter === 'all' || invitation.rsvpMode === rsvpFilter
+        return matchesSearch && matchesEvent && matchesRsvp
+    })
+    const hasFilters = Boolean(normalizedSearch) || eventFilter !== 'all' || rsvpFilter !== 'all'
+    const drafts = filteredInvitations
+        .filter(invitation => invitation.isDraft)
+        .sort((left, right) => left.title.localeCompare(right.title, 'es'))
+    const demoInvitations = filteredInvitations
+        .filter(invitation => !invitation.isDraft && invitation.isDemo)
+        .sort((left, right) => left.title.localeCompare(right.title, 'es'))
+    const upcomingInvitations = filteredInvitations
+        .filter(invitation => !invitation.isDraft && !invitation.isDemo && (eventTimestamp(invitation) === null || eventTimestamp(invitation) >= now))
+        .sort((left, right) => {
+            const leftDate = eventTimestamp(left) ?? Number.POSITIVE_INFINITY
+            const rightDate = eventTimestamp(right) ?? Number.POSITIVE_INFINITY
+            return leftDate - rightDate || left.title.localeCompare(right.title, 'es')
+        })
+    const expiredInvitations = filteredInvitations
+        .filter(invitation => !invitation.isDraft && !invitation.isDemo && eventTimestamp(invitation) !== null && eventTimestamp(invitation) < now)
+        .sort((left, right) => eventTimestamp(right) - eventTimestamp(left) || left.title.localeCompare(right.title, 'es'))
+    const nextInvitationSlug = upcomingInvitations[0]?.slug || null
 
     return (
         <div className="admin admin-no-sidebar">
@@ -424,6 +591,138 @@ export default function AdminPanel() {
                 </div>
             )}
 
+            {activationDialog && (
+                <div className="deploy-overlay" onClick={() => !actionLoading.startsWith('activate:') && setActivationDialog(null)}>
+                    <div className="deploy-dialog report-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon"><Rocket size={22} /></div>
+                            <h3>Preparar invitación activa</h3>
+                            <button
+                                className="btn-icon deploy-dialog-close"
+                                onClick={() => setActivationDialog(null)}
+                                disabled={actionLoading.startsWith('activate:')}
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            <div className="deploy-warning activation-local-note">
+                                <AlertTriangle size={16} />
+                                <span>Solo prepara archivos locales. No ejecuta commit, push ni publicación.</span>
+                            </div>
+
+                            {activationDialog.plan.errors.length > 0 && (
+                                <div className="activation-issues">
+                                    {activationDialog.plan.errors.map((error, index) => <p key={index}>{error}</p>)}
+                                </div>
+                            )}
+
+                            <div className="form-group">
+                                <label className="form-label">Título público</label>
+                                <input
+                                    className="form-input"
+                                    value={activationDialog.title}
+                                    onChange={e => setActivationDialog(current => ({ ...current, title: e.target.value }))}
+                                />
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label className="form-label">Fecha y hora</label>
+                                    <input
+                                        type="datetime-local"
+                                        className="form-input"
+                                        value={activationDialog.eventDate}
+                                        onChange={e => setActivationDialog(current => ({ ...current, eventDate: e.target.value }))}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Confirmación RSVP</label>
+                                    <select
+                                        className="form-input"
+                                        value={activationDialog.rsvpMode}
+                                        onChange={e => setActivationDialog(current => ({ ...current, rsvpMode: e.target.value }))}
+                                    >
+                                        <option value="none">Sin RSVP</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                        <option value="supabase">Dashboard</option>
+                                        <option value="mixed">Dashboard + WhatsApp</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Descripción para compartir</label>
+                                <textarea
+                                    className="form-input"
+                                    rows="3"
+                                    value={activationDialog.description}
+                                    onChange={e => setActivationDialog(current => ({ ...current, description: e.target.value }))}
+                                    placeholder="Si se deja vacía se usará una descripción genérica."
+                                />
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label className="form-label">Imagen para Open Graph</label>
+                                    <select
+                                        className="form-input"
+                                        value={activationDialog.ogSource}
+                                        onChange={e => setActivationDialog(current => ({ ...current, ogSource: e.target.value }))}
+                                    >
+                                        <option value="">Selecciona una imagen</option>
+                                        {activationDialog.plan.ogCandidates.map(candidate => (
+                                            <option key={candidate} value={candidate}>{candidate}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Encuadre</label>
+                                    <select
+                                        className="form-input"
+                                        value={activationDialog.focalPoint}
+                                        onChange={e => setActivationDialog(current => ({ ...current, focalPoint: e.target.value }))}
+                                    >
+                                        <option value="center">Centro</option>
+                                        <option value="top">Arriba</option>
+                                        <option value="bottom">Abajo</option>
+                                        <option value="left">Izquierda</option>
+                                        <option value="right">Derecha</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <label className="activation-checkbox">
+                                <input
+                                    type="checkbox"
+                                    checked={activationDialog.portfolioGalleryAllowed}
+                                    onChange={e => setActivationDialog(current => ({ ...current, portfolioGalleryAllowed: e.target.checked }))}
+                                />
+                                Permitir fotografías personales cuando se abra desde el portafolio
+                            </label>
+                            <div className="activation-operations">
+                                <strong>La preparación hará lo siguiente:</strong>
+                                {activationDialog.plan.operations.map((operation, index) => <span key={index}>• {operation}</span>)}
+                            </div>
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button
+                                className="btn btn-secondary"
+                                onClick={() => setActivationDialog(null)}
+                                disabled={actionLoading.startsWith('activate:')}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleActivateDraft}
+                                disabled={actionLoading.startsWith('activate:') || !activationDialog.title || !activationDialog.eventDate || !activationDialog.ogSource}
+                            >
+                                {actionLoading.startsWith('activate:')
+                                    ? <><Loader2 size={14} className="animate-spin" /> Preparando…</>
+                                    : <><Rocket size={14} /> Preparar localmente</>}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {reportDialog && (
                 <div className="deploy-overlay" onClick={() => setReportDialog(null)}>
                     <div className="deploy-dialog report-dialog" onClick={e => e.stopPropagation()}>
@@ -443,6 +742,62 @@ export default function AdminPanel() {
                         </div>
                         <div className="deploy-dialog-footer">
                             <button className="btn btn-primary" onClick={() => setReportDialog(null)}>Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showHistoryDialog && (
+                <div className="deploy-overlay" onClick={() => !restoringPublication && setShowHistoryDialog(false)}>
+                    <div className="deploy-dialog report-dialog" onClick={e => e.stopPropagation()}>
+                        <div className="deploy-dialog-header">
+                            <div className="deploy-dialog-icon history-dialog-icon"><History size={22} /></div>
+                            <h3>Historial de publicaciones</h3>
+                            <button className="btn-icon deploy-dialog-close" onClick={() => setShowHistoryDialog(false)} disabled={restoringPublication}>
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div className="deploy-dialog-body">
+                            <div className="history-explanation">
+                                Deshacer restaura la versión anterior como cambios locales. Podrás revisarlos antes de volver a publicar.
+                            </div>
+                            {publicationHistory.length === 0 ? (
+                                <div className="history-empty">El historial comenzará con la próxima publicación realizada desde este panel.</div>
+                            ) : (
+                                <div className="history-list">
+                                    {publicationHistory.map((item, index) => (
+                                        <article className={`history-item ${item.restoredAt ? 'is-restored' : ''}`} key={item.id}>
+                                            <div className="history-item-heading">
+                                                <strong>{item.message}</strong>
+                                                {index === 0 && !item.restoredAt && <span className="badge badge-green">Última</span>}
+                                                {item.restoredAt && <span className="badge badge-gray">Restaurada</span>}
+                                            </div>
+                                            <span>{new Date(item.publishedAt).toLocaleString('es-MX')}</span>
+                                            <code>{item.publishedCommit.slice(0, 8)} · {item.files.length} archivo(s)</code>
+                                        </article>
+                                    ))}
+                                </div>
+                            )}
+                            {deployStatus.hasChanges && publicationHistory[0] && !publicationHistory[0].restoredAt && (
+                                <div className="deploy-warning history-warning">
+                                    <AlertTriangle size={16} />
+                                    <span>Hay cambios locales. Debes publicarlos o guardarlos antes de restaurar.</span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="deploy-dialog-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowHistoryDialog(false)} disabled={restoringPublication}>Cerrar</button>
+                            {publicationHistory[0] && !publicationHistory[0].restoredAt && (
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleRestorePublication}
+                                    disabled={restoringPublication || deployStatus.hasChanges || !publicationHistory[0].canRestore}
+                                >
+                                    {restoringPublication
+                                        ? <><Loader2 size={14} className="animate-spin" /> Restaurando…</>
+                                        : <><RotateCcw size={14} /> Deshacer última publicación</>}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -527,6 +882,10 @@ export default function AdminPanel() {
                     <div className="admin-header">
                         <h2>Invitaciones</h2>
                         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                            <button onClick={() => { fetchPublicationHistory(); setShowHistoryDialog(true) }} className="btn btn-secondary">
+                                <History size={15} /> Historial
+                                {publicationHistory.length > 0 && <span className="history-count">{publicationHistory.length}</span>}
+                            </button>
                             <button onClick={openDeployDialog} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges}>
                                 <Upload size={15} />
                                 Publicar
@@ -557,23 +916,135 @@ export default function AdminPanel() {
                         ) : (
                             <div className="inv-layout">
                                 <div className="inv-list">
-                                    {invitations.map(inv => (
-                                        <div key={inv.slug} className={`inv-row ${selectedSlug === inv.slug ? 'inv-row-selected' : ''}`} onClick={() => setSelectedSlug(selectedSlug === inv.slug ? null : inv.slug)}>
-                                            <span className={`status-dot ${inv.enabled ? 'status-active' : 'status-draft'}`} />
-                                            <div className="inv-row-info">
-                                                <span className="inv-row-name">{inv.title}</span>
-                                                <div className="inv-row-meta">
-                                                    {inv.isDefault && <span className="badge badge-blue">Landing</span>}
-                                                    {inv.isDraft && <span className="badge badge-purple">Borrador personalizado</span>}
-                                                    {!inv.enabled && <span className="badge badge-gray">Inactiva</span>}
-                                                    {inv.eventType && <span className={`badge ${inv.eventType === 'xv' ? 'badge-purple' : inv.eventType === 'boda' ? 'badge-orange' : 'badge-gray'}`}>{EVENT_LABELS[inv.eventType] || inv.eventType}</span>}
-                                                    {inv.rsvpMode && <span className={`badge ${inv.rsvpMode === 'whatsapp' ? 'badge-green' : inv.rsvpMode === 'supabase' ? 'badge-orange' : 'badge-gray'}`}>{RSVP_LABELS[inv.rsvpMode] || inv.rsvpMode}</span>}
-                                                    {inv.eventDate && new Date(inv.eventDate) < new Date() && <span className="badge badge-red">Vencida</span>}
-                                                    <code className="inv-card-url">/i/{inv.slug}</code>
-                                                </div>
+                                    <div className="inv-filters">
+                                        <label className="inv-search">
+                                            <Search size={15} />
+                                            <input
+                                                type="search"
+                                                value={searchQuery}
+                                                onChange={event => setSearchQuery(event.target.value)}
+                                                placeholder="Buscar por nombre o enlace…"
+                                                aria-label="Buscar invitaciones"
+                                            />
+                                        </label>
+                                        <select value={eventFilter} onChange={event => setEventFilter(event.target.value)} aria-label="Filtrar por tipo de evento">
+                                            <option value="all">Todos los eventos</option>
+                                            {Object.entries(EVENT_LABELS).filter(([value]) => value !== 'cumple').map(([value, label]) => (
+                                                <option key={value} value={value}>{label}</option>
+                                            ))}
+                                        </select>
+                                        <select value={rsvpFilter} onChange={event => setRsvpFilter(event.target.value)} aria-label="Filtrar por confirmación">
+                                            <option value="all">Todos los RSVP</option>
+                                            {Object.entries(RSVP_LABELS).map(([value, label]) => (
+                                                <option key={value} value={value}>{label}</option>
+                                            ))}
+                                        </select>
+                                        {hasFilters && (
+                                            <button type="button" onClick={() => { setSearchQuery(''); setEventFilter('all'); setRsvpFilter('all') }}>
+                                                Limpiar
+                                            </button>
+                                        )}
+                                    </div>
+                                    <section className="inv-group">
+                                        <div className="inv-group-header">
+                                            <div>
+                                                <CalendarDays size={16} />
+                                                <span>Próximas</span>
                                             </div>
+                                            <span className="inv-group-count">{upcomingInvitations.length}</span>
                                         </div>
-                                    ))}
+                                        {upcomingInvitations.length > 0 ? upcomingInvitations.map(inv => (
+                                            <InvitationRow
+                                                key={inv.slug}
+                                                invitation={inv}
+                                                selected={selectedSlug === inv.slug}
+                                                isNext={inv.slug === nextInvitationSlug}
+                                                onSelect={() => setSelectedSlug(selectedSlug === inv.slug ? null : inv.slug)}
+                                            />
+                                        )) : <p className="inv-group-empty">No hay invitaciones próximas.</p>}
+                                    </section>
+
+                                    {drafts.length > 0 && (
+                                        <section className="inv-group inv-group-drafts">
+                                            <div className="inv-group-header">
+                                                <div>
+                                                    <FileText size={16} />
+                                                    <span>Borradores</span>
+                                                </div>
+                                                <span className="inv-group-count">{drafts.length}</span>
+                                            </div>
+                                            {drafts.map(inv => (
+                                                <InvitationRow
+                                                    key={inv.slug}
+                                                    invitation={inv}
+                                                    selected={selectedSlug === inv.slug}
+                                                    onSelect={() => setSelectedSlug(selectedSlug === inv.slug ? null : inv.slug)}
+                                                />
+                                            ))}
+                                        </section>
+                                    )}
+
+                                    {demoInvitations.length > 0 && (
+                                        <section className="inv-group inv-group-demos">
+                                            <button
+                                                type="button"
+                                                className="inv-group-header inv-group-toggle"
+                                                aria-expanded={showDemos || hasFilters}
+                                                onClick={() => setShowDemos(current => !current)}
+                                            >
+                                                <div>
+                                                    <Sparkles size={16} />
+                                                    <span>Plantillas y demos</span>
+                                                </div>
+                                                <span className="inv-group-count">{demoInvitations.length}</span>
+                                                <ChevronDown className={showDemos || hasFilters ? 'is-open' : ''} size={16} />
+                                            </button>
+                                            {(showDemos || hasFilters) && demoInvitations.map(inv => (
+                                                <InvitationRow
+                                                    key={inv.slug}
+                                                    invitation={inv}
+                                                    selected={selectedSlug === inv.slug}
+                                                    onSelect={() => setSelectedSlug(selectedSlug === inv.slug ? null : inv.slug)}
+                                                />
+                                            ))}
+                                        </section>
+                                    )}
+
+                                    {expiredInvitations.length > 0 && (
+                                        <section className="inv-group inv-group-expired">
+                                            <button
+                                                type="button"
+                                                className="inv-group-header inv-group-toggle"
+                                                aria-expanded={showExpired}
+                                                onClick={() => {
+                                                    if (showExpired && expiredInvitations.some(inv => inv.slug === selectedSlug)) setSelectedSlug(null)
+                                                    setShowExpired(current => !current)
+                                                }}
+                                            >
+                                                <div>
+                                                    <Archive size={16} />
+                                                    <span>Vencidas</span>
+                                                </div>
+                                                <span className="inv-group-count">{expiredInvitations.length}</span>
+                                                <ChevronDown className={showExpired ? 'is-open' : ''} size={16} />
+                                            </button>
+                                            {showExpired && expiredInvitations.map(inv => (
+                                                <InvitationRow
+                                                    key={inv.slug}
+                                                    invitation={inv}
+                                                    selected={selectedSlug === inv.slug}
+                                                    onSelect={() => setSelectedSlug(selectedSlug === inv.slug ? null : inv.slug)}
+                                                />
+                                            ))}
+                                        </section>
+                                    )}
+                                    {filteredInvitations.length === 0 && (
+                                        <div className="inv-no-results">
+                                            <Search size={20} />
+                                            <strong>Sin resultados</strong>
+                                            <span>Prueba con otro nombre o cambia los filtros.</span>
+                                        </div>
+                                    )}
                                 </div>
                                 {selectedSlug && (() => {
                                     const inv = invitations.find(i => i.slug === selectedSlug)
@@ -598,6 +1069,9 @@ export default function AdminPanel() {
                                             <div className="inv-detail-actions">
                                                 {inv.isDraft && <div className="draft-note">Este borrador todavía no tiene enlace público. Puedes revisarlo localmente sin enviarlo a producción.</div>}
                                                 {inv.isDraft && <a href={`/admin/drafts/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa local</a>}
+                                                {inv.isDraft && <button onClick={() => openActivationDialog(inv.slug)} className="btn btn-action-full" disabled={actionLoading === `activation-plan:${inv.slug}`}>
+                                                    {actionLoading === `activation-plan:${inv.slug}` ? <Loader2 size={14} className="animate-spin" /> : <Rocket size={14} />} Preparar activación
+                                                </button>}
                                                 {!inv.isDraft && <button onClick={() => copyLink(inv.slug)} className="btn btn-action-full"><Copy size={14} /> Copiar enlace</button>}
                                                 {!inv.isDraft && <a href={`/i/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-action-full"><Eye size={14} /> Vista previa</a>}
                                                 {!inv.isDraft && <button onClick={() => openCloneDialog(inv)} className="btn btn-action-full"><Copy size={14} /> Clonar</button>}

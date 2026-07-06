@@ -7,6 +7,7 @@ const ROOT = process.cwd()
 const SRC_ROOT = path.join(ROOT, 'src', 'invitations')
 const PUBLIC_ROOT = path.join(ROOT, 'public', 'invitations')
 const REGISTRY_PATH = path.join(SRC_ROOT, 'registry.js')
+const OG_DATA_PATH = path.join(ROOT, 'og-data.js')
 const RSVP_KEYS_PATH = path.join(ROOT, 'plugins', 'rsvp-keys.json')
 
 const VALID_RSVP_MODES = new Set(['whatsapp', 'supabase', 'mixed', 'none'])
@@ -36,7 +37,139 @@ export function listInvitationSlugs() {
         .sort()
 }
 
-export function cloneInvitation(sourceSlug, targetSlug, options = {}) {
+function snapshotFiles(filePaths) {
+    return new Map(filePaths.map((filePath) => [
+        filePath,
+        fs.existsSync(filePath) ? fs.readFileSync(filePath) : null,
+    ]))
+}
+
+function restoreFiles(snapshot) {
+    for (const [filePath, content] of snapshot) {
+        if (content === null) {
+            fs.rmSync(filePath, { force: true })
+        } else {
+            fs.mkdirSync(path.dirname(filePath), { recursive: true })
+            fs.writeFileSync(filePath, content)
+        }
+    }
+}
+
+async function readOgDataEntry(slug) {
+    if (!fs.existsSync(OG_DATA_PATH)) return null
+    const url = `${pathToFileURL(OG_DATA_PATH).href}?og=${Date.now()}-${Math.random()}`
+    const { ogData } = await import(url)
+    return ogData?.[slug] || null
+}
+
+function removeOgDataEntry(slug) {
+    let content = fs.readFileSync(OG_DATA_PATH, 'utf8')
+    const regex = new RegExp(`\\s*['"]${escapeRegex(slug)}['"]\\s*:\\s*\\{[\\s\\S]*?\\n\\s*\\},?`)
+    content = content.replace(regex, '')
+    fs.writeFileSync(OG_DATA_PATH, content, 'utf8')
+}
+
+function appendOgDataEntry(slug, data) {
+    let content = fs.readFileSync(OG_DATA_PATH, 'utf8')
+    if (new RegExp(`['"]${escapeRegex(slug)}['"]\\s*:`).test(content)) {
+        throw new Error(`Open Graph already has slug: ${slug}`)
+    }
+    const closingIndex = content.lastIndexOf('}')
+    if (closingIndex === -1) throw new Error('Could not find ogData object end')
+    const entry = `    '${escapeJs(slug)}': {
+        title: '${escapeJs(data.title)}',
+        description: '${escapeJs(data.description)}',
+        image: '${escapeJs(data.image)}',
+    },
+`
+    content = `${content.slice(0, closingIndex)}${entry}${content.slice(closingIndex)}`
+    fs.writeFileSync(OG_DATA_PATH, content, 'utf8')
+}
+
+function defaultOgDescription(eventType) {
+    const descriptions = {
+        xv: 'Estás invitado(a) a celebrar mis XV años. Toca aquí para ver la invitación.',
+        boda: 'Te invitamos a celebrar nuestra boda. Toca aquí para ver la invitación.',
+        bautizo: 'Te invitamos a celebrar este día tan especial. Toca aquí para ver la invitación.',
+        cumpleanos: 'Estás invitado(a). Toca aquí para ver la invitación y confirmar tu asistencia.',
+        'primera-comunion': 'Te invitamos a celebrar nuestra Primera Comunión. Toca aquí para ver la invitación.',
+    }
+    return descriptions[eventType] || 'Estás invitado(a). Toca aquí para ver la invitación completa.'
+}
+
+function findImageCandidate(slug, preferredUrl, config) {
+    const candidates = []
+    if (preferredUrl) {
+        const renamedUrl = preferredUrl.replace(/\/invitations\/[^/]+\//, `/invitations/${slug}/`)
+        candidates.push(path.join(ROOT, 'public', renamedUrl.replace(/^\/+/, '')))
+    }
+    if (config?.seo?.shareImage) {
+        candidates.push(path.join(PUBLIC_ROOT, slug, 'img', config.seo.shareImage))
+    }
+
+    const imageDirectory = path.join(PUBLIC_ROOT, slug, 'img')
+    const discovered = []
+    walk(imageDirectory, (file) => {
+        if (IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase())) discovered.push(file)
+    })
+    discovered.sort((left, right) => {
+        const score = (file) => {
+            const name = path.basename(file).toLowerCase()
+            if (name.startsWith('og-preview.')) return 0
+            if (name.includes('hero') || name.includes('portada')) return 1
+            return 2
+        }
+        return score(left) - score(right) || left.localeCompare(right)
+    })
+    candidates.push(...discovered)
+    return candidates.find((candidate) => fs.existsSync(candidate)) || null
+}
+
+async function generateCloneOgPreview(sourceSlug, targetSlug, sourceOg, config, options) {
+    const candidate = findImageCandidate(
+        targetSlug,
+        sourceOg?.image?.replace(`/invitations/${sourceSlug}/`, `/invitations/${targetSlug}/`),
+        config,
+    )
+    if (!candidate) throw new Error('No image is available to generate the Open Graph preview')
+
+    const allowedPositions = new Set(['center', 'top', 'bottom', 'left', 'right'])
+    const focalPoint = allowedPositions.has(options.focalPoint)
+        ? options.focalPoint
+        : (allowedPositions.has(config?.seo?.focalPoint) ? config.seo.focalPoint : 'center')
+    const sharp = await loadSharp()
+    const input = fs.readFileSync(candidate)
+    const output = await sharp(input)
+        .rotate()
+        .resize(1200, 630, { fit: 'cover', position: focalPoint })
+        .jpeg({ quality: 88, mozjpeg: true })
+        .toBuffer()
+    const target = path.join(PUBLIC_ROOT, targetSlug, 'img', 'og-preview.jpg')
+    fs.mkdirSync(path.dirname(target), { recursive: true })
+    fs.writeFileSync(target, output)
+    return `/invitations/${targetSlug}/img/og-preview.jpg`
+}
+
+async function replaceOgDataSlug(oldSlug, newSlug, sourceOg, config) {
+    if (sourceOg?.image) {
+        removeOgDataEntry(oldSlug)
+        appendOgDataEntry(newSlug, {
+            title: config?.title || sourceOg.title,
+            description: sourceOg.description || config?.seo?.description || defaultOgDescription(config?.eventType),
+            image: sourceOg.image.replace(`/invitations/${oldSlug}/`, `/invitations/${newSlug}/`),
+        })
+        return
+    }
+
+    const image = await generateCloneOgPreview(oldSlug, newSlug, null, config, {})
+    appendOgDataEntry(newSlug, {
+        title: config?.title || readRegistryEntry(newSlug)?.title || newSlug,
+        description: config?.seo?.description || defaultOgDescription(config?.eventType),
+        image,
+    })
+}
+
+export async function cloneInvitation(sourceSlug, targetSlug, options = {}) {
     sourceSlug = slugify(sourceSlug)
     targetSlug = slugify(targetSlug)
     ensureSlug(sourceSlug, 'sourceSlug')
@@ -52,40 +185,57 @@ export function cloneInvitation(sourceSlug, targetSlug, options = {}) {
         throw new Error(`Target invitation already exists: ${targetSlug}`)
     }
 
-    fs.cpSync(sourceSrc, targetSrc, { recursive: true })
-    if (fs.existsSync(sourcePublic)) {
-        fs.cpSync(sourcePublic, targetPublic, { recursive: true })
-    } else {
-        fs.mkdirSync(path.join(targetPublic, 'img'), { recursive: true })
-        fs.mkdirSync(path.join(targetPublic, 'audio'), { recursive: true })
-    }
+    const snapshots = snapshotFiles([REGISTRY_PATH, OG_DATA_PATH, RSVP_KEYS_PATH])
+    try {
+        const sourceOg = await readOgDataEntry(sourceSlug)
+        fs.cpSync(sourceSrc, targetSrc, { recursive: true })
+        if (fs.existsSync(sourcePublic)) {
+            fs.cpSync(sourcePublic, targetPublic, { recursive: true })
+        } else {
+            fs.mkdirSync(path.join(targetPublic, 'img'), { recursive: true })
+            fs.mkdirSync(path.join(targetPublic, 'audio'), { recursive: true })
+        }
 
-    replaceTextInDir(targetSrc, sourceSlug, targetSlug)
-    const config = readConfig(targetSlug)
-    if (config) {
-        config.slug = targetSlug
-        if (options.title) config.title = String(options.title)
-        if (config.calendar?.icsFilename) config.calendar.icsFilename = `${targetSlug}.ics`
-        if (options.title && config.calendar?.icsProdId) config.calendar.icsProdId = String(options.title)
-        writeConfig(targetSlug, config)
-    }
+        replaceTextInDir(targetSrc, sourceSlug, targetSlug)
+        const config = readConfig(targetSlug)
+        if (config) {
+            config.slug = targetSlug
+            if (options.title) config.title = String(options.title)
+            if (config.calendar?.icsFilename) config.calendar.icsFilename = `${targetSlug}.ics`
+            if (options.title && config.calendar?.icsProdId) config.calendar.icsProdId = String(options.title)
+            if (config.seo) config.seo.shareImage = 'og-preview.jpg'
+            writeConfig(targetSlug, config)
+        }
 
-    const title = options.title || config?.title || readRegistryEntry(sourceSlug)?.title || targetSlug
-    appendRegistryEntry(targetSlug, title, config)
-    const rsvpKey = rotateRsvpKey(targetSlug)
+        const title = options.title || config?.title || readRegistryEntry(sourceSlug)?.title || targetSlug
+        const generatedOg = await generateCloneOgPreview(sourceSlug, targetSlug, sourceOg, config, options)
+        appendRegistryEntry(targetSlug, title, config)
+        appendOgDataEntry(targetSlug, {
+            title,
+            description: sourceOg?.description || config?.seo?.description || defaultOgDescription(config?.eventType),
+            image: generatedOg,
+        })
+        const rsvpKey = rotateRsvpKey(targetSlug)
 
-    return {
-        slug: targetSlug,
-        path: `/i/${targetSlug}`,
-        rsvpLink: `/i/${targetSlug}/rsvp?key=${rsvpKey}`,
-        notes: [
-            'Registry was updated because the SPA router needs it.',
-            'Open Graph metadata was not edited automatically; run validate to review share-preview gaps.',
-        ],
+        return {
+            slug: targetSlug,
+            path: `/i/${targetSlug}`,
+            rsvpLink: `/i/${targetSlug}/rsvp?key=${rsvpKey}`,
+            ogImage: generatedOg,
+            notes: [
+                'Registry and Open Graph metadata were updated automatically.',
+                'A dedicated 1200x630 Open Graph image was generated for the clone.',
+            ],
+        }
+    } catch (error) {
+        restoreFiles(snapshots)
+        fs.rmSync(targetSrc, { recursive: true, force: true })
+        fs.rmSync(targetPublic, { recursive: true, force: true })
+        throw new Error(`Clone was rolled back: ${error.message}`)
     }
 }
 
-export function renameInvitation(oldSlug, newSlug) {
+export async function renameInvitation(oldSlug, newSlug) {
     oldSlug = slugify(oldSlug)
     newSlug = slugify(newSlug)
     ensureSlug(oldSlug, 'oldSlug')
@@ -101,28 +251,47 @@ export function renameInvitation(oldSlug, newSlug) {
         throw new Error(`New slug already exists: ${newSlug}`)
     }
 
-    fs.renameSync(oldSrc, newSrc)
-    if (fs.existsSync(oldPublic)) fs.renameSync(oldPublic, newPublic)
+    const sourceOg = await readOgDataEntry(oldSlug)
+    const snapshots = snapshotFiles([REGISTRY_PATH, OG_DATA_PATH, RSVP_KEYS_PATH])
+    const oldOgPreviewExisted = fs.existsSync(path.join(oldPublic, 'img', 'og-preview.jpg'))
+    try {
+        fs.renameSync(oldSrc, newSrc)
+        if (fs.existsSync(oldPublic)) fs.renameSync(oldPublic, newPublic)
 
-    replaceTextInDir(newSrc, oldSlug, newSlug)
-    const config = readConfig(newSlug)
-    if (config) {
-        config.slug = newSlug
-        if (config.calendar?.icsFilename) config.calendar.icsFilename = `${newSlug}.ics`
-        writeConfig(newSlug, config)
-    }
+        replaceTextInDir(newSrc, oldSlug, newSlug)
+        const config = readConfig(newSlug)
+        if (config) {
+            config.slug = newSlug
+            if (config.calendar?.icsFilename) config.calendar.icsFilename = `${newSlug}.ics`
+            writeConfig(newSlug, config)
+        }
 
-    updateRegistrySlug(oldSlug, newSlug, config)
-    renameRsvpKey(oldSlug, newSlug)
+        updateRegistrySlug(oldSlug, newSlug, config)
+        renameRsvpKey(oldSlug, newSlug)
+        await replaceOgDataSlug(oldSlug, newSlug, sourceOg, config)
 
-    return {
-        oldSlug,
-        slug: newSlug,
-        path: `/i/${newSlug}`,
-        notes: [
-            'Source and public folders were renamed.',
-            'Open Graph metadata was not edited automatically; validate will flag old share metadata.',
-        ],
+        return {
+            oldSlug,
+            slug: newSlug,
+            path: `/i/${newSlug}`,
+            notes: [
+                'Source and public folders were renamed.',
+                'Open Graph metadata and image paths were updated automatically.',
+            ],
+        }
+    } catch (error) {
+        restoreFiles(snapshots)
+        if (!oldOgPreviewExisted) {
+            fs.rmSync(path.join(newPublic, 'img', 'og-preview.jpg'), { force: true })
+        }
+        if (fs.existsSync(newSrc) && !fs.existsSync(oldSrc)) {
+            replaceTextInDir(newSrc, newSlug, oldSlug)
+            fs.renameSync(newSrc, oldSrc)
+        }
+        if (fs.existsSync(newPublic) && !fs.existsSync(oldPublic)) {
+            fs.renameSync(newPublic, oldPublic)
+        }
+        throw new Error(`Rename was rolled back: ${error.message}`)
     }
 }
 
@@ -584,7 +753,7 @@ function escapeRegex(value) {
 }
 
 function escapeJs(value) {
-    return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+    return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/[\r\n]+/g, ' ')
 }
 
 function parseArgs(argv) {
@@ -629,13 +798,13 @@ async function main() {
     }
 
     if (command === 'clone') {
-        const result = cloneInvitation(positional[0], positional[1], { title: options.title })
+        const result = await cloneInvitation(positional[0], positional[1], { title: options.title })
         console.log(JSON.stringify(result, null, 2))
         return
     }
 
     if (command === 'rename') {
-        const result = renameInvitation(positional[0], positional[1])
+        const result = await renameInvitation(positional[0], positional[1])
         console.log(JSON.stringify(result, null, 2))
         return
     }

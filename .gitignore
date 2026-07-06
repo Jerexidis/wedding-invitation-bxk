@@ -2,6 +2,7 @@ node_modules
 dist
 playwright-report
 test-results
+.invita-history/
 
 # ─── Admin Panel (local only, not for production) ───
 src/admin/

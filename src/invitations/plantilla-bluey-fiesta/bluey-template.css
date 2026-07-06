@@ -1,0 +1,986 @@
+/* ═══════════════════════════════════════════════════════════
+   PLANTILLA BLUEY – FIESTA DE CUMPLEAÑOS INFANTIL
+   Paleta inspirada en la serie animada Bluey
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+    --bluey-sky: #5BABE0;
+    --bluey-sky-dark: #2D5AA0;
+    --bluey-sky-deep: #1B3D6F;
+    --bluey-bingo: #E8853D;
+    --bluey-bingo-light: #F5A95E;
+    --bluey-yellow: #F7C948;
+    --bluey-yellow-light: #FDE68A;
+    --bluey-cream: #FFF8EC;
+    --bluey-cream-warm: #FFF2D9;
+    --bluey-green: #6BB54A;
+    --bluey-green-dark: #4A8C32;
+    --bluey-pink: #E86B8A;
+    --bluey-ink: #2A2438;
+    --bluey-ink-soft: #4A4255;
+    --bluey-white: #FFFFFF;
+    --bluey-radius: 1.5rem;
+    --bluey-radius-sm: 1rem;
+}
+
+.bluey-template {
+    background: var(--bluey-cream);
+    color: var(--bluey-ink);
+    font-family: "Nunito", "Segoe UI", sans-serif;
+    overflow: clip;
+}
+
+.bluey-template *,
+.bluey-template *::before,
+.bluey-template *::after {
+    box-sizing: border-box;
+}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+
+.bluey-hero {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 100svh;
+    overflow: hidden;
+    padding: 4rem 1.25rem 7rem;
+    position: relative;
+}
+
+.bluey-hero__art {
+    background: url("/invitations/plantilla-bluey-fiesta/img/hero-bluey-party.png") center / cover no-repeat;
+    inset: -7% 0;
+    position: absolute;
+    z-index: 0;
+}
+
+.bluey-hero__veil {
+    background:
+        linear-gradient(180deg,
+            rgba(27, 61, 111, .15) 0%,
+            rgba(91, 171, 224, .05) 30%,
+            rgba(255, 248, 236, .1) 55%,
+            rgba(27, 61, 111, .7) 100%),
+        radial-gradient(circle at 50% 45%, rgba(255, 248, 236, .4), transparent 45%);
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.bluey-hero__content {
+    margin-top: 6vh;
+    max-width: 34rem;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 3;
+}
+
+.bluey-hero__eyebrow {
+    background: var(--bluey-bingo);
+    border-radius: 2rem;
+    box-shadow: 3px 4px 0 rgba(42, 36, 56, .25);
+    color: white;
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .2em;
+    margin: 0 0 1.2rem;
+    padding: .5rem 1.2rem;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+}
+
+.bluey-hero__age-wrap {
+    display: grid;
+    height: clamp(9rem, 26vh, 14rem);
+    margin: 0 auto 1rem;
+    place-items: center;
+    position: relative;
+    width: clamp(9rem, 26vh, 14rem);
+}
+
+.bluey-hero__age-wrap::before {
+    background: var(--bluey-sky);
+    border: 4px solid var(--bluey-white);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 6px var(--bluey-sky),
+        6px 8px 0 rgba(42, 36, 56, .2);
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+}
+
+.bluey-hero__age {
+    color: var(--bluey-yellow);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(5.5rem, 16vh, 8rem);
+    font-weight: 700;
+    line-height: 1;
+    paint-order: stroke fill;
+    position: relative;
+    text-shadow:
+        3px 3px 0 var(--bluey-bingo),
+        6px 6px 0 rgba(42, 36, 56, .22);
+    -webkit-text-stroke: 2px white;
+    z-index: 1;
+}
+
+.bluey-hero h1 {
+    color: white;
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(3.5rem, 14vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: .88;
+    margin: 0 0 .8rem;
+    text-shadow:
+        3px 4px 0 var(--bluey-sky-dark),
+        0 0 30px rgba(91, 171, 224, .5);
+}
+
+.bluey-hero__date {
+    align-items: center;
+    color: white;
+    display: flex;
+    font-size: .95rem;
+    font-weight: 700;
+    gap: .65rem;
+    justify-content: center;
+    margin: 0;
+    text-shadow: 1px 2px 4px rgba(27, 61, 111, .4);
+}
+
+.bluey-hero__date::before,
+.bluey-hero__date::after {
+    background: var(--bluey-yellow);
+    border-radius: 2px;
+    content: "";
+    height: 3px;
+    width: 2rem;
+}
+
+.bluey-hero__quote {
+    color: rgba(255, 255, 255, .9);
+    font-size: .95rem;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 1rem auto 0;
+    max-width: 20rem;
+    text-shadow: 0 1px 6px rgba(27, 61, 111, .35);
+}
+
+/* Paw prints floating */
+.bluey-paws {
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+}
+
+.bluey-paws span {
+    animation: bluey-paw-float calc(5s + var(--i) * .4s) ease-in-out infinite alternate;
+    color: rgba(255, 255, 255, .25);
+    font-size: calc(1.2rem + var(--i) * .15rem);
+    left: calc(5% + var(--i) * 9.5%);
+    position: absolute;
+    top: calc(6% + var(--i) * 7.5%);
+    transform: rotate(calc(var(--i) * 32deg));
+}
+
+.bluey-scroll {
+    align-items: center;
+    background: var(--bluey-yellow);
+    border: 0;
+    border-radius: 2rem;
+    bottom: 1.6rem;
+    box-shadow: 3px 4px 0 rgba(42, 36, 56, .2);
+    color: var(--bluey-ink);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font: 800 .6rem "Nunito", sans-serif;
+    gap: .3rem;
+    letter-spacing: .14em;
+    padding: .6rem 1rem;
+    position: absolute;
+    text-transform: uppercase;
+    z-index: 4;
+}
+
+.bluey-scroll svg {
+    animation: bluey-bounce 1.6s ease-in-out infinite;
+}
+
+/* ── SECTIONS SHARED ──────────────────────────────────────── */
+
+.bluey-section {
+    min-height: 80svh;
+    padding: 6rem 1.35rem;
+    position: relative;
+}
+
+.bluey-container {
+    margin: 0 auto;
+    max-width: 54rem;
+    position: relative;
+    z-index: 2;
+}
+
+.bluey-heading {
+    margin: 0 auto 2.8rem;
+    text-align: center;
+}
+
+.bluey-heading > p {
+    align-items: center;
+    color: var(--bluey-bingo);
+    display: flex;
+    font-size: .68rem;
+    font-weight: 800;
+    gap: .5rem;
+    justify-content: center;
+    letter-spacing: .2em;
+    margin: 0 0 .8rem;
+    text-transform: uppercase;
+}
+
+.bluey-heading h2 {
+    color: var(--bluey-sky-dark);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(2.8rem, 11vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: .92;
+    margin: 0;
+}
+
+.bluey-heading h2 em {
+    color: var(--bluey-bingo);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.bluey-heading--light > p { color: var(--bluey-yellow); }
+.bluey-heading--light h2 { color: white; }
+.bluey-heading--light h2 em { color: var(--bluey-yellow); }
+
+.bluey-heading__rule {
+    align-items: center;
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    margin-top: .8rem;
+}
+
+.bluey-heading__rule > i {
+    background: var(--bluey-yellow);
+    border-radius: 2px;
+    height: 3px;
+    width: 2.2rem;
+}
+
+/* Paw mark divider */
+.bluey-paw-mark {
+    display: inline-block;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+/* ── INTRO ────────────────────────────────────────────────── */
+
+.bluey-intro {
+    align-items: center;
+    background:
+        url("/invitations/plantilla-bluey-fiesta/img/bluey-pattern.png") center / 260px repeat,
+        var(--bluey-cream);
+    display: flex;
+}
+
+.bluey-intro::before {
+    background: radial-gradient(circle at 50% 50%, rgba(255, 248, 236, .92) 0%, rgba(255, 248, 236, .7) 55%, transparent 100%);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.bluey-intro__copy {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.7;
+    margin: 0 auto 2.5rem;
+    max-width: 32rem;
+    text-align: center;
+}
+
+.bluey-intro__family-img {
+    border-radius: var(--bluey-radius);
+    box-shadow:
+        0 14px 40px rgba(42, 36, 56, .12),
+        6px 8px 0 var(--bluey-sky);
+    display: block;
+    height: auto;
+    margin: 0 auto 2.5rem;
+    max-width: 16rem;
+    width: 80%;
+}
+
+.bluey-name-card {
+    background: rgba(255, 255, 255, .85);
+    border: 2px solid rgba(91, 171, 224, .3);
+    border-radius: var(--bluey-radius);
+    box-shadow:
+        0 16px 45px rgba(42, 36, 56, .1),
+        5px 6px 0 var(--bluey-yellow);
+    margin: 0 auto;
+    max-width: 32rem;
+    padding: 2.5rem 1.5rem;
+    position: relative;
+    text-align: center;
+}
+
+.bluey-name-card > .bluey-paw-mark {
+    color: var(--bluey-sky);
+    margin-bottom: .5rem;
+}
+
+.bluey-name-card > span {
+    color: var(--bluey-bingo);
+    display: block;
+    font-size: .64rem;
+    font-weight: 800;
+    letter-spacing: .2em;
+    margin-bottom: .8rem;
+    text-transform: uppercase;
+}
+
+.bluey-name-card h3 {
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(1.4rem, 5.5vw, 2rem);
+    font-weight: 600;
+    margin: 0;
+}
+
+.bluey-name-card > i {
+    color: var(--bluey-pink);
+    display: block;
+    font-family: "Fredoka", sans-serif;
+    font-style: normal;
+    margin: .3rem 0;
+}
+
+.bluey-name-card > p {
+    color: var(--bluey-ink-soft);
+    font-size: .82rem;
+    font-style: italic;
+    margin: 1rem 0 0;
+}
+
+/* ── COUNTDOWN ────────────────────────────────────────────── */
+
+.bluey-countdown {
+    align-items: center;
+    background: var(--bluey-sky);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.bluey-countdown::before {
+    background:
+        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, .12), transparent 22rem),
+        radial-gradient(circle at 75% 70%, rgba(247, 201, 72, .08), transparent 18rem);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.bluey-countdown__clouds {
+    inset: 0;
+    opacity: .08;
+    pointer-events: none;
+    position: absolute;
+}
+
+.bluey-countdown__clouds i {
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.bluey-countdown__clouds i:nth-child(1) {
+    box-shadow: 26px 0 0 12px white, 52px -4px 0 4px white;
+    height: 28px;
+    left: 8%;
+    top: 14%;
+    width: 28px;
+}
+
+.bluey-countdown__clouds i:nth-child(2) {
+    box-shadow: 20px 0 0 8px white, 38px -3px 0 3px white;
+    height: 20px;
+    right: 12%;
+    top: 22%;
+    width: 20px;
+}
+
+.bluey-countdown__clouds i:nth-child(3) {
+    bottom: 18%;
+    box-shadow: 30px 0 0 14px white, 58px -5px 0 5px white;
+    height: 32px;
+    left: 55%;
+    width: 32px;
+}
+
+.bluey-timer {
+    display: grid;
+    gap: .6rem;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto 2rem;
+    max-width: 42rem;
+}
+
+.bluey-timer__unit {
+    background: var(--bluey-cream);
+    border: 3px solid var(--bluey-white);
+    border-radius: var(--bluey-radius);
+    box-shadow:
+        0 6px 0 var(--bluey-sky-dark),
+        0 12px 25px rgba(27, 61, 111, .18);
+    padding: 1.2rem .3rem .9rem;
+    text-align: center;
+    transition: transform .3s;
+}
+
+.bluey-timer__unit:nth-child(even) {
+    transform: translateY(6px);
+}
+
+.bluey-timer__unit strong {
+    color: var(--bluey-sky-dark);
+    display: block;
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(1.8rem, 8vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.bluey-timer__unit span {
+    color: var(--bluey-bingo);
+    display: block;
+    font-size: clamp(.5rem, 2vw, .68rem);
+    font-weight: 700;
+    letter-spacing: .06em;
+    margin-top: .45rem;
+    text-transform: uppercase;
+}
+
+.bluey-countdown__date {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-align: center;
+    text-shadow: 1px 2px 3px rgba(27, 61, 111, .25);
+}
+
+.bluey-button {
+    align-items: center;
+    border: 0;
+    border-radius: 2rem;
+    cursor: pointer;
+    display: flex;
+    font: 700 .7rem "Nunito", sans-serif;
+    gap: .6rem;
+    justify-content: center;
+    letter-spacing: .08em;
+    margin: 1.4rem auto 0;
+    padding: 1rem 1.4rem;
+    text-transform: uppercase;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.bluey-button:hover {
+    transform: translateY(-3px);
+}
+
+.bluey-button--yellow {
+    background: var(--bluey-yellow);
+    box-shadow: 4px 5px 0 rgba(42, 36, 56, .18);
+    color: var(--bluey-ink);
+}
+
+.bluey-button--orange {
+    background: var(--bluey-bingo);
+    box-shadow: 4px 5px 0 rgba(42, 36, 56, .18);
+    color: white;
+    width: 100%;
+}
+
+/* Balloon decoration */
+.bluey-balloons {
+    height: 12rem;
+    opacity: .15;
+    position: absolute;
+    right: -2rem;
+    top: 8%;
+    width: 8rem;
+}
+
+.bluey-balloons img {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+/* ── LOCATION ─────────────────────────────────────────────── */
+
+.bluey-location {
+    align-items: center;
+    background:
+        url("/invitations/plantilla-bluey-fiesta/img/bluey-pattern.png") center / 260px repeat,
+        var(--bluey-cream);
+    display: flex;
+}
+
+.bluey-location::before {
+    background: radial-gradient(circle at 50% 50%, rgba(255, 248, 236, .9) 0%, rgba(255, 248, 236, .65) 50%, transparent 100%);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.bluey-location__card {
+    background: white;
+    border: 3px solid var(--bluey-sky);
+    border-radius: var(--bluey-radius);
+    box-shadow:
+        7px 8px 0 var(--bluey-bingo),
+        0 18px 45px rgba(42, 36, 56, .1);
+    margin: 0 auto;
+    max-width: 34rem;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.bluey-location__image {
+    background: url("/invitations/plantilla-bluey-fiesta/img/bluey-house.png") center / cover no-repeat;
+    height: 12rem;
+    position: relative;
+    width: 100%;
+}
+
+.bluey-location__image::after {
+    background: linear-gradient(transparent 40%, white);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.bluey-location__body {
+    padding: 1.2rem 1.5rem 2.2rem;
+}
+
+.bluey-location__pin {
+    align-items: center;
+    background: var(--bluey-sky);
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 3px 4px 0 rgba(42, 36, 56, .18);
+    color: white;
+    display: flex;
+    height: 3.8rem;
+    justify-content: center;
+    left: calc(50% - 1.9rem);
+    position: absolute;
+    top: -1.9rem;
+    width: 3.8rem;
+    z-index: 2;
+}
+
+.bluey-location__label {
+    color: var(--bluey-bingo);
+    font-size: .64rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+}
+
+.bluey-location__card h3 {
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
+    font-weight: 700;
+    margin: 0 0 .6rem;
+}
+
+.bluey-location__time {
+    align-items: center;
+    color: var(--bluey-sky-dark);
+    display: flex;
+    font-size: .82rem;
+    font-weight: 700;
+    gap: .4rem;
+    justify-content: center;
+    margin: 0 0 .6rem;
+}
+
+.bluey-location__card > .bluey-location__body > p:not(.bluey-location__label):not(.bluey-location__time) {
+    color: var(--bluey-ink-soft);
+    font-size: .75rem;
+    line-height: 1.6;
+    margin: 0 auto 1.5rem;
+    max-width: 22rem;
+}
+
+.bluey-location__card a {
+    align-items: center;
+    background: var(--bluey-sky);
+    border: 0;
+    border-radius: 2rem;
+    box-shadow: 3px 4px 0 rgba(42, 36, 56, .15);
+    color: white;
+    display: inline-flex;
+    font: 700 .7rem "Nunito", sans-serif;
+    gap: .5rem;
+    letter-spacing: .06em;
+    padding: .8rem 1.3rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.bluey-location__card a:hover {
+    box-shadow: 4px 5px 0 var(--bluey-yellow);
+    transform: translate(-2px, -2px);
+}
+
+/* Drifting sticker */
+.bluey-sticker {
+    align-items: center;
+    background: var(--bluey-bingo);
+    border: 3px solid var(--bluey-ink);
+    border-radius: 50%;
+    box-shadow: 4px 5px 0 rgba(42, 36, 56, .25);
+    color: white;
+    display: grid;
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: .7rem;
+    font-weight: 700;
+    height: 5rem;
+    left: -1rem;
+    line-height: 1;
+    place-items: center;
+    position: absolute;
+    text-align: center;
+    top: 12%;
+    transform: rotate(-12deg);
+    width: 5rem;
+    z-index: 3;
+}
+
+/* ── RSVP ─────────────────────────────────────────────────── */
+
+.bluey-rsvp {
+    align-items: center;
+    background:
+        linear-gradient(rgba(27, 61, 111, .88), rgba(45, 90, 160, .92)),
+        url("/invitations/plantilla-bluey-fiesta/img/hero-bluey-party.png") center / cover;
+    color: white;
+    display: flex;
+    min-height: 100svh;
+    overflow: hidden;
+}
+
+.bluey-rsvp__stars {
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.bluey-rsvp__stars i {
+    animation: bluey-twinkle calc(2s + var(--i) * .3s) ease-in-out infinite alternate;
+    background: var(--bluey-yellow);
+    border-radius: 50%;
+    height: calc(3px + var(--i) * .3px);
+    left: calc(4% + var(--i) * 10.5%);
+    opacity: .4;
+    position: absolute;
+    top: calc(7% + var(--i) * 9%);
+    width: calc(3px + var(--i) * .3px);
+}
+
+.bluey-rsvp__intro {
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1.7;
+    margin: -1rem auto 2rem;
+    max-width: 26rem;
+    text-align: center;
+}
+
+.bluey-form {
+    background: var(--bluey-cream);
+    border: 3px solid var(--bluey-white);
+    border-radius: var(--bluey-radius);
+    box-shadow:
+        7px 8px 0 var(--bluey-bingo),
+        0 20px 50px rgba(27, 61, 111, .25);
+    color: var(--bluey-ink);
+    margin: 0 auto;
+    max-width: 34rem;
+    padding: 1.8rem;
+}
+
+.bluey-form label > span,
+.bluey-form legend {
+    display: block;
+    font-size: .64rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+}
+
+.bluey-form input:not([type="radio"]),
+.bluey-form select {
+    appearance: none;
+    background: white;
+    border: 2px solid rgba(91, 171, 224, .35);
+    border-radius: var(--bluey-radius-sm);
+    color: var(--bluey-ink);
+    font: .88rem "Nunito", sans-serif;
+    min-height: 3rem;
+    outline: 0;
+    padding: 0 .9rem;
+    width: 100%;
+}
+
+.bluey-form input:focus,
+.bluey-form select:focus {
+    border-color: var(--bluey-sky);
+    box-shadow: 0 0 0 3px rgba(91, 171, 224, .15);
+}
+
+.bluey-form__row {
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: 1.5fr .7fr;
+    margin-top: 1rem;
+}
+
+.bluey-form fieldset {
+    border: 0;
+    margin: 1.5rem 0;
+    padding: 0;
+}
+
+.bluey-options {
+    display: grid;
+    gap: .6rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.bluey-options label {
+    border: 2px solid rgba(91, 171, 224, .35);
+    border-radius: var(--bluey-radius-sm);
+    cursor: pointer;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: .85rem .5rem;
+    text-align: center;
+    transition: background .2s, color .2s, transform .2s, border-color .2s;
+}
+
+.bluey-options label.is-selected {
+    background: var(--bluey-sky);
+    border-color: var(--bluey-sky);
+    color: white;
+    transform: scale(1.03);
+}
+
+.bluey-options input {
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.bluey-form button {
+    cursor: pointer;
+}
+
+.bluey-form__hint {
+    color: var(--bluey-ink-soft);
+    font-size: .58rem;
+    line-height: 1.5;
+    margin: .8rem 0 0;
+    text-align: center;
+}
+
+.bluey-rsvp__signoff {
+    color: var(--bluey-yellow);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 2.5rem 0 0;
+    text-align: center;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+
+.bluey-footer {
+    background: var(--bluey-cream);
+    border-top: 3px solid rgba(91, 171, 224, .2);
+    padding: 2rem 1.25rem 1.6rem;
+    text-align: center;
+}
+
+.bluey-footer > .bluey-paw-mark {
+    color: var(--bluey-sky);
+}
+
+.bluey-footer > p {
+    color: var(--bluey-ink-soft);
+    font-size: .88rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: .5rem 0;
+}
+
+.bluey-footer > p em {
+    color: var(--bluey-bingo);
+    font-style: normal;
+    font-weight: 700;
+}
+
+.bluey-footer h2 {
+    color: var(--bluey-sky-dark);
+    font-family: "Fredoka", "Nunito", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: .45rem 0 .15rem;
+}
+
+.bluey-footer > span {
+    color: var(--bluey-ink-soft);
+    display: block;
+    font-size: .55rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    margin-bottom: .7rem;
+    text-transform: uppercase;
+}
+
+.bluey-footer > a {
+    color: var(--bluey-sky);
+    font-size: .52rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* ── DECORATIVE FLOATING PAWS (CSS-only) ──────────────────── */
+
+.bluey-float-paw {
+    color: rgba(91, 171, 224, .08);
+    font-size: 4rem;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+}
+
+.bluey-float-paw--left {
+    left: -1rem;
+    top: 20%;
+    transform: rotate(-25deg);
+}
+
+.bluey-float-paw--right {
+    bottom: 15%;
+    right: -1rem;
+    transform: rotate(18deg);
+}
+
+/* ── KEYFRAMES ────────────────────────────────────────────── */
+
+@keyframes bluey-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes bluey-paw-float {
+    from { transform: rotate(calc(var(--i) * 32deg)) translateY(0); }
+    to { transform: rotate(calc(var(--i) * 32deg + 8deg)) translateY(-12px); }
+}
+
+@keyframes bluey-twinkle {
+    0% { opacity: .2; transform: scale(.8); }
+    100% { opacity: .7; transform: scale(1.2); }
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+
+@media (min-width: 720px) {
+    .bluey-hero {
+        min-height: 960px;
+        padding-bottom: 5rem;
+        padding-top: 3.5rem;
+    }
+
+    .bluey-section {
+        min-height: 700px;
+    }
+
+    .bluey-form {
+        padding: 2.4rem;
+    }
+
+    .bluey-sticker {
+        left: 8%;
+        top: 15%;
+    }
+
+    .bluey-location__image {
+        height: 16rem;
+    }
+}
+
+@media (min-width: 720px) and (max-height: 760px) {
+    .bluey-hero {
+        padding-bottom: 4rem;
+        padding-top: 2rem;
+    }
+
+    .bluey-hero__age-wrap {
+        height: clamp(7rem, 20vh, 10rem);
+        width: clamp(7rem, 20vh, 10rem);
+    }
+
+    .bluey-hero h1 {
+        font-size: clamp(3rem, 10vh, 5rem);
+    }
+}
+
+/* ── REDUCED MOTION ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .bluey-scroll svg,
+    .bluey-paws span,
+    .bluey-rsvp__stars i {
+        animation: none;
+    }
+
+    .bluey-template *,
+    .bluey-template *::before,
+    .bluey-template *::after {
+        scroll-behavior: auto !important;
+    }
+}
