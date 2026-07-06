@@ -31,6 +31,11 @@ export const ogData = {
         description: 'Una invitación infantil temática de Bluey con animaciones, cuenta regresiva y confirmación por WhatsApp.',
         image: '/invitations/plantilla-bluey-fiesta/img/hero-bluey-party.png',
     },
+    'plantilla-minecraft-fiesta': {
+        title: 'Plantilla | Fiesta Minecraft ⛏️',
+        description: 'Una invitación temática de Minecraft con estética pixel art, cuenta regresiva y confirmación por WhatsApp.',
+        image: '/invitations/plantilla-minecraft-fiesta/img/hero-minecraft-party.png',
+    },
     'kassandra-brian': {
         title: 'Invitación de Kassandra & Brian 💕',
         description: 'Te invitamos a celebrar nuestra boda. ¡Toca aquí para ver la invitación completa!',

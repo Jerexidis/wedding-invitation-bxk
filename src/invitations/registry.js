@@ -62,6 +62,17 @@ const invitations = [
         eventDate: '2027-08-15T16:00:00-06:00',
     },
     {
+        slug: 'plantilla-minecraft-fiesta',
+        title: 'Plantilla | Fiesta Minecraft',
+        component: lazy(() => import('./plantilla-minecraft-fiesta/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        portfolioPriority: 5,
+        eventType: 'cumpleanos',
+        rsvpMode: 'whatsapp',
+        eventDate: '2027-09-20T15:00:00-06:00',
+    },
+    {
         slug: 'kassandra-brian',
         title: 'Nuestra Boda | Kassandra & Brian',
         component: lazy(() => import('./kassandra-brian/index.jsx')),

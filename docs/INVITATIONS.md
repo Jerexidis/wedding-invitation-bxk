@@ -11,6 +11,7 @@ the minimum invitation-specific files needed for a task.
 | `plantilla-rapunzel-xv` | standalone-custom | xv | whatsapp | 2 files | 1.10 MB |
 | `plantilla-fiesta-casual` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.03 MB |
 | `plantilla-bluey-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.48 MB |
+| `plantilla-minecraft-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.53 MB |
 | `kassandra-brian` | dedicated-components | boda | whatsapp | 10 files | 5.75 MB |
 | `melani-marisol` | dedicated-components | xv | whatsapp | 13 files | 4.83 MB |
 | `despedida-kass-brian` | hybrid-overrides | despedida | whatsapp | 7 files | 1.17 MB |
@@ -53,6 +54,13 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `standalone-custom`
 - Flags: demo, calendar
 - Source: `src/invitations/plantilla-bluey-fiesta/bluey-template.css`, `src/invitations/plantilla-bluey-fiesta/index.jsx`
+
+### plantilla-minecraft-fiesta
+
+- Entry: `src/invitations/plantilla-minecraft-fiesta/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: demo, calendar
+- Source: `src/invitations/plantilla-minecraft-fiesta/index.jsx`, `src/invitations/plantilla-minecraft-fiesta/minecraft-template.css`
 
 ### kassandra-brian
 
