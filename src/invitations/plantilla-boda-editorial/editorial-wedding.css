@@ -184,59 +184,26 @@
 }
 
 .wed-bow {
-    height: 5rem;
+    display: block;
+    height: 6.5rem;
     position: absolute;
-    width: 5rem;
+    width: 6.5rem;
     z-index: 4;
+    overflow: visible;
 }
 
-.wed-bow::before {
-    border: 9px solid var(--wed-red);
-    border-radius: 65% 35% 55% 45%;
-    content: "";
-    height: 2.4rem;
-    left: .15rem;
-    position: absolute;
-    top: .35rem;
-    transform: rotate(29deg);
-    width: 2.7rem;
-}
-
-.wed-bow::after {
-    border: 9px solid var(--wed-red);
-    border-radius: 35% 65% 45% 55%;
-    content: "";
-    height: 2.4rem;
-    position: absolute;
-    right: .15rem;
-    top: .35rem;
-    transform: rotate(-27deg);
-    width: 2.7rem;
-}
-
-.wed-bow i,
-.wed-bow b {
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 4.3rem solid var(--wed-red);
-    bottom: -2.1rem;
-    height: 0;
-    left: 1.3rem;
-    position: absolute;
-    transform: rotate(12deg);
-    width: 0;
-}
-
-.wed-bow b {
-    left: auto;
-    right: 1.3rem;
-    transform: rotate(-14deg);
+.wed-bow svg {
+    display: block;
+    height: 100%;
+    overflow: visible;
+    width: 100%;
+    filter: drop-shadow(0 2px 6px rgba(120, 10, 20, .28));
 }
 
 .wed-bow--hero {
-    right: -1rem;
-    top: 11%;
-    transform: rotate(17deg);
+    right: -1.8rem;
+    top: -1.8rem;
+    transform: rotate(12deg);
 }
 
 .wed-section {

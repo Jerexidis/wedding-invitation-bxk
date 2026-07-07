@@ -11,6 +11,72 @@ import './editorial-wedding.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
+ * Elegant ribbon bow SVG — replaces the old CSS-only bow that looked like scissors.
+ * Two organic loops, a center knot, and graceful trailing ribbons.
+ */
+function RibbonBow({ className, ...props }) {
+    return (
+        <span className={`wed-bow ${className || ''}`} {...props}>
+            <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="bowLoopL" x1="10" y1="20" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#c4243b" />
+                        <stop offset="100%" stopColor="#8a0f20" />
+                    </linearGradient>
+                    <linearGradient id="bowLoopR" x1="110" y1="20" x2="70" y2="50" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#c4243b" />
+                        <stop offset="100%" stopColor="#8a0f20" />
+                    </linearGradient>
+                    <linearGradient id="bowTailL" x1="54" y1="48" x2="16" y2="92" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#9f1427" />
+                        <stop offset="100%" stopColor="#6e0d1a" />
+                    </linearGradient>
+                    <linearGradient id="bowTailR" x1="66" y1="48" x2="104" y2="92" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#9f1427" />
+                        <stop offset="100%" stopColor="#6e0d1a" />
+                    </linearGradient>
+                    <linearGradient id="bowKnot" x1="52" y1="36" x2="68" y2="52" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#b51e32" />
+                        <stop offset="100%" stopColor="#7a0e1c" />
+                    </linearGradient>
+                </defs>
+
+                {/* Left loop — stroke only, no fill */}
+                <path
+                    d="M58 42 C48 18, 8 4, 6 28 C4 48, 32 56, 56 46"
+                    stroke="url(#bowLoopL)" strokeWidth="5" strokeLinecap="round"
+                    fill="none"
+                />
+
+                {/* Right loop — stroke only, no fill */}
+                <path
+                    d="M62 42 C72 18, 112 4, 114 28 C116 48, 88 56, 64 46"
+                    stroke="url(#bowLoopR)" strokeWidth="5" strokeLinecap="round"
+                    fill="none"
+                />
+
+                {/* Left tail */}
+                <path
+                    d="M54 48 C42 62, 24 70, 18 90"
+                    stroke="url(#bowTailL)" strokeWidth="3.5" strokeLinecap="round"
+                    fill="none"
+                />
+
+                {/* Right tail */}
+                <path
+                    d="M66 48 C78 62, 96 70, 102 90"
+                    stroke="url(#bowTailR)" strokeWidth="3.5" strokeLinecap="round"
+                    fill="none"
+                />
+
+                {/* Center knot */}
+                <ellipse cx="60" cy="44" rx="8" ry="6" fill="url(#bowKnot)" />
+            </svg>
+        </span>
+    )
+}
+
+/**
  * PLANTILLA BODA EDITORIAL
  * Duplica la carpeta, cambia el slug y edita únicamente este objeto.
  */
@@ -111,10 +177,9 @@ function Hero({ config }) {
         <header className="wed-hero">
             <div className="wed-hero__photo" data-hero-photo />
             <div className="wed-hero__wash" />
-            <div className="wed-handwriting wed-handwriting--hero" aria-hidden="true">
-                I love you · I love you · I love you
-            </div>
+
             <div className="wed-hero__panel">
+                <RibbonBow className="wed-bow--hero" />
                 <p className="wed-hero__eyebrow" data-hero-copy>Nos casamos</p>
                 <h1 data-hero-copy>
                     <span>{config.couple[0]}</span>
@@ -124,7 +189,6 @@ function Hero({ config }) {
                 <div className="wed-hero__date" data-hero-copy>{config.dateLabel}</div>
                 <p className="wed-hero__phrase" data-hero-copy>“{config.phrase}”</p>
             </div>
-            <span className="wed-bow wed-bow--hero" data-drift aria-hidden="true"><i /><b /></span>
             <button
                 className="wed-scroll"
                 type="button"
@@ -268,7 +332,7 @@ function Events({ config }) {
 function DressCode({ config }) {
     return (
         <section className="wed-section wed-dress" data-wed-section>
-            <span className="wed-bow wed-bow--dress" data-drift aria-hidden="true"><i /><b /></span>
+            <RibbonBow className="wed-bow--dress" data-drift />
             <div className="wed-container">
                 <EditorialHeading kicker="Dress code" light>
                     Vístanse para<br /><em>celebrar</em>
