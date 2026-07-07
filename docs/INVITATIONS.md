@@ -7,23 +7,23 @@ the minimum invitation-specific files needed for a task.
 
 | Slug | Architecture | Event | RSVP | Source | Assets |
 | --- | --- | --- | --- | ---: | ---: |
-| `plantilla-boda-editorial` | standalone-custom | boda | whatsapp | 2 files | 0.27 MB |
-| `plantilla-rapunzel-xv` | standalone-custom | xv | whatsapp | 2 files | 1.10 MB |
+| `plantilla-boda-editorial` | standalone-custom | boda | whatsapp | 2 files | 0.25 MB |
+| `plantilla-rapunzel-xv` | standalone-custom | xv | whatsapp | 2 files | 0.90 MB |
 | `plantilla-fiesta-casual` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.03 MB |
-| `plantilla-bluey-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.48 MB |
-| `plantilla-minecraft-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 3.53 MB |
-| `kassandra-brian` | dedicated-components | boda | whatsapp | 10 files | 5.75 MB |
-| `melani-marisol` | dedicated-components | xv | whatsapp | 13 files | 4.83 MB |
-| `despedida-kass-brian` | hybrid-overrides | despedida | whatsapp | 7 files | 1.17 MB |
-| `isabella` | shared-config | primera-comunion | supabase | 2 files | 2.63 MB |
-| `erik-shady-bermejo` | shared-config | primera-comunion | mixed | 2 files | 4.40 MB |
+| `plantilla-bluey-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 4.17 MB |
+| `plantilla-minecraft-fiesta` | standalone-custom | cumpleanos | whatsapp | 2 files | 4.41 MB |
+| `kassandra-brian` | dedicated-components | boda | whatsapp | 10 files | 5.63 MB |
+| `melani-marisol` | dedicated-components | xv | whatsapp | 13 files | 4.97 MB |
+| `despedida-kass-brian` | hybrid-overrides | despedida | whatsapp | 7 files | 2.14 MB |
+| `isabella` | shared-config | primera-comunion | supabase | 2 files | 2.61 MB |
+| `erik-shady-bermejo` | shared-config | primera-comunion | mixed | 2 files | 5.27 MB |
 | `alexa-y-santiago` | shared-config | primera-comunion | supabase | 2 files | 2.61 MB |
-| `victoria-rojas` | hybrid-overrides | xv | mixed | 9 files | 8.68 MB |
-| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 6.72 MB |
-| `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 13.26 MB |
-| `jose-raul` | shared-config | xv | none | 3 files | 5.08 MB |
+| `victoria-rojas` | hybrid-overrides | xv | mixed | 9 files | 8.64 MB |
+| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 7.63 MB |
+| `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 13.25 MB |
+| `jose-raul` | shared-config | xv | none | 3 files | 5.18 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
-| `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.21 MB |
+| `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
 
 ## Targeted context
 

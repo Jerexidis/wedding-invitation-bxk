@@ -178,6 +178,22 @@ export default function devAdminPlugin() {
                     return
                 }
 
+                // PATCH /api/invitations/:slug/portfolio
+                const portfolioMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/portfolio$/)
+                if (req.method === 'PATCH' && portfolioMatch) {
+                    try {
+                        const slug = portfolioMatch[1]
+                        const newExcluded = togglePortfolioVisibility(slug)
+                        res.setHeader('Content-Type', 'application/json')
+                        res.end(JSON.stringify({ ok: true, slug, excludeFromPortfolio: newExcluded }))
+                    } catch (err) {
+                        res.setHeader('Content-Type', 'application/json')
+                        res.statusCode = 500
+                        res.end(JSON.stringify({ ok: false, error: err.message }))
+                    }
+                    return
+                }
+
                 // GET/POST /api/invitations/:slug/activation
                 const activationMatch = req.url?.match(/^\/api\/invitations\/([a-z0-9-]+)\/activation$/)
                 if (req.method === 'GET' && activationMatch) {
@@ -494,6 +510,7 @@ function readRegistry() {
         const isDefault = block.includes('isDefault: true')
         const isDemo = block.includes('isDemo: true')
         const enabled = !block.includes('enabled: false')
+        const excludeFromPortfolio = block.includes('excludeFromPortfolio: true')
         const registryEventType = block.match(/eventType:\s*['"]([^'"]+)['"]/)?.[1] || null
         const registryRsvpMode = block.match(/rsvpMode:\s*['"]([^'"]+)['"]/)?.[1] || null
         const registryEventDate = block.match(/eventDate:\s*['"]([^'"]+)['"]/)?.[1] || null
@@ -515,6 +532,7 @@ function readRegistry() {
             isDefault,
             isDemo,
             enabled,
+            excludeFromPortfolio,
             hasConfig,
             rsvpMode: config?.rsvp?.mode || registryRsvpMode,
             eventType: config?.eventType || registryEventType,
@@ -827,6 +845,36 @@ function toggleInvitation(slug) {
     content = content.replace(blockRegex, `$1enabled: ${newState}`)
     fs.writeFileSync(REGISTRY_PATH, content, 'utf-8')
     return newState
+}
+
+// ─── TOGGLE PORTFOLIO VISIBILITY ────────────────────────────────
+function togglePortfolioVisibility(slug) {
+    let content = fs.readFileSync(REGISTRY_PATH, 'utf-8')
+
+    const slugIndex = content.indexOf(`slug: '${slug}'`)
+    if (slugIndex === -1) {
+        throw new Error(`Invitación "${slug}" no encontrada en el registro`)
+    }
+
+    const blockStart = content.lastIndexOf('{', slugIndex)
+    const blockEnd = content.indexOf('}', slugIndex)
+    if (blockStart === -1 || blockEnd === -1) {
+        throw new Error(`Error parsing registry block for "${slug}"`)
+    }
+
+    let block = content.substring(blockStart, blockEnd + 1)
+    let isExcluded = block.includes('excludeFromPortfolio: true')
+    let newBlock
+
+    if (isExcluded) {
+        newBlock = block.replace(/\n\s*excludeFromPortfolio:\s*true,?/g, '')
+    } else {
+        newBlock = block.replace(/,?\s*\}\s*$/, ',\n        excludeFromPortfolio: true,\n    }')
+    }
+
+    content = content.substring(0, blockStart) + newBlock + content.substring(blockEnd + 1)
+    fs.writeFileSync(REGISTRY_PATH, content, 'utf-8')
+    return !isExcluded
 }
 
 // ─── GIT DEPLOY ─────────────────────────────────────────────────

@@ -30,8 +30,8 @@
         "files": 3,
         "images": 3,
         "audio": 0,
-        "bytes": 278266,
-        "megabytes": 0.27
+        "bytes": 261745,
+        "megabytes": 0.25
       }
     },
     {
@@ -58,8 +58,8 @@
         "files": 3,
         "images": 3,
         "audio": 0,
-        "bytes": 1148610,
-        "megabytes": 1.1
+        "bytes": 940336,
+        "megabytes": 0.9
       }
     },
     {
@@ -114,8 +114,8 @@
         "files": 5,
         "images": 5,
         "audio": 0,
-        "bytes": 3646828,
-        "megabytes": 3.48
+        "bytes": 4369774,
+        "megabytes": 4.17
       }
     },
     {
@@ -142,8 +142,8 @@
         "files": 5,
         "images": 5,
         "audio": 0,
-        "bytes": 3702944,
-        "megabytes": 3.53
+        "bytes": 4620222,
+        "megabytes": 4.41
       }
     },
     {
@@ -178,8 +178,8 @@
         "files": 7,
         "images": 6,
         "audio": 1,
-        "bytes": 6032591,
-        "megabytes": 5.75
+        "bytes": 5902970,
+        "megabytes": 5.63
       }
     },
     {
@@ -217,8 +217,8 @@
         "files": 14,
         "images": 13,
         "audio": 1,
-        "bytes": 5066366,
-        "megabytes": 4.83
+        "bytes": 5211977,
+        "megabytes": 4.97
       }
     },
     {
@@ -250,8 +250,8 @@
         "files": 5,
         "images": 4,
         "audio": 0,
-        "bytes": 1222286,
-        "megabytes": 1.17
+        "bytes": 2248524,
+        "megabytes": 2.14
       }
     },
     {
@@ -278,8 +278,8 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2761480,
-        "megabytes": 2.63
+        "bytes": 2740080,
+        "megabytes": 2.61
       }
     },
     {
@@ -306,8 +306,8 @@
         "files": 7,
         "images": 5,
         "audio": 1,
-        "bytes": 4609463,
-        "megabytes": 4.4
+        "bytes": 5522704,
+        "megabytes": 5.27
       }
     },
     {
@@ -334,7 +334,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2739139,
+        "bytes": 2740080,
         "megabytes": 2.61
       }
     },
@@ -369,8 +369,8 @@
         "files": 30,
         "images": 28,
         "audio": 1,
-        "bytes": 9097773,
-        "megabytes": 8.68
+        "bytes": 9058496,
+        "megabytes": 8.64
       }
     },
     {
@@ -397,8 +397,8 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 7048875,
-        "megabytes": 6.72
+        "bytes": 7996728,
+        "megabytes": 7.63
       }
     },
     {
@@ -432,8 +432,8 @@
         "files": 45,
         "images": 42,
         "audio": 2,
-        "bytes": 13900540,
-        "megabytes": 13.26
+        "bytes": 13889269,
+        "megabytes": 13.25
       }
     },
     {
@@ -461,8 +461,8 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 5324801,
-        "megabytes": 5.08
+        "bytes": 5432296,
+        "megabytes": 5.18
       }
     },
     {
@@ -523,8 +523,8 @@
         "files": 34,
         "images": 31,
         "audio": 2,
-        "bytes": 13854933,
-        "megabytes": 13.21
+        "bytes": 13878236,
+        "megabytes": 13.24
       }
     }
   ]

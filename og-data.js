@@ -54,7 +54,7 @@ export const ogData = {
     'despedida-kass-brian': {
         title: 'Despedida de Solteros | Kass & Brian 🎉',
         description: '¡Estás invitad@ a nuestra Despedida de Solteros! 17 de octubre de 2026. ¡No faltes!',
-        image: '/invitations/despedida-kass-brian/img/share-preview.png',
+        image: '/invitations/despedida-kass-brian/img/hero-pareja.png',
     },
     'isabella': {
         title: 'Primera Comunión | Isabella 🕊️',

@@ -101,6 +101,7 @@ const invitations = [
         eventType: 'despedida',
         rsvpMode: 'whatsapp',
         eventDate: '2026-10-17T19:00:00',
+        portfolioPriority: 6,
     },
 
     {
@@ -129,6 +130,7 @@ const invitations = [
         eventType: 'primera-comunion',
         rsvpMode: 'supabase',
         eventDate: '2026-06-27T13:00:00',
+        excludeFromPortfolio: true,
     },
 
     {
@@ -149,6 +151,7 @@ const invitations = [
         eventType: 'xv',
         rsvpMode: 'whatsapp',
         eventDate: '2026-06-27T17:00:00',
+        excludeFromPortfolio: true,
     },
 
     {

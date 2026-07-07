@@ -62,6 +62,7 @@ const formatEventDate = (date) => {
 export default function Showcase() {
     const portfolioInvitations = activeInvitations
         .filter((inv) => {
+            if (inv.excludeFromPortfolio) return false
             if (inv.portfolioPriority) return true
             if (!inv.eventDate) return false
             return new Date(inv.eventDate) < new Date()

@@ -179,6 +179,19 @@ export default function AdminPanel() {
         } catch (err) { showToast(err.message, 'error') }
     }
 
+    const handlePortfolioToggle = async (slug, currentExcluded) => {
+        try {
+            const res = await fetch(`${API}/${slug}/portfolio`, { method: 'PATCH' })
+            const json = await res.json()
+            if (json.ok) {
+                showToast(json.excludeFromPortfolio ? `"${slug}" oculta del landing` : `"${slug}" visible en landing`)
+                fetchInvitations()
+                fetchDeployStatus()
+            }
+            else showToast(json.error, 'error')
+        } catch (err) { showToast(err.message, 'error') }
+    }
+
     const openCloneDialog = (inv) => {
         setCloneDialog({
             sourceSlug: inv.slug,
@@ -1053,15 +1066,22 @@ export default function AdminPanel() {
                                         <div className="inv-detail">
                                             <h3 className="inv-detail-title">{inv.title}</h3>
 
-                                            {/* Toggle visibility */}
+                                            {/* Toggles */}
                                             {!inv.isDefault && !inv.isDraft && (
                                                 <div className="inv-detail-toggle">
-                                                    <div className="toggle-row">
+                                                    <div className="toggle-row" style={{ marginBottom: '10px' }}>
                                                         <label className="toggle">
                                                             <input type="checkbox" checked={inv.enabled} onChange={() => handleToggle(inv.slug, inv.enabled)} />
                                                             <span className="toggle-slider" />
                                                         </label>
-                                                        <span className="toggle-label">{inv.enabled ? 'Activa — visible' : 'Inactiva — oculta'}</span>
+                                                        <span className="toggle-label">{inv.enabled ? 'Activa — visible por link' : 'Inactiva — oculta por link'}</span>
+                                                    </div>
+                                                    <div className="toggle-row">
+                                                        <label className="toggle">
+                                                            <input type="checkbox" checked={!inv.excludeFromPortfolio} onChange={() => handlePortfolioToggle(inv.slug, inv.excludeFromPortfolio)} />
+                                                            <span className="toggle-slider" />
+                                                        </label>
+                                                        <span className="toggle-label">{!inv.excludeFromPortfolio ? 'Mostrar en el landing' : 'Ocultar en el landing'}</span>
                                                     </div>
                                                 </div>
                                             )}
