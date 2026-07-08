@@ -21,16 +21,25 @@ export default function RSVP({ config, basePath }) {
         setRsvpForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleRsvpSubmit = (e, recipient) => {
+    const handleRsvpSubmit = (e) => {
         e.preventDefault();
         if (!rsvpForm.name.trim()) {
             alert('Por favor, escribe tu nombre completo para confirmar.');
             return;
         }
-        const selectedNumber = config.rsvp.whatsappNumbers[recipient] || config.rsvp.whatsappNumbers.lorena;
         const message = `¡Hola! 🥈✨ Soy *${rsvpForm.name}* y confirmo asistencia a las Bodas de Plata de Lorena y Arturo. 🎉\n👥 Personas: ${rsvpForm.guests}${rsvpForm.message?.trim() ? `\n💬 ${rsvpForm.message.trim()}` : ''}`;
-        const url = `https://wa.me/${selectedNumber}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
+        
+        const num1 = config.rsvp.whatsappNumbers.lorena;
+        const num2 = config.rsvp.whatsappNumbers.arturo;
+        
+        // Open first WhatsApp chat (Lorena)
+        window.open(`https://wa.me/${num1}?text=${encodeURIComponent(message)}`, '_blank');
+        
+        // Open second WhatsApp chat (Arturo) after a small delay
+        setTimeout(() => {
+            window.open(`https://wa.me/${num2}?text=${encodeURIComponent(message)}`, '_blank');
+        }, 800);
+        
         setRsvpSubmitted(true);
     };
 
@@ -68,7 +77,7 @@ export default function RSVP({ config, basePath }) {
                             value={rsvpForm.name}
                             onChange={handleNameChange}
                             className="bla-rsvp__input"
-                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+"
+                            pattern="[a-zA-Záéí0-9áéíóúÁÉÍÓÚñÑüÜ\s]+"
                             title="Solo se permiten letras"
                         />
                         <input
@@ -92,25 +101,15 @@ export default function RSVP({ config, basePath }) {
                             className="bla-rsvp__input bla-rsvp__textarea"
                         />
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginTop: '0.5rem' }}>
-                            <button
-                                type="button"
-                                onClick={(e) => handleRsvpSubmit(e, 'lorena')}
-                                className="bla-rsvp__btn"
-                            >
-                                Confirmar con Lorena
-                                <WhatsAppIcon />
-                            </button>
-                            <button
-                                type="button"
-                                onClick={(e) => handleRsvpSubmit(e, 'arturo')}
-                                className="bla-rsvp__btn"
-                                style={{ background: 'linear-gradient(145deg, var(--bla-silver), var(--bla-silver-dark))' }}
-                            >
-                                Confirmar con Arturo
-                                <WhatsAppIcon />
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            onClick={handleRsvpSubmit}
+                            className="bla-rsvp__btn"
+                            style={{ marginTop: '0.5rem' }}
+                        >
+                            Confirmar asistencia por WhatsApp
+                            <WhatsAppIcon />
+                        </button>
                     </form>
                 </div>
             )}

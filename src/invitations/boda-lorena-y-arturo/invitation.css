@@ -697,7 +697,8 @@
 .bla-brindis-section {
     text-align: center;
     background: linear-gradient(180deg, var(--bla-beige) 0%, rgba(192, 192, 192, 0.06) 50%, var(--bla-beige) 100%);
-    padding: 2.5rem 1.5rem !important;
+    padding: 0.5rem 1.5rem 2rem !important;
+    margin-top: -1rem;
 }
 
 .bla-brindis-img {
