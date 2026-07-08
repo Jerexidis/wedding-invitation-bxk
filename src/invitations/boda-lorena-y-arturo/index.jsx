@@ -30,7 +30,45 @@ const getTimeLeft = (targetDate) => {
 
 // ─── Confetti & Silver Sparkles ─────────────────────────────────
 const CONFETTI_COLORS = ['#c0c0c0', '#e8e8e8', '#d4d4d4', '#c9b896', '#b8b8b8', '#a8a8a8', '#f0ead6'];
-const CONFETTI_SHAPES = ['✦', '♥', '★', '25', '●', '✧', '♦'];
+
+// SVG shapes that render consistently across all devices
+const ConfettiStar = ({ color, size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" />
+    </svg>
+);
+
+const ConfettiHeart = ({ color, size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+);
+
+const ConfettiDiamond = ({ color, size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 12l10 10 10-10z" />
+    </svg>
+);
+
+const ConfettiSparkle = ({ color, size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0l1.8 8.4L22 12l-8.2 3.6L12 24l-1.8-8.4L2 12l8.2-3.6z" />
+    </svg>
+);
+
+const ConfettiCircle = ({ color, size }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" />
+    </svg>
+);
+
+const Confetti25 = ({ color, size }) => (
+    <svg width={size * 1.4} height={size} viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="18" y="18" textAnchor="middle" fontFamily="var(--font-display)" fontSize="20" fontWeight="700" fill={color}>25</text>
+    </svg>
+);
+
+const CONFETTI_COMPONENTS = [ConfettiSparkle, ConfettiHeart, ConfettiStar, Confetti25, ConfettiCircle, ConfettiSparkle, ConfettiDiamond];
 
 function ConfettiPiece({ index, total }) {
     const left = Math.random() * 100;
@@ -38,22 +76,21 @@ function ConfettiPiece({ index, total }) {
     const duration = 2 + Math.random() * 3;
     const delay = (index / total) * 1.8 + Math.random() * 0.5;
     const color = CONFETTI_COLORS[index % CONFETTI_COLORS.length];
-    const shape = CONFETTI_SHAPES[index % CONFETTI_SHAPES.length];
+    const ShapeComponent = CONFETTI_COMPONENTS[index % CONFETTI_COMPONENTS.length];
 
     return (
         <span
             className="bla-confetti__piece"
             style={{
                 left: `${left}%`,
-                fontSize: `${size}px`,
-                color,
                 animationDuration: `${duration}s`,
                 animationDelay: `${delay}s`,
             }}
         >
-            {shape}
+            <ShapeComponent color={color} size={size} />
         </span>
     );
+
 }
 
 // ═══════════════════════════════════════════════════════════════════
