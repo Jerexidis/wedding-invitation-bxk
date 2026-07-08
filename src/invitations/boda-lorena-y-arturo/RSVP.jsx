@@ -8,7 +8,7 @@ const WhatsAppIcon = () => (
 );
 
 export default function RSVP({ config, basePath }) {
-    const [rsvpForm, setRsvpForm] = useState({ name: '', guests: 1, message: '', confirmTo: 'lorena' });
+    const [rsvpForm, setRsvpForm] = useState({ name: '', guests: 1, message: '' });
     const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
     const handleNameChange = (e) => {
@@ -21,9 +21,13 @@ export default function RSVP({ config, basePath }) {
         setRsvpForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleRsvpSubmit = (e) => {
+    const handleRsvpSubmit = (e, recipient) => {
         e.preventDefault();
-        const selectedNumber = config.rsvp.whatsappNumbers[rsvpForm.confirmTo] || config.rsvp.whatsappNumbers.lorena;
+        if (!rsvpForm.name.trim()) {
+            alert('Por favor, escribe tu nombre completo para confirmar.');
+            return;
+        }
+        const selectedNumber = config.rsvp.whatsappNumbers[recipient] || config.rsvp.whatsappNumbers.lorena;
         const message = `¡Hola! 🥈✨ Soy *${rsvpForm.name}* y confirmo asistencia a las Bodas de Plata de Lorena y Arturo. 🎉\n👥 Personas: ${rsvpForm.guests}${rsvpForm.message?.trim() ? `\n💬 ${rsvpForm.message.trim()}` : ''}`;
         const url = `https://wa.me/${selectedNumber}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
@@ -55,7 +59,7 @@ export default function RSVP({ config, basePath }) {
                         {config.rsvp.deadline}
                     </p>
 
-                    <form onSubmit={handleRsvpSubmit} className="bla-rsvp__form">
+                    <form onSubmit={(e) => e.preventDefault()} className="bla-rsvp__form">
                         <input
                             type="text"
                             name="name"
@@ -77,17 +81,6 @@ export default function RSVP({ config, basePath }) {
                             onChange={handleInputChange}
                             className="bla-rsvp__input"
                         />
-                        
-                        <select
-                            name="confirmTo"
-                            value={rsvpForm.confirmTo}
-                            onChange={handleInputChange}
-                            className="bla-rsvp__input"
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <option value="lorena">Confirmar con Lorena</option>
-                            <option value="arturo">Confirmar con Arturo</option>
-                        </select>
 
                         <textarea
                             name="message"
@@ -98,10 +91,26 @@ export default function RSVP({ config, basePath }) {
                             maxLength={200}
                             className="bla-rsvp__input bla-rsvp__textarea"
                         />
-                        <button type="submit" className="bla-rsvp__btn">
-                            Confirmar por WhatsApp
-                            <WhatsAppIcon />
-                        </button>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginTop: '0.5rem' }}>
+                            <button
+                                type="button"
+                                onClick={(e) => handleRsvpSubmit(e, 'lorena')}
+                                className="bla-rsvp__btn"
+                            >
+                                Confirmar con Lorena
+                                <WhatsAppIcon />
+                            </button>
+                            <button
+                                type="button"
+                                onClick={(e) => handleRsvpSubmit(e, 'arturo')}
+                                className="bla-rsvp__btn"
+                                style={{ background: 'linear-gradient(145deg, var(--bla-silver), var(--bla-silver-dark))' }}
+                            >
+                                Confirmar con Arturo
+                                <WhatsAppIcon />
+                            </button>
+                        </div>
                     </form>
                 </div>
             )}

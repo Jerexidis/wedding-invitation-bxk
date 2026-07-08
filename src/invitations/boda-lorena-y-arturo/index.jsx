@@ -236,25 +236,8 @@ export default function BodaLorenaYArturo({ portfolioMode = false }) {
                             </div>
                         </section>
 
-                        {/* ── Banderines Divider ──────────────────────── */}
-                        <img
-                            src={`${basePath}/img/banderines.png`}
-                            alt=""
-                            className="bla-banderines-divider"
-                            aria-hidden="true"
-                            style={{ transform: 'scaleX(-1)' }}
-                        />
-
                         {/* ── Padrinos Section ────────────────────────── */}
                         <Padrinos config={config} />
-
-                        {/* ── Banderines Divider ──────────────────────── */}
-                        <img
-                            src={`${basePath}/img/banderines.png`}
-                            alt=""
-                            className="bla-banderines-divider"
-                            aria-hidden="true"
-                        />
 
                         {/* ── Events Section ──────────────────────────── */}
                         <Events config={config} basePath={basePath} />
@@ -271,28 +254,12 @@ export default function BodaLorenaYArturo({ portfolioMode = false }) {
                             </p>
                         </section>
 
-                        {/* ── Banderines Divider ──────────────────────── */}
-                        <img
-                            src={`${basePath}/img/banderines.png`}
-                            alt=""
-                            className="bla-banderines-divider"
-                            aria-hidden="true"
-                            style={{ transform: 'scaleX(-1)' }}
-                        />
-
                         {/* ── RSVP Section ────────────────────────────── */}
                         <RSVP config={config} basePath={basePath} />
                     </main>
 
                     {/* ── Footer Section ──────────────────────────── */}
                     <Footer config={config} basePath={basePath} />
-
-                    {/* Audio Element */}
-                    {config.hero.song && (
-                        <audio ref={audioRef} loop>
-                            <source src={`${basePath}/audio/${config.hero.song}`} type="audio/mpeg" />
-                        </audio>
-                    )}
 
                     {/* Floating Audio Button */}
                     {config.hero.song && (
@@ -305,6 +272,13 @@ export default function BodaLorenaYArturo({ portfolioMode = false }) {
                         </button>
                     )}
                 </>
+            )}
+
+            {/* Audio Element (Rendered unconditionally so audioRef is available before opening) */}
+            {config.hero.song && (
+                <audio ref={audioRef} loop>
+                    <source src={`${basePath}/audio/${config.hero.song}`} type="audio/mpeg" />
+                </audio>
             )}
         </div>
     );
