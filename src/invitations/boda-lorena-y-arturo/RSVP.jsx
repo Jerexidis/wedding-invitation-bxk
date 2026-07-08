@@ -27,19 +27,11 @@ export default function RSVP({ config, basePath }) {
             alert('Por favor, escribe tu nombre completo para confirmar.');
             return;
         }
-        const message = `¡Hola! 🥈✨ Soy *${rsvpForm.name}* y confirmo asistencia a las Bodas de Plata de Lorena y Arturo. 🎉\n👥 Personas: ${rsvpForm.guests}${rsvpForm.message?.trim() ? `\n💬 ${rsvpForm.message.trim()}` : ''}`;
-        
+        const message = `¡Hola! ✨ Soy *${rsvpForm.name}* y confirmo asistencia a las Bodas de Plata de Lorena y Arturo. 🎉\n👥 Personas: ${rsvpForm.guests}${rsvpForm.message?.trim() ? `\n💬 ${rsvpForm.message.trim()}` : ''}`;
+
         const num1 = config.rsvp.whatsappNumbers.lorena;
-        const num2 = config.rsvp.whatsappNumbers.arturo;
-        
-        // Open first WhatsApp chat (Lorena)
         window.open(`https://wa.me/${num1}?text=${encodeURIComponent(message)}`, '_blank');
-        
-        // Open second WhatsApp chat (Arturo) after a small delay
-        setTimeout(() => {
-            window.open(`https://wa.me/${num2}?text=${encodeURIComponent(message)}`, '_blank');
-        }, 800);
-        
+
         setRsvpSubmitted(true);
     };
 
@@ -52,7 +44,7 @@ export default function RSVP({ config, basePath }) {
                     </div>
                     <h2 className="bla-section__title" style={{ marginTop: '0.5rem' }}>¡Gracias!</h2>
                     <p className="bla-section__subtitle">
-                        Tu confirmación ha sido enviada. ¡Nos vemos en la fiesta de plata! 🥈🎉
+                        Tu confirmación ha sido enviada. ¡Nos vemos en la fiesta! 🎉
                     </p>
                 </div>
             ) : (

@@ -72,32 +72,32 @@
     "photos": [
       {
         "src": "1.jpeg",
-        "caption": "Nuestra Historia ♥"
+        "caption": ""
       },
       {
         "src": "2.jpeg",
-        "caption": "Caminando Juntos 🥈"
+        "caption": ""
       },
       {
         "src": "3.jpeg",
-        "caption": "Momentos Especiales ✨"
+        "caption": ""
       },
       {
         "src": "4.jpeg",
-        "caption": "Complicidad y Amor ♥"
+        "caption": ""
       },
       {
         "src": "5.png",
-        "caption": "Nuestra Familia 🌟",
+        "caption": "",
         "objectFit": "contain"
       },
       {
         "src": "6.jpeg",
-        "caption": "Risas Compartidas 😊"
+        "caption": ""
       },
       {
         "src": "7.png",
-        "caption": "Bodas de Plata 🥂"
+        "caption": ""
       }
     ]
   },
@@ -111,8 +111,7 @@
     "mode": "whatsapp",
     "whatsappNumber": "524494792201",
     "whatsappNumbers": {
-      "lorena": "524494792201",
-      "arturo": "525534887928"
+      "lorena": "524494792201"
     },
     "deadline": "Confirma antes del gran día 🥂"
   },
