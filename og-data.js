@@ -88,7 +88,7 @@ export const ogData = {
     },
     'maia-sofia-duran-avila': {
         title: 'Mis XV Años | Maia Sofía ',
-        description:"",
+        description: "",
         image: '/invitations/maia-sofia-duran-avila/img/og-preview.jpg',
     },
     'andre-joel': {
@@ -97,7 +97,7 @@ export const ogData = {
         image: '/invitations/andre-joel/img/og-preview.jpg',
     },
     'boda-lorena-y-arturo': {
-        title: 'Bodas de Plata | Lorena & Arturo 🥈',
+        title: 'Bodas de Plata | Lorena & Arturo',
         description: 'Te invitamos a celebrar nuestras Bodas de Plata. ¡Toca aquí para ver la invitación!',
         image: '/invitations/boda-lorena-y-arturo/img/og-preview.png',
     },
