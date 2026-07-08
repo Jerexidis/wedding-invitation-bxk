@@ -1030,3 +1030,298 @@
     }
 }
 
+/* ─── Gallery Section ────────────────────────────────────────── */
+.bla-gallery-section {
+    background: linear-gradient(180deg, var(--bla-beige) 0%, var(--bla-beige-light) 50%, var(--bla-beige) 100%);
+    overflow: hidden;
+}
+
+.bla-gallery-stack-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0 3rem;
+    margin-top: 1rem;
+}
+
+.bla-gallery-stack {
+    position: relative;
+    width: 260px;
+    height: 340px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .bla-gallery-stack {
+        width: 320px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 400px) {
+    .bla-gallery-stack {
+        width: 220px;
+        height: 290px;
+    }
+}
+
+.bla-gallery-stack__card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bla-white);
+    padding: 12px 12px 42px 12px;
+    border-radius: 4px;
+    margin: -1rem auto -2.5rem;
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.05));
+}
+
+/* ─── Floating Audio Player ──────────────────────────────────── */
+.bla-audio-control {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(192, 192, 192, 0.5);
+    box-shadow: 0 8px 32px rgba(74, 63, 53, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bla-text);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+}
+
+.bla-audio-control:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--bla-white);
+}
+
+.bla-audio-control.playing svg {
+    animation: bla-spin 4s linear infinite;
+}
+
+@keyframes bla-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (min-width: 640px) {
+    .bla-hero__image {
+        width: 260px;
+    }
+
+    .bla-hero__names {
+        font-size: 4rem;
+    }
+
+    .bla-section__title {
+        font-size: 3.4rem;
+    }
+
+    .bla-countdown__value {
+        font-size: 2.4rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .bla-hero {
+        padding: 4rem 2rem 3rem;
+    }
+
+    .bla-hero__frame {
+        padding: 3rem 2.5rem;
+    }
+
+    .bla-hero__image {
+        width: 280px;
+    }
+
+    .bla-section {
+        padding: 4rem 2rem;
+    }
+
+    .bla-brindis-text {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bla-hero__names {
+        font-size: 2.5rem;
+    }
+
+    .bla-hero__quote {
+        font-size: 0.82rem;
+        padding: 1rem 1.2rem;
+    }
+
+    .bla-countdown {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.35rem;
+        max-width: 320px;
+    }
+
+    .bla-countdown__box {
+        padding: 0.65rem 0.25rem;
+        border-radius: 12px;
+    }
+
+    .bla-countdown__value {
+        font-size: 1.35rem;
+    }
+
+    .bla-countdown__label {
+        font-size: 0.52rem;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+    }
+
+    .bla-envelope__names {
+        font-size: 2.4rem;
+    }
+
+    .bla-section__title {
+        font-size: 2.2rem;
+    }
+
+    .bla-padrinos__name {
+        font-size: 1.5rem;
+    }
+
+    .bla-silver-badge {
+        width: 62px;
+        height: 62px;
+        top: -14px;
+        right: -6px;
+    }
+
+    .bla-silver-badge__number {
+        font-size: 1.6rem;
+    }
+
+    .bla-brindis-text {
+        font-size: 1.3rem;
+    }
+
+    .bla-fun-banner {
+        margin: 0 1rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .bla-fun-banner__text {
+        font-size: 0.82rem;
+    }
+}
+
+/* ─── Gallery Section ────────────────────────────────────────── */
+.bla-gallery-section {
+    background: linear-gradient(180deg, var(--bla-beige) 0%, var(--bla-beige-light) 50%, var(--bla-beige) 100%);
+    overflow: hidden;
+}
+
+.bla-gallery-stack-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0 3rem;
+    margin-top: 1rem;
+}
+
+.bla-gallery-stack {
+    position: relative;
+    width: 260px;
+    height: 340px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .bla-gallery-stack {
+        width: 320px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 400px) {
+    .bla-gallery-stack {
+        width: 220px;
+        height: 290px;
+    }
+}
+
+.bla-gallery-stack__card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bla-white);
+    padding: 12px 12px 42px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(192, 192, 192, 0.35);
+    box-shadow: 0 15px 35px rgba(74, 63, 53, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+    transform-origin: bottom center;
+    will-change: transform, opacity;
+    transition: transform 600ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 600ms ease;
+}
+
+.bla-gallery-stack__card--tilt-left {
+    transform: rotate(-2deg);
+}
+
+.bla-gallery-stack__card--tilt-right {
+    transform: rotate(3deg);
+}
+
+.bla-gallery-stack__card--exit {
+    transform: translateX(-150%) translateY(-20%) rotate(-30deg);
+    opacity: 0;
+}
+
+.bla-gallery-stack__img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    background: var(--bla-white);
+    border: 1px solid rgba(192, 192, 192, 0.15);
+}
+
+.bla-gallery-stack__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bla-gallery-stack__caption {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--bla-text);
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+    transform: rotate(-0.5deg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 400px) {
+    .bla-gallery-stack__caption {
+        font-size: 1.15rem;
+        margin-top: 6px;
+    }
+}

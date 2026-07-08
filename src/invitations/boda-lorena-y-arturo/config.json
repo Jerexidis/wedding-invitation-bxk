@@ -68,8 +68,38 @@
     "enabled": false
   },
   "gallery": {
-    "enabled": false,
-    "photos": []
+    "enabled": true,
+    "photos": [
+      {
+        "src": "1.jpeg",
+        "caption": "Nuestra Historia ♥"
+      },
+      {
+        "src": "2.jpeg",
+        "caption": "Caminando Juntos 🥈"
+      },
+      {
+        "src": "3.jpeg",
+        "caption": "Momentos Especiales ✨"
+      },
+      {
+        "src": "4.jpeg",
+        "caption": "Complicidad y Amor ♥"
+      },
+      {
+        "src": "5.png",
+        "caption": "Nuestra Familia 🌟",
+        "objectFit": "contain"
+      },
+      {
+        "src": "6.jpeg",
+        "caption": "Risas Compartidas 😊"
+      },
+      {
+        "src": "7.png",
+        "caption": "Bodas de Plata 🥂"
+      }
+    ]
   },
   "gifts": {
     "enabled": false

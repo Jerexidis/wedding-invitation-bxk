@@ -10,6 +10,7 @@ import Envelope from './Envelope';
 import Hero from './Hero';
 import Padrinos from './Padrinos';
 import Events from './Events';
+import Gallery from './Gallery';
 import RSVP from './RSVP';
 import Footer from './Footer';
 
@@ -253,6 +254,11 @@ export default function BodaLorenaYArturo({ portfolioMode = false }) {
                                 ¡Por 25 años más de aventuras juntos! 🥂
                             </p>
                         </section>
+
+                        {/* ── Gallery Section ────────────────────────── */}
+                        {config.gallery?.enabled && (
+                            <Gallery config={config} basePath={basePath} />
+                        )}
 
                         {/* ── RSVP Section ────────────────────────────── */}
                         <RSVP config={config} basePath={basePath} />

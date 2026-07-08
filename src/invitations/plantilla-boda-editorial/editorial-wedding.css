@@ -237,15 +237,17 @@
     font-size: clamp(3rem, 12vw, 5.8rem);
     font-weight: 400;
     letter-spacing: -.06em;
-    line-height: .88;
+    line-height: 1.25;
     margin: 0;
 }
 
 .wed-heading h2 em {
     color: var(--wed-red);
+    display: inline-block;
     font-family: "Mrs Saint Delafield", cursive;
     font-size: 1.12em;
     font-weight: 400;
+    margin-top: 0.35em;
 }
 
 .wed-heading > span {
@@ -253,8 +255,8 @@
     display: block;
     font-family: "Mrs Saint Delafield", cursive;
     font-size: 2.2rem;
-    line-height: .7;
-    margin: .5rem 0 0;
+    line-height: 1.1;
+    margin: 1.5rem 0 0;
     transform: rotate(-3deg);
 }
 
