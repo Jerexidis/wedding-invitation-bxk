@@ -52,7 +52,7 @@
       "address": "Misa Santa María estrella 7.00 pm",
       "time": "7:00 PM",
       "image": "iglesia.png",
-      "mapLink": "https://maps.google.com/?q=Santa+Maria+Estrella"
+      "mapLink": "https://maps.app.goo.gl/K8xKgnRthDQQfC4J6"
     },
     {
       "type": "party",
@@ -61,7 +61,7 @@
       "address": "Recepción jardín el edén",
       "time": "Después de la ceremonia",
       "image": "jardin.png",
-      "mapLink": "https://maps.google.com/?q=Jardin+El+Eden"
+      "mapLink": "https://maps.app.goo.gl/nBHEUXa2ibVs45tPA"
     }
   ],
   "dressCode": {

@@ -21,9 +21,6 @@ export default function Events({ config, basePath }) {
                                     className="bla-event-card__img"
                                 />
                                 <div className="bla-event-card__overlay">
-                                    <p className="bla-event-card__tag">
-                                        {event.type === 'church' ? '⛪ Misa' : '🎉 Fiesta'}
-                                    </p>
                                     <p className="bla-event-card__name">{event.title}</p>
                                 </div>
                             </div>

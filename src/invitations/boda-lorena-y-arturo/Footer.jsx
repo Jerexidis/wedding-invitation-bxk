@@ -12,7 +12,7 @@ export default function Footer({ config, basePath }) {
                 />
                 <p className="bla-footer__names">{config.hero.names}</p>
                 <p className="bla-footer__tagline">
-                    Bodas de Plata · 25 Años 🥈
+                    Bodas de Plata · 25 Años
                 </p>
                 <p className="bla-footer__message">
                     25 años de risas, aventuras y mucho amor.
@@ -22,7 +22,7 @@ export default function Footer({ config, basePath }) {
                     <Heart size={18} color="var(--bla-silver)" className="bla-heartbeat" style={{ display: 'inline' }} />
                 </div>
                 <p style={{ marginTop: '1.2rem', fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.15em', color: 'var(--bla-text-muted)' }}>
-                    Creado con <span style={{ color: 'var(--bla-silver)' }}>♥</span> por <strong>Invita-Ya</strong>
+                    Creado con <strong>Invita-Ya</strong>
                 </p>
             </div>
         </footer>
