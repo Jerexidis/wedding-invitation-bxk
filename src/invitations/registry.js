@@ -194,6 +194,16 @@ const invitations = [
         eventDate: '2026-07-18T15:30:00',
     },
 
+    {
+        slug: 'boda-lorena-y-arturo',
+        title: 'Nuestra Boda | Lorena & Arturo',
+        component: lazy(() => import('./boda-lorena-y-arturo/index.jsx')),
+        enabled: true,
+        eventType: 'boda',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-08-08T19:00:00',
+    },
+
 ]
 
 // Solo invitaciones activas

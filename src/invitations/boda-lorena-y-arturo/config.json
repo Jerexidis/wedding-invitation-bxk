@@ -1,0 +1,90 @@
+{
+  "slug": "boda-lorena-y-arturo",
+  "eventType": "boda",
+  "title": "Nuestra Boda | Lorena & Arturo",
+  "theme": {
+    "primaryHue": 35,
+    "primarySat": 15,
+    "accentHue": 192,
+    "fontBody": "Quicksand",
+    "fontDisplay": "Dancing Script"
+  },
+  "hero": {
+    "name": "Lorena & Arturo",
+    "title": "Bodas de Plata",
+    "names": "Lorena & Arturo",
+    "quote": "\"No se trata de contar los años, sino de ir recordando los bonitos momentos y de vivir con más ganas los que faltan por estar juntos\"",
+    "backgroundImage": "novios-cartoon.png",
+    "song": "Metallica.mp3",
+    "date": "Sábado 8 de agosto de 2026",
+    "time": "7:00 PM"
+  },
+  "seo": {
+    "shareImage": "novios-cartoon.png"
+  },
+  "intro": {},
+  "countdown": {
+    "targetDate": "2026-08-08T19:00:00",
+    "subtitle": "Para volver a decir \"sí, acepto\" (ahora ya sabiendo en lo que nos metimos)"
+  },
+  "calendar": {
+    "title": "Bodas de Plata | Lorena & Arturo",
+    "description": "¡Acompáñanos a celebrar!",
+    "location": "Jardín El Edén, Aguascalientes",
+    "startDateTime": "20260808T190000",
+    "endDateTime": "20260808T235900",
+    "outlookStart": "2026-08-08T19:00:00",
+    "outlookEnd": "2026-08-08T23:59:00",
+    "icsFilename": "boda_lorena_arturo.ics",
+    "icsProdId": "Boda | Lorena & Arturo"
+  },
+  "padrinos": {
+    "enabled": true,
+    "label": "Padrinos de Velación",
+    "madrina": "Lety Pérez",
+    "padrino": "Jorge Ruiz Esparza"
+  },
+  "events": [
+    {
+      "type": "church",
+      "title": "Ceremonia Religiosa",
+      "location": "Santa María Estrella",
+      "address": "Misa Santa María estrella 7.00 pm",
+      "time": "7:00 PM",
+      "image": "iglesia.png",
+      "mapLink": "https://maps.google.com/?q=Santa+Maria+Estrella"
+    },
+    {
+      "type": "party",
+      "title": "Recepción",
+      "location": "Jardín El Edén",
+      "address": "Recepción jardín el edén",
+      "time": "Después de la ceremonia",
+      "image": "jardin.png",
+      "mapLink": "https://maps.google.com/?q=Jardin+El+Eden"
+    }
+  ],
+  "dressCode": {
+    "enabled": false
+  },
+  "gallery": {
+    "enabled": false,
+    "photos": []
+  },
+  "gifts": {
+    "enabled": false
+  },
+  "itinerary": {
+    "enabled": false
+  },
+  "rsvp": {
+    "mode": "whatsapp",
+    "whatsappNumber": "524494792201",
+    "whatsappNumbers": {
+      "lorena": "524494792201",
+      "arturo": "525534887928"
+    },
+    "deadline": "Confirma antes del gran día 🥂"
+  },
+  "footer": {}
+}
