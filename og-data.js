@@ -99,6 +99,6 @@ export const ogData = {
     'boda-lorena-y-arturo': {
         title: 'Bodas de Plata | Lorena & Arturo 🥈',
         description: 'Te invitamos a celebrar nuestras Bodas de Plata. ¡Toca aquí para ver la invitación!',
-        image: '/invitations/boda-lorena-y-arturo/img/novios-cartoon.png',
+        image: '/invitations/boda-lorena-y-arturo/img/og-preview.png',
     },
 }

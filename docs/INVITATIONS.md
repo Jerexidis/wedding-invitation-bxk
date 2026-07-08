@@ -24,6 +24,7 @@ the minimum invitation-specific files needed for a task.
 | `jose-raul` | shared-config | xv | none | 3 files | 5.18 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
+| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 10 files | 12.41 MB |
 
 ## Targeted context
 
@@ -147,6 +148,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/andre-joel/DESIGN.md`
 - Source: `src/invitations/andre-joel/config.json`, `src/invitations/andre-joel/DESIGN.md`, `src/invitations/andre-joel/FooterOverride.jsx`, `src/invitations/andre-joel/HeroOverride.jsx`, `src/invitations/andre-joel/index.jsx`, `src/invitations/andre-joel/IntroOverride.jsx`
+
+### boda-lorena-y-arturo
+
+- Entry: `src/invitations/boda-lorena-y-arturo/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: audio, calendar
+- Design brief: `src/invitations/boda-lorena-y-arturo/DESIGN.md`
+- Source: `src/invitations/boda-lorena-y-arturo/config.json`, `src/invitations/boda-lorena-y-arturo/DESIGN.md`, `src/invitations/boda-lorena-y-arturo/Envelope.jsx`, `src/invitations/boda-lorena-y-arturo/Events.jsx`, `src/invitations/boda-lorena-y-arturo/Footer.jsx`, `src/invitations/boda-lorena-y-arturo/Hero.jsx`, `src/invitations/boda-lorena-y-arturo/index.jsx`, `src/invitations/boda-lorena-y-arturo/invitation.css`, `src/invitations/boda-lorena-y-arturo/Padrinos.jsx`, `src/invitations/boda-lorena-y-arturo/RSVP.jsx`
 
 ## Refresh
 
