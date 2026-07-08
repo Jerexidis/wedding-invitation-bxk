@@ -1034,6 +1034,7 @@
 .bla-gallery-section {
     background: linear-gradient(180deg, var(--bla-beige) 0%, var(--bla-beige-light) 50%, var(--bla-beige) 100%);
     overflow: hidden;
+    text-align: center;
 }
 
 .bla-gallery-stack-container {
@@ -1077,7 +1078,7 @@
     padding: 12px 12px 42px 12px;
     border-radius: 4px;
     margin: -1rem auto -2.5rem;
-    opacity: 0.9;
+    opacity: 1;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.05));
 }
 
