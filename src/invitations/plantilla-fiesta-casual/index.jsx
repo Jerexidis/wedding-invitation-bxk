@@ -16,11 +16,11 @@ const PARTY_CONFIG = {
     name: 'Ana',
     age: '21',
     title: 'Birthday Party',
-    date: '2026-12-13T21:00:00-06:00',
-    dateLabel: '13 de diciembre',
+    date: '2026-09-14T21:00:00-06:00',
+    dateLabel: '14 de septiembre',
     timeLabel: '9:00 pm',
     note: 'Brillos, risas y cero ganas de irnos temprano.',
-    heroPhoto: '',
+    heroPhoto: '/invitations/plantilla-fiesta-casual/img/baby-party-hat.png',
     location: {
         name: 'Casa Cabral',
         address: 'Av. de los Sueños 214, Aguascalientes, Ags.',
@@ -83,14 +83,13 @@ function Hero({ config }) {
 
             <div className="party-hero__content">
                 <p className="party-eyebrow" data-hero-item>{config.eyebrow}</p>
-                <div className="party-portrait-wrap" data-hero-item>
-                    {config.heroPhoto ? (
+                <div className={`party-portrait-wrap${config.heroPhoto ? ' has-photo' : ''}`} data-hero-item>
+                    {config.heroPhoto && (
                         <img className="party-portrait" src={config.heroPhoto} alt={`Retrato de ${config.name}`} />
-                    ) : (
-                        <div className="party-age" aria-label={`${config.age} años`}>
-                            <span>{config.age}</span>
-                        </div>
                     )}
+                    <div className="party-age" aria-label={`${config.age} años`}>
+                        <span>{config.age}</span>
+                    </div>
                     <span className="party-spark party-spark--one">✦</span>
                     <span className="party-spark party-spark--two">✦</span>
                 </div>

@@ -90,11 +90,47 @@
     width: min(72vw, 21rem);
 }
 
+.party-portrait-wrap.has-photo {
+    height: clamp(18rem, 50vh, 28rem);
+    width: min(80vw, 24rem);
+}
+
+.party-portrait-wrap.has-photo > * {
+    grid-area: 1 / 1;
+}
+
 .party-portrait {
-    filter: drop-shadow(8px 10px 0 rgba(26, 25, 28, .82));
+    clip-path: polygon(
+        1% 0%, 12% 0.5%, 30% 0%, 55% 0.8%, 78% 0%, 99% 0.3%,
+        99.5% 18%, 100% 40%, 99.3% 65%, 100% 85%, 99% 100%,
+        82% 99.5%, 60% 100%, 35% 99.2%, 10% 100%, 0% 99.6%,
+        0.5% 78%, 0% 55%, 0.7% 30%, 0% 10%
+    );
+    filter: none;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center 15%;
+    transform: rotate(-2deg);
     width: 100%;
+}
+
+.party-portrait-wrap.has-photo .party-age {
+    align-self: end;
+    height: auto;
+    justify-self: end;
+    margin: 0 -1.2rem -1.8rem 0;
+    transform: rotate(6deg);
+    width: auto;
+    z-index: 4;
+}
+
+.party-portrait-wrap.has-photo .party-age::before {
+    height: clamp(6rem, 18vw, 9rem);
+    width: clamp(6rem, 18vw, 9rem);
+}
+
+.party-portrait-wrap.has-photo .party-age span {
+    font-size: clamp(3.5rem, 14vw, 5.5rem);
 }
 
 .party-age {
@@ -159,11 +195,12 @@
 
 .party-cutout-title {
     display: flex;
-    flex-wrap: wrap;
-    gap: .14rem;
+    flex-wrap: nowrap;
+    gap: .12rem;
     justify-content: center;
-    margin: 0 -.5rem .85rem;
-    max-width: 28rem;
+    margin: 0 auto .85rem;
+    max-width: 100%;
+    padding: 0 .25rem;
 }
 
 .party-cutout-title span {
@@ -171,12 +208,13 @@
     background: var(--swatch);
     color: white;
     display: grid;
+    flex-shrink: 1;
     font-family: "Archivo Black", Impact, sans-serif;
-    font-size: clamp(1.22rem, 5.9vw, 2.1rem);
+    font-size: clamp(.82rem, 4.3vw, 2.1rem);
     line-height: 1;
     min-height: 1.75em;
-    min-width: 1.25em;
-    padding: .32em .2em;
+    min-width: 0;
+    padding: .32em .18em;
     place-items: center;
     text-transform: uppercase;
     transform: rotate(calc((var(--i) - 5) * 1.3deg));
@@ -668,7 +706,6 @@
     }
 
     .party-cutout-title {
-        flex-wrap: nowrap;
         max-width: 46rem;
     }
 

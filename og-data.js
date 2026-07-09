@@ -24,7 +24,7 @@ export const ogData = {
     'plantilla-fiesta-casual': {
         title: 'Plantilla | Fiesta casual',
         description: 'Una invitación casual con collage editorial, disco, brillos y confirmación por WhatsApp.',
-        image: '/invitations/plantilla-fiesta-casual/img/party-collage-frame.png',
+        image: '/invitations/plantilla-fiesta-casual/img/og-preview.png',
     },
     'plantilla-bluey-fiesta': {
         title: 'Plantilla | Fiesta Bluey 🐾',
