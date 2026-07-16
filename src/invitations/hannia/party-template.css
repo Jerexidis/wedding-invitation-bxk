@@ -94,6 +94,7 @@
     justify-content: center;
     position: relative;
     width: min(82vw, 25rem);
+    z-index: 4;
 }
 
 .party-cartoon-hannia {

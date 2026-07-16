@@ -102,7 +102,7 @@ export const ogData = {
         image: '/invitations/boda-lorena-y-arturo/img/og-preview.png',
     },
     'hannia': {
-        title: 'Fiesta de Hannia | 23 años',
+        title: 'Hannia · 23 años',
         description: 'Acompaña a Hannia a celebrar sus 23 años en una aventura especial este 20 de julio de 2026.',
         image: '/invitations/hannia/img/og-preview.jpg',
     },

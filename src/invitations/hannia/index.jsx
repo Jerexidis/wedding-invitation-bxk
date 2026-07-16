@@ -164,7 +164,6 @@ function Location({ config }) {
 function RSVP({ embedded = false }) {
     const [attendance, setAttendance] = useState('yes')
     const [name, setName] = useState('')
-    const [guests, setGuests] = useState(1)
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false)
     const [submitting, setSubmitting] = useState(false)
@@ -180,7 +179,7 @@ function RSVP({ embedded = false }) {
             const attendanceLabel = attendance === 'yes' ? 'Sí asisto' : 'No asisto'
             await addConfirmation('hannia', {
                 name,
-                guests: attendance === 'yes' ? guests : 0,
+                guests: attendance === 'yes' ? 1 : 0,
                 message: message ? `${attendanceLabel} · ${message}` : attendanceLabel,
             })
             setSubmitted(true)
@@ -227,13 +226,6 @@ function RSVP({ embedded = false }) {
                             <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Escribe aquí" required />
                         </label>
 
-                        {attendance === 'yes' && (
-                            <label>
-                                <span>Número de personas</span>
-                                <input type="number" min="1" max="10" value={guests} onChange={(event) => setGuests(event.target.value)} required />
-                            </label>
-                        )}
-
                         <label>
                             <span>Mensaje para Hannia <small>(opcional)</small></span>
                             <textarea value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Escribe un mensaje bonito" rows="3" maxLength="98" />
@@ -275,7 +267,7 @@ export default function HanniaPartyInvitation() {
         fontLink.rel = 'stylesheet'
         fontLink.href = 'https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap'
         document.head.appendChild(fontLink)
-        document.title = 'Fiesta de Hannia · 23 años'
+        document.title = 'Hannia · 23 años'
 
         const media = gsap.matchMedia()
         const context = gsap.context(() => {
