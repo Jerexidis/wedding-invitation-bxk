@@ -14,7 +14,6 @@ const PARTY_CONFIG = {
     date: '2026-07-20T15:00:00-06:00',
     dateLabel: '20 de julio de 2026',
     timeLabel: '3:00 pm',
-    note: '¡Ven a celebrar conmigo una aventura inolvidable!',
     location: {
         name: 'Casa López Reyes',
         address: 'Consulta la ubicación y la ruta en Google Maps.',
@@ -83,7 +82,6 @@ function Hero({ config }) {
                     <span aria-hidden="true">★</span>
                     {config.timeLabel}
                 </p>
-                <p className="party-hero__note" data-hero-item>{config.note}</p>
             </div>
 
             <button
@@ -112,6 +110,8 @@ function Countdown({ config }) {
         <section className="party-section party-countdown" id="party-countdown" data-section>
             <img className="party-deco party-deco--jake-face" src="/invitations/hannia/img/elements/jake-face.png" alt="" data-drift aria-hidden="true" />
             <img className="party-deco party-deco--finn-stars" src="/invitations/hannia/img/elements/finn-stars.png" alt="" data-drift aria-hidden="true" />
+            <img className="party-sticker party-sticker--snail" src="/invitations/hannia/img/stickers/snail.png" alt="" data-drift aria-hidden="true" />
+            <img className="party-sticker party-sticker--bmo" src="/invitations/hannia/img/stickers/bmo.png" alt="" data-drift aria-hidden="true" />
             <div className="party-section__inner">
                 <p className="party-kicker"><Sparkles size={17} /> Cuenta regresiva</p>
                 <h2>{time.arrived ? '¡La fiesta es hoy!' : <>Falta poco para<br /><em>la aventura</em></>}</h2>
@@ -137,8 +137,10 @@ function Location({ config }) {
 
     return (
         <section className="party-section party-location" data-section>
-            <img className="party-deco party-deco--character-collage" src="/invitations/hannia/img/elements/character-collage.png" alt="" aria-hidden="true" />
-            <img className="party-deco party-deco--friend-faces" src="/invitations/hannia/img/elements/friend-faces.png" alt="" aria-hidden="true" />
+            <span className="party-grass" aria-hidden="true" />
+            <img className="party-sticker party-sticker--lumpy" src="/invitations/hannia/img/stickers/lumpy-space-princess.png" alt="" aria-hidden="true" />
+            <img className="party-sticker party-sticker--finn" src="/invitations/hannia/img/stickers/finn.png" alt="" aria-hidden="true" />
+            <img className="party-sticker party-sticker--ice-king" src="/invitations/hannia/img/stickers/ice-king.png" alt="" aria-hidden="true" />
             <div className="party-section__inner">
                 <p className="party-kicker"><MapPin size={17} /> Punto de encuentro</p>
                 <h2>El reino de<br /><em>la fiesta</em></h2>
@@ -159,7 +161,8 @@ function Location({ config }) {
     )
 }
 
-function RSVP() {
+function RSVP({ embedded = false }) {
+    const [attendance, setAttendance] = useState('yes')
     const [name, setName] = useState('')
     const [guests, setGuests] = useState(1)
     const [message, setMessage] = useState('')
@@ -174,7 +177,12 @@ function RSVP() {
 
         try {
             const { addConfirmation } = await import('../../utils/rsvpStore')
-            await addConfirmation('hannia', { name, guests, message })
+            const attendanceLabel = attendance === 'yes' ? 'Sí asisto' : 'No asisto'
+            await addConfirmation('hannia', {
+                name,
+                guests: attendance === 'yes' ? guests : 0,
+                message: message ? `${attendanceLabel} · ${message}` : attendanceLabel,
+            })
             setSubmitted(true)
         } catch (submissionError) {
             console.error('Error submitting RSVP:', submissionError)
@@ -185,15 +193,13 @@ function RSVP() {
     }
 
     return (
-        <section className="party-section party-rsvp" data-section>
+        <section className={`party-section party-rsvp${embedded ? ' party-rsvp--footer' : ''}`} data-section>
             <div className="party-sword" data-drift aria-hidden="true">⚔</div>
             <img className="party-deco party-deco--balloons" src="/invitations/hannia/img/elements/balloons.png" alt="" aria-hidden="true" />
             <img className="party-deco party-deco--bmo-jake" src="/invitations/hannia/img/elements/bmo-jake-collage.png" alt="" aria-hidden="true" />
             <div className="party-section__inner">
-                <p className="party-kicker"><MessageCircle size={17} /> Confirma tu misión</p>
+                <p className="party-kicker"><MessageCircle size={17} /> Confirmo</p>
                 <h2>¿Vienes a<br /><em>celebrar?</em></h2>
-                <p className="party-rsvp__intro">La pandilla está casi completa. Confirma quiénes se unen a esta aventura.</p>
-
                 {submitted ? (
                     <div className="party-form party-form--success" role="status">
                         <span className="party-success-icon"><Check size={32} /></span>
@@ -202,15 +208,31 @@ function RSVP() {
                     </div>
                 ) : (
                     <form className="party-form" onSubmit={handleSubmit}>
+                        <fieldset>
+                            <legend>¿Asistes a la fiesta?</legend>
+                            <div className="party-options">
+                                <label className={attendance === 'yes' ? 'is-selected' : ''}>
+                                    <input type="radio" name="attendance" value="yes" checked={attendance === 'yes'} onChange={() => setAttendance('yes')} />
+                                    Sí asisto
+                                </label>
+                                <label className={attendance === 'no' ? 'is-selected' : ''}>
+                                    <input type="radio" name="attendance" value="no" checked={attendance === 'no'} onChange={() => setAttendance('no')} />
+                                    No asisto
+                                </label>
+                            </div>
+                        </fieldset>
+
                         <label>
                             <span>Nombre del aventurero</span>
                             <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Escribe aquí" required />
                         </label>
 
-                        <label>
-                            <span>Número de personas</span>
-                            <input type="number" min="1" max="10" value={guests} onChange={(event) => setGuests(event.target.value)} required />
-                        </label>
+                        {attendance === 'yes' && (
+                            <label>
+                                <span>Número de personas</span>
+                                <input type="number" min="1" max="10" value={guests} onChange={(event) => setGuests(event.target.value)} required />
+                            </label>
+                        )}
 
                         <label>
                             <span>Mensaje para Hannia <small>(opcional)</small></span>
@@ -234,10 +256,13 @@ function RSVP() {
 function Footer({ config }) {
     return (
         <footer className="party-footer">
-            <p><span>★</span> Gracias por ser parte de mi aventura <span>★</span></p>
-            <h2>{config.name} · {config.age} años</h2>
-            <small>{config.dateLabel}</small>
-            <a href="https://invita-ya.com" target="_blank" rel="noreferrer">Invita-Ya.com</a>
+            <RSVP embedded />
+            <div className="party-footer__card">
+                <p><span>★</span> Gracias por ser parte de mi aventura <span>★</span></p>
+                <h2>{config.name} · {config.age} años</h2>
+                <small>{config.dateLabel}</small>
+                <a href="https://invita-ya.com" target="_blank" rel="noreferrer">Invita-Ya.com</a>
+            </div>
         </footer>
     )
 }
@@ -265,7 +290,7 @@ export default function HanniaPartyInvitation() {
                 })
 
                 gsap.utils.toArray('[data-section]').forEach((section) => {
-                    gsap.from(section.querySelectorAll('.party-kicker, h2, .party-timer, .party-location__card, .party-rsvp__intro, .party-form'), {
+                    gsap.from(section.querySelectorAll('.party-kicker, h2, .party-timer, .party-location__card, .party-form'), {
                         y: 45,
                         opacity: 0,
                         duration: 0.8,
@@ -298,7 +323,6 @@ export default function HanniaPartyInvitation() {
             <Hero config={PARTY_CONFIG} />
             <Countdown config={PARTY_CONFIG} />
             <Location config={PARTY_CONFIG} />
-            <RSVP />
             <Footer config={PARTY_CONFIG} />
         </main>
     )

@@ -157,16 +157,6 @@
 .party-hero__date strong { font-weight: 700; }
 .party-hero__date span { color: var(--party-pink); }
 
-.party-hero__note {
-    background: rgba(255, 246, 216, .9);
-    border-radius: 999px;
-    font-size: .72rem;
-    font-weight: 600;
-    line-height: 1.35;
-    margin: .65rem 0 0;
-    padding: .45rem .75rem;
-}
-
 .party-scroll-cue {
     align-items: center;
     background: transparent;
@@ -210,6 +200,15 @@
 }
 
 .party-deco {
+    object-fit: contain;
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    z-index: 3;
+}
+
+.party-sticker {
+    filter: drop-shadow(4px 6px 0 rgba(24, 43, 67, .2));
     object-fit: contain;
     pointer-events: none;
     position: absolute;
@@ -306,7 +305,19 @@
     width: 7.2rem;
 }
 
-.party-location { align-items: center; background: linear-gradient(#7dd5f2 0 41%, #81cf59 41% 100%); display: flex; overflow: hidden; }
+.party-countdown .party-sticker--snail { bottom: 2%; left: -.7rem; transform: rotate(-5deg); width: 6.8rem; }
+.party-countdown .party-sticker--bmo { right: -.5rem; top: 7%; transform: rotate(7deg); width: 5.7rem; }
+
+.party-location {
+    align-items: center;
+    background-color: #c5df4a;
+    background-image: url("/invitations/hannia/img/bug-meadow-footer.png"), linear-gradient(180deg, #c4dc48, #c5df4c 55%, #c3e04b);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%, 100% 100%;
+    display: flex;
+    overflow: hidden;
+}
 
 .party-location .party-kicker { color: var(--party-ink); }
 
@@ -330,28 +341,29 @@
 
 .party-location__card a,
 .party-form button,
-.party-location__pending { align-items: center; background: var(--party-ink); border: 2px solid var(--party-ink); border-radius: 999px; color: white; display: inline-flex; font: 700 .68rem "Fredoka", sans-serif; gap: .65rem; justify-content: center; letter-spacing: .07em; padding: .9rem 1.2rem; text-decoration: none; text-transform: uppercase; transition: transform .2s, box-shadow .2s; }
+.party-location__pending { align-items: center; border: 3px solid var(--party-ink); border-radius: 999px; box-shadow: 4px 5px 0 var(--party-ink); color: var(--party-ink); display: inline-flex; font: 700 .68rem "Fredoka", sans-serif; gap: .65rem; justify-content: center; letter-spacing: .07em; padding: .9rem 1.2rem; text-decoration: none; text-transform: uppercase; transition: transform .2s, box-shadow .2s; }
+.party-location__card a { background: var(--party-yellow); }
 .party-location__pending { background: #526277; cursor: default; }
-.party-location__card a:hover, .party-form button:hover { box-shadow: 4px 4px 0 var(--party-yellow); transform: translate(-2px, -2px); }
+.party-location__card a:hover, .party-form button:hover { box-shadow: 6px 7px 0 var(--party-ink); transform: translate(-2px, -2px); }
 
-.party-deco--character-collage {
-    display: none;
+.party-grass {
+    background: #58ad32;
+    bottom: 0;
+    clip-path: polygon(0 42%, 2% 8%, 4% 45%, 6% 0, 8% 43%, 11% 12%, 14% 47%, 17% 4%, 20% 44%, 24% 15%, 28% 48%, 32% 5%, 36% 43%, 40% 10%, 44% 48%, 48% 2%, 52% 44%, 56% 14%, 60% 47%, 64% 5%, 68% 43%, 72% 12%, 76% 48%, 80% 3%, 84% 44%, 88% 11%, 92% 47%, 96% 5%, 100% 42%, 100% 100%, 0 100%);
+    height: 4.4rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
 }
-
-.party-deco--friend-faces {
-    bottom: 1.2rem;
-    filter: drop-shadow(4px 5px 0 rgba(24, 43, 67, .22));
-    left: 50%;
-    transform: translateX(-50%);
-    width: 9rem;
-}
+.party-location .party-sticker--lumpy { bottom: .65rem; left: -.45rem; transform: rotate(-6deg); width: 6.4rem; }
+.party-location .party-sticker--finn { bottom: .7rem; right: -.25rem; transform: rotate(6deg); width: 5.5rem; }
+.party-sticker--ice-king { right: -1.1rem; top: 4%; transform: rotate(4deg); width: 6.5rem; }
 
 .party-rsvp { align-items: center; background: #6146a5; color: white; display: flex; min-height: 100svh; overflow: hidden; }
 .party-rsvp::before { background-image: radial-gradient(rgba(255, 255, 255, .18) 1.5px, transparent 1.5px); background-size: 22px 22px; content: ""; inset: 0; position: absolute; }
 .party-rsvp .party-kicker { color: var(--party-yellow); }
 .party-rsvp h2 em { color: #ff93c3; text-shadow: 3px 4px 0 #2c2258; }
-.party-rsvp__intro { font-size: .78rem; line-height: 1.6; margin: -1.6rem auto 2rem; max-width: 28rem; text-align: center; }
-
 .party-form { background: var(--party-cream); border: 3px solid var(--party-ink); border-radius: 1.35rem; box-shadow: 9px 11px 0 #ff93c3; color: var(--party-ink); margin: 0 auto; max-width: 34rem; padding: 1.5rem; position: relative; }
 .party-form > label { display: block; margin-bottom: 1.25rem; position: relative; }
 .party-form > label > span, .party-form legend { display: block; font-size: .64rem; font-weight: 700; letter-spacing: .1em; margin: 0 0 .55rem; text-transform: uppercase; }
@@ -363,7 +375,7 @@
 .party-options label { border: 2px solid var(--party-ink); border-radius: 999px; cursor: pointer; font-size: .7rem; font-weight: 600; padding: .78rem .45rem; text-align: center; transition: background .2s, transform .2s; }
 .party-options label.is-selected { background: var(--party-yellow); box-shadow: 2px 3px 0 var(--party-ink); transform: rotate(-1deg); }
 .party-options input { height: 1px; opacity: 0; position: absolute; width: 1px; }
-.party-form button { background: var(--party-green-dark); cursor: pointer; width: 100%; }
+.party-form button { background: #cbed45; cursor: pointer; width: 100%; }
 .party-form button:disabled { cursor: wait; opacity: .65; }
 .party-form__hint { color: #5a6270; font-size: .6rem; line-height: 1.45; margin: .75rem 0 0; text-align: center; }
 .party-form__counter { bottom: .45rem; color: #77808d; font-size: .56rem; position: absolute; right: .65rem; }
@@ -388,12 +400,65 @@
     display: none;
 }
 
-.party-footer { background: var(--party-cream); border-top: 4px solid var(--party-ink); padding: 2rem 1.2rem 1.6rem; text-align: center; }
+.party-rsvp--footer {
+    background: transparent;
+    color: var(--party-ink);
+    min-height: auto;
+    overflow: visible;
+    padding: 5rem 0 2.25rem;
+    width: 100%;
+}
+.party-rsvp--footer::before { display: none; }
+.party-rsvp--footer .party-section__inner { max-width: 26rem; width: 100%; }
+.party-rsvp--footer .party-kicker { color: #bd2f76; }
+.party-rsvp--footer h2 { font-size: clamp(2.35rem, 10vw, 4rem); margin-bottom: 1.75rem; }
+.party-rsvp--footer h2 em { color: var(--party-pink); text-shadow: 3px 4px 0 rgba(255, 246, 216, .95); }
+.party-rsvp--footer .party-form { background: #fff0a6; box-shadow: 9px 11px 0 #ff73b1; max-width: 23rem; padding: 1.1rem; }
+.party-rsvp--footer .party-form > label { margin-bottom: .85rem; }
+.party-rsvp--footer .party-form fieldset { margin: 0 0 .9rem; }
+.party-rsvp--footer .party-options label { background: #fff9fc; }
+.party-rsvp--footer .party-options label.is-selected { background: #ff73b1; }
+.party-rsvp--footer .party-form > label > span { margin-bottom: .4rem; }
+.party-rsvp--footer .party-form input,
+.party-rsvp--footer .party-form textarea { background: #fff9fc; font-size: .86rem; padding: .65rem; }
+.party-rsvp--footer .party-form textarea { min-height: 4.8rem; }
+.party-rsvp--footer .party-form button { background: #ff73b1; }
+.party-rsvp--footer .party-form button:hover { box-shadow: 6px 7px 0 #ffd84d; }
+.party-rsvp--footer .party-signoff { color: #bd2f76; margin-top: 1.5rem; text-shadow: 1px 2px 0 var(--party-cream); }
+.party-rsvp--footer .party-sword,
+.party-rsvp--footer .party-deco { display: none; }
+
+.party-footer {
+    align-items: center;
+    background-color: #e3d301;
+    background-image: url("/invitations/hannia/img/yellow-hall-footer.png"), linear-gradient(90deg, #e3d301 0 50%, #736713 50% 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%, 100% 100%;
+    border-top: 4px solid var(--party-ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 120svh;
+    padding: 0 1.2rem clamp(16rem, 32svh, 21rem);
+    position: relative;
+    text-align: center;
+}
+.party-footer__card {
+    background: transparent;
+    bottom: clamp(1.5rem, 4svh, 2.75rem);
+    max-width: 24rem;
+    padding: 0 1rem;
+    position: absolute;
+    text-shadow: 1px 2px 0 rgba(255, 246, 216, .72);
+    width: 100%;
+    z-index: 2;
+}
 .party-footer p { color: var(--party-green-dark); font-size: .82rem; font-weight: 600; margin: 0 0 .4rem; }
 .party-footer p span { color: var(--party-pink); }
 .party-footer h2 { font-family: "Baloo 2", sans-serif; font-size: 1.45rem; font-weight: 800; letter-spacing: -.04em; line-height: 1; margin: 0; text-transform: uppercase; }
 .party-footer small { display: block; font-size: .58rem; font-weight: 600; letter-spacing: .09em; margin-top: .35rem; text-transform: uppercase; }
-.party-footer a { color: var(--party-ink); display: inline-block; font-size: .52rem; letter-spacing: .1em; margin-top: .85rem; text-decoration: none; text-transform: uppercase; }
+.party-footer a { color: var(--party-ink); display: inline-block; font-size: .55rem; font-weight: 800; letter-spacing: .1em; margin-top: .7rem; padding: .15rem 0; text-decoration: underline; text-decoration-color: var(--party-pink); text-decoration-thickness: 2px; text-underline-offset: 3px; text-transform: uppercase; }
 
 @keyframes party-scroll { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
 
@@ -406,15 +471,11 @@
     .party-section { min-height: 760px; }
     .party-deco--jake-face { left: 7%; top: 10%; width: 9rem; }
     .party-deco--finn-stars { bottom: 7%; right: 6%; width: 10rem; }
-    .party-deco--character-collage {
-        bottom: 2%;
-        display: block;
-        left: 1.5%;
-        max-height: 48rem;
-        opacity: .42;
-        width: min(18vw, 12rem);
-    }
-    .party-deco--friend-faces { bottom: 2%; left: auto; right: 3%; transform: rotate(5deg); width: min(16vw, 10rem); }
+    .party-countdown .party-sticker--snail { bottom: 6%; left: 5%; width: 9rem; }
+    .party-countdown .party-sticker--bmo { right: 5%; top: 9%; width: 7.5rem; }
+    .party-location .party-sticker--lumpy { bottom: .7rem; left: 3%; width: min(13vw, 9rem); }
+    .party-location .party-sticker--finn { bottom: .8rem; right: 4%; width: min(11vw, 7.5rem); }
+    .party-sticker--ice-king { right: 4%; top: 7%; width: min(12vw, 8rem); }
     .party-sword { left: 7%; }
     .party-deco--bmo-jake {
         bottom: 1%;
@@ -426,13 +487,13 @@
         z-index: 1;
     }
     .party-form { padding: 2rem; }
+    .party-rsvp--footer .party-form { padding: 1.25rem; }
 }
 
 @media (max-height: 760px) {
     .party-hero { padding-top: .75rem; }
     .party-hero__logo { max-height: 7.4rem; width: min(68vw, 18rem); }
     .party-cartoon-stage { height: clamp(16rem, 40svh, 20rem); }
-    .party-hero__note { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
