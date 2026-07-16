@@ -25,7 +25,7 @@ the minimum invitation-specific files needed for a task.
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
 | `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.26 MB |
-| `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 14.72 MB |
+| `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 
 ## Targeted context
 
@@ -162,7 +162,7 @@ the minimum invitation-specific files needed for a task.
 
 - Entry: `src/invitations/hannia/index.jsx`
 - Architecture: `standalone-custom`
-- Flags: calendar
+- Flags: audio, calendar
 - Source: `src/invitations/hannia/index.jsx`, `src/invitations/hannia/party-template.css`
 
 ## Refresh

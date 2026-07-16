@@ -576,7 +576,7 @@
       "services": {
         "rsvp": "supabase",
         "gallery": false,
-        "audio": false,
+        "audio": true,
         "calendar": true
       },
       "sourceFiles": [
@@ -585,11 +585,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 18,
+        "files": 19,
         "images": 17,
-        "audio": 0,
-        "bytes": 15439928,
-        "megabytes": 14.72
+        "audio": 1,
+        "bytes": 17295531,
+        "megabytes": 16.49
       }
     }
   ]

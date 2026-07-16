@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CalendarDays, Check, MapPin, MessageCircle, Navigation, Sparkles } from 'lucide-react'
+import { CalendarDays, Check, MapPin, MessageCircle, Music2, Navigation, Pause, Sparkles } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './party-template.css'
@@ -46,7 +46,7 @@ function useCountdown(targetDate) {
     return time
 }
 
-function Hero({ config }) {
+function Hero({ config, onStartMusic }) {
     return (
         <header className="party-hero">
             <div className="party-hero__world" data-parallax />
@@ -87,7 +87,10 @@ function Hero({ config }) {
             <button
                 className="party-scroll-cue"
                 type="button"
-                onClick={() => document.querySelector('#party-countdown')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                    onStartMusic()
+                    document.querySelector('#party-countdown')?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 aria-label="Ver los detalles"
             >
                 <span>Comienza la aventura</span>
@@ -261,6 +264,46 @@ function Footer({ config }) {
 
 export default function HanniaPartyInvitation() {
     const pageRef = useRef(null)
+    const audioRef = useRef(null)
+    const [musicPlaying, setMusicPlaying] = useState(false)
+
+    const startMusic = async () => {
+        if (!audioRef.current || !audioRef.current.paused) return
+        try {
+            await audioRef.current.play()
+        } catch {
+            setMusicPlaying(false)
+        }
+    }
+
+    const toggleMusic = async () => {
+        if (!audioRef.current) return
+        if (audioRef.current.paused) await startMusic()
+        else audioRef.current.pause()
+    }
+
+    useEffect(() => {
+        const audio = audioRef.current
+        if (!audio) return undefined
+
+        audio.volume = 0.55
+        audio.play().catch(() => {})
+
+        const unlockAudio = (event) => {
+            if (event.target?.closest?.('.party-music-toggle')) return
+            startMusic()
+            window.removeEventListener('pointerdown', unlockAudio)
+            window.removeEventListener('keydown', unlockAudio)
+        }
+
+        window.addEventListener('pointerdown', unlockAudio, { passive: true })
+        window.addEventListener('keydown', unlockAudio)
+
+        return () => {
+            window.removeEventListener('pointerdown', unlockAudio)
+            window.removeEventListener('keydown', unlockAudio)
+        }
+    }, [])
 
     useEffect(() => {
         const fontLink = document.createElement('link')
@@ -312,7 +355,24 @@ export default function HanniaPartyInvitation() {
 
     return (
         <main className="party-template" ref={pageRef}>
-            <Hero config={PARTY_CONFIG} />
+            <audio
+                ref={audioRef}
+                src="/invitations/hannia/audio/come-along-with-me.mp3"
+                preload="metadata"
+                loop
+                onPlay={() => setMusicPlaying(true)}
+                onPause={() => setMusicPlaying(false)}
+            />
+            <button
+                className={`party-music-toggle${musicPlaying ? ' is-playing' : ''}`}
+                type="button"
+                onClick={toggleMusic}
+                aria-label={musicPlaying ? 'Pausar música' : 'Reproducir música'}
+                title={musicPlaying ? 'Pausar música' : 'Reproducir música'}
+            >
+                {musicPlaying ? <Pause size={20} /> : <Music2 size={20} />}
+            </button>
+            <Hero config={PARTY_CONFIG} onStartMusic={startMusic} />
             <Countdown config={PARTY_CONFIG} />
             <Location config={PARTY_CONFIG} />
             <Footer config={PARTY_CONFIG} />

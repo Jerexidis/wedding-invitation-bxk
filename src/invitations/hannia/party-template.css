@@ -21,6 +21,28 @@
 .party-template *::before,
 .party-template *::after { box-sizing: border-box; }
 
+.party-music-toggle {
+    align-items: center;
+    background: var(--party-yellow);
+    border: 3px solid var(--party-ink);
+    border-radius: 50%;
+    box-shadow: 4px 5px 0 var(--party-ink);
+    color: var(--party-ink);
+    cursor: pointer;
+    display: flex;
+    height: 3.15rem;
+    justify-content: center;
+    position: fixed;
+    right: .9rem;
+    top: .9rem;
+    transition: background .2s, transform .2s;
+    width: 3.15rem;
+    z-index: 100;
+}
+
+.party-music-toggle:hover { transform: translate(-1px, -1px); }
+.party-music-toggle.is-playing { background: var(--party-pink); }
+
 .party-hero {
     align-items: center;
     background: var(--party-sky);
