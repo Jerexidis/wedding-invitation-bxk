@@ -83,11 +83,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 1,
-        "images": 1,
+        "files": 3,
+        "images": 3,
         "audio": 0,
-        "bytes": 3176901,
-        "megabytes": 3.03
+        "bytes": 5423356,
+        "megabytes": 5.17
       }
     },
     {
@@ -562,6 +562,34 @@
         "audio": 1,
         "bytes": 18101013,
         "megabytes": 17.26
+      }
+    },
+    {
+      "slug": "hannia",
+      "title": "Fiesta de Hannia | 23 años",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "cumpleanos",
+      "eventDate": "2026-07-20T15:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "supabase",
+        "gallery": false,
+        "audio": false,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/hannia/index.jsx",
+        "src/invitations/hannia/party-template.css"
+      ],
+      "designBrief": null,
+      "assets": {
+        "files": 13,
+        "images": 12,
+        "audio": 0,
+        "bytes": 6858861,
+        "megabytes": 6.54
       }
     }
   ]

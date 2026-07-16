@@ -204,6 +204,16 @@ const invitations = [
         eventDate: '2026-08-08T19:00:00',
     },
 
+    {
+        slug: 'hannia',
+        title: 'Fiesta de Hannia | 23 años',
+        component: lazy(() => import('./hannia/index.jsx')),
+        enabled: true,
+        eventType: 'cumpleanos',
+        rsvpMode: 'supabase',
+        eventDate: '2026-07-20T15:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas
