@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CalendarDays, Check, MapPin, MessageCircle, Music2, Navigation, Pause, Sparkles } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -44,6 +44,48 @@ function useCountdown(targetDate) {
     }, [targetDate])
 
     return time
+}
+
+/* ── confetti rain (pure CSS, no deps) ──────────────────────────── */
+const CONFETTI_COLORS = ['#ff6b9d', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#c084fc', '#f472b6', '#22d3ee']
+const CONFETTI_SHAPES = ['square', 'circle', 'strip']
+const CONFETTI_COUNT = 60
+
+function Confetti() {
+    const pieces = useMemo(() =>
+        Array.from({ length: CONFETTI_COUNT }, (_, i) => ({
+            id: i,
+            left: Math.random() * 100,
+            delay: Math.random() * 4,
+            duration: 2.5 + Math.random() * 3,
+            size: 6 + Math.random() * 8,
+            color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+            shape: CONFETTI_SHAPES[i % CONFETTI_SHAPES.length],
+            drift: -30 + Math.random() * 60,
+            spin: 360 + Math.random() * 720,
+        })),
+    [])
+
+    return (
+        <div className="party-confetti" aria-hidden="true">
+            {pieces.map((p) => (
+                <span
+                    key={p.id}
+                    className={`party-confetti__piece party-confetti__piece--${p.shape}`}
+                    style={{
+                        left: `${p.left}%`,
+                        width: p.shape === 'strip' ? `${p.size * 0.4}px` : `${p.size}px`,
+                        height: p.shape === 'strip' ? `${p.size * 2.2}px` : `${p.size}px`,
+                        backgroundColor: p.color,
+                        animationDelay: `${p.delay}s`,
+                        animationDuration: `${p.duration}s`,
+                        '--confetti-drift': `${p.drift}px`,
+                        '--confetti-spin': `${p.spin}deg`,
+                    }}
+                />
+            ))}
+        </div>
+    )
 }
 
 function Hero({ config, onStartMusic }) {
@@ -264,6 +306,7 @@ function Footer({ config }) {
 
 export default function HanniaPartyInvitation() {
     const pageRef = useRef(null)
+    const { arrived: isEventDay } = useCountdown(PARTY_CONFIG.date)
     const audioRef = useRef(null)
     const [musicPlaying, setMusicPlaying] = useState(false)
 
@@ -355,6 +398,7 @@ export default function HanniaPartyInvitation() {
 
     return (
         <main className="party-template" ref={pageRef}>
+            {isEventDay && <Confetti />}
             <audio
                 ref={audioRef}
                 src="/invitations/hannia/audio/come-along-with-me.mp3"

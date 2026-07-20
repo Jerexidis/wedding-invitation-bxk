@@ -522,4 +522,51 @@
 @media (prefers-reduced-motion: reduce) {
     .party-scroll-cue i::after { animation: none; }
     .party-template *, .party-template *::before, .party-template *::after { scroll-behavior: auto !important; }
+    .party-confetti { display: none; }
+}
+
+/* ── confetti rain ────────────────────────────────────────────── */
+.party-confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.party-confetti__piece {
+    position: absolute;
+    top: -20px;
+    opacity: 0;
+    animation: confetti-fall linear infinite;
+}
+
+.party-confetti__piece--square {
+    border-radius: 2px;
+}
+
+.party-confetti__piece--circle {
+    border-radius: 50%;
+}
+
+.party-confetti__piece--strip {
+    border-radius: 1px;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateX(0) rotateZ(0) rotateY(0);
+        opacity: 1;
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        transform:
+            translateX(var(--confetti-drift, 0px))
+            translateY(calc(100vh + 40px))
+            rotateZ(var(--confetti-spin, 720deg))
+            rotateY(180deg);
+        opacity: 0;
+    }
 }
