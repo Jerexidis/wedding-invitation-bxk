@@ -111,4 +111,9 @@ export const ogData = {
         description: 'Acompáñame a celebrar mis XV años el sábado 22 de agosto de 2026.',
         image: '/invitations/daniela-itzel/img/og-preview-v2.jpg',
     },
+    'angelica-y-salvador': {
+        title: 'Nuestra Boda | Angélica & Salvador',
+        description: 'Acompáñanos a celebrar nuestra boda el 22 de agosto de 2026 en Aguascalientes.',
+        image: '/invitations/angelica-y-salvador/img/og-preview.jpg',
+    },
 }

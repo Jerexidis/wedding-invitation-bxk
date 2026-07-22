@@ -621,6 +621,35 @@
         "bytes": 7265157,
         "megabytes": 6.93
       }
+    },
+    {
+      "slug": "angelica-y-salvador",
+      "title": "Nuestra Boda | Angélica & Salvador",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "boda",
+      "eventDate": "2026-08-22T19:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "mixed",
+        "gallery": true,
+        "audio": false,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/angelica-y-salvador/DESIGN.md",
+        "src/invitations/angelica-y-salvador/index.jsx",
+        "src/invitations/angelica-y-salvador/invitation.css"
+      ],
+      "designBrief": "src/invitations/angelica-y-salvador/DESIGN.md",
+      "assets": {
+        "files": 11,
+        "images": 10,
+        "audio": 0,
+        "bytes": 1824841,
+        "megabytes": 1.74
+      }
     }
   ]
 }

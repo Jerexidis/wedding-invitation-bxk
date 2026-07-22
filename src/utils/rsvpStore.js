@@ -68,7 +68,7 @@ export async function removeConfirmation(id) {
 export async function getTotalGuests(slug) {
     const confirmations = await getConfirmations(slug)
     return confirmations.reduce((sum, c) => {
-        if (slug === 'maria-loyola') {
+        if (slug === 'maria-loyola' || slug === 'angelica-y-salvador') {
             return sum + (Number(c.guests) || 0)
         }
         return sum + (c.guests || 1)

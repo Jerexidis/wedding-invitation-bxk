@@ -224,6 +224,16 @@ const invitations = [
         eventDate: '2026-08-22T17:00:00-06:00',
     },
 
+    {
+        slug: 'angelica-y-salvador',
+        title: 'Nuestra Boda | Angélica & Salvador',
+        component: lazy(() => import('./angelica-y-salvador/index.jsx')),
+        enabled: true,
+        eventType: 'boda',
+        rsvpMode: 'mixed',
+        eventDate: '2026-08-22T19:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas
