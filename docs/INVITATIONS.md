@@ -24,8 +24,9 @@ the minimum invitation-specific files needed for a task.
 | `jose-raul` | shared-config | xv | none | 3 files | 5.18 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
-| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.26 MB |
+| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.11 MB |
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
+| `daniela-itzel` | standalone-custom | xv | supabase | 4 files | 1.51 MB |
 
 ## Targeted context
 
@@ -164,6 +165,14 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `standalone-custom`
 - Flags: audio, calendar
 - Source: `src/invitations/hannia/index.jsx`, `src/invitations/hannia/party-template.css`
+
+### daniela-itzel
+
+- Entry: `src/invitations/daniela-itzel/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/daniela-itzel/DESIGN.md`
+- Source: `src/invitations/daniela-itzel/DESIGN.md`, `src/invitations/daniela-itzel/index.jsx`, `src/invitations/daniela-itzel/invitation.css`, `src/invitations/daniela-itzel/invitation.manifest.json`
 
 ## Refresh
 

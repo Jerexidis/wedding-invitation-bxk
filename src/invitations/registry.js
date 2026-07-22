@@ -214,6 +214,16 @@ const invitations = [
         eventDate: '2026-07-20T15:00:00-06:00',
     },
 
+    {
+        slug: 'daniela-itzel',
+        title: 'Mis XV | Daniela Itzel',
+        component: lazy(() => import('./daniela-itzel/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'supabase',
+        eventDate: '2026-08-22T17:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "slug": "daniela-itzel",
+  "title": "Mis XV | Daniela Itzel",
+  "eventType": "xv",
+  "eventDate": "2026-08-22T17:00:00-06:00",
+  "architecture": "standalone-custom",
+  "status": "published",
+  "registered": true,
+  "functionalReference": "maia-sofia-duran-avila",
+  "entry": "index.jsx",
+  "styles": [
+    "invitation.css"
+  ],
+  "services": {
+    "audio": true,
+    "calendar": true,
+    "gallery": false,
+    "rsvp": "supabase",
+    "seo": true
+  }
+}

@@ -560,8 +560,8 @@
         "files": 17,
         "images": 14,
         "audio": 1,
-        "bytes": 18101013,
-        "megabytes": 17.26
+        "bytes": 17944073,
+        "megabytes": 17.11
       }
     },
     {
@@ -590,6 +590,36 @@
         "audio": 1,
         "bytes": 17295528,
         "megabytes": 16.49
+      }
+    },
+    {
+      "slug": "daniela-itzel",
+      "title": "Mis XV | Daniela Itzel",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "xv",
+      "eventDate": "2026-08-22T17:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "supabase",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/daniela-itzel/DESIGN.md",
+        "src/invitations/daniela-itzel/index.jsx",
+        "src/invitations/daniela-itzel/invitation.css",
+        "src/invitations/daniela-itzel/invitation.manifest.json"
+      ],
+      "designBrief": "src/invitations/daniela-itzel/DESIGN.md",
+      "assets": {
+        "files": 6,
+        "images": 2,
+        "audio": 1,
+        "bytes": 1583451,
+        "megabytes": 1.51
       }
     }
   ]
