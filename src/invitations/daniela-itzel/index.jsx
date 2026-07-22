@@ -596,7 +596,7 @@ function RSVP() {
     const submit = async (event) => {
         event.preventDefault()
         setSubmitting(true)
-        const waMessage = `¡Hola! Soy ${name}. Confirmo mi asistencia a los XV años de Daniela Itzel para ${guests} persona(s).${message.trim() ? `\n\nMensaje: "${message.trim()}"` : ''}`
+        const waMessage = `✨ ¡Hola! Soy ${name}.\n\n🌸 Confirmo mi asistencia a los XV años de Daniela Itzel 👑\n👥 Número de asistentes: ${guests}${message.trim() ? `\n💌 Mensaje: "${message.trim()}"` : ''}\n\n¡Nos vemos para celebrar este día tan especial! 🥳💖`
         const whatsappUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`
         const whatsappWindow = window.open(whatsappUrl, '_blank')
 
