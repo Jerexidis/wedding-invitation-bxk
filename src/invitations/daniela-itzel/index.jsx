@@ -24,7 +24,7 @@ import ceremonyPhoto from './assets/daniela-ceremony.webp'
 import receptionPhoto from './assets/daniela-reception.webp'
 import countdownPhoto from './assets/daniela-countdown.webp'
 import rsvpPhoto from './assets/daniela-rsvp.webp'
-import ogPreview from './assets/og-preview.jpg'
+import ogPreview from './assets/og-preview-v2.jpg'
 import './invitation.css'
 
 gsap.registerPlugin(ScrollTrigger)

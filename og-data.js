@@ -109,6 +109,6 @@ export const ogData = {
     'daniela-itzel': {
         title: 'Mis XV | Daniela Itzel',
         description: 'Acompáñame a celebrar mis XV años el sábado 22 de agosto de 2026.',
-        image: '/invitations/daniela-itzel/img/og-preview.jpg',
+        image: '/invitations/daniela-itzel/img/og-preview-v2.jpg',
     },
 }
