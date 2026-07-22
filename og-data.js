@@ -112,8 +112,8 @@ export const ogData = {
         image: '/invitations/daniela-itzel/img/og-preview-v2.jpg',
     },
     'angelica-y-salvador': {
-        title: 'Nuestra Boda | Angélica & Salvador',
+        title: 'Nuestra Boda | Yatzel & Salvador',
         description: 'Acompáñanos a celebrar nuestra boda el 22 de agosto de 2026 en Aguascalientes.',
-        image: '/invitations/angelica-y-salvador/img/og-preview-v2.jpg',
+        image: '/invitations/angelica-y-salvador/img/og-preview-v3.jpg',
     },
 }

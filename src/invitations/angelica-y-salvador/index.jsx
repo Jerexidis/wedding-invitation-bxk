@@ -12,6 +12,7 @@ import {
     MapPin,
     Music2,
     Navigation,
+    Pause,
     Sparkles,
     UtensilsCrossed,
 } from 'lucide-react'
@@ -21,6 +22,7 @@ const SLUG = 'angelica-y-salvador'
 const BASE = `/invitations/${SLUG}`
 const EVENT_DATE = '2026-08-22T19:00:00-06:00'
 const WHATSAPP = '524491579941'
+const AUDIO = `${BASE}/audio/que-suerte-tenerte-fonseca.mp3`
 
 const photos = Array.from({ length: 7 }, (_, index) => `${BASE}/img/photo-${index + 1}.webp`)
 
@@ -83,23 +85,45 @@ function SectionTitle({ eyebrow, children, light = false }) {
 }
 
 function MusicControl({ active }) {
-    if (!active) return null
+    const audioRef = useRef(null)
+    const [playing, setPlaying] = useState(false)
+
+    useEffect(() => {
+        if (!active || !audioRef.current) return
+        audioRef.current.play().catch(() => setPlaying(false))
+    }, [active])
+
+    const toggle = async () => {
+        const audio = audioRef.current
+        if (!audio) return
+        if (audio.paused) {
+            await audio.play().catch(() => setPlaying(false))
+        } else {
+            audio.pause()
+        }
+    }
+
     return (
-        <button className="ays-music" type="button" disabled aria-label="Música próximamente">
-            <Music2 size={16} />
-            <span>Próximamente</span>
-        </button>
+        <>
+            <audio ref={audioRef} src={AUDIO} preload="metadata" loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+            {active && (
+                <button className={`ays-music${playing ? ' is-playing' : ''}`} type="button" onClick={toggle} aria-label={playing ? 'Pausar música' : 'Reproducir música'}>
+                    {playing ? <Pause size={16} /> : <Music2 size={16} />}
+                    <span>{playing ? 'Pausar' : 'Música'}</span>
+                </button>
+            )}
+        </>
     )
 }
 
 function Opening({ onOpen }) {
     return (
         <div className="ays-opening">
-            <img src={photos[4]} alt="Angélica y Salvador" />
+            <img src={photos[4]} alt="Yatzel y Salvador" />
             <div className="ays-opening__veil" />
             <div className="ays-opening__content">
                 <p>Nos casamos</p>
-                <h1><span>Angélica</span><b>&</b><span>Salvador</span></h1>
+                <h1><span>Yatzel</span><b>&</b><span>Salvador</span></h1>
                 <time>22 · 08 · 2026</time>
                 <button type="button" onClick={onOpen}>
                     <Heart size={17} fill="currentColor" />
@@ -113,11 +137,11 @@ function Opening({ onOpen }) {
 function Hero() {
     return (
         <header className="ays-hero">
-            <img src={photos[2]} alt="Angélica y Salvador celebrando su compromiso" className="ays-hero__photo" />
+            <img src={photos[2]} alt="Yatzel y Salvador celebrando su compromiso" className="ays-hero__photo" />
             <div className="ays-hero__overlay" />
             <div className="ays-hero__copy" data-reveal>
                 <p>Nos casamos</p>
-                <h1>Angélica <i>&</i> Salvador</h1>
+                <h1>Yatzel <i>&</i> Salvador</h1>
                 <time>22 · 08 · 2026</time>
             </div>
             <button type="button" className="ays-scroll" onClick={() => document.querySelector('#historia')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -145,7 +169,7 @@ function SaveTheDate() {
     return (
         <section className="ays-save-date">
             <div className="ays-save-date__photo" data-reveal>
-                <img src={photos[1]} alt="Propuesta de matrimonio de Angélica y Salvador frente al mar" loading="lazy" />
+                <img src={photos[1]} alt="Propuesta de matrimonio de Yatzel y Salvador frente al mar" loading="lazy" />
             </div>
             <div className="ays-save-date__card" data-reveal>
                 <p>Save the date</p>
@@ -153,7 +177,7 @@ function SaveTheDate() {
                 <span>Sábado</span>
                 <CalendarDays size={28} strokeWidth={1.2} />
                 <a
-                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda%20de%20Ang%C3%A9lica%20y%20Salvador&dates=20260823T010000Z%2F20260823T080000Z&details=Acomp%C3%A1%C3%B1anos%20a%20celebrar%20nuestra%20boda.&location=Templo%20Sagrado%20Coraz%C3%B3n%20de%20Jes%C3%BAs%2C%20Aguascalientes"
+                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda%20de%20Yatzel%20y%20Salvador&dates=20260823T010000Z%2F20260823T080000Z&details=Acomp%C3%A1%C3%B1anos%20a%20celebrar%20nuestra%20boda.&location=Templo%20Sagrado%20Coraz%C3%B3n%20de%20Jes%C3%BAs%2C%20Aguascalientes"
                     target="_blank"
                     rel="noreferrer"
                 >
@@ -220,7 +244,7 @@ function Events() {
                     const Icon = event.icon
                     return (
                         <article className="ays-event" key={event.type} data-reveal>
-                            <div className="ays-event__photo"><img src={event.photo} alt="Angélica y Salvador" loading="lazy" /></div>
+                            <div className="ays-event__photo"><img src={event.photo} alt="Yatzel y Salvador" loading="lazy" /></div>
                             <div className="ays-event__body">
                                 <Icon size={30} strokeWidth={1.15} />
                                 <p>{event.type}</p>
@@ -262,7 +286,7 @@ function DressCode() {
 function Itinerary() {
     return (
         <section className="ays-itinerary">
-            <img src={photos[0]} alt="Angélica y Salvador" loading="lazy" />
+            <img src={photos[0]} alt="Yatzel y Salvador" loading="lazy" />
             <div className="ays-itinerary__overlay" />
             <div className="ays-itinerary__content">
                 <SectionTitle eyebrow="Nuestro gran día" light>Itinerario</SectionTitle>
@@ -318,7 +342,7 @@ function Gallery({ hidden }) {
         <section className="ays-gallery">
             <SectionTitle eyebrow="Nuestra historia">Momentos para siempre</SectionTitle>
             <div className="ays-gallery__grid">
-                {layout.map((photo, index) => <img key={photo} src={photo} alt={`Recuerdo de Angélica y Salvador ${index + 1}`} loading="lazy" data-reveal />)}
+                {layout.map((photo, index) => <img key={photo} src={photo} alt={`Recuerdo de Yatzel y Salvador ${index + 1}`} loading="lazy" data-reveal />)}
             </div>
         </section>
     )
@@ -336,7 +360,7 @@ function RSVP() {
         const attending = form.attendance === 'yes'
         const guests = attending ? Number(form.guests) : 0
         const status = attending ? 'Sí asistiremos' : 'No podremos asistir'
-        const text = `¡Hola! Soy ${form.name.trim()}.\n\n${attending ? '✨ Confirmo mi asistencia' : 'Con mucho cariño, no podré acompañarlos'} a la boda de Angélica y Salvador.\n${attending ? `👥 Asistentes: ${guests}\n` : ''}${form.message.trim() ? `💌 Mensaje: ${form.message.trim()}\n` : ''}\n${attending ? '¡Nos vemos para celebrar!' : 'Les deseamos toda la felicidad.'}`
+        const text = `¡Hola! Soy ${form.name.trim()}.\n\n${attending ? '✨ Confirmo mi asistencia' : 'Con mucho cariño, no podré acompañarlos'} a la boda de Yatzel y Salvador.\n${attending ? `👥 Asistentes: ${guests}\n` : ''}${form.message.trim() ? `💌 Mensaje: ${form.message.trim()}\n` : ''}\n${attending ? '¡Nos vemos para celebrar!' : 'Les deseamos toda la felicidad.'}`
         try {
             const { addConfirmation } = await import('../../utils/rsvpStore')
             await addConfirmation(SLUG, { name: form.name.trim(), guests, message: `${attending ? '🟢' : '🔴'} ${status}${form.message.trim() ? ` · ${form.message.trim()}` : ''}` })
@@ -350,7 +374,7 @@ function RSVP() {
 
     return (
         <section className="ays-rsvp">
-            <div className="ays-rsvp__photo"><img src={photos[1]} alt="Propuesta de matrimonio de Angélica y Salvador" loading="lazy" /></div>
+            <div className="ays-rsvp__photo"><img src={photos[1]} alt="Propuesta de matrimonio de Yatzel y Salvador" loading="lazy" /></div>
             <div className="ays-rsvp__card">
                 {submitted ? (
                     <div className="ays-rsvp__thanks"><Check size={30} /><h2>¡Gracias!</h2><p>Tu respuesta fue registrada y WhatsApp se abrió para completar la confirmación.</p></div>
@@ -380,7 +404,7 @@ export default function AngelicaYSalvador({ hideGallery = false }) {
 
     useEffect(() => {
         const previous = document.title
-        document.title = 'Nuestra Boda | Angélica & Salvador'
+        document.title = 'Nuestra Boda | Yatzel & Salvador'
         const link = document.createElement('link')
         link.rel = 'stylesheet'
         link.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap'
@@ -420,7 +444,7 @@ export default function AngelicaYSalvador({ hideGallery = false }) {
                     <RSVP />
                     <footer className="ays-footer">
                         <Heart size={22} fill="currentColor" />
-                        <h2>Angélica <i>&</i> Salvador</h2>
+                        <h2>Yatzel <i>&</i> Salvador</h2>
                         <p>Los amamos mucho y nos vemos muy pronto.</p>
                         <time>22 · 08 · 2026</time>
                     </footer>

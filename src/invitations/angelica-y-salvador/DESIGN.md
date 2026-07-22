@@ -1,4 +1,4 @@
-# Angélica & Salvador — dirección de diseño
+# Yatzel & Salvador — dirección de diseño
 
 - Estética editorial, elegante y moderna inspirada en la referencia enviada: marfil, azul grisáceo y acentos dorado tenue.
 - Tipografía serif de alto contraste para títulos y sans serif espaciada para información funcional.

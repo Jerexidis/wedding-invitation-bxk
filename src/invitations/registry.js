@@ -226,7 +226,7 @@ const invitations = [
 
     {
         slug: 'angelica-y-salvador',
-        title: 'Nuestra Boda | Angélica & Salvador',
+        title: 'Nuestra Boda | Yatzel & Salvador',
         component: lazy(() => import('./angelica-y-salvador/index.jsx')),
         enabled: true,
         eventType: 'boda',

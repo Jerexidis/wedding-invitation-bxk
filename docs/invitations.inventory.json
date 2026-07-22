@@ -624,7 +624,7 @@
     },
     {
       "slug": "angelica-y-salvador",
-      "title": "Nuestra Boda | Angélica & Salvador",
+      "title": "Nuestra Boda | Yatzel & Salvador",
       "architecture": "standalone-custom",
       "enabled": true,
       "demo": false,
@@ -634,7 +634,7 @@
       "services": {
         "rsvp": "mixed",
         "gallery": true,
-        "audio": false,
+        "audio": true,
         "calendar": true
       },
       "sourceFiles": [
@@ -644,11 +644,11 @@
       ],
       "designBrief": "src/invitations/angelica-y-salvador/DESIGN.md",
       "assets": {
-        "files": 12,
-        "images": 11,
-        "audio": 0,
-        "bytes": 1974411,
-        "megabytes": 1.88
+        "files": 14,
+        "images": 12,
+        "audio": 1,
+        "bytes": 6231539,
+        "megabytes": 5.94
       }
     }
   ]
