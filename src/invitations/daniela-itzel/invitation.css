@@ -816,6 +816,170 @@
     text-align: center;
 }
 
+.maia-gallery {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, .92), transparent 34rem),
+        linear-gradient(180deg, var(--maia-cream), #f7e8e8 52%, var(--maia-paper));
+    overflow: hidden;
+    padding: 7rem 1.2rem 8rem;
+    position: relative;
+    text-align: center;
+}
+
+.maia-gallery::before,
+.maia-gallery::after {
+    background: var(--maia-orchid) left top / 100% auto no-repeat;
+    content: "";
+    height: min(760px, 94vw);
+    opacity: .12;
+    pointer-events: none;
+    position: absolute;
+    width: min(180px, 24vw);
+    z-index: 0;
+}
+
+.maia-gallery::before {
+    left: -48px;
+    top: 7%;
+}
+
+.maia-gallery::after {
+    bottom: -10%;
+    right: -48px;
+    transform: scaleX(-1);
+}
+
+.maia-gallery__heading,
+.maia-gallery__stage,
+.maia-gallery__controls {
+    position: relative;
+    z-index: 1;
+}
+
+.maia-gallery__heading .maia-heading {
+    margin-bottom: 1.2rem;
+}
+
+.maia-gallery__heading > p {
+    color: var(--maia-moss);
+    font-family: "Italiana", Georgia, serif;
+    font-size: .88rem;
+    letter-spacing: .035em;
+    line-height: 1.75;
+    margin: 0 auto;
+    max-width: 28rem;
+}
+
+.maia-gallery__stage {
+    height: 430px;
+    margin: 3.8rem auto 2.7rem;
+    max-width: 100%;
+    perspective: 1100px;
+    width: 330px;
+}
+
+.maia-polaroid {
+    appearance: none;
+    background: #fffdfb;
+    border: 1px solid rgba(73, 53, 62, .1);
+    border-radius: 2px;
+    box-shadow: 0 20px 46px rgba(74, 50, 60, .17), 0 3px 10px rgba(74, 50, 60, .1);
+    color: var(--maia-ink);
+    height: 410px;
+    inset: 0;
+    margin: auto;
+    padding: 13px 13px 17px;
+    position: absolute;
+    transition: opacity .65s ease, transform .65s cubic-bezier(.22, .8, .32, 1), box-shadow .3s ease;
+    width: 306px;
+}
+
+.maia-polaroid--layer-0 {
+    cursor: pointer;
+    pointer-events: auto;
+    transform: rotate(-2.2deg) translateZ(16px);
+    z-index: 3;
+}
+
+.maia-polaroid--layer-1 {
+    opacity: .9;
+    pointer-events: none;
+    transform: translate(13px, -8px) rotate(4.4deg) scale(.975);
+    z-index: 2;
+}
+
+.maia-polaroid--layer-2 {
+    opacity: .72;
+    pointer-events: none;
+    transform: translate(-13px, -3px) rotate(-6deg) scale(.95);
+    z-index: 1;
+}
+
+.maia-polaroid__image {
+    background: #efe4e1;
+    display: block;
+    height: 326px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.maia-polaroid__image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+    width: 100%;
+}
+
+.maia-polaroid__caption {
+    display: block;
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: 2.15rem;
+    line-height: 1;
+    margin-top: 1rem;
+    transform: rotate(-1deg);
+}
+
+.maia-gallery__controls {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.maia-gallery__dots {
+    display: flex;
+    gap: .55rem;
+    justify-content: center;
+}
+
+.maia-gallery__dots button {
+    background: rgba(143, 92, 106, .22);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    height: .42rem;
+    padding: 0;
+    transition: background .3s ease, width .3s ease;
+    width: .42rem;
+}
+
+.maia-gallery__dots button.is-active {
+    background: var(--maia-rose-dark);
+    width: 1.65rem;
+}
+
+@media (hover: hover) {
+    .maia-polaroid--layer-0:hover {
+        box-shadow: 0 26px 54px rgba(74, 50, 60, .22), 0 4px 12px rgba(74, 50, 60, .12);
+        transform: rotate(0deg) translateY(-7px) translateZ(20px);
+    }
+
+    .maia-polaroid--layer-0:hover .maia-polaroid__image img {
+        transform: scale(1.025);
+    }
+}
+
 .maia-dress {
     align-items: flex-end;
     display: flex;
@@ -924,6 +1088,8 @@
     align-items: center;
     background: var(--maia-paper);
     display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     justify-content: center;
     min-height: 720px;
     padding: 6rem 1.2rem;
@@ -936,6 +1102,7 @@
     padding: 5.5rem 2rem 3rem;
     position: relative;
     text-align: center;
+    width: min(100%, 35rem);
 }
 
 .maia-gifts__flap {
@@ -984,6 +1151,108 @@
 .maia-gifts__envelope > span strong {
     color: var(--maia-forest);
     font-weight: 600;
+}
+
+.maia-transfer {
+    background:
+        radial-gradient(circle at 12% 15%, rgba(255, 255, 255, .14), transparent 16rem),
+        linear-gradient(145deg, #a86176, #7f4057);
+    border: 1px solid rgba(255, 255, 255, .28);
+    box-shadow: 0 18px 42px rgba(95, 48, 66, .15);
+    color: #fff9f7;
+    max-width: 35rem;
+    overflow: hidden;
+    padding: 3.2rem 2rem 2.4rem;
+    position: relative;
+    text-align: center;
+    width: min(100%, 35rem);
+}
+
+.maia-transfer::after {
+    background: var(--maia-orchid) left top / 100% auto no-repeat;
+    content: "";
+    height: 430px;
+    opacity: .08;
+    pointer-events: none;
+    position: absolute;
+    right: -38px;
+    top: -35px;
+    transform: scaleX(-1);
+    width: 110px;
+}
+
+.maia-transfer > * {
+    position: relative;
+    z-index: 1;
+}
+
+.maia-transfer > svg {
+    color: #f4ccd7;
+}
+
+.maia-transfer > p {
+    color: #f7d9e1;
+    font-size: .55rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    margin: 1rem 0 .4rem;
+    text-transform: uppercase;
+}
+
+.maia-transfer h3 {
+    font-family: "Mrs Saint Delafield", cursive;
+    font-size: clamp(3.4rem, 11vw, 5rem);
+    font-weight: 400;
+    line-height: .95;
+    margin: .5rem 0 1.2rem;
+}
+
+.maia-transfer > span {
+    display: block;
+    font-family: "Italiana", Georgia, serif;
+    font-size: .8rem;
+    line-height: 1.75;
+    margin: 0 auto 2rem;
+    max-width: 27rem;
+}
+
+.maia-transfer dl {
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    border-top: 1px solid rgba(255, 255, 255, .2);
+    display: grid;
+    margin: 0 auto 1.2rem;
+    max-width: 27rem;
+    padding: .65rem 0;
+}
+
+.maia-transfer dl > div {
+    align-items: baseline;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: .55rem .15rem;
+}
+
+.maia-transfer dt {
+    color: #f7d9e1;
+    font-size: .5rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.maia-transfer dd {
+    font-family: "Italiana", Georgia, serif;
+    font-size: .78rem;
+    margin: 0;
+    text-align: right;
+}
+
+.maia-transfer small {
+    color: rgba(255, 249, 247, .65);
+    display: block;
+    font-size: .48rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
 }
 
 .maia-rsvp {
@@ -1237,6 +1506,57 @@
     .maia-itinerary__item {
         gap: .75rem;
         grid-template-columns: 3.25rem 4.8rem 1fr;
+    }
+
+    .maia-gallery {
+        padding: 5.5rem .75rem 6rem;
+    }
+
+    .maia-gallery::before,
+    .maia-gallery::after {
+        height: 470px;
+        width: 104px;
+    }
+
+    .maia-gallery::before {
+        left: -35px;
+    }
+
+    .maia-gallery::after {
+        right: -35px;
+    }
+
+    .maia-gallery__stage {
+        height: 350px;
+        margin: 3.2rem auto 2.3rem;
+        width: 250px;
+    }
+
+    .maia-polaroid {
+        height: 330px;
+        padding: 10px 10px 14px;
+        width: 232px;
+    }
+
+    .maia-polaroid__image {
+        height: 258px;
+    }
+
+    .maia-polaroid__caption {
+        font-size: 1.8rem;
+        margin-top: .85rem;
+    }
+
+    .maia-transfer {
+        padding: 2.8rem 1.25rem 2.2rem;
+    }
+
+    .maia-transfer dl > div {
+        gap: .6rem;
+    }
+
+    .maia-transfer dd {
+        font-size: .7rem;
     }
 
 }

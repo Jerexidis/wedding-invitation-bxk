@@ -7,6 +7,7 @@ import {
     Flower2,
     Gift,
     Heart,
+    Landmark,
     MapPin,
     Music2,
     Navigation,
@@ -24,13 +25,21 @@ import ceremonyPhoto from './assets/daniela-ceremony.webp'
 import receptionPhoto from './assets/daniela-reception.webp'
 import countdownPhoto from './assets/daniela-countdown.webp'
 import rsvpPhoto from './assets/daniela-rsvp.webp'
+import galleryPhoto1 from './assets/gallery-1.webp'
+import galleryPhoto2 from './assets/gallery-2.webp'
+import galleryPhoto3 from './assets/gallery-3.webp'
+import galleryPhoto4 from './assets/gallery-4.webp'
+import galleryPhoto5 from './assets/gallery-5.webp'
+import galleryPhoto6 from './assets/gallery-6.webp'
+import galleryPhoto7 from './assets/gallery-7.webp'
+import galleryPhoto8 from './assets/gallery-8.webp'
 import ogPreview from './assets/og-preview-v2.jpg'
 import './invitation.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const EVENT_DATE = '2026-08-22T17:00:00-06:00'
-const AUDIO = '/invitations/daniela-itzel/audio/once-upon-a-dream.mp3'
+const AUDIO = '/invitations/daniela-itzel/audio/perfect-piano.mp3'
 
 const locations = [
     {
@@ -64,6 +73,17 @@ const itinerary = [
     { time: '8:30 pm', label: 'Cena', icon: UtensilsCrossed },
     { time: '9:30 pm', label: 'Baile sorpresa', icon: Sparkles },
     { time: '10:00 pm', label: 'Baile', icon: PartyPopper },
+]
+
+const galleryPhotos = [
+    { src: galleryPhoto1, caption: 'Entre flores', position: 'center 42%' },
+    { src: galleryPhoto2, caption: 'Miradas que hablan', position: 'center 36%' },
+    { src: galleryPhoto3, caption: 'Un momento para mí', position: 'center 45%' },
+    { src: galleryPhoto4, caption: 'Donde nacen los recuerdos', position: 'center 48%' },
+    { src: galleryPhoto5, caption: 'Todo empieza a florecer', position: 'center 44%' },
+    { src: galleryPhoto6, caption: 'Mi rincón favorito', position: 'center 52%' },
+    { src: galleryPhoto7, caption: 'Sonrisas para siempre', position: 'center 50%' },
+    { src: galleryPhoto8, caption: 'Instantes que guardaré', position: 'center 43%' },
 ]
 
 const calculateTime = () => {
@@ -404,6 +424,75 @@ function Itinerary() {
     )
 }
 
+function PolaroidGallery({ hidden = false }) {
+    const [activePhoto, setActivePhoto] = useState(0)
+
+    useEffect(() => {
+        if (hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+        const interval = window.setInterval(() => {
+            setActivePhoto((current) => (current + 1) % galleryPhotos.length)
+        }, 4200)
+        return () => window.clearInterval(interval)
+    }, [hidden])
+
+    if (hidden) return null
+
+    const advance = () => setActivePhoto((current) => (current + 1) % galleryPhotos.length)
+    const visiblePhotos = [2, 1, 0].map((offset) => ({
+        ...galleryPhotos[(activePhoto + offset) % galleryPhotos.length],
+        offset,
+    }))
+
+    return (
+        <section className="maia-gallery" id="galeria" aria-label="Galería de recuerdos de Daniela Itzel">
+            <div className="maia-gallery__heading" data-reveal>
+                <SectionTitle eyebrow="Recuerdos que florecen">
+                    Momentos de<br /><em>Daniela</em>
+                </SectionTitle>
+                <p>Pequeños instantes que guardo con mucho cariño.</p>
+            </div>
+
+            <div className="maia-gallery__stage" data-reveal>
+                {visiblePhotos.map((photo) => (
+                    <button
+                        aria-label={photo.offset === 0 ? `Ver siguiente fotografía. Fotografía actual: ${photo.caption}` : photo.caption}
+                        className={`maia-polaroid maia-polaroid--layer-${photo.offset}`}
+                        key={photo.src}
+                        onClick={advance}
+                        type="button"
+                    >
+                        <span className="maia-polaroid__image">
+                            <img
+                                alt={`Daniela Itzel — ${photo.caption}`}
+                                decoding="async"
+                                loading={photo.offset === 0 ? 'eager' : 'lazy'}
+                                src={photo.src}
+                                style={{ objectPosition: photo.position }}
+                            />
+                        </span>
+                        <span className="maia-polaroid__caption">{photo.caption}</span>
+                    </button>
+                ))}
+            </div>
+
+            <div className="maia-gallery__controls" data-reveal>
+                <div className="maia-gallery__dots" aria-label="Seleccionar fotografía">
+                    {galleryPhotos.map((photo, index) => (
+                        <button
+                            aria-label={`Ver fotografía ${index + 1}: ${photo.caption}`}
+                            aria-pressed={index === activePhoto}
+                            className={index === activePhoto ? 'is-active' : ''}
+                            key={photo.src}
+                            onClick={() => setActivePhoto(index)}
+                            type="button"
+                        />
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+}
+
 function PortraitInterlude() {
     return (
         <section className="maia-dress" aria-label="Retrato de Daniela Itzel">
@@ -424,11 +513,36 @@ function Gifts() {
             <div className="maia-gifts__envelope" data-reveal>
                 <div className="maia-gifts__flap" />
                 <Gift size={25} strokeWidth={1.4} />
-                <p>Mi mejor regalo</p>
-                <h2>Tu presencia<br />es mi mejor regalo</h2>
+                <p>Un detalle especial</p>
+                <h2>Lluvia<br />de sobres</h2>
                 <span>
-                    Gracias por compartir conmigo este momento tan especial y ser parte de mis recuerdos.
+                    Tu presencia es mi mejor regalo. Si deseas obsequiarme un detalle adicional,
+                    tendremos lluvia de sobres el día del evento.
                 </span>
+            </div>
+            <div className="maia-transfer" data-reveal>
+                <Landmark size={27} strokeWidth={1.35} />
+                <p>Otra forma de acompañarme</p>
+                <h3>Transferencia</h3>
+                <span>
+                    No es necesario estar cerca para hacerme sentir tu amor y cariño.
+                    Si así lo prefieres, puedes realizar una transferencia.
+                </span>
+                <dl>
+                    <div>
+                        <dt>Banco</dt>
+                        <dd>Banco Aurora</dd>
+                    </div>
+                    <div>
+                        <dt>Beneficiaria</dt>
+                        <dd>Daniela Itzel</dd>
+                    </div>
+                    <div>
+                        <dt>CLABE</dt>
+                        <dd>0000 •••• •••• •••• 00</dd>
+                    </div>
+                </dl>
+                <small>Datos de muestra · pendientes de confirmar</small>
             </div>
         </section>
     )
@@ -630,6 +744,7 @@ export default function DanielaItzelInvitation({ portfolioMode = false }) {
             <DateAndCountdown />
             <Locations />
             <Itinerary />
+            <PolaroidGallery hidden={portfolioMode} />
             <PortraitInterlude />
             <Gifts />
             <RSVP />

@@ -29,9 +29,10 @@ An editorial quinceañera invitation built around Daniela's forest portraits. It
 4. Date, countdown, and calendar action
 5. Mass and reception
 6. Full celebration itinerary
-7. Portrait interlude
-8. Presence-as-gift message
-9. RSVP
+7. Private polaroid memory gallery
+8. Portrait interlude
+9. Lluvia de sobres and provisional transfer options
+10. RSVP
 
 ## Event details
 
@@ -45,7 +46,7 @@ An editorial quinceañera invitation built around Daniela's forest portraits. It
 
 - GSAP hero entrance
 - GSAP reveal and subtle photographic parallax on scroll
-- Minimal fixed music control for `Once Upon a Dream`
+- Minimal fixed music control for the piano cover of `Perfect`
 - Reduced-motion support
 
 ## Preserve
