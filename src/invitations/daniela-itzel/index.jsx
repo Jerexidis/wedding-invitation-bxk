@@ -41,6 +41,7 @@ import './invitation.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const EVENT_DATE = '2026-08-22T17:00:00-06:00'
+const WHATSAPP = '524492728716'
 const AUDIO = '/invitations/daniela-itzel/audio/perfect-piano.mp3'
 
 const locations = [
@@ -595,6 +596,14 @@ function RSVP() {
     const submit = async (event) => {
         event.preventDefault()
         setSubmitting(true)
+        const waMessage = `¡Hola! Soy ${name}. Confirmo mi asistencia a los XV años de Daniela Itzel para ${guests} persona(s).${message.trim() ? `\n\nMensaje: "${message.trim()}"` : ''}`
+        const whatsappUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`
+        const whatsappWindow = window.open(whatsappUrl, '_blank')
+
+        if (whatsappWindow) {
+            whatsappWindow.opener = null
+        }
+
         try {
             const { addConfirmation } = await import('../../utils/rsvpStore')
             await addConfirmation('daniela-itzel', {
@@ -605,8 +614,11 @@ function RSVP() {
             setSubmitted(true)
         } catch (err) {
             console.error('Error saving RSVP:', err)
-            window.alert('No pudimos guardar tu confirmación. Por favor, inténtalo nuevamente.')
+            setSubmitted(true)
         } finally {
+            if (!whatsappWindow) {
+                window.location.href = whatsappUrl
+            }
             setSubmitting(false)
         }
     }
@@ -621,6 +633,7 @@ function RSVP() {
                         </div>
                         <h2 style={{ fontFamily: 'Italiana, Georgia, serif', fontSize: '2.5rem', fontWeight: '400', letterSpacing: '0.05em', marginBottom: '1.5rem' }}>¡Muchas gracias!</h2>
                         <p style={{ color: '#ddd7c8', fontFamily: 'Italiana, Georgia, serif', fontSize: '1.1rem', lineHeight: '1.65' }}>Tu confirmación ha sido registrada exitosamente.</p>
+                        <p style={{ fontSize: '0.75rem', marginTop: '1.5rem', opacity: 0.7, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Completa el envío en WhatsApp.</p>
                     </div>
                 ) : (
                     <>
@@ -629,7 +642,7 @@ function RSVP() {
                         </SectionTitle>
                         <p data-reveal>
                             Tu asistencia es muy importante para nosotros.<br />
-                            Confirma tu asistencia aquí.
+                            Al abrir WhatsApp, toca Enviar para completar tu confirmación.
                         </p>
                         <form onSubmit={submit} data-reveal>
                             <label>
@@ -662,7 +675,7 @@ function RSVP() {
                                 </div>
                             </label>
                             <button className="maia-button maia-button--light" type="submit" disabled={submitting}>
-                                <Heart size={17} /> {submitting ? 'Enviando...' : 'Confirmar asistencia'}
+                                <Heart size={17} /> {submitting ? 'Abriendo...' : 'Confirmar por WhatsApp'}
                             </button>
                         </form>
                     </>
