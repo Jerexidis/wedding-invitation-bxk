@@ -220,7 +220,7 @@ const invitations = [
         component: lazy(() => import('./daniela-itzel/index.jsx')),
         enabled: true,
         eventType: 'xv',
-        rsvpMode: 'supabase',
+        rsvpMode: 'mixed',
         eventDate: '2026-08-22T17:00:00-06:00',
     },
 

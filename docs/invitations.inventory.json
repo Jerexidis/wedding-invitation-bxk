@@ -602,7 +602,7 @@
       "eventDate": "2026-08-22T17:00:00-06:00",
       "portfolioGalleryAllowed": false,
       "services": {
-        "rsvp": "supabase",
+        "rsvp": "mixed",
         "gallery": true,
         "audio": true,
         "calendar": true

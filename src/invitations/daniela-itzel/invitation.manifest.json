@@ -16,7 +16,7 @@
     "audio": true,
     "calendar": true,
     "gallery": false,
-    "rsvp": "supabase",
+    "rsvp": "mixed",
     "seo": true
   }
 }
