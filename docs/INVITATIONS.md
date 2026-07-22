@@ -19,12 +19,12 @@ the minimum invitation-specific files needed for a task.
 | `erik-shady-bermejo` | shared-config | primera-comunion | mixed | 2 files | 5.27 MB |
 | `alexa-y-santiago` | shared-config | primera-comunion | supabase | 2 files | 2.61 MB |
 | `victoria-rojas` | hybrid-overrides | xv | mixed | 9 files | 8.64 MB |
-| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 7.63 MB |
+| `michel-mtz` | custom-composition | xv | whatsapp | 2 files | 5.89 MB |
 | `maria-loyola` | hybrid-overrides | xv | mixed | 9 files | 13.25 MB |
 | `jose-raul` | shared-config | xv | none | 3 files | 5.18 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
-| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.11 MB |
+| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 8.22 MB |
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |

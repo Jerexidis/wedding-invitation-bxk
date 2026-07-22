@@ -360,7 +360,8 @@ function RSVP() {
         const attending = form.attendance === 'yes'
         const guests = attending ? Number(form.guests) : 0
         const status = attending ? 'Sí asistiremos' : 'No podremos asistir'
-        const text = `¡Hola! Soy ${form.name.trim()}.\n\n${attending ? '✨ Confirmo mi asistencia' : 'Con mucho cariño, no podré acompañarlos'} a la boda de Yatzel y Salvador.\n${attending ? `👥 Asistentes: ${guests}\n` : ''}${form.message.trim() ? `💌 Mensaje: ${form.message.trim()}\n` : ''}\n${attending ? '¡Nos vemos para celebrar!' : 'Les deseamos toda la felicidad.'}`
+        const text = `¡Hola! Soy ${form.name.trim()}.\n\n${attending ? 'Confirmo mi asistencia' : 'Con mucho cariño, no podré acompañarlos'} a la boda de Yatzel y Salvador.\n${attending ? `Asistentes: ${guests}\n` : ''}${form.message.trim() ? `Mensaje: ${form.message.trim()}\n` : ''}\n${attending ? '¡Nos vemos para celebrar!' : 'Les deseamos toda la felicidad.'}`
+        const whatsappUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
         try {
             const { addConfirmation } = await import('../../utils/rsvpStore')
             await addConfirmation(SLUG, { name: form.name.trim(), guests, message: `${attending ? '🟢' : '🔴'} ${status}${form.message.trim() ? ` · ${form.message.trim()}` : ''}` })
@@ -368,8 +369,10 @@ function RSVP() {
             console.error('No se pudo guardar el RSVP en el panel:', error)
         }
         setSubmitted(true)
-        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
         setSubmitting(false)
+        // Navegar en la misma pestaña evita los bloqueadores de ventanas
+        // emergentes que impedían abrir WhatsApp en algunos celulares.
+        window.location.href = whatsappUrl
     }
 
     return (

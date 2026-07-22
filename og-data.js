@@ -49,7 +49,7 @@ export const ogData = {
     'michel-mtz': {
         title: 'Mis XV Años — Michel Guadalupe 🐸✨',
         description: 'Estás cordialmente invitado(a) a celebrar mis XV años. ¡Toca aquí para ver la invitación!',
-        image: '/invitations/michel-mtz/img/og-preview.png',
+        image: '/invitations/michel-mtz/img/og-preview.webp',
     },
     'despedida-kass-brian': {
         title: 'Despedida de Solteros | Kass & Brian 🎉',
@@ -99,7 +99,7 @@ export const ogData = {
     'boda-lorena-y-arturo': {
         title: 'Bodas de Plata | Lorena & Arturo',
         description: 'Te invitamos a celebrar nuestras Bodas de Plata. ¡Toca aquí para ver la invitación!',
-        image: '/invitations/boda-lorena-y-arturo/img/og-preview.png',
+        image: '/invitations/boda-lorena-y-arturo/img/og-preview.webp',
     },
     'hannia': {
         title: 'Hannia · 23 años',

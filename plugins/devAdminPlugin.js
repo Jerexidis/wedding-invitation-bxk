@@ -408,12 +408,12 @@ function runQualityCheck() {
                 const details = output
                     .split(/\r?\n/)
                     .map((line) => line.trim())
-                    .filter((line) =>
-                        line.startsWith('warning:')
-                        || line.startsWith('error:')
-                        || line.includes('failed')
-                        || line.includes('ERROR '),
-                    )
+                    .filter((line) => {
+                        const normalized = line.toLowerCase()
+                        return normalized.startsWith('warning:')
+                            || normalized.startsWith('error:')
+                            || normalized.includes('failed')
+                    })
                     .slice(-30)
 
                 resolve({

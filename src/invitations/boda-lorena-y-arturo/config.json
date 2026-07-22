@@ -20,7 +20,7 @@
     "time": "7:00 PM"
   },
   "seo": {
-    "shareImage": "og-preview.png"
+    "shareImage": "og-preview.webp"
   },
   "intro": {},
   "countdown": {
@@ -87,7 +87,7 @@
         "caption": ""
       },
       {
-        "src": "5.png",
+        "src": "5.webp",
         "caption": "",
         "objectFit": "contain"
       },
@@ -96,7 +96,7 @@
         "caption": ""
       },
       {
-        "src": "7.png",
+        "src": "7.webp",
         "caption": ""
       }
     ]
