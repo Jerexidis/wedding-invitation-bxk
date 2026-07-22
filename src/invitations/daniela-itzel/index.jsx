@@ -4,6 +4,8 @@ import {
     ChevronDown,
     Church,
     Clock3,
+    Check,
+    Copy,
     Flower2,
     Gift,
     Heart,
@@ -85,6 +87,12 @@ const galleryPhotos = [
     { src: galleryPhoto7, caption: 'Sonrisas para siempre', position: 'center 50%' },
     { src: galleryPhoto8, caption: 'Instantes que guardaré', position: 'center 43%' },
 ]
+
+const TRANSFER_DETAILS = {
+    bank: 'BBVA',
+    beneficiary: 'Daniela Itzel Aguilar Montoya',
+    account: '1576825914',
+}
 
 const calculateTime = () => {
     const distance = new Date(EVENT_DATE).getTime() - Date.now()
@@ -508,6 +516,19 @@ function PortraitInterlude() {
 }
 
 function Gifts() {
+    const [copiedField, setCopiedField] = useState('')
+
+    const copyTransferDetail = async (value, field) => {
+        try {
+            await navigator.clipboard.writeText(value)
+            setCopiedField(field)
+            window.setTimeout(() => setCopiedField(''), 1800)
+        } catch (error) {
+            console.error('Unable to copy transfer detail:', error)
+            setCopiedField('error')
+        }
+    }
+
     return (
         <section className="maia-gifts">
             <div className="maia-gifts__envelope" data-reveal>
@@ -531,19 +552,34 @@ function Gifts() {
                 <dl>
                     <div>
                         <dt>Banco</dt>
-                        <dd>BBVA</dd>
+                        <dd>{TRANSFER_DETAILS.bank}</dd>
                     </div>
                     <div>
                         <dt>Beneficiaria</dt>
-                        <dd>Daniela Itzel Aguilar Montoya</dd>
+                        <dd>{TRANSFER_DETAILS.beneficiary}</dd>
                     </div>
                     <div>
                         <dt>Número de cuenta</dt>
-                        <dd>1576825914</dd>
+                        <dd>{TRANSFER_DETAILS.account}</dd>
                     </div>
                 </dl>
-                <small>Copiar cuenta</small>
-                <small>Copiar beneficiaria</small>
+                <div className="maia-transfer__actions" aria-live="polite">
+                    <button
+                        onClick={() => copyTransferDetail(TRANSFER_DETAILS.account, 'account')}
+                        type="button"
+                    >
+                        {copiedField === 'account' ? <Check size={14} /> : <Copy size={14} />}
+                        {copiedField === 'account' ? 'Cuenta copiada' : 'Copiar cuenta'}
+                    </button>
+                    <button
+                        onClick={() => copyTransferDetail(TRANSFER_DETAILS.beneficiary, 'beneficiary')}
+                        type="button"
+                    >
+                        {copiedField === 'beneficiary' ? <Check size={14} /> : <Copy size={14} />}
+                        {copiedField === 'beneficiary' ? 'Beneficiaria copiada' : 'Copiar beneficiaria'}
+                    </button>
+                </div>
+                {copiedField === 'error' && <small className="maia-transfer__error">No se pudo copiar. Inténtalo nuevamente.</small>}
             </div>
         </section>
     )
