@@ -152,7 +152,7 @@ function MusicControl() {
 
         document.addEventListener('pointerdown', playAfterInteraction, true)
         document.addEventListener('keydown', playAfterInteraction, true)
-        audio.play().then(removeInteractionListeners).catch(() => {})
+        audio.play().then(removeInteractionListeners).catch(() => { })
         return removeInteractionListeners
     }, [])
 
@@ -531,18 +531,19 @@ function Gifts() {
                 <dl>
                     <div>
                         <dt>Banco</dt>
-                        <dd>Banco Aurora</dd>
+                        <dd>BBVA</dd>
                     </div>
                     <div>
                         <dt>Beneficiaria</dt>
-                        <dd>Daniela Itzel</dd>
+                        <dd>Daniela Itzel Aguilar Montoya</dd>
                     </div>
                     <div>
-                        <dt>CLABE</dt>
-                        <dd>0000 •••• •••• •••• 00</dd>
+                        <dt>Número de cuenta</dt>
+                        <dd>1576825914</dd>
                     </div>
                 </dl>
-                <small>Datos de muestra · pendientes de confirmar</small>
+                <small>Copiar cuenta</small>
+                <small>Copiar beneficiaria</small>
             </div>
         </section>
     )
