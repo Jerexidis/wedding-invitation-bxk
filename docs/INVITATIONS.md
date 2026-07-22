@@ -26,7 +26,7 @@ the minimum invitation-specific files needed for a task.
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
 | `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.11 MB |
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
-| `daniela-itzel` | standalone-custom | xv | supabase | 4 files | 5.87 MB |
+| `daniela-itzel` | standalone-custom | xv | supabase | 4 files | 6.93 MB |
 
 ## Targeted context
 
