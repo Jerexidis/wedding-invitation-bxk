@@ -26,13 +26,15 @@ An editorial quinceañera invitation built around Daniela's forest portraits. It
 1. Cinematic XV hero
 2. Daniela Itzel name reveal
 3. Parents and godparents
-4. Date, countdown, and calendar action
-5. Mass and reception
-6. Full celebration itinerary
-7. Private polaroid memory gallery
-8. Portrait interlude
-9. Lluvia de sobres and provisional transfer options
-10. RSVP
+4. Editorial XV portrait and coming-of-age phrase
+5. Date, countdown, and calendar action
+6. Mass and reception
+7. Formal dress code and quinceañera-reserved palette
+8. Full celebration itinerary
+9. Private polaroid memory gallery
+10. Portrait interlude
+11. Lluvia de sobres and transfer options
+12. RSVP by WhatsApp with panel storage
 
 ## Event details
 
@@ -40,7 +42,8 @@ An editorial quinceañera invitation built around Daniela's forest portraits. It
 - Godparents: Heriberto Torres Hernández and Esmeralda Marín Guerrero
 - Mass: El Conventito at 5:00 pm
 - Reception: Finca D at 7:30 pm
-- RSVP: stored confirmation; no WhatsApp phone was supplied
+- RSVP: name and optional message are stored in the panel, then WhatsApp opens with a prepared confirmation
+- Dress code: formal elegant; nude, pink, peach, coral, and gray are reserved for Daniela
 
 ## Motion
 

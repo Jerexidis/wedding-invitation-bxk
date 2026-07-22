@@ -7,7 +7,7 @@
     --ays-gold: #b7a177;
     --ays-line: rgba(32, 41, 56, 0.18);
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: clip;
     background: var(--ays-ivory);
     color: var(--ays-ink);
     font-family: 'Montserrat', sans-serif;
@@ -36,7 +36,8 @@
 .ays-music:disabled { cursor: default; opacity: .82; }
 @keyframes ays-spin { to { transform: rotate(360deg); } }
 
-.ays-hero { position: relative; height: 100svh; min-height: 620px; color: #fff; }
+.ays-hero { position: sticky; top: 0; z-index: 0; height: 100svh; min-height: 620px; color: #fff; }
+.ays-hero ~ * { position: relative; z-index: 1; }
 .ays-hero__photo { height: 100%; object-fit: cover; object-position: center; filter: grayscale(1); }
 .ays-hero__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24,32,44,.18), rgba(20,28,40,.28) 46%, rgba(17,24,35,.82)); }
 .ays-hero__copy { position: absolute; left: 0; right: 0; bottom: 15%; padding: 0 1.2rem; text-align: center; }
@@ -54,7 +55,7 @@
 .ays-heading--light { color: #fff; }
 .ays-heading--light i { background: rgba(255,255,255,.58); }
 
-.ays-quote { padding: 6rem max(1.5rem, 7vw); text-align: center; }
+.ays-quote { padding: 6rem max(1.5rem, 7vw); background: var(--ays-ivory); text-align: center; }
 .ays-quote svg { margin: 0 auto 1.5rem; color: var(--ays-gold); }
 .ays-quote h2 { max-width: 820px; margin: 0 auto 2.2rem; font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 7vw, 4.6rem); font-weight: 500; line-height: 1; }
 .ays-quote h2 i { display: block; margin: .35rem 0; color: var(--ays-gold); font-size: .62em; font-weight: 400; }
@@ -89,7 +90,7 @@
 .ays-padrinos { max-width: 620px; margin: 1rem auto 0; padding: 2rem 1rem; text-align: center; }
 .ays-padrinos h3 b { display: inline; }
 
-.ays-events { padding: 6rem max(1rem, 5vw); }
+.ays-events { padding: 6rem max(1rem, 5vw); background: var(--ays-ivory); }
 .ays-events__grid { display: grid; gap: 1.25rem; max-width: 980px; margin: auto; }
 .ays-event { overflow: hidden; background: var(--ays-paper); box-shadow: 0 20px 55px rgba(36,44,56,.1); }
 .ays-event__photo { height: 260px; overflow: hidden; }
@@ -138,7 +139,7 @@
 .ays-bank small { margin-bottom: .3rem; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; }
 .ays-bank strong { font-size: .9rem; letter-spacing: .08em; }
 
-.ays-gallery { padding: 6rem 0 0; }
+.ays-gallery { padding: 6rem 0 0; background: var(--ays-ivory); }
 .ays-gallery__grid { display: grid; grid-template-columns: repeat(2, 1fr); }
 .ays-gallery__grid img { height: 230px; object-fit: cover; }
 .ays-gallery__grid img:nth-child(3n+1) { grid-row: span 2; height: 460px; }

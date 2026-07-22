@@ -27,6 +27,7 @@ import ceremonyPhoto from './assets/daniela-ceremony.webp'
 import receptionPhoto from './assets/daniela-reception.webp'
 import countdownPhoto from './assets/daniela-countdown.webp'
 import rsvpPhoto from './assets/daniela-rsvp.webp'
+import xvPortraitPhoto from './assets/daniela-xv-portrait.webp'
 import galleryPhoto1 from './assets/gallery-1.webp'
 import galleryPhoto2 from './assets/gallery-2.webp'
 import galleryPhoto3 from './assets/gallery-3.webp'
@@ -279,6 +280,24 @@ function Family() {
     )
 }
 
+function FifteenPortrait() {
+    return (
+        <section className="daniela-xv-moment" aria-label="Retrato especial de Daniela Itzel">
+            <img
+                src={xvPortraitPhoto}
+                alt="Daniela Itzel sosteniendo un ramo de flores"
+                loading="lazy"
+            />
+            <div className="daniela-xv-moment__veil" />
+            <div className="daniela-xv-moment__copy" data-reveal>
+                <span>Mis XV años</span>
+                <blockquote>Quince años, quince sueños y toda una vida por florecer.</blockquote>
+                <p>Daniela Itzel</p>
+            </div>
+        </section>
+    )
+}
+
 function DateAndCountdown() {
     const time = useCountdown()
     const [calendarOpen, setCalendarOpen] = useState(false)
@@ -405,6 +424,40 @@ function Locations() {
                         </article>
                     )
                 })}
+            </div>
+        </section>
+    )
+}
+
+function DressCode() {
+    const reservedColors = [
+        { color: '#f6d7c2', label: 'Nude' },
+        { color: '#f4b6a7', label: 'Rosa durazno' },
+        { color: '#f39e8a', label: 'Coral suave' },
+        { color: '#9c9997', label: 'Gris' },
+    ]
+
+    return (
+        <section className="daniela-dress-code">
+            <div className="daniela-dress-code__inner">
+                <SectionTitle eyebrow="Una nota para celebrar">
+                    Código de<br /><em>vestimenta</em>
+                </SectionTitle>
+                <p className="daniela-dress-code__style" data-reveal>Formal elegante</p>
+                <div className="daniela-dress-code__palette" aria-label="Colores reservados para la quinceañera" data-reveal>
+                    {reservedColors.map((swatch) => (
+                        <span
+                            aria-label={swatch.label}
+                            key={swatch.color}
+                            role="img"
+                            style={{ '--swatch-color': swatch.color }}
+                        />
+                    ))}
+                </div>
+                <div className="daniela-dress-code__notice" data-reveal>
+                    <strong>Colores reservados para la quinceañera</strong>
+                    <p>Los tonos nude, rosa, durazno, coral y gris están reservados exclusivamente para Daniela. Te agradecemos elegir un color distinto.</p>
+                </div>
             </div>
         </section>
     )
@@ -588,7 +641,6 @@ function Gifts() {
 
 function RSVP() {
     const [name, setName] = useState('')
-    const [guests, setGuests] = useState('1')
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false)
     const [submitting, setSubmitting] = useState(false)
@@ -596,7 +648,7 @@ function RSVP() {
     const submit = async (event) => {
         event.preventDefault()
         setSubmitting(true)
-        const waMessage = `✨ ¡Hola! Soy ${name}.\n\n🌸 Confirmo mi asistencia a los XV años de Daniela Itzel 👑\n👥 Número de asistentes: ${guests}${message.trim() ? `\n💌 Mensaje: "${message.trim()}"` : ''}\n\n¡Nos vemos para celebrar este día tan especial! 🥳💖`
+        const waMessage = `✨ ¡Hola! Soy ${name}.\n\n🌸 Confirmo mi asistencia a los XV años de Daniela Itzel 👑${message.trim() ? `\n\n💌 Mensaje: "${message.trim()}"` : ''}\n\n¡Nos vemos para celebrar este día tan especial! 🥳💖`
         const whatsappUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMessage)}`
         const whatsappWindow = window.open(whatsappUrl, '_blank')
 
@@ -608,7 +660,7 @@ function RSVP() {
             const { addConfirmation } = await import('../../utils/rsvpStore')
             await addConfirmation('daniela-itzel', {
                 name,
-                guests: parseInt(guests),
+                guests: 1,
                 message: message.trim(),
             })
             setSubmitted(true)
@@ -653,14 +705,6 @@ function RSVP() {
                                     onChange={(event) => setName(event.target.value)}
                                     placeholder="Escribe tu nombre"
                                 />
-                            </label>
-                            <label>
-                                <span>Número de asistentes</span>
-                                <select value={guests} onChange={(event) => setGuests(event.target.value)}>
-                                    {[1, 2, 3, 4, 5, 6].map((number) => (
-                                        <option key={number} value={number}>{number}</option>
-                                    ))}
-                                </select>
                             </label>
                             <label>
                                 <span>Mensaje (opcional)</span>
@@ -791,8 +835,10 @@ export default function DanielaItzelInvitation({ portfolioMode = false }) {
             <Hero />
             <NameReveal />
             <Family />
+            <FifteenPortrait />
             <DateAndCountdown />
             <Locations />
+            <DressCode />
             <Itinerary />
             <PolaroidGallery hidden={portfolioMode} />
             <PortraitInterlude />

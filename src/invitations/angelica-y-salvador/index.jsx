@@ -41,7 +41,7 @@ const events = [
         time: '8:30 pm',
         maps: 'https://maps.app.goo.gl/kJmcjFGPvbeaFe4i8?g_st=iw',
         icon: Sparkles,
-        photo: `${BASE}/img/venue-reception-enhanced.webp`,
+        photo: `${BASE}/img/venue-reception-garden-v2.webp`,
     },
 ]
 

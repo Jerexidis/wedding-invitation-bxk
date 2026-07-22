@@ -27,7 +27,7 @@ the minimum invitation-specific files needed for a task.
 | `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 17.11 MB |
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
-| `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 1.74 MB |
+| `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 1.67 MB |
 
 ## Targeted context
 
