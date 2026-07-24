@@ -25,7 +25,7 @@ const INVITATIONS_PUBLIC = path.resolve('public/invitations')
 const REGISTRY_PATH = path.resolve('src/invitations/registry.js')
 const OG_DATA_PATH = path.resolve('og-data.js')
 const RSVP_KEYS_PATH = path.resolve('plugins/rsvp-keys.json')
-let qualityCheckPromise = null
+const qualityCheckPromises = new Map()
 
 /**
  * Vite plugin that adds admin API endpoints (dev mode only).
@@ -50,11 +50,14 @@ export default function devAdminPlugin() {
             server.middlewares.use(async (req, res, next) => {
                 if (req.method === 'POST' && req.url === '/api/quality/run') {
                     try {
-                        if (!qualityCheckPromise) {
-                            qualityCheckPromise = runQualityCheck()
-                                .finally(() => { qualityCheckPromise = null })
+                        const data = await parseBody(req)
+                        const mode = data.mode === 'production' ? 'production' : 'quick'
+                        if (!qualityCheckPromises.has(mode)) {
+                            const check = runQualityCheck(mode)
+                                .finally(() => { qualityCheckPromises.delete(mode) })
+                            qualityCheckPromises.set(mode, check)
                         }
-                        const result = await qualityCheckPromise
+                        const result = await qualityCheckPromises.get(mode)
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify(result))
                     } catch (err) {
@@ -96,7 +99,7 @@ export default function devAdminPlugin() {
                 if (req.method === 'POST' && req.url === '/api/invitations') {
                     try {
                         const data = await parseBody(req)
-                        const result = createInvitation(data)
+                        const result = await createInvitation(data)
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify({ ok: true, ...result }))
                     } catch (err) {
@@ -294,7 +297,10 @@ export default function devAdminPlugin() {
                     try {
                         const slug = optimizeMatch[1]
                         const data = await parseBody(req)
-                        const report = await optimizeInvitation(slug, { write: Boolean(data.write) })
+                        const report = await optimizeInvitation(slug, {
+                            write: Boolean(data.write),
+                            onlyLarge: Boolean(data.onlyLarge),
+                        })
                         res.setHeader('Content-Type', 'application/json')
                         res.end(JSON.stringify({ ok: true, report }))
                     } catch (err) {
@@ -373,12 +379,13 @@ export default function devAdminPlugin() {
 }
 
 // ─── READ REGISTRY ──────────────────────────────────────────────
-function runQualityCheck() {
+function runQualityCheck(mode = 'quick') {
+    const script = mode === 'production' ? 'release:check' : 'review:quick'
     const hasNpmCli = Boolean(process.env.npm_execpath)
     const command = hasNpmCli ? process.execPath : (process.platform === 'win32' ? 'npm.cmd' : 'npm')
     const args = hasNpmCli
-        ? [process.env.npm_execpath, 'run', 'release:check']
-        : ['run', 'release:check']
+        ? [process.env.npm_execpath, 'run', script]
+        : ['run', script]
     return new Promise((resolve) => {
         execFile(
             command,
@@ -394,8 +401,10 @@ function runQualityCheck() {
                 const consistency = output.match(/Consistency summary:\s*(\d+) error\(s\),\s*(\d+) warning\(s\)/)
                 const browserTests = [...output.matchAll(/(\d+) passed/g)].at(-1)
                 const schema = output.match(/Schema validation passed for\s*(\d+)/)
+                const largeImages = [...output.matchAll(/warning:\s+Large image/gi)]
                 const workspace = await getDeployStatus()
                 const summary = {
+                    mode,
                     schemaPassed: Boolean(schema),
                     configInvitations: Number(schema?.[1] || 0),
                     consistencyErrors: Number(consistency?.[1] || 0),
@@ -403,6 +412,7 @@ function runQualityCheck() {
                     contextCurrent: output.includes('Invitation context is current'),
                     productionBoundaryClean: output.includes('Production boundary is clean'),
                     browserTestsPassed: Number(browserTests?.[1] || 0),
+                    largeImages: largeImages.length,
                 }
                 const issues = parseConsistencyIssues(output)
                 const outputLines = output
@@ -427,14 +437,18 @@ function runQualityCheck() {
                     ? outputLines.slice(-12)
                     : detectedDetails
 
+                const quickReady = !error
+                    && summary.schemaPassed
+                    && summary.consistencyErrors === 0
+                    && summary.contextCurrent
+                const productionReady = quickReady
+                    && summary.productionBoundaryClean
+                    && summary.browserTestsPassed > 0
+
                 resolve({
                     ok: !error,
-                    ready: !error
-                        && summary.schemaPassed
-                        && summary.consistencyErrors === 0
-                        && summary.contextCurrent
-                        && summary.productionBoundaryClean
-                        && summary.browserTestsPassed > 0,
+                    mode,
+                    ready: mode === 'production' ? productionReady : quickReady,
                     summary,
                     issues,
                     workspaceSignature: workspace.signature,
@@ -598,7 +612,7 @@ function removeRsvpKey(slug) {
 }
 
 // ─── CREATE INVITATION ──────────────────────────────────────────
-function createInvitation(data) {
+async function createInvitation(data) {
     const { slug, title, config } = data
 
     if (!slug || !title || !config) {
@@ -703,7 +717,24 @@ function createInvitation(data) {
         console.warn(`[Admin] No se pudo actualizar og-data.js para "${slug}":`, e.message)
     }
 
-    return { slug, path: `/i/${slug}`, rsvpLink: `/i/${slug}/rsvp?key=${rsvpKey}` }
+    let optimization = { optimized: [], totalSavedKb: 0 }
+    let optimizationWarning = null
+    if (data.photos?.length) {
+        try {
+            optimization = await optimizeInvitation(slug, { write: true, onlyLarge: true })
+        } catch (error) {
+            optimizationWarning = `La invitación se creó, pero no se pudieron comprimir sus fotos: ${error.message}`
+        }
+    }
+
+    return {
+        slug,
+        path: `/i/${slug}`,
+        rsvpLink: `/i/${slug}/rsvp?key=${rsvpKey}`,
+        optimizedImages: optimization.optimized.length,
+        savedKb: optimization.totalSavedKb,
+        optimizationWarning,
+    }
 }
 
 

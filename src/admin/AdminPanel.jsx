@@ -72,7 +72,7 @@ export default function AdminPanel() {
     const [renameDialog, setRenameDialog] = useState(null)
     const [reportDialog, setReportDialog] = useState(null)
     const [actionLoading, setActionLoading] = useState('')
-    const [quality, setQuality] = useState({ status: 'idle', summary: null, issues: [], details: [], workspaceSignature: null })
+    const [quality, setQuality] = useState({ status: 'idle', mode: null, summary: null, issues: [], details: [], workspaceSignature: null })
     const [customDialog, setCustomDialog] = useState(null)
     const [creatingCustom, setCreatingCustom] = useState(false)
     const [activationDialog, setActivationDialog] = useState(null)
@@ -129,7 +129,7 @@ export default function AdminPanel() {
     useEffect(() => { fetchPublicationHistory() }, [fetchPublicationHistory])
     useEffect(() => {
         if (
-            quality.status === 'ready'
+            (quality.status === 'ready' || quality.status === 'quick-ready')
             && quality.workspaceSignature
             && deployStatus.signature
             && quality.workspaceSignature !== deployStatus.signature
@@ -270,19 +270,54 @@ export default function AdminPanel() {
         try {
             const res = await fetch(`${API}/${slug}/assets`)
             const json = await res.json()
-            if (json.ok) setReportDialog({ type: 'assets', title: `Assets - ${slug}`, report: json.report })
+            if (json.ok) setReportDialog({ type: 'assets', slug, title: `Assets - ${slug}`, report: json.report })
             else showToast(json.error, 'error')
         } catch (err) { showToast(err.message, 'error') }
         setActionLoading('')
     }
 
-    const runQualityCheck = async () => {
-        setQuality({ status: 'running', summary: null, issues: [], details: [], workspaceSignature: null })
+    const optimizeAssets = async (slug) => {
+        if (!confirm(`¿Comprimir las imágenes de "${slug}"? Solo se reemplazarán archivos cuando el ahorro sea significativo.`)) return
+        setActionLoading(`optimize:${slug}`)
         try {
-            const res = await fetch('/api/quality/run', { method: 'POST' })
+            const res = await fetch(`${API}/${slug}/optimize`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ write: true, onlyLarge: true }),
+            })
+            const json = await res.json()
+            if (!json.ok) throw new Error(json.error || 'No se pudieron optimizar las imágenes')
+
+            const assetsRes = await fetch(`${API}/${slug}/assets`)
+            const assetsJson = await assetsRes.json()
+            if (assetsJson.ok) {
+                setReportDialog({ type: 'assets', slug, title: `Assets - ${slug}`, report: assetsJson.report })
+            }
+            const count = json.report?.optimized?.length || 0
+            const savedKb = json.report?.totalSavedKb || 0
+            showToast(count
+                ? `${count} imagen(es) optimizadas; ahorro aproximado: ${savedKb} KB`
+                : 'Las imágenes ya estaban optimizadas')
+            setQuality((current) => ({ ...current, status: 'stale' }))
+            fetchDeployStatus()
+        } catch (err) {
+            showToast(err.message, 'error')
+        }
+        setActionLoading('')
+    }
+
+    const runQualityCheck = async (mode = 'quick') => {
+        setQuality({ status: 'running', mode, summary: null, issues: [], details: [], workspaceSignature: null })
+        try {
+            const res = await fetch('/api/quality/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mode }),
+            })
             const json = await res.json()
             setQuality({
-                status: json.ready ? 'ready' : 'failed',
+                status: json.ready ? (json.mode === 'production' ? 'ready' : 'quick-ready') : 'failed',
+                mode: json.mode || mode,
                 summary: json.summary || null,
                 issues: json.issues || [],
                 details: json.details || [],
@@ -290,8 +325,10 @@ export default function AdminPanel() {
                 workspaceSignature: json.workspaceSignature || null,
             })
             fetchDeployStatus()
+            return json
         } catch (err) {
-            setQuality({ status: 'failed', summary: null, issues: [], details: [], error: err.message, workspaceSignature: null })
+            setQuality({ status: 'failed', mode, summary: null, issues: [], details: [], error: err.message, workspaceSignature: null })
+            return null
         }
     }
 
@@ -377,12 +414,21 @@ export default function AdminPanel() {
         setActionLoading('')
     }
 
-    const openDeployDialog = () => {
+    const openDeployDialog = async () => {
         const reviewIsCurrent = quality.status === 'ready'
+            && quality.mode === 'production'
             && quality.workspaceSignature
             && quality.workspaceSignature === deployStatus.signature
-        if (!reviewIsCurrent) {
-            showToast('Revisa el proyecto antes de publicar', 'error')
+
+        if (reviewIsCurrent) {
+            setShowDeployDialog(true)
+            return
+        }
+
+        showToast('Comprobando producción antes de publicar…')
+        const result = await runQualityCheck('production')
+        if (!result?.ready) {
+            showToast(result?.error || 'La revisión de producción necesita atención', 'error')
             document.querySelector('.quality-center')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
             return
         }
@@ -754,6 +800,17 @@ export default function AdminPanel() {
                             )}
                         </div>
                         <div className="deploy-dialog-footer">
+                            {reportDialog.type === 'assets' && reportDialog.report?.largeImages?.length > 0 && (
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => optimizeAssets(reportDialog.slug)}
+                                    disabled={actionLoading === `optimize:${reportDialog.slug}`}
+                                >
+                                    {actionLoading === `optimize:${reportDialog.slug}`
+                                        ? <><Loader2 size={14} className="animate-spin" /> Comprimiendo…</>
+                                        : <><Sparkles size={14} /> Comprimir imágenes</>}
+                                </button>
+                            )}
                             <button className="btn btn-primary" onClick={() => setReportDialog(null)}>Cerrar</button>
                         </div>
                     </div>
@@ -899,7 +956,7 @@ export default function AdminPanel() {
                                 <History size={15} /> Historial
                                 {publicationHistory.length > 0 && <span className="history-count">{publicationHistory.length}</span>}
                             </button>
-                            <button onClick={openDeployDialog} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges}>
+                            <button onClick={openDeployDialog} className={`btn btn-deploy-header ${deployStatus.hasChanges ? 'has-changes' : ''}`} disabled={!deployStatus.hasChanges || quality.status === 'running'}>
                                 <Upload size={15} />
                                 Publicar
                                 {deployStatus.hasChanges && <span className="deploy-badge">{deployStatus.changeCount}</span>}
@@ -1127,12 +1184,13 @@ export default function AdminPanel() {
 }
 
 function QualityCenter({ quality, onRun, onSelect }) {
-    const summary = quality.summary
+    const summary = quality.summary || {}
     const isRunning = quality.status === 'running'
     const isReady = quality.status === 'ready'
+    const isQuickReady = quality.status === 'quick-ready'
     const isStale = quality.status === 'stale'
-    const hasResult = Boolean(summary)
-    const cards = hasResult ? [
+    const hasResult = Boolean(quality.summary)
+    const productionCards = [
         {
             label: 'Configuraciones',
             value: summary.schemaPassed ? `${summary.configInvitations} correctas` : 'Revisar',
@@ -1156,27 +1214,64 @@ function QualityCenter({ quality, onRun, onSelect }) {
             value: summary.browserTestsPassed ? `${summary.browserTestsPassed} aprobadas` : 'Revisar',
             good: summary.browserTestsPassed > 0,
         },
-    ] : []
+    ]
+    const quickCards = [
+        productionCards[0],
+        productionCards[1],
+        {
+            label: 'Inventario',
+            value: summary.contextCurrent ? 'Actualizado' : 'Revisar',
+            good: summary.contextCurrent,
+        },
+        {
+            label: 'Imágenes',
+            value: summary.largeImages ? `${summary.largeImages} por optimizar` : 'Sin archivos pesados',
+            good: summary.largeImages === 0,
+            warning: summary.largeImages > 0,
+        },
+    ]
+    const cards = hasResult ? (summary.mode === 'production' ? productionCards : quickCards) : []
+    const headline = isReady
+        ? 'Proyecto listo para publicar'
+        : isQuickReady
+            ? 'Revisión rápida correcta'
+            : isStale
+                ? 'Hay cambios después de la última revisión'
+                : quality.status === 'failed'
+                    ? 'Hay puntos por revisar'
+                    : 'Revisa al ritmo de tu trabajo'
+    const description = isRunning
+        ? quality.mode === 'production'
+            ? 'Compilando y probando todas las invitaciones antes de publicar.'
+            : 'Validando configuraciones, datos, inventario y peso de imágenes.'
+        : isReady
+            ? 'La compilación y las pruebas de producción terminaron correctamente.'
+            : isQuickReady
+                ? 'Puedes seguir editando. Ejecuta producción una sola vez cuando vayas a publicar.'
+                : isStale
+                    ? 'Haz una revisión rápida para continuar o la de producción si ya vas a publicar.'
+                    : 'Usa la rápida durante la edición; producción conserva la comprobación completa.'
 
     return (
-        <section className={`quality-center ${isReady ? 'quality-ready' : quality.status === 'failed' ? 'quality-failed' : isStale ? 'quality-stale' : ''}`}>
+        <section className={`quality-center ${isReady || isQuickReady ? 'quality-ready' : quality.status === 'failed' ? 'quality-failed' : isStale ? 'quality-stale' : ''}`}>
             <div className="quality-header">
                 <div>
                     <span className="quality-kicker">Centro de calidad</span>
-                    <h3>{isReady ? 'Proyecto listo para publicar' : isStale ? 'Hay cambios después de la última revisión' : quality.status === 'failed' ? 'Hay puntos por revisar' : 'Revisa todo con un clic'}</h3>
-                    <p>
-                        {isRunning
-                            ? 'Estamos validando configuraciones, producción y todas las invitaciones.'
-                            : isReady
-                                ? 'Las comprobaciones importantes terminaron correctamente.'
-                                : isStale
-                                    ? 'Vuelve a revisar antes de publicar para comprobar el estado actual.'
-                                    : 'No necesitas abrir la terminal. Esta revisión no publica ni modifica invitaciones.'}
-                    </p>
+                    <h3>{headline}</h3>
+                    <p>{description}</p>
                 </div>
-                <button className="btn btn-primary quality-run" onClick={onRun} disabled={isRunning}>
-                    {isRunning ? <><Loader2 size={15} className="animate-spin" /> Revisando…</> : <><Check size={15} /> Revisar proyecto</>}
-                </button>
+                <div className="quality-actions">
+                    <button className="btn btn-primary quality-run" onClick={() => onRun('quick')} disabled={isRunning}>
+                        {isRunning && quality.mode === 'quick'
+                            ? <><Loader2 size={15} className="animate-spin" /> Revisando…</>
+                            : <><Check size={15} /> Revisión rápida</>}
+                    </button>
+                    <button className="btn btn-secondary quality-run" onClick={() => onRun('production')} disabled={isRunning}>
+                        {isRunning && quality.mode === 'production'
+                            ? <><Loader2 size={15} className="animate-spin" /> Probando…</>
+                            : <><Rocket size={15} /> Revisión de producción</>}
+                    </button>
+                </div>
             </div>
 
             {hasResult && (

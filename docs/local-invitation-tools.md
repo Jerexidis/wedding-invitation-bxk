@@ -8,9 +8,14 @@ On Windows, double-click `Abrir-Panel-InvitaYa.cmd`. It starts the local server
 and opens `/admin` automatically. Keep its terminal window open while using the
 panel.
 
-Inside the panel, use **Revisar proyecto** in the **Centro de calidad**. One
-click checks configurations, connected data, production separation, and every
-active invitation in the browser. It does not publish or modify invitations.
+Inside the panel, use **Revisión rápida** while editing. It refreshes generated
+context and checks configurations, connected data, invitation structure, and
+heavy assets without rebuilding or opening every invitation in the browser.
+When you press **Publicar**, the panel runs **Revisión de producción**
+automatically if the current changes have not passed it yet. It always keeps the
+full build and production-boundary check, then tests only affected invitation
+routes. Shared or structural changes automatically fall back to every active
+route.
 
 Each successful publication made from the panel stores local recovery metadata.
 Use **Historial** to restore the version before the latest publication. Restore
@@ -33,6 +38,8 @@ Available local actions:
 - Change an invitation slug/link.
 - Validate an invitation before publishing.
 - Review heavy image/audio assets.
+- Compress heavy images from the Assets report. Wizard-uploaded photos are
+  optimized automatically when a new invitation is created.
 - Publish with the existing git deploy flow.
 - Review local publication history and restore the previous release as pending
   local changes.
@@ -118,6 +125,12 @@ Run the publish checklist:
 npm run publish:check
 ```
 
+Run the fast editing checklist:
+
+```bash
+npm run review:quick
+```
+
 Refresh or verify the compact agent context:
 
 ```bash
@@ -141,6 +154,12 @@ Run the complete local release gate:
 
 ```bash
 npm run release:check
+```
+
+Force every active route regardless of the changed files:
+
+```bash
+npm run release:check:full
 ```
 
 ## Notes

@@ -23,7 +23,9 @@
     "history:test": "node scripts/publication-history.test.mjs",
     "og-lifecycle:test": "node scripts/invitation-og-lifecycle.test.mjs",
     "test:routes": "playwright test",
-    "release:check": "npm run publish:check && npm run test:routes",
+    "review:quick": "node scripts/invitation-inventory.mjs refresh && node scripts/invitation-schema.mjs --all && node scripts/invitation-consistency.mjs && node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check",
+    "release:check": "node scripts/smart-release-check.mjs",
+    "release:check:full": "npm run publish:check && npm run test:routes",
     "publish:check": "node scripts/invitation-schema.mjs --all && node scripts/invitation-consistency.mjs && node scripts/invitation-tools.mjs preflight --all && node scripts/invitation-inventory.mjs check && vite build && node scripts/check-production-boundary.mjs",
     "deploy": "git add . && git commit -m \"deploy: update\" && git push"
   },

@@ -211,10 +211,20 @@ npm run invite:preflight    # validation plus asset checks
 npm run invite:starter      # dry-run custom artistic scaffold
 npm run context:check       # fail if the compact inventory is stale
 npm run context:refresh     # regenerate the compact inventory
+npm run review:quick        # refresh context + schema/consistency/preflight checks
 npm run publish:check       # required pre-publish check + production build
 npm run test:routes         # browser smoke tests for active invitations
-npm run release:check       # publish checks plus browser smoke tests
+npm run release:check       # publish checks + affected routes (or all if shared)
+npm run release:check:full  # publish checks + every active route
 ```
+
+The admin quality center uses `review:quick` for fast iteration. Publishing
+automatically runs `release:check`: invitation-local changes test only the
+affected active routes, while shared, registry, dependency, tooling, or unknown
+changes fall back to every active route. `release:check:full` remains available
+for an explicit complete pass. New wizard-uploaded photos are optimized
+automatically; existing heavy images can be compressed from an invitation's
+Assets report.
 
 Targeted invitation tools:
 

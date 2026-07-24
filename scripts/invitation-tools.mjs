@@ -404,6 +404,7 @@ export async function optimizeInvitation(slug, options = {}) {
     ensureSlug(slug, 'slug')
 
     const write = Boolean(options.write)
+    const onlyLarge = Boolean(options.onlyLarge)
     const sharp = await loadSharp()
     const publicDir = path.join(PUBLIC_ROOT, slug)
     const results = []
@@ -415,6 +416,7 @@ export async function optimizeInvitation(slug, options = {}) {
 
     for (const file of imageFiles) {
         const before = fs.statSync(file).size
+        if (onlyLarge && before <= 1_500_000) continue
         const ext = path.extname(file).toLowerCase()
         const image = sharp(file).rotate()
         const meta = await image.metadata()

@@ -99,7 +99,16 @@ export default function WizardForm({ onBack, showToast }) {
                 body: JSON.stringify({ slug: form.slug, title: form.title, config, photos: photosToUpload })
             })
             const json = await res.json()
-            if (json.ok) { showToast(`Invitación creada — ${json.path}`); onBack() }
+            if (json.ok) {
+                const optimization = json.optimizedImages
+                    ? ` · ${json.optimizedImages} foto(s) comprimidas, ${json.savedKb} KB ahorrados`
+                    : ''
+                showToast(`Invitación creada — ${json.path}${optimization}`)
+                if (json.optimizationWarning) {
+                    window.setTimeout(() => showToast(json.optimizationWarning, 'error'), 500)
+                }
+                onBack()
+            }
             else showToast(json.error, 'error')
         } catch (err) { showToast(err.message, 'error') }
         setCreating(false)
