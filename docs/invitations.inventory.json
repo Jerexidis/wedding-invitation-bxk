@@ -250,7 +250,7 @@
         "files": 5,
         "images": 4,
         "audio": 0,
-        "bytes": 2248525,
+        "bytes": 2248524,
         "megabytes": 2.14
       }
     },
@@ -278,7 +278,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2740081,
+        "bytes": 2740080,
         "megabytes": 2.61
       }
     },
@@ -306,7 +306,7 @@
         "files": 7,
         "images": 5,
         "audio": 1,
-        "bytes": 5522705,
+        "bytes": 5522704,
         "megabytes": 5.27
       }
     },
@@ -334,7 +334,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2740081,
+        "bytes": 2740080,
         "megabytes": 2.61
       }
     },
@@ -397,7 +397,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 6172296,
+        "bytes": 6172293,
         "megabytes": 5.89
       }
     },
@@ -432,7 +432,7 @@
         "files": 45,
         "images": 42,
         "audio": 2,
-        "bytes": 13889272,
+        "bytes": 13889269,
         "megabytes": 13.25
       }
     },
@@ -491,7 +491,7 @@
         "files": 6,
         "images": 2,
         "audio": 1,
-        "bytes": 1572102,
+        "bytes": 1572099,
         "megabytes": 1.5
       }
     },
@@ -588,7 +588,7 @@
         "files": 19,
         "images": 17,
         "audio": 1,
-        "bytes": 17295528,
+        "bytes": 17295531,
         "megabytes": 16.49
       }
     },
@@ -618,37 +618,8 @@
         "files": 7,
         "images": 2,
         "audio": 2,
-        "bytes": 7265157,
+        "bytes": 7265160,
         "megabytes": 6.93
-      }
-    },
-    {
-      "slug": "angelica-y-salvador",
-      "title": "Nuestra Boda | Yatzel & Salvador",
-      "architecture": "standalone-custom",
-      "enabled": true,
-      "demo": false,
-      "eventType": "boda",
-      "eventDate": "2026-08-22T19:00:00-06:00",
-      "portfolioGalleryAllowed": false,
-      "services": {
-        "rsvp": "mixed",
-        "gallery": true,
-        "audio": true,
-        "calendar": true
-      },
-      "sourceFiles": [
-        "src/invitations/angelica-y-salvador/DESIGN.md",
-        "src/invitations/angelica-y-salvador/index.jsx",
-        "src/invitations/angelica-y-salvador/invitation.css"
-      ],
-      "designBrief": "src/invitations/angelica-y-salvador/DESIGN.md",
-      "assets": {
-        "files": 14,
-        "images": 12,
-        "audio": 1,
-        "bytes": 6231539,
-        "megabytes": 5.94
       }
     }
   ]

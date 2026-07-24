@@ -228,7 +228,7 @@ const invitations = [
         slug: 'angelica-y-salvador',
         title: 'Nuestra Boda | Yatzel & Salvador',
         component: lazy(() => import('./angelica-y-salvador/index.jsx')),
-        enabled: true,
+        enabled: false,
         eventType: 'boda',
         rsvpMode: 'mixed',
         eventDate: '2026-08-22T19:00:00-06:00',

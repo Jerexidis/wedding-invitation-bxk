@@ -405,16 +405,27 @@ function runQualityCheck() {
                     browserTestsPassed: Number(browserTests?.[1] || 0),
                 }
                 const issues = parseConsistencyIssues(output)
-                const details = output
+                const outputLines = output
                     .split(/\r?\n/)
                     .map((line) => line.trim())
+                    .filter(Boolean)
+                const detectedDetails = outputLines
                     .filter((line) => {
                         const normalized = line.toLowerCase()
                         return normalized.startsWith('warning:')
                             || normalized.startsWith('error:')
                             || normalized.includes('failed')
+                            || normalized.includes('is stale')
+                            || normalized.startsWith('run:')
+                            || normalized.startsWith('npm error')
                     })
                     .slice(-30)
+                // Some tools report failures without using "error" or "failed".
+                // Keep a bounded tail as a fallback so the admin never hides the
+                // only useful diagnostic behind a generic message.
+                const details = error && detectedDetails.length === 0
+                    ? outputLines.slice(-12)
+                    : detectedDetails
 
                 resolve({
                     ok: !error,
