@@ -5,6 +5,7 @@ import { getDefaultInvitation, getInvitationBySlug } from './invitations/registr
 const RsvpDashboard = lazy(() => import('./components/RsvpDashboard'))
 const Showcase = lazy(() => import('./components/Showcase'))
 const SharedAlbum = lazy(() => import('./album/SharedAlbum'))
+const LorenaArturoAlbum = lazy(() => import('./invitations/boda-lorena-y-arturo/Album'))
 
 function ScrollToTop() {
     const { pathname, search } = useLocation()
@@ -112,6 +113,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Showcase />} />
                     <Route path="/album" element={<SharedAlbum />} />
+                    <Route path="/i/boda-lorena-y-arturo/album" element={<LorenaArturoAlbum />} />
                     <Route path="/i/:slug" element={<InvitationBySlug />} />
                     <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
                     {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}

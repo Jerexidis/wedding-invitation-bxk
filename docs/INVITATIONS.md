@@ -24,7 +24,7 @@ the minimum invitation-specific files needed for a task.
 | `jose-raul` | shared-config | xv | none | 3 files | 5.18 MB |
 | `maia-sofia-duran-avila` | standalone-custom | xv | mixed | 4 files | 1.50 MB |
 | `andre-joel` | hybrid-overrides | bautizo | none | 6 files | 13.24 MB |
-| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 11 files | 8.22 MB |
+| `boda-lorena-y-arturo` | standalone-custom | boda | whatsapp | 13 files | 8.22 MB |
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
@@ -158,7 +158,7 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `standalone-custom`
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/boda-lorena-y-arturo/DESIGN.md`
-- Source: `src/invitations/boda-lorena-y-arturo/config.json`, `src/invitations/boda-lorena-y-arturo/DESIGN.md`, `src/invitations/boda-lorena-y-arturo/Envelope.jsx`, `src/invitations/boda-lorena-y-arturo/Events.jsx`, `src/invitations/boda-lorena-y-arturo/Footer.jsx`, `src/invitations/boda-lorena-y-arturo/Gallery.jsx`, `src/invitations/boda-lorena-y-arturo/Hero.jsx`, `src/invitations/boda-lorena-y-arturo/index.jsx`, `src/invitations/boda-lorena-y-arturo/invitation.css`, `src/invitations/boda-lorena-y-arturo/Padrinos.jsx`, `src/invitations/boda-lorena-y-arturo/RSVP.jsx`
+- Source: `src/invitations/boda-lorena-y-arturo/album.css`, `src/invitations/boda-lorena-y-arturo/Album.jsx`, `src/invitations/boda-lorena-y-arturo/config.json`, `src/invitations/boda-lorena-y-arturo/DESIGN.md`, `src/invitations/boda-lorena-y-arturo/Envelope.jsx`, `src/invitations/boda-lorena-y-arturo/Events.jsx`, `src/invitations/boda-lorena-y-arturo/Footer.jsx`, `src/invitations/boda-lorena-y-arturo/Gallery.jsx`, `src/invitations/boda-lorena-y-arturo/Hero.jsx`, `src/invitations/boda-lorena-y-arturo/index.jsx`, `src/invitations/boda-lorena-y-arturo/invitation.css`, `src/invitations/boda-lorena-y-arturo/Padrinos.jsx`, `src/invitations/boda-lorena-y-arturo/RSVP.jsx`
 
 ### hannia
 

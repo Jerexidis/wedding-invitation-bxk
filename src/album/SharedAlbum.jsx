@@ -31,7 +31,22 @@ function PhotoCard({ photo, onOpen }) {
     )
 }
 
-export default function SharedAlbum() {
+export default function SharedAlbum({
+    className = '',
+    eventFolder = 'evento-principal',
+    kicker = 'Nuestro evento',
+    title = 'Álbum compartido',
+    intro = 'Ayúdanos a guardar cada sonrisa, abrazo y momento especial que vivamos juntos.',
+    sectionLabel = 'Recuerdos compartidos',
+    galleryTitle = 'Nuestros momentos',
+    emptyTitle = 'La primera foto puede ser tuya',
+    emptyText = 'Comparte un momento y comienza este álbum con nosotros.',
+    footerText = 'Gracias por ser parte de nuestra historia',
+    heroImage = null,
+    heroImageAlt = '',
+    invitationHref = null,
+    invitationLabel = 'Volver a la invitación',
+}) {
     const inputRef = useRef(null)
     const [photos, setPhotos] = useState([])
     const [selectedFiles, setSelectedFiles] = useState([])
@@ -46,14 +61,14 @@ export default function SharedAlbum() {
     const loadPhotos = useCallback(async (quiet = false) => {
         if (!quiet) setRefreshing(true)
         try {
-            setPhotos(await listAlbumPhotos())
+            setPhotos(await listAlbumPhotos(eventFolder))
         } catch (error) {
             setMessage({ type: 'error', text: error.message })
         } finally {
             setLoading(false)
             setRefreshing(false)
         }
-    }, [])
+    }, [eventFolder])
 
     useEffect(() => {
         loadPhotos(true)
@@ -63,11 +78,11 @@ export default function SharedAlbum() {
 
     useEffect(() => {
         const previousTitle = document.title
-        document.title = 'Álbum compartido | Invita-Ya'
+        document.title = `${title} | Invita-Ya`
         return () => {
             document.title = previousTitle
         }
-    }, [])
+    }, [title])
 
     useEffect(() => {
         const urls = selectedFiles.map((file) => URL.createObjectURL(file))
@@ -108,7 +123,7 @@ export default function SharedAlbum() {
 
         try {
             for (let index = 0; index < selectedFiles.length; index += 1) {
-                await uploadAlbumPhoto(selectedFiles[index])
+                await uploadAlbumPhoto(selectedFiles[index], eventFolder)
                 setUploadedCount(index + 1)
             }
             const total = selectedFiles.length
@@ -130,14 +145,17 @@ export default function SharedAlbum() {
     const configured = isAlbumConfigured()
 
     return (
-        <main className="shared-album">
+        <main className={`shared-album ${className}`.trim()}>
             <section className="album-hero">
                 <div className="album-hero__glow album-hero__glow--one" />
                 <div className="album-hero__glow album-hero__glow--two" />
                 <div className="album-hero__content">
-                    <div className="album-kicker"><Heart size={14} fill="currentColor" /> Nuestro evento</div>
-                    <h1>Álbum compartido</h1>
-                    <p>Ayúdanos a guardar cada sonrisa, abrazo y momento especial que vivamos juntos.</p>
+                    <div className="album-kicker"><Heart size={14} fill="currentColor" /> {kicker}</div>
+                    {heroImage && (
+                        <img className="album-hero__image" src={heroImage} alt={heroImageAlt} />
+                    )}
+                    <h1>{title}</h1>
+                    <p>{intro}</p>
                     <button
                         className="album-primary-button"
                         type="button"
@@ -225,8 +243,8 @@ export default function SharedAlbum() {
 
                 <div className="album-gallery-heading">
                     <div>
-                        <span className="album-section-label"><Images size={16} /> Recuerdos compartidos</span>
-                        <h2>Nuestros momentos</h2>
+                        <span className="album-section-label"><Images size={16} /> {sectionLabel}</span>
+                        <h2>{galleryTitle}</h2>
                     </div>
                     <button
                         className="album-refresh"
@@ -253,15 +271,18 @@ export default function SharedAlbum() {
                 ) : (
                     <div className="album-empty">
                         <span><Camera size={28} /></span>
-                        <h3>La primera foto puede ser tuya</h3>
-                        <p>Comparte un momento y comienza este álbum con nosotros.</p>
+                        <h3>{emptyTitle}</h3>
+                        <p>{emptyText}</p>
                     </div>
                 )}
             </section>
 
             <footer className="album-footer">
                 <Heart size={15} fill="currentColor" />
-                Gracias por ser parte de nuestra historia
+                {footerText}
+                {invitationHref && (
+                    <a className="album-footer__link" href={invitationHref}>{invitationLabel}</a>
+                )}
             </footer>
 
             {activePhoto && (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Camera } from 'lucide-react';
+import { Camera, Images } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Gallery({ config, basePath }) {
     const initialPhotos = useMemo(
@@ -75,7 +76,7 @@ export default function Gallery({ config, basePath }) {
                                         src={photo.src}
                                         alt={photo.caption}
                                         className="bla-gallery-stack__img"
-                                        style={{ 
+                                        style={{
                                             objectPosition: photo.position,
                                             objectFit: photo.objectFit
                                         }}
@@ -89,6 +90,17 @@ export default function Gallery({ config, basePath }) {
                     })}
                 </div>
             </div>
+
+            {/* <div className="bla-shared-album-callout">
+                <Images size={26} aria-hidden="true" />
+                <div>
+                    <h3>El álbum de nuestro gran día</h3>
+                    <p>Sube las fotos que tomes durante la celebración y descubre los recuerdos compartidos por todos.</p>
+                </div>
+                <Link to="/i/boda-lorena-y-arturo/album">
+                    Compartir mis fotos
+                </Link>
+            </div> */}
         </section>
     );
 }

@@ -1,7 +1,7 @@
 import { supabase } from './supabase'
 
 const BUCKET = 'shared-album'
-const EVENT_FOLDER = 'evento-principal'
+const DEFAULT_EVENT_FOLDER = 'evento-principal'
 const MAX_SOURCE_BYTES = 25 * 1024 * 1024
 const MAX_FILES_PER_BATCH = 10
 const MAX_IMAGE_EDGE = 2400
@@ -85,7 +85,14 @@ async function optimizeImage(file) {
     return blob
 }
 
-export async function uploadAlbumPhoto(file) {
+function resolveEventFolder(eventFolder = DEFAULT_EVENT_FOLDER) {
+    if (!/^[a-z0-9][a-z0-9/-]*$/i.test(eventFolder) || eventFolder.includes('..')) {
+        throw new Error('La carpeta del álbum no es válida.')
+    }
+    return eventFolder.replace(/\/+$/, '')
+}
+
+export async function uploadAlbumPhoto(file, eventFolder = DEFAULT_EVENT_FOLDER) {
     if (!isAlbumConfigured()) {
         throw new Error('El álbum todavía no tiene conexión con Supabase.')
     }
@@ -94,7 +101,7 @@ export async function uploadAlbumPhoto(file) {
     const uniqueId = typeof crypto.randomUUID === 'function'
         ? crypto.randomUUID()
         : `${Date.now()}-${Math.random().toString(16).slice(2)}`
-    const path = `${EVENT_FOLDER}/${Date.now()}-${uniqueId}.jpg`
+    const path = `${resolveEventFolder(eventFolder)}/${Date.now()}-${uniqueId}.jpg`
 
     const { error } = await supabase.storage
         .from(BUCKET)
@@ -108,12 +115,13 @@ export async function uploadAlbumPhoto(file) {
     return path
 }
 
-export async function listAlbumPhotos() {
+export async function listAlbumPhotos(eventFolder = DEFAULT_EVENT_FOLDER) {
     if (!isAlbumConfigured()) return []
 
+    const folder = resolveEventFolder(eventFolder)
     const { data, error } = await supabase.storage
         .from(BUCKET)
-        .list(EVENT_FOLDER, {
+        .list(folder, {
             limit: 300,
             offset: 0,
             sortBy: { column: 'created_at', order: 'desc' },
@@ -124,7 +132,7 @@ export async function listAlbumPhotos() {
     return (data || [])
         .filter((item) => item.name && item.id)
         .map((item) => {
-            const path = `${EVENT_FOLDER}/${item.name}`
+            const path = `${folder}/${item.name}`
             const { data: publicData } = supabase.storage.from(BUCKET).getPublicUrl(path)
             return {
                 id: item.id,

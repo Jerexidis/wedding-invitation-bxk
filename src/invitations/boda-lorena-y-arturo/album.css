@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+
+.lorena-arturo-album {
+    --album-ink: #4a3f35;
+    --album-muted: #7a7068;
+    --album-accent: #929292;
+    --album-accent-dark: #707070;
+    background:
+        radial-gradient(circle at 8% 42%, rgba(192, 192, 192, 0.18), transparent 28rem),
+        linear-gradient(180deg, #f5f0e8 0%, #faf7f2 55%, #ede5d8 100%);
+    font-family: 'Quicksand', sans-serif;
+}
+
+.lorena-arturo-album .album-hero {
+    min-height: 600px;
+    padding-top: 48px;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.32), transparent 18rem),
+        linear-gradient(145deg, #817a74 0%, #aaa6a2 48%, #726a64 100%);
+}
+
+.lorena-arturo-album .album-hero::after {
+    background: #f5f0e8;
+}
+
+.lorena-arturo-album .album-kicker {
+    color: #f1e8dc;
+}
+
+.lorena-arturo-album .album-hero__image {
+    filter: drop-shadow(0 14px 24px rgba(74, 63, 53, 0.22));
+}
+
+.lorena-arturo-album .album-hero h1,
+.lorena-arturo-album .album-gallery-heading h2,
+.lorena-arturo-album .album-empty h3 {
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 0;
+}
+
+.lorena-arturo-album .album-hero h1 {
+    font-size: clamp(3.6rem, 12vw, 7rem);
+    line-height: 0.92;
+}
+
+.lorena-arturo-album .album-hero p {
+    font-family: 'Playfair Display', serif;
+}
+
+.lorena-arturo-album .album-primary-button {
+    color: #4a3f35;
+    background: #faf7f2;
+}
+
+.lorena-arturo-album .album-primary-button--wide {
+    color: white;
+    background: linear-gradient(145deg, #858585, #b8b8b8);
+}
+
+.lorena-arturo-album .album-upload-card,
+.lorena-arturo-album .album-empty {
+    border-color: rgba(138, 138, 138, 0.25);
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.lorena-arturo-album .album-dropzone {
+    border-color: #c9c3bb;
+    background: #faf7f2;
+}
+
+.lorena-arturo-album .album-photo {
+    padding: 7px 7px 22px;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 12px 30px rgba(74, 63, 53, 0.14);
+}
+
+.lorena-arturo-album .album-footer {
+    flex-wrap: wrap;
+    font-family: 'Playfair Display', serif;
+}
+
+.lorena-arturo-album .album-footer__link {
+    font-family: 'Quicksand', sans-serif;
+}
+
+@media (max-width: 640px) {
+    .lorena-arturo-album .album-hero {
+        min-height: 560px;
+    }
+}

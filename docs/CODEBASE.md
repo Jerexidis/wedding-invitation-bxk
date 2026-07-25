@@ -34,6 +34,7 @@ index.html
         /                       -> Showcase
         /album                  -> public shared event photo album
         /i/:slug                -> registry lookup -> lazy invitation component
+        /i/boda-lorena-y-arturo/album -> themed guest photo album
         /i/:slug/rsvp           -> protected RSVP dashboard
         /admin                  -> local development only
         anything else           -> 404
@@ -183,9 +184,12 @@ operations return a configuration error instead of breaking the SPA.
 The public `/album` route is intentionally independent from invitation slugs.
 Guests can upload JPEG, PNG, WebP, or browser-decodable HEIC images to
 `shared-album/evento-principal/` in Supabase Storage and see the newest public
-photos. Images are converted to JPEG and resized to a maximum 2400px edge in
-the browser before upload. Storage RLS allows anonymous read and insert for
-that bucket/folder only; guests cannot update or delete objects.
+photos. Invitation-specific albums reuse the same UI and storage helper with a
+nested event folder; Lorena and Arturo use
+`shared-album/evento-principal/boda-lorena-y-arturo/`. Images are converted to
+JPEG and resized to a maximum 2400px edge in the browser before upload. Storage
+RLS allows anonymous read and insert for that bucket/folder only; guests cannot
+update or delete objects.
 
 The dashboard route fetches
 `public/invitations/<slug>/rsvp-access.json`, validates the supplied key in the
