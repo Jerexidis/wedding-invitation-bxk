@@ -21,6 +21,7 @@ metadata, and local-only invitation administration.
 - Tailwind utility classes plus global/invitation-specific CSS
 - GSAP for the richer template animations
 - Supabase table `rsvp` for stored confirmations
+- Supabase Storage bucket `shared-album` for public event photo uploads
 - Vercel edge middleware for bot-specific Open Graph HTML
 - `sharp` in local tooling for asset analysis/optimization
 
@@ -31,6 +32,7 @@ index.html
   -> src/main.jsx (BrowserRouter)
      -> src/App.jsx
         /                       -> Showcase
+        /album                  -> public shared event photo album
         /i/:slug                -> registry lookup -> lazy invitation component
         /i/:slug/rsvp           -> protected RSVP dashboard
         /admin                  -> local development only
@@ -128,6 +130,8 @@ They do not follow the shared `config.json` contract.
 | `public/invitations/<slug>/` | Per-event images, audio, RSVP access hash |
 | `src/utils/themeEngine.js` | Theme variables and Google Font injection |
 | `src/utils/rsvpStore.js` | Supabase CRUD for table `rsvp` |
+| `src/utils/albumStore.js` | Shared-album image validation, optimization, upload, and listing |
+| `src/album/` | Public mobile-first shared event album page |
 | `src/components/RsvpDashboard.jsx` | Confirmation list/edit/delete UI |
 | `og-data.js` | Server-side social preview metadata by slug |
 | `middleware.js` | Vercel bot detection and preview HTML |
@@ -173,6 +177,15 @@ VITE_SUPABASE_ANON_KEY
 
 Without them, `src/utils/supabase.js` exposes a safe no-op client and RSVP
 operations return a configuration error instead of breaking the SPA.
+
+## Shared album flow
+
+The public `/album` route is intentionally independent from invitation slugs.
+Guests can upload JPEG, PNG, WebP, or browser-decodable HEIC images to
+`shared-album/evento-principal/` in Supabase Storage and see the newest public
+photos. Images are converted to JPEG and resized to a maximum 2400px edge in
+the browser before upload. Storage RLS allows anonymous read and insert for
+that bucket/folder only; guests cannot update or delete objects.
 
 The dashboard route fetches
 `public/invitations/<slug>/rsvp-access.json`, validates the supplied key in the
