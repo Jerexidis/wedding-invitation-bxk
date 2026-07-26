@@ -5,6 +5,7 @@ const DEFAULT_EVENT_FOLDER = 'evento-principal'
 const MAX_SOURCE_BYTES = 25 * 1024 * 1024
 const MAX_FILES_PER_BATCH = 10
 const MAX_IMAGE_EDGE = 2400
+const ALBUM_IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp'])
 
 export const albumLimits = {
     maxFiles: MAX_FILES_PER_BATCH,
@@ -130,7 +131,11 @@ export async function listAlbumPhotos(eventFolder = DEFAULT_EVENT_FOLDER) {
     if (error) throw new Error(error.message || 'No se pudo cargar el álbum.')
 
     return (data || [])
-        .filter((item) => item.name && item.id)
+        .filter((item) => {
+            if (!item.name || !item.id || item.name.startsWith('.')) return false
+            const extension = item.name.split('.').pop()?.toLowerCase()
+            return ALBUM_IMAGE_EXTENSIONS.has(extension)
+        })
         .map((item) => {
             const path = `${folder}/${item.name}`
             const { data: publicData } = supabase.storage.from(BUCKET).getPublicUrl(path)
