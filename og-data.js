@@ -116,4 +116,9 @@ export const ogData = {
         description: 'Acompáñanos a celebrar nuestra boda el 22 de agosto de 2026 en Aguascalientes.',
         image: '/invitations/angelica-y-salvador/img/og-preview-v3.jpg',
     },
+    'xv-anos-kimberly-judith': {
+        title: 'XV Años | Kimberly Judith',
+        description: 'Acompáñame a celebrar mis XV años. Descubre todos los detalles de esta noche especial.',
+        image: '/invitations/xv-anos-kimberly-judith/img/og-preview.jpg',
+    },
 }

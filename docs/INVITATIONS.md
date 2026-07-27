@@ -28,6 +28,7 @@ the minimum invitation-specific files needed for a task.
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
+| `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 3.99 MB |
 
 ## Targeted context
 
@@ -182,6 +183,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/angelica-y-salvador/DESIGN.md`
 - Source: `src/invitations/angelica-y-salvador/DESIGN.md`, `src/invitations/angelica-y-salvador/index.jsx`, `src/invitations/angelica-y-salvador/invitation.css`
+
+### xv-anos-kimberly-judith
+
+- Entry: `src/invitations/xv-anos-kimberly-judith/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/xv-anos-kimberly-judith/DESIGN.md`
+- Source: `src/invitations/xv-anos-kimberly-judith/DESIGN.md`, `src/invitations/xv-anos-kimberly-judith/index.jsx`, `src/invitations/xv-anos-kimberly-judith/invitation.css`, `src/invitations/xv-anos-kimberly-judith/invitation.manifest.json`
 
 ## Refresh
 

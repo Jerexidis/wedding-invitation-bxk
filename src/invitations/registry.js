@@ -234,6 +234,16 @@ const invitations = [
         eventDate: '2026-08-22T19:00:00-06:00',
     },
 
+    {
+        slug: 'xv-anos-kimberly-judith',
+        title: 'XV Años | Kimberly Judith',
+        component: lazy(() => import('./xv-anos-kimberly-judith/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'none',
+        eventDate: '2026-08-29T00:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas
