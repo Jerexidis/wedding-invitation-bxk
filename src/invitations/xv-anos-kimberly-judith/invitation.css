@@ -205,14 +205,16 @@
 
 .kj-hero__castle {
     position: absolute;
-    right: 0;
-    bottom: -1.8rem;
-    left: 0;
-    z-index: 1;
-    width: min(40rem, 108vw);
-    height: auto;
-    margin-inline: auto;
-    opacity: 0.22;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.38;
+    background-image: url('/invitations/xv-anos-kimberly-judith/castle-cutout.png');
+    background-repeat: no-repeat;
+    background-position: center calc(100% + 1.2rem);
+    background-size: min(40rem, 108vw) auto;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 .kj-hero__cinderella {
@@ -787,7 +789,7 @@
     }
 
     .kj-hero__castle {
-        width: min(46rem, 72vw);
+        background-size: min(46rem, 72vw) auto;
     }
 
     .kj-family-grid {

@@ -127,6 +127,29 @@ export default function CustomInvitation({ portfolioMode = false }) {
     }
 
     useEffect(() => {
+        const audio = audioRef.current
+        if (!audio) return undefined
+
+        const startMusic = (event) => {
+            if (event?.target instanceof Element && event.target.closest('.kj-music')) return
+            audio.play().catch(() => {})
+        }
+
+        audio.play().catch(() => {})
+        window.addEventListener('pointerdown', startMusic, { capture: true, once: true })
+        window.addEventListener('touchstart', startMusic, { capture: true, once: true, passive: true })
+        window.addEventListener('click', startMusic, { capture: true, once: true })
+        window.addEventListener('keydown', startMusic, { capture: true, once: true })
+
+        return () => {
+            window.removeEventListener('pointerdown', startMusic, true)
+            window.removeEventListener('touchstart', startMusic, true)
+            window.removeEventListener('click', startMusic, true)
+            window.removeEventListener('keydown', startMusic, true)
+        }
+    }, [])
+
+    useEffect(() => {
         const previousTitle = document.title
         document.title = invitationTitle
 
@@ -210,12 +233,7 @@ export default function CustomInvitation({ portfolioMode = false }) {
                 <Sparkle className="kj-sparkle--one" />
                 <Sparkle className="kj-sparkle--two" />
 
-                <img
-                    className="kj-hero__castle"
-                    src={`${assetRoot}/castle-cutout.png`}
-                    alt=""
-                    aria-hidden="true"
-                />
+                <div className="kj-hero__castle" aria-hidden="true" />
 
                 <div className="kj-hero__content">
                     <p className="kj-kicker" data-hero-item>Había una vez una noche inolvidable</p>
@@ -243,6 +261,7 @@ export default function CustomInvitation({ portfolioMode = false }) {
 
             <audio
                 ref={audioRef}
+                autoPlay
                 loop
                 preload="metadata"
                 onPause={() => setIsPlaying(false)}
