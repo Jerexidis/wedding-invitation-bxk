@@ -869,6 +869,30 @@
     text-transform: uppercase;
 }
 
+.kj-footer__credit {
+    align-self: end;
+    margin: 2.5rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(62, 102, 141, 0.2);
+    color: var(--kj-blue-deep);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.kj-footer__credit a {
+    color: var(--kj-ink);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.kj-footer__credit a:hover,
+.kj-footer__credit a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
 @media (min-width: 760px) {
     .kj-hero {
         padding-top: 3rem;
@@ -919,6 +943,10 @@
 
     .kj-footer {
         grid-template-columns: minmax(17rem, 0.8fr) minmax(21rem, 1fr);
+    }
+
+    .kj-footer__credit {
+        grid-column: 1 / -1;
     }
 }
 

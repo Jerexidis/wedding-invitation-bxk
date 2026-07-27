@@ -414,6 +414,9 @@ export default function CustomInvitation({ portfolioMode = false }) {
                     <h2>Kimberly Judith</h2>
                     <span>Mis XV años · 29 de agosto</span>
                 </div>
+                <p className="kj-footer__credit">
+                    Hecho con <a href="https://www.invita-ya.com" target="_blank" rel="noreferrer">Invita Ya</a>
+                </p>
             </footer>
         </main>
     )
