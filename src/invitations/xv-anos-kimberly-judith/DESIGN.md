@@ -29,7 +29,7 @@ La narrativa avanza del castillo y el carruaje hacia el baile y la zapatilla.
 ## Structure
 
 - Section order: portada, historia/familia, celebración, galería, lluvia de sobres y cierre.
-- Shared services: galería local; no usa RSVP, ceremonia, audio ni calendario.
+- Shared services: galería local y música; no usa RSVP, ceremonia ni calendario.
 - Custom sections: todas son autocontenidas en `index.jsx`.
 
 ## Motion

@@ -108,6 +108,23 @@ function PolaroidGallery() {
 
 export default function CustomInvitation({ portfolioMode = false }) {
     const pageRef = useRef(null)
+    const audioRef = useRef(null)
+    const [isPlaying, setIsPlaying] = useState(false)
+
+    const toggleAudio = async () => {
+        const audio = audioRef.current
+        if (!audio) return
+
+        if (audio.paused) {
+            try {
+                await audio.play()
+            } catch {
+                setIsPlaying(false)
+            }
+        } else {
+            audio.pause()
+        }
+    }
 
     useEffect(() => {
         const previousTitle = document.title
@@ -198,7 +215,6 @@ export default function CustomInvitation({ portfolioMode = false }) {
                     src={`${assetRoot}/castle-cutout.png`}
                     alt=""
                     aria-hidden="true"
-                    data-parallax
                 />
 
                 <div className="kj-hero__content">
@@ -224,6 +240,29 @@ export default function CustomInvitation({ portfolioMode = false }) {
                     alt="Ilustración de Cenicienta con vestido azul"
                 />
             </section>
+
+            <audio
+                ref={audioRef}
+                loop
+                preload="metadata"
+                onPause={() => setIsPlaying(false)}
+                onPlay={() => setIsPlaying(true)}
+            >
+                <source
+                    src={`${assetRoot}/audio/somewhere-over-the-rainbow.mp3`}
+                    type="audio/mpeg"
+                />
+            </audio>
+            <button
+                className={`kj-music${isPlaying ? ' is-playing' : ''}`}
+                type="button"
+                aria-label={isPlaying ? 'Pausar música' : 'Reproducir música'}
+                aria-pressed={isPlaying}
+                onClick={toggleAudio}
+            >
+                <span aria-hidden="true">{isPlaying ? 'Ⅱ' : '♪'}</span>
+                <small>{isPlaying ? 'Pausar' : 'Música'}</small>
+            </button>
 
             <section className="kj-story kj-section" aria-labelledby="kj-story-title" data-section>
                 <img

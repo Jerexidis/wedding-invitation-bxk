@@ -12,7 +12,7 @@
     "invitation.css"
   ],
   "services": {
-    "audio": false,
+    "audio": true,
     "calendar": false,
     "gallery": true,
     "rsvp": "none",
@@ -22,6 +22,6 @@
   "seo": {
     "description": "Acompáñame a celebrar mis XV años. Descubre todos los detalles de esta noche especial.",
     "shareImage": "og-preview.jpg",
-    "focalPoint": "center"
+    "focalPoint": "top"
   }
 }
