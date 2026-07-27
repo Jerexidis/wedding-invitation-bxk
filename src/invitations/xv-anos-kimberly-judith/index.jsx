@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import useCountdown from '../../hooks/useCountdown'
 import './invitation.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const assetRoot = '/invitations/xv-anos-kimberly-judith'
 const invitationTitle = 'XV Años | Kimberly Judith'
+const eventDate = '2026-08-29T00:00:00-06:00'
 const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Los+Naranjos+Av.+Gral.+Mariano+Escobedo+312+Jardines+de+la+Cruz'
 const galleryPhotos = [
     {
@@ -37,6 +39,36 @@ const galleryPhotos = [
 
 function Sparkle({ className = '' }) {
     return <span className={`kj-sparkle ${className}`} aria-hidden="true">✦</span>
+}
+
+function CountdownSection() {
+    const { days, hours, minutes, seconds, isTime } = useCountdown(eventDate)
+    const units = [
+        { value: days, label: 'Días' },
+        { value: hours, label: 'Horas' },
+        { value: minutes, label: 'Minutos' },
+        { value: seconds, label: 'Segundos' },
+    ]
+
+    return (
+        <section className="kj-countdown" aria-labelledby="kj-countdown-title" data-section>
+            <div className="kj-shell" data-reveal>
+                <p className="kj-section-label kj-section-label--light">La magia está por comenzar</p>
+                <h2 id="kj-countdown-title">{isTime ? 'Hoy comienza mi cuento' : 'Cada vez falta menos'}</h2>
+                {!isTime && (
+                    <div className="kj-countdown__grid" aria-label="Cuenta regresiva">
+                        {units.map((unit) => (
+                            <div className="kj-countdown__unit" key={unit.label}>
+                                <strong>{String(unit.value).padStart(2, '0')}</strong>
+                                <span>{unit.label}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <p className="kj-countdown__date">29 · Agosto · 2026</p>
+            </div>
+        </section>
+    )
 }
 
 function PolaroidGallery() {
@@ -258,6 +290,8 @@ export default function CustomInvitation({ portfolioMode = false }) {
                     alt="Ilustración de Cenicienta con vestido azul"
                 />
             </section>
+
+            <CountdownSection />
 
             <audio
                 ref={audioRef}

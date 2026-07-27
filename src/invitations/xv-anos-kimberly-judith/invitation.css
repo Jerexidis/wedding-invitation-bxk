@@ -228,6 +228,97 @@
     filter: drop-shadow(0 10px 12px rgba(32, 51, 77, 0.2));
 }
 
+/* Countdown */
+.kj-countdown {
+    position: relative;
+    overflow: hidden;
+    padding: 5.2rem 1.1rem;
+    color: var(--kj-white);
+    text-align: center;
+    background:
+        radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1.5px) 0 0 / 15px 15px,
+        var(--kj-night);
+}
+
+.kj-countdown::before,
+.kj-countdown::after {
+    position: absolute;
+    color: var(--kj-gold);
+    font-size: 2rem;
+    content: '✦';
+}
+
+.kj-countdown::before {
+    top: 2.2rem;
+    left: 8%;
+    transform: rotate(-12deg);
+}
+
+.kj-countdown::after {
+    right: 8%;
+    bottom: 2.2rem;
+    font-size: 1.2rem;
+    transform: rotate(10deg);
+}
+
+.kj-countdown h2 {
+    margin-inline: auto;
+    color: var(--kj-white);
+    font-size: clamp(2.7rem, 12vw, 5rem);
+}
+
+.kj-countdown__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.55rem;
+    width: min(100%, 42rem);
+    margin: 2.4rem auto 1.8rem;
+}
+
+.kj-countdown__unit {
+    display: grid;
+    min-width: 0;
+    padding: 1.15rem 0.2rem 1rem;
+    place-items: center;
+    color: var(--kj-ink);
+    background: var(--kj-white);
+    box-shadow: 4px 5px 0 var(--kj-blue);
+}
+
+.kj-countdown__unit:nth-child(odd) {
+    transform: rotate(-1.5deg);
+}
+
+.kj-countdown__unit:nth-child(even) {
+    transform: rotate(1.5deg);
+}
+
+.kj-countdown__unit strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 8vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1;
+}
+
+.kj-countdown__unit span,
+.kj-countdown__date {
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+}
+
+.kj-countdown__unit span {
+    margin-top: 0.45rem;
+    font-size: clamp(0.38rem, 1.7vw, 0.62rem);
+    letter-spacing: 0.05em;
+}
+
+.kj-countdown__date {
+    margin: 0;
+    color: var(--kj-mist);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+}
+
 .kj-music {
     position: fixed;
     left: max(1rem, env(safe-area-inset-left));

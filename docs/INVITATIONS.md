@@ -28,7 +28,7 @@ the minimum invitation-specific files needed for a task.
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
-| `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.32 MB |
+| `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.55 MB |
 
 ## Targeted context
 
