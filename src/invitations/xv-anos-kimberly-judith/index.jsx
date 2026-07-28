@@ -401,6 +401,19 @@ export default function CustomInvitation({ portfolioMode = false }) {
                 </div>
             </section>
 
+            <section className="kj-rsvp-reminder kj-section" aria-labelledby="kj-rsvp-title" data-section>
+                <div className="kj-shell kj-rsvp-reminder__content" data-reveal>
+                    <Sparkle className="kj-sparkle--rsvp-one" />
+                    <Sparkle className="kj-sparkle--rsvp-two" />
+                    <p className="kj-section-label kj-section-label--light">Confirmación</p>
+                    <h2 id="kj-rsvp-title">¡No olvides confirmar tu asistencia!</h2>
+                    <p className="kj-rsvp-reminder__text">
+                        Para mí es muy importante contar con tu presencia en esta noche tan mágica.
+                        Por favor, no olvides confirmarme tu asistencia lo antes posible para guardar tu lugar.
+                    </p>
+                </div>
+            </section>
+
             <footer className="kj-footer">
                 <img
                     className="kj-footer__slipper"
