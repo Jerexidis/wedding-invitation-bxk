@@ -580,9 +580,18 @@
 }
 
 .kj-event-card h3 {
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.35rem;
     font-size: 2rem;
     font-weight: 500;
+}
+
+.kj-event-card__time {
+    margin-bottom: 0.95rem;
+    color: var(--kj-blue-deep);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .kj-event-card address {

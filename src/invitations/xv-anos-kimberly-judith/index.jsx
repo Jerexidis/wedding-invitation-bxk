@@ -371,6 +371,7 @@ export default function CustomInvitation({ portfolioMode = false }) {
                         </div>
                         <div className="kj-event-card__divider" aria-hidden="true"><span>✦</span></div>
                         <h3>Salón Los Naranjos</h3>
+                        <p className="kj-event-card__time">A partir de las 3:30 p.m.</p>
                         <address>
                             Av. Gral. Mariano Escobedo #312<br />
                             Jardines de la Cruz
