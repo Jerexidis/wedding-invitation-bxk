@@ -61,7 +61,7 @@ const locations = [
         kind: 'Recepción',
         name: 'Finca D',
         detail: 'San José de la Ordeña · Aguascalientes, Ags.',
-        time: '7:30 pm',
+        time: '7:00 pm',
         image: receptionPhoto,
         imageAlt: 'Jardín y alberca de Finca D',
         imagePosition: 'center 48%',
@@ -72,11 +72,11 @@ const locations = [
 
 const itinerary = [
     { time: '5:00 pm', label: 'Misa', icon: Church },
-    { time: '7:30 pm', label: 'Recepción', icon: MapPin },
-    { time: '8:00 pm', label: 'Vals', icon: Music2 },
-    { time: '8:30 pm', label: 'Cena', icon: UtensilsCrossed },
-    { time: '9:30 pm', label: 'Baile sorpresa', icon: Sparkles },
-    { time: '10:00 pm', label: 'Baile', icon: PartyPopper },
+    { time: '7:00 pm', label: 'Recepción', icon: MapPin },
+    { time: '7:30 pm', label: 'Vals', icon: Music2 },
+    { time: '8:00 pm', label: 'Cena', icon: UtensilsCrossed },
+    { time: '9:00 pm', label: 'Baile sorpresa', icon: Sparkles },
+    { time: '9:30 pm', label: 'Baile', icon: PartyPopper },
 ]
 
 const galleryPhotos = [
@@ -443,7 +443,7 @@ function DressCode() {
                 <SectionTitle eyebrow="Una nota para celebrar">
                     Código de<br /><em>vestimenta</em>
                 </SectionTitle>
-                <p className="daniela-dress-code__style" data-reveal>Formal elegante</p>
+                <p className="daniela-dress-code__style" data-reveal>Formal</p>
                 <div className="daniela-dress-code__palette" aria-label="Colores reservados para la quinceañera" data-reveal>
                     {reservedColors.map((swatch) => (
                         <span
