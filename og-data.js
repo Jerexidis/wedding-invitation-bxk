@@ -121,4 +121,9 @@ export const ogData = {
         description: 'Acompáñame a celebrar mis XV años. Descubre todos los detalles de esta noche especial.',
         image: '/invitations/xv-anos-kimberly-judith/img/og-preview.jpg',
     },
+    'baby-ernesto': {
+        title: 'Baby Shower | Baby Ernesto 👶',
+        description: '¡Acompáñanos a celebrar la llegada de Baby Ernesto! Sábado 12 de septiembre.',
+        image: '/invitations/baby-ernesto/img/hero-babyshower.png',
+    },
 }

@@ -682,6 +682,35 @@
         "bytes": 9232898,
         "megabytes": 8.81
       }
+    },
+    {
+      "slug": "baby-ernesto",
+      "title": "Baby Shower | Baby Ernesto",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "babyshower",
+      "eventDate": "2026-09-12T17:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": false,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/baby-ernesto/babyshower-template.css",
+        "src/invitations/baby-ernesto/DESIGN.md",
+        "src/invitations/baby-ernesto/index.jsx"
+      ],
+      "designBrief": "src/invitations/baby-ernesto/DESIGN.md",
+      "assets": {
+        "files": 6,
+        "images": 6,
+        "audio": 0,
+        "bytes": 2349374,
+        "megabytes": 2.24
+      }
     }
   ]
 }

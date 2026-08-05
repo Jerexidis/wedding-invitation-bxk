@@ -29,6 +29,7 @@ the minimum invitation-specific files needed for a task.
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
 | `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.81 MB |
+| `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 2.24 MB |
 
 ## Targeted context
 
@@ -191,6 +192,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/xv-anos-kimberly-judith/DESIGN.md`
 - Source: `src/invitations/xv-anos-kimberly-judith/DESIGN.md`, `src/invitations/xv-anos-kimberly-judith/index.jsx`, `src/invitations/xv-anos-kimberly-judith/invitation.css`, `src/invitations/xv-anos-kimberly-judith/invitation.manifest.json`
+
+### baby-ernesto
+
+- Entry: `src/invitations/baby-ernesto/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: audio, calendar
+- Design brief: `src/invitations/baby-ernesto/DESIGN.md`
+- Source: `src/invitations/baby-ernesto/babyshower-template.css`, `src/invitations/baby-ernesto/DESIGN.md`, `src/invitations/baby-ernesto/index.jsx`
 
 ## Refresh
 

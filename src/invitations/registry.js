@@ -244,6 +244,16 @@ const invitations = [
         eventDate: '2026-08-29T00:00:00-06:00',
     },
 
+    {
+        slug: 'baby-ernesto',
+        title: 'Baby Shower | Baby Ernesto',
+        component: lazy(() => import('./baby-ernesto/index.jsx')),
+        enabled: true,
+        eventType: 'babyshower',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-09-12T17:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas
