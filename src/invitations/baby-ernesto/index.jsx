@@ -8,12 +8,14 @@ import {
     Copy,
     ExternalLink,
     Flower2,
-    Gift,
     GlassWater,
     HeartPulse,
     MapPin,
     Navigation,
+    PackageOpen,
     Send,
+    ShoppingBag,
+    Store,
 } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -40,9 +42,24 @@ const BABY_CONFIG = {
         maps: 'https://www.google.com/maps/search/?api=1&query=Sara+Eventos+Las+Hadas+Calle+Thalia+217+Aguascalientes',
     },
     gifts: [
-        { store: 'Sears', code: '270976' },
-        { store: 'Liverpool', code: '60022186' },
-        { store: 'Nido de Mamá', code: '1209' },
+        {
+            store: 'Sears',
+            code: '270976',
+            label: 'Mesa Baby Shower',
+            url: 'https://www.sears.com.mx/Mesa-de-Regalos/270976/Te-invito-a-mi-Baby-Shower---Claudia-Andrea-',
+        },
+        {
+            store: 'Liverpool',
+            code: '60022186',
+            label: 'Mesa Baby Shower',
+            url: 'https://mesaderegalos.liverpool.com.mx/milistaderegalos/60022186',
+        },
+        {
+            store: 'Nido de Mamá',
+            code: '1209',
+            label: 'Registro de regalos',
+            url: 'https://elnidodemama.com.mx/addf_gift_registry/',
+        },
         {
             store: 'Amazon',
             label: 'Mesa de Andrea Marmolejo',
@@ -106,62 +123,42 @@ function useCountdown(date) {
 }
 
 function UltrasoundMoment() {
-    const heartbeatTimerRef = useRef(null)
-    const audioContextRef = useRef(null)
+    const audioRef = useRef(null)
+    const hapticTimerRef = useRef(null)
+    const listeningRef = useRef(false)
     const [holding, setHolding] = useState(false)
 
-    const stopHeartbeat = () => {
-        window.clearInterval(heartbeatTimerRef.current)
-        heartbeatTimerRef.current = null
-    }
-
-    const playHeartbeat = () => {
-        const AudioContext = window.AudioContext || window.webkitAudioContext
-        if (!AudioContext) return
-
-        if (!audioContextRef.current) audioContextRef.current = new AudioContext()
-        const context = audioContextRef.current
-        context.resume()
-
-        const thump = (time, volume, frequency) => {
-            const oscillator = context.createOscillator()
-            const filter = context.createBiquadFilter()
-            const gain = context.createGain()
-
-            oscillator.type = 'sine'
-            oscillator.frequency.setValueAtTime(frequency, time)
-            oscillator.frequency.exponentialRampToValueAtTime(42, time + .13)
-            filter.type = 'lowpass'
-            filter.frequency.value = 140
-            gain.gain.setValueAtTime(.0001, time)
-            gain.gain.exponentialRampToValueAtTime(volume, time + .015)
-            gain.gain.exponentialRampToValueAtTime(.0001, time + .15)
-
-            oscillator.connect(filter)
-            filter.connect(gain)
-            gain.connect(context.destination)
-            oscillator.start(time)
-            oscillator.stop(time + .17)
-        }
-
-        const beat = () => {
-            const now = context.currentTime + .025
-            thump(now, .24, 68)
-            thump(now + .19, .15, 58)
-        }
-
-        beat()
-        heartbeatTimerRef.current = window.setInterval(beat, 1050)
-    }
-
     const beginListening = () => {
-        if (heartbeatTimerRef.current) return
-        playHeartbeat()
+        if (listeningRef.current) return
+        listeningRef.current = true
         setHolding(true)
+
+        const audio = audioRef.current
+        if (audio) {
+            audio.currentTime = 0
+            audio.play().catch(() => {
+                listeningRef.current = false
+                setHolding(false)
+            })
+        }
+
+        if (typeof navigator.vibrate === 'function') {
+            const pulse = () => navigator.vibrate([90, 90, 70])
+            pulse()
+            hapticTimerRef.current = window.setInterval(pulse, 1050)
+        }
     }
 
     const finishListening = () => {
-        stopHeartbeat()
+        listeningRef.current = false
+        const audio = audioRef.current
+        if (audio) {
+            audio.pause()
+            audio.currentTime = 0
+        }
+        window.clearInterval(hapticTimerRef.current)
+        hapticTimerRef.current = null
+        if (typeof navigator.vibrate === 'function') navigator.vibrate(0)
         setHolding(false)
     }
 
@@ -170,8 +167,8 @@ function UltrasoundMoment() {
         livePreview.src = '/invitations/baby-ernesto/img/ecografia-ernesto-live.gif'
 
         return () => {
-            stopHeartbeat()
-            audioContextRef.current?.close()
+            window.clearInterval(hapticTimerRef.current)
+            if (typeof navigator.vibrate === 'function') navigator.vibrate(0)
         }
     }, [])
 
@@ -212,6 +209,12 @@ function UltrasoundMoment() {
                 </span>
             </button>
             <HeartPulse className="baby-ultrasound__pulse" size={27} aria-hidden="true" />
+            <audio
+                ref={audioRef}
+                src="/invitations/baby-ernesto/audio/heartbeat.mp3"
+                preload="auto"
+                loop
+            />
         </div>
     )
 }
@@ -399,6 +402,13 @@ function Considerations() {
 
 function GiftCard({ gift, index }) {
     const [copied, setCopied] = useState(false)
+    const iconByStore = {
+        Sears: ShoppingBag,
+        Liverpool: Store,
+        'Nido de Mamá': Baby,
+        Amazon: PackageOpen,
+    }
+    const StoreIcon = iconByStore[gift.store] || ShoppingBag
 
     const copyCode = async () => {
         if (!gift.code) return
@@ -410,22 +420,24 @@ function GiftCard({ gift, index }) {
     return (
         <article className="baby-gift-card" data-gift-card>
             <span className="baby-gift-card__number">0{index + 1}</span>
-            <div className="baby-gift-card__icon"><Gift size={19} /></div>
+            <div className="baby-gift-card__icon" aria-hidden="true"><StoreIcon size={27} /></div>
             <p className="baby-gift-card__store">{gift.store}</p>
             <h3>{gift.label || 'Mesa de regalos'}</h3>
 
-            {gift.code && (
-                <button className="baby-gift-card__code" type="button" onClick={copyCode} aria-label={`Copiar número de mesa ${gift.code}`}>
-                    <span>No. {gift.code}</span>
-                    {copied ? <Check size={14} /> : <Copy size={14} />}
-                </button>
-            )}
+            <div className="baby-gift-card__actions">
+                {gift.code && (
+                    <button className="baby-gift-card__code" type="button" onClick={copyCode} aria-label={`Copiar número de mesa ${gift.code}`}>
+                        <span>No. {gift.code}</span>
+                        {copied ? <Check size={14} /> : <Copy size={14} />}
+                    </button>
+                )}
 
-            {gift.url && (
-                <a href={gift.url} target="_blank" rel="noreferrer">
-                    Ver mesa <ExternalLink size={13} />
-                </a>
-            )}
+                {gift.url && (
+                    <a href={gift.url} target="_blank" rel="noreferrer" aria-label={`Abrir mesa de regalos de ${gift.store}`}>
+                        Ir directo a la mesa <ExternalLink size={13} />
+                    </a>
+                )}
+            </div>
         </article>
     )
 }

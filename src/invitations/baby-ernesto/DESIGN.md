@@ -34,7 +34,8 @@ personaje de fiesta infantil.
 - Cuenta regresiva y mesas de regalos con stagger discreto
 - La ecografía se comporta como Live Photo: permanece estática en reposo y,
   mientras la persona mantiene presionada la imagen, cambia a una animación
-  corta y suena el latido sintetizado
+  corta y reproduce un archivo de latido. En navegadores compatibles también
+  acompaña el pulso con vibración; Safari de iPhone no expone esa función web
 - Respeta `prefers-reduced-motion`
 
 ## Preserve
