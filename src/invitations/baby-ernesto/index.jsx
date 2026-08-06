@@ -512,6 +512,36 @@ function Considerations() {
     )
 }
 
+function DressCode() {
+    const palette = [
+        { name: 'Marfil', color: '#eaded3' },
+        { name: 'Arena', color: '#dfba9c' },
+        { name: 'Camel', color: '#c88f67' },
+        { name: 'Café', color: '#68412d' },
+    ]
+
+    return (
+        <section className="baby-section baby-dress" data-baby-section>
+            <div className="baby-container">
+                <SectionHeading kicker="Código de vestimenta">
+                    Una paleta cálida<br /><em>para celebrar juntos</em>
+                </SectionHeading>
+                <p className="baby-dress__intro">
+                    Te invitamos a vestir en tonos neutros. Elige el que más te guste dentro de esta gama.
+                </p>
+
+                <div className="baby-dress__palette" data-card aria-label="Paleta sugerida: marfil, arena, camel y café">
+                    {palette.map((tone) => (
+                        <div className="baby-dress__tone" key={tone.name}>
+                            <span style={{ '--dress-tone': tone.color }} aria-hidden="true" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+}
+
 function GiftCard({ gift, index }) {
     const [copied, setCopied] = useState(false)
     const iconByStore = {
@@ -710,7 +740,8 @@ export default function BabyShowerTemplate() {
                 gsap.utils.toArray('[data-baby-section]').forEach((section) => {
                     const elements = section.querySelectorAll(
                         '.baby-heading > *, .baby-intro__copy, .baby-intro__host, [data-card], ' +
-                        '.baby-location__intro > p, .baby-notes__intro, [data-note], .baby-gifts__intro, .baby-rsvp__intro'
+                        '.baby-location__intro > p, .baby-notes__intro, [data-note], .baby-dress__intro, ' +
+                        '.baby-gifts__intro, .baby-rsvp__intro'
                     )
                     gsap.from(elements, {
                         opacity: 0,
@@ -758,6 +789,7 @@ export default function BabyShowerTemplate() {
             <Countdown config={BABY_CONFIG} />
             <Location config={BABY_CONFIG} />
             <Considerations />
+            <DressCode />
             <Gifts config={BABY_CONFIG} />
             <RSVP config={BABY_CONFIG} />
             <Footer config={BABY_CONFIG} />

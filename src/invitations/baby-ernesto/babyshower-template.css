@@ -958,6 +958,66 @@
     max-width: 24rem;
 }
 
+/* Dress code */
+.baby-dress {
+    background: var(--baby-ivory);
+    color: var(--baby-ink);
+    overflow: hidden;
+}
+
+.baby-dress::before {
+    background:
+        linear-gradient(rgba(255, 253, 248, .78), rgba(246, 237, 223, .72)),
+        url("/invitations/baby-ernesto/img/ivory-silk.webp") center / cover;
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.baby-dress__intro {
+    color: #75685c;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.08rem, 3vw, 1.35rem);
+    line-height: 1.55;
+    margin: -1rem auto 2.5rem;
+    max-width: 34rem;
+    text-align: center;
+}
+
+.baby-dress__palette {
+    align-items: start;
+    display: grid;
+    gap: clamp(.5rem, 2.5vw, 1.4rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 auto;
+    max-width: 34rem;
+}
+
+.baby-dress__tone {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.baby-dress__tone > span {
+    background: var(--dress-tone);
+    border: 1px solid rgba(90, 73, 57, .48);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 3px rgba(255, 253, 248, .92),
+        0 0 0 4px rgba(90, 73, 57, .32),
+        0 12px 24px rgba(76, 57, 39, .12);
+    display: block;
+    width: min(100%, 6.2rem);
+}
+
+.baby-dress__tone > span::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
 /* Gifts */
 .baby-gifts {
     background: var(--baby-paper);

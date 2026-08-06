@@ -21,7 +21,8 @@ personaje de fiesta infantil.
 ## Structure
 
 - Section order: Hero/ecografía → Invitación/fecha → Cuenta regresiva →
-  Ubicación → Consideraciones → Mesa de regalos → RSVP → Footer
+  Ubicación → Consideraciones → Dress code → Mesa de regalos → RSVP
+  → Footer
 - Shared services: GSAP, ScrollTrigger, lucide-react
 - Custom interactions: copiar números de mesa, Google Calendar, ubicación y
   confirmación por WhatsApp
@@ -48,6 +49,8 @@ personaje de fiesta infantil.
   sábado 12 de septiembre de 2026
 - Acento azul como detalle menor; beige y dorado siguen siendo dominantes
 - Aviso amable sobre cupo para niños y política de bebidas
+- Dress code horizontal en marfil, arena, camel y café, con el tono más oscuro
+  a la derecha
 - Ecografía recortada sin nombres ni datos clínicos visibles
 
 ## Decisions
