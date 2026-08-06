@@ -124,6 +124,6 @@ export const ogData = {
     'baby-ernesto': {
         title: 'Baby Shower | Baby Ernesto 👶',
         description: '¡Acompáñanos a celebrar la llegada de Baby Ernesto! Sábado 12 de septiembre.',
-        image: '/invitations/baby-ernesto/img/hero-babyshower.png',
+        image: '/invitations/baby-ernesto/img/og-preview.jpg',
     },
 }
