@@ -32,6 +32,8 @@ personaje de fiesta infantil.
 - Parallax suave en acuarelas del hero
 - Revelado de secciones una sola vez, con distancia corta y easing sobrio
 - Cuenta regresiva y mesas de regalos con stagger discreto
+- Ilustraciones acuarela de ositos, globos, nubes y elementos de bebé flotan
+  lentamente entre secciones sin competir con el contenido principal
 - La ecografía se comporta como Live Photo: permanece estática en reposo y,
   mientras la persona mantiene presionada la imagen, cambia a una animación
   corta y reproduce un archivo de latido. En navegadores compatibles también
@@ -51,10 +53,13 @@ personaje de fiesta infantil.
 ## Decisions
 
 - Arquitectura `standalone-custom`
-- RSVP por WhatsApp; el número real sigue pendiente antes de publicar
+- RSVP por WhatsApp al `+52 449 386 8213`, con navegación directa compatible
+  con Safari móvil
 - Se reutilizan el fondo de nubes y el patrón; el osito no forma parte de la UI
 - No se publica video: se usan una imagen estática y un GIF optimizado recortados,
   centrados y sin datos clínicos visibles
 - Las secciones beige usan una textura marfil clara tipo tela/seda, sin bloques
   café oscuro
+- La canción `Mi Amor` tiene control fijo; se pausa durante el latido y después
+  continúa automáticamente
 - `eventType`: `babyshower`

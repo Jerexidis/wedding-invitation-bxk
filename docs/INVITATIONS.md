@@ -29,7 +29,7 @@ the minimum invitation-specific files needed for a task.
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
 | `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.81 MB |
-| `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 2.37 MB |
+| `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 5.37 MB |
 
 ## Targeted context
 

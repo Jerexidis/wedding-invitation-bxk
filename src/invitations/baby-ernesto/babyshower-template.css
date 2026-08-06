@@ -45,6 +45,139 @@
     position: relative;
 }
 
+.baby-float {
+    filter: drop-shadow(0 14px 18px rgba(91, 68, 46, .1));
+    max-width: none;
+    opacity: .8;
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    z-index: 1;
+}
+
+.baby-float--hero-cloud {
+    left: -2.5rem;
+    opacity: .5;
+    top: 15%;
+    width: clamp(7rem, 18vw, 12rem);
+}
+
+.baby-float--hero-bear {
+    bottom: 2.5rem;
+    opacity: .64;
+    right: -3.2rem;
+    width: clamp(7.5rem, 20vw, 13rem);
+}
+
+.baby-float--intro-teddy {
+    bottom: -2rem;
+    opacity: .68;
+    right: -3.8rem;
+    width: clamp(8rem, 21vw, 15rem);
+}
+
+.baby-float--countdown-balloon {
+    left: -3rem;
+    top: 7%;
+    width: clamp(8rem, 18vw, 13rem);
+}
+
+.baby-float--countdown-cloud {
+    opacity: .55;
+    right: -3.5rem;
+    top: 4%;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--location-balloons {
+    bottom: -2.5rem;
+    opacity: .7;
+    right: -4rem;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--notes-bottle {
+    bottom: 6%;
+    opacity: .68;
+    right: clamp(.4rem, 4vw, 3rem);
+    transform: rotate(9deg);
+    width: clamp(3.8rem, 8vw, 5.5rem);
+}
+
+.baby-float--gifts-rattle {
+    left: clamp(.8rem, 5vw, 4rem);
+    opacity: .7;
+    top: 7%;
+    width: clamp(3.5rem, 7vw, 5rem);
+}
+
+.baby-float--gifts-teddy {
+    bottom: -2rem;
+    opacity: .56;
+    right: -3.5rem;
+    width: clamp(8rem, 19vw, 13rem);
+}
+
+.baby-float--rsvp-bear {
+    bottom: -2.5rem;
+    left: -3.5rem;
+    opacity: .46;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--rsvp-teddy {
+    bottom: 8%;
+    opacity: .5;
+    right: -3.8rem;
+    width: clamp(7.5rem, 18vw, 12rem);
+}
+
+.baby-music {
+    align-items: center;
+    backdrop-filter: blur(14px);
+    background: rgba(255, 253, 248, .9);
+    border: 1px solid rgba(183, 149, 86, .5);
+    border-radius: 999px;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    box-shadow: 0 12px 34px rgba(76, 57, 39, .16);
+    color: var(--baby-cocoa);
+    cursor: pointer;
+    display: flex;
+    height: 3.35rem;
+    justify-content: center;
+    left: 1rem;
+    padding: .55rem;
+    position: fixed;
+    width: 3.35rem;
+    z-index: 30;
+}
+
+.baby-music__icon {
+    align-items: center;
+    background: var(--baby-blue-soft);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: flex;
+    height: 2.15rem;
+    justify-content: center;
+    position: relative;
+    width: 2.15rem;
+}
+
+.baby-music.is-playing .baby-music__icon::after {
+    animation: baby-music-ring 1.8s ease-out infinite;
+    border: 1px solid rgba(183, 149, 86, .5);
+    border-radius: inherit;
+    content: "";
+    inset: -4px;
+    position: absolute;
+}
+
+@keyframes baby-music-ring {
+    from { opacity: .75; transform: scale(.9); }
+    to { opacity: 0; transform: scale(1.35); }
+}
+
 .baby-heading {
     margin-bottom: 2.4rem;
     text-align: center;
@@ -1150,6 +1283,16 @@
     .baby-container { width: min(100% - 1.75rem, 1100px); }
     .baby-hero { padding-left: .9rem; padding-right: .9rem; }
     .baby-hero__quote { max-width: 20rem; }
+    .baby-float { opacity: .52; }
+    .baby-float--hero-bear { bottom: 5.5rem; right: -3.8rem; width: 8rem; }
+    .baby-float--hero-cloud { left: -3.2rem; top: 20%; width: 8rem; }
+    .baby-float--intro-teddy { right: -4.5rem; width: 9rem; }
+    .baby-float--countdown-balloon { left: -4rem; width: 9rem; }
+    .baby-float--location-balloons { right: -4.5rem; width: 9rem; }
+    .baby-float--gifts-teddy { right: -4.6rem; width: 9rem; }
+    .baby-float--rsvp-bear { left: -4.5rem; width: 9rem; }
+    .baby-float--rsvp-teddy { right: -4.6rem; width: 8.5rem; }
+    .baby-music { bottom: max(.75rem, env(safe-area-inset-bottom)); left: .75rem; }
     .baby-timer { gap: 0; }
     .baby-date-card__date strong { font-size: 3.75rem; padding: 0 .7rem 0 .55rem; }
     .baby-options { grid-template-columns: 1fr; }

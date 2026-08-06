@@ -11,8 +11,10 @@ import {
     GlassWater,
     HeartPulse,
     MapPin,
+    Music2,
     Navigation,
     PackageOpen,
+    Pause,
     Send,
     ShoppingBag,
     Store,
@@ -33,7 +35,7 @@ const BABY_CONFIG = {
     shortDate: 'Sábado 12 de septiembre',
     timeLabel: '5:00 pm',
     quote: 'Un pequeño milagro está por llegar y queremos celebrarlo contigo.',
-    hosts: 'Andrea Marmolejo',
+    hosts: 'Andrea y Leonel',
     location: {
         name: 'Sara Eventos',
         venue: 'Las Hadas',
@@ -66,7 +68,7 @@ const BABY_CONFIG = {
             url: 'https://www.amazon.com.mx/baby-reg/andrea-marmolejo-septiembre-2026-aguascalientes/PNB6CFNJT2PK?ref_=cm_sw_r_apin_dp_KJRNRW00AB888XQT15PM&language=en-US',
         },
     ],
-    whatsapp: '5210000000000',
+    whatsapp: '524493868213',
 }
 
 const pad = (value) => String(value).padStart(2, '0')
@@ -78,6 +80,110 @@ function Ornament({ light = false }) {
             <svg viewBox="0 0 24 24"><path d="M12 2c.8 5.9 4.1 9.2 10 10-5.9.8-9.2 4.1-10 10-.8-5.9-4.1-9.2-10-10 5.9-.8 9.2-4.1 10-10Z" /></svg>
             <i />
         </span>
+    )
+}
+
+function FloatingDecor({ src, className }) {
+    return (
+        <img
+            className={`baby-float ${className}`}
+            src={`/invitations/baby-ernesto/img/decor/${src}`}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            data-baby-float
+        />
+    )
+}
+
+function MusicControl() {
+    const audioRef = useRef(null)
+    const resumeAfterHeartbeatRef = useRef(false)
+    const [playing, setPlaying] = useState(false)
+
+    useEffect(() => {
+        const audio = audioRef.current
+        if (!audio) return undefined
+
+        let waitingForInteraction = true
+
+        function removeInteractionListeners() {
+            if (!waitingForInteraction) return
+            document.removeEventListener('pointerdown', playAfterInteraction, true)
+            document.removeEventListener('keydown', playAfterInteraction, true)
+            waitingForInteraction = false
+        }
+
+        async function playAfterInteraction(event) {
+            if (event.target instanceof Element && event.target.closest('.baby-music, .baby-ultrasound')) return
+            try {
+                await audio.play()
+                removeInteractionListeners()
+            } catch {
+                setPlaying(false)
+            }
+        }
+
+        function pauseForHeartbeat() {
+            resumeAfterHeartbeatRef.current = !audio.paused
+            if (resumeAfterHeartbeatRef.current) audio.pause()
+        }
+
+        function resumeAfterHeartbeat() {
+            if (!resumeAfterHeartbeatRef.current) return
+            resumeAfterHeartbeatRef.current = false
+            audio.play().catch(() => setPlaying(false))
+        }
+
+        document.addEventListener('pointerdown', playAfterInteraction, true)
+        document.addEventListener('keydown', playAfterInteraction, true)
+        window.addEventListener('baby-heartbeat-start', pauseForHeartbeat)
+        window.addEventListener('baby-heartbeat-end', resumeAfterHeartbeat)
+        audio.play().then(removeInteractionListeners).catch(() => { })
+
+        return () => {
+            removeInteractionListeners()
+            window.removeEventListener('baby-heartbeat-start', pauseForHeartbeat)
+            window.removeEventListener('baby-heartbeat-end', resumeAfterHeartbeat)
+        }
+    }, [])
+
+    const toggle = async () => {
+        const audio = audioRef.current
+        if (!audio) return
+        if (audio.paused) {
+            try {
+                await audio.play()
+            } catch {
+                setPlaying(false)
+            }
+        } else {
+            audio.pause()
+        }
+    }
+
+    return (
+        <>
+            <audio
+                ref={audioRef}
+                src="/invitations/baby-ernesto/audio/mi-amor.mp3"
+                preload="metadata"
+                autoPlay
+                loop
+                onPlay={() => setPlaying(true)}
+                onPause={() => setPlaying(false)}
+            />
+            <button
+                className={`baby-music${playing ? ' is-playing' : ''}`}
+                type="button"
+                onClick={toggle}
+                aria-label={playing ? 'Pausar Mi Amor' : 'Reproducir Mi Amor'}
+            >
+                <span className="baby-music__icon" aria-hidden="true">
+                    {playing ? <Pause size={16} /> : <Music2 size={16} />}
+                </span>
+            </button>
+        </>
     )
 }
 
@@ -132,14 +238,12 @@ function UltrasoundMoment() {
         if (listeningRef.current) return
         listeningRef.current = true
         setHolding(true)
+        window.dispatchEvent(new Event('baby-heartbeat-start'))
 
         const audio = audioRef.current
         if (audio) {
             audio.currentTime = 0
-            audio.play().catch(() => {
-                listeningRef.current = false
-                setHolding(false)
-            })
+            audio.play().catch(() => finishListening())
         }
 
         if (typeof navigator.vibrate === 'function') {
@@ -160,6 +264,7 @@ function UltrasoundMoment() {
         hapticTimerRef.current = null
         if (typeof navigator.vibrate === 'function') navigator.vibrate(0)
         setHolding(false)
+        window.dispatchEvent(new Event('baby-heartbeat-end'))
     }
 
     useEffect(() => {
@@ -224,6 +329,8 @@ function Hero({ config }) {
         <header className="baby-hero">
             <div className="baby-hero__sky" data-hero-sky />
             <CloudDecor />
+            <FloatingDecor src="cloud-small.webp" className="baby-float--hero-cloud" />
+            <FloatingDecor src="balloon-bear.webp" className="baby-float--hero-bear" />
             <span className="baby-hero__line baby-hero__line--left" aria-hidden="true" />
             <span className="baby-hero__line baby-hero__line--right" aria-hidden="true" />
 
@@ -258,6 +365,7 @@ function Hero({ config }) {
 function Intro({ config }) {
     return (
         <section className="baby-section baby-intro" id="baby-intro" data-baby-section>
+            <FloatingDecor src="teddy-gold.webp" className="baby-float--intro-teddy" />
             <div className="baby-container baby-intro__layout">
                 <div className="baby-intro__copy-wrap">
                     <SectionHeading kicker="Con inmensa alegría">
@@ -311,6 +419,8 @@ function Countdown({ config }) {
     return (
         <section className="baby-section baby-countdown" data-baby-section>
             <div className="baby-countdown__arch" aria-hidden="true" />
+            <FloatingDecor src="hot-air-balloon.webp" className="baby-float--countdown-balloon" />
+            <FloatingDecor src="cloud-large.webp" className="baby-float--countdown-cloud" />
             <div className="baby-container">
                 <SectionHeading kicker="La cuenta regresiva">
                     {time.arrived ? 'El gran día llegó' : 'Cada día falta menos'}
@@ -339,6 +449,7 @@ function Location({ config }) {
     return (
         <section className="baby-section baby-location" data-baby-section>
             <div className="baby-location__wash" aria-hidden="true" />
+            <FloatingDecor src="balloons.webp" className="baby-float--location-balloons" />
             <div className="baby-container baby-location__layout">
                 <div className="baby-location__intro">
                     <SectionHeading kicker="Dónde nos encontraremos">
@@ -366,6 +477,7 @@ function Location({ config }) {
 function Considerations() {
     return (
         <section className="baby-section baby-notes" data-baby-section>
+            <FloatingDecor src="bottle.webp" className="baby-float--notes-bottle" />
             <div className="baby-container">
                 <SectionHeading kicker="Una pequeña nota">
                     Para disfrutar juntos<br /><em>este día tan especial</em>
@@ -446,6 +558,8 @@ function Gifts({ config }) {
     return (
         <section className="baby-section baby-gifts" data-baby-section>
             <div className="baby-gifts__glow" aria-hidden="true" />
+            <FloatingDecor src="rattle.webp" className="baby-float--gifts-rattle" />
+            <FloatingDecor src="teddy-gold.webp" className="baby-float--gifts-teddy" />
             <div className="baby-container">
                 <SectionHeading kicker="Mesa de regalos">
                     El mejor regalo<br /><em>es compartir contigo</em>
@@ -477,12 +591,14 @@ function RSVP({ config }) {
         const message = form.attendance === 'sí'
             ? `¡Hola! Soy ${form.name}. Confirmo mi asistencia al Baby Shower de ${config.babyName}.`
             : `¡Hola! Soy ${form.name}. No podré asistir al Baby Shower de ${config.babyName}, pero le mando mucho cariño.`
-        window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+        window.location.assign(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(message)}`)
     }
 
     return (
         <section className="baby-section baby-rsvp" data-baby-section>
             <CloudDecor />
+            <FloatingDecor src="balloon-bear.webp" className="baby-float--rsvp-bear" />
+            <FloatingDecor src="teddy-gold.webp" className="baby-float--rsvp-teddy" />
             <div className="baby-container">
                 <SectionHeading kicker="Confirma tu asistencia">
                     ¿Nos acompañas a<br /><em>celebrar a Ernesto?</em>
@@ -579,6 +695,18 @@ export default function BabyShowerTemplate() {
                     scrollTrigger: { trigger: '.baby-hero', start: 'top top', end: 'bottom top', scrub: 1.2 },
                 })
 
+                gsap.utils.toArray('[data-baby-float]').forEach((item, index) => {
+                    gsap.to(item, {
+                        x: index % 2 ? 7 : -6,
+                        y: index % 2 ? -14 : 12,
+                        rotation: index % 2 ? 2.5 : -2,
+                        duration: 3.8 + (index % 3) * .75,
+                        ease: 'sine.inOut',
+                        repeat: -1,
+                        yoyo: true,
+                    })
+                })
+
                 gsap.utils.toArray('[data-baby-section]').forEach((section) => {
                     const elements = section.querySelectorAll(
                         '.baby-heading > *, .baby-intro__copy, .baby-intro__host, [data-card], ' +
@@ -624,6 +752,7 @@ export default function BabyShowerTemplate() {
 
     return (
         <main className="baby-template" ref={rootRef}>
+            <MusicControl />
             <Hero config={BABY_CONFIG} />
             <Intro config={BABY_CONFIG} />
             <Countdown config={BABY_CONFIG} />

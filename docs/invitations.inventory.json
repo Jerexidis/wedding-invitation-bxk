@@ -705,11 +705,11 @@
       ],
       "designBrief": "src/invitations/baby-ernesto/DESIGN.md",
       "assets": {
-        "files": 7,
-        "images": 6,
-        "audio": 1,
-        "bytes": 2486195,
-        "megabytes": 2.37
+        "files": 16,
+        "images": 14,
+        "audio": 2,
+        "bytes": 5627527,
+        "megabytes": 5.37
       }
     }
   ]
