@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const assetRoot = '/invitations/xv-anos-kimberly-judith'
 const invitationTitle = 'XV Años | Kimberly Judith'
-const eventDate = '2026-08-29T00:00:00-06:00'
+const eventDate = '2026-11-21T00:00:00-06:00'
 const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n+Los+Naranjos+Av.+Gral.+Mariano+Escobedo+312+Jardines+de+la+Cruz'
 const galleryPhotos = [
     {
@@ -65,7 +65,7 @@ function CountdownSection() {
                         ))}
                     </div>
                 )}
-                <p className="kj-countdown__date">29 · Agosto · 2026</p>
+                <p className="kj-countdown__date">21 · Noviembre · 2026</p>
             </div>
         </section>
     )
@@ -278,8 +278,8 @@ export default function CustomInvitation({ portfolioMode = false }) {
                     </h1>
 
                     <div className="kj-date-lockup" data-hero-item>
-                        <span>29</span>
-                        <span className="kj-date-lockup__month">Agosto</span>
+                        <span>21</span>
+                        <span className="kj-date-lockup__month">Noviembre</span>
                     </div>
                     <p className="kj-scroll-cue" data-hero-item>Desliza para descubrir la magia</p>
                 </div>
@@ -366,8 +366,8 @@ export default function CustomInvitation({ portfolioMode = false }) {
                         <span className="kj-event-card__tape" aria-hidden="true" />
                         <p className="kj-event-card__day">Sábado</p>
                         <div className="kj-event-card__date">
-                            <span>29</span>
-                            <p>de agosto</p>
+                            <span>21</span>
+                            <p>de noviembre</p>
                         </div>
                         <div className="kj-event-card__divider" aria-hidden="true"><span>✦</span></div>
                         <h3>Salón Los Naranjos</h3>
@@ -426,7 +426,7 @@ export default function CustomInvitation({ portfolioMode = false }) {
                 <div className="kj-footer__content" data-reveal>
                     <p>Los sueños sí se hacen realidad</p>
                     <h2>Kimberly Judith</h2>
-                    <span>Mis XV años · 29 de agosto</span>
+                    <span>Mis XV años · 21 de noviembre</span>
                 </div>
                 <p className="kj-footer__credit">
                     Hecho con <a href="https://www.invita-ya.com" target="_blank" rel="noreferrer">Invita Ya</a>
