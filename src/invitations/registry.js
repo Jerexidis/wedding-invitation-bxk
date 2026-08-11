@@ -234,6 +234,16 @@ const invitations = [
         eventDate: '2026-08-22T19:00:00-06:00',
     },
 
+    {
+        slug: 'boda-pamela-y-alfredo',
+        title: 'Nuestra Boda | Pamela & Alfredo',
+        component: lazy(() => import('./boda-pamela-y-alfredo/index.jsx')),
+        enabled: true,
+        eventType: 'boda',
+        rsvpMode: 'mixed',
+        eventDate: '2027-01-08T17:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

@@ -116,4 +116,9 @@ export const ogData = {
         description: 'Acompáñanos a celebrar nuestra boda el 22 de agosto de 2026 en Aguascalientes.',
         image: '/invitations/angelica-y-salvador/img/og-preview-v3.jpg',
     },
+    'boda-pamela-y-alfredo': {
+        title: 'Nuestra Boda | Pamela & Alfredo',
+        description: 'Acompáñanos a celebrar nuestra boda el viernes 8 de enero de 2027 en Aguascalientes.',
+        image: '/invitations/boda-pamela-y-alfredo/img/og-preview.jpg',
+    },
 }

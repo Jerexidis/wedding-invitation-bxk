@@ -652,6 +652,35 @@
         "bytes": 6231539,
         "megabytes": 5.94
       }
+    },
+    {
+      "slug": "boda-pamela-y-alfredo",
+      "title": "Nuestra Boda | Pamela & Alfredo",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "boda",
+      "eventDate": "2027-01-08T17:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "mixed",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/boda-pamela-y-alfredo/DESIGN.md",
+        "src/invitations/boda-pamela-y-alfredo/index.jsx",
+        "src/invitations/boda-pamela-y-alfredo/invitation.css"
+      ],
+      "designBrief": "src/invitations/boda-pamela-y-alfredo/DESIGN.md",
+      "assets": {
+        "files": 12,
+        "images": 10,
+        "audio": 1,
+        "bytes": 5748603,
+        "megabytes": 5.48
+      }
     }
   ]
 }

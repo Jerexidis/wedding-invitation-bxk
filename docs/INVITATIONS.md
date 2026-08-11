@@ -28,6 +28,7 @@ the minimum invitation-specific files needed for a task.
 | `hannia` | standalone-custom | cumpleanos | supabase | 2 files | 16.49 MB |
 | `daniela-itzel` | standalone-custom | xv | mixed | 4 files | 6.93 MB |
 | `angelica-y-salvador` | standalone-custom | boda | mixed | 3 files | 5.94 MB |
+| `boda-pamela-y-alfredo` | standalone-custom | boda | mixed | 3 files | 5.48 MB |
 
 ## Targeted context
 
@@ -182,6 +183,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/angelica-y-salvador/DESIGN.md`
 - Source: `src/invitations/angelica-y-salvador/DESIGN.md`, `src/invitations/angelica-y-salvador/index.jsx`, `src/invitations/angelica-y-salvador/invitation.css`
+
+### boda-pamela-y-alfredo
+
+- Entry: `src/invitations/boda-pamela-y-alfredo/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/boda-pamela-y-alfredo/DESIGN.md`
+- Source: `src/invitations/boda-pamela-y-alfredo/DESIGN.md`, `src/invitations/boda-pamela-y-alfredo/index.jsx`, `src/invitations/boda-pamela-y-alfredo/invitation.css`
 
 ## Refresh
 
