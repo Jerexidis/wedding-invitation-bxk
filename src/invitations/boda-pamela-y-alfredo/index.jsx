@@ -87,15 +87,8 @@ function SectionTitle({ eyebrow, children, light = false }) {
     )
 }
 
-function MusicControl({ active }) {
-    const audioRef = useRef(null)
+function MusicControl({ active, audioRef }) {
     const [playing, setPlaying] = useState(false)
-    const [ready, setReady] = useState(false)
-
-    useEffect(() => {
-        if (!active || !ready || !audioRef.current) return
-        audioRef.current.play().catch(() => setPlaying(false))
-    }, [active, ready])
 
     const toggle = async () => {
         const audio = audioRef.current
@@ -106,8 +99,8 @@ function MusicControl({ active }) {
 
     return (
         <>
-            <audio ref={audioRef} src={AUDIO} preload="metadata" loop onCanPlay={() => setReady(true)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
-            {active && ready && (
+            <audio ref={audioRef} src={AUDIO} preload="auto" loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+            {active && (
                 <button className={`ays-music${playing ? ' is-playing' : ''}`} type="button" onClick={toggle} aria-label={playing ? 'Pausar música' : 'Reproducir música'}>
                     {playing ? <Pause size={16} /> : <Music2 size={16} />}
                     <span>{playing ? 'Pausar' : 'Música'}</span>
@@ -337,6 +330,21 @@ function RSVP() {
 
 export default function PamelaYAlfredo({ hideGallery = false }) {
     const [open, setOpen] = useState(false)
+    const audioRef = useRef(null)
+
+    const handleOpen = () => {
+        const audio = audioRef.current
+
+        if (audio) {
+            audio.muted = false
+            audio.volume = 1
+
+            const playPromise = audio.play()
+            if (playPromise?.catch) playPromise.catch(() => {})
+        }
+
+        setOpen(true)
+    }
 
     useEffect(() => {
         const previous = document.title
@@ -361,8 +369,8 @@ export default function PamelaYAlfredo({ hideGallery = false }) {
 
     return (
         <div className="ays-invitation">
-            <MusicControl active={open} />
-            {!open ? <Opening onOpen={() => setOpen(true)} /> : (
+            <MusicControl active={open} audioRef={audioRef} />
+            {!open ? <Opening onOpen={handleOpen} /> : (
                 <main>
                     <Hero /><Quote /><SaveTheDate /><Countdown /><Padrinos /><Events /><DressCode /><Itinerary /><Gifts />
                     <Gallery hidden={hideGallery} /><RSVP />

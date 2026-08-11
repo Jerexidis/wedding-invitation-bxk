@@ -8,4 +8,4 @@
 - La confirmación usa modo `mixed`: guarda en el panel RSVP y continúa por WhatsApp.
 - La galería debe ocultarse en modo portafolio salvo autorización explícita.
 - La sección de vestimenta conserva todas las indicaciones, tonos reservados y aviso de niñeras; la franja de atuendos proporcionada por los novios debe mostrarse sin fondo.
-- El control musical usa `public/invitations/boda-pamela-y-alfredo/audio/cancion-de-boda.mp3` y solo aparece cuando ese archivo existe y puede reproducirse.
+- El control musical usa `public/invitations/boda-pamela-y-alfredo/audio/cancion-de-boda.mp3`. La reproducción inicia directamente desde el toque en “Abrir invitación” para ser compatible con Safari/iOS; el control manual permanece visible como respaldo.
