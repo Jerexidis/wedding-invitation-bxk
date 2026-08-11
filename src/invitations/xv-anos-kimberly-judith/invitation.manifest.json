@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "slug": "xv-anos-kimberly-judith",
+  "title": "XV Años | Kimberly Judith",
+  "eventType": "xv",
+  "architecture": "standalone-custom",
+  "status": "published",
+  "registered": true,
+  "functionalReference": "plantilla-rapunzel-xv",
+  "entry": "index.jsx",
+  "styles": [
+    "invitation.css"
+  ],
+  "services": {
+    "audio": true,
+    "calendar": false,
+    "gallery": true,
+    "rsvp": "none",
+    "seo": true
+  },
+  "eventDate": "2026-11-21T00:00:00-06:00",
+  "seo": {
+    "description": "Acompáñame a celebrar mis XV años. Descubre todos los detalles de esta noche especial.",
+    "shareImage": "og-preview.jpg",
+    "focalPoint": "top"
+  }
+}

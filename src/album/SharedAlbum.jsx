@@ -18,7 +18,7 @@ import {
 } from '../utils/albumStore'
 import './shared-album.css'
 
-function PhotoCard({ photo, onOpen }) {
+function PhotoCard({ photo, onOpen, onError }) {
     return (
         <button
             className="album-photo"
@@ -26,7 +26,12 @@ function PhotoCard({ photo, onOpen }) {
             onClick={() => onOpen(photo)}
             aria-label="Abrir fotografía"
         >
-            <img src={photo.url} alt="Recuerdo compartido por un invitado" loading="lazy" />
+            <img
+                src={photo.url}
+                alt="Recuerdo compartido por un invitado"
+                loading="lazy"
+                onError={() => onError(photo.id)}
+            />
         </button>
     )
 }
@@ -69,6 +74,11 @@ export default function SharedAlbum({
             setRefreshing(false)
         }
     }, [eventFolder])
+
+    const handlePhotoError = useCallback((photoId) => {
+        setPhotos((currentPhotos) => currentPhotos.filter((photo) => photo.id !== photoId))
+        setActivePhoto((currentPhoto) => currentPhoto?.id === photoId ? null : currentPhoto)
+    }, [])
 
     useEffect(() => {
         loadPhotos(true)
@@ -265,7 +275,12 @@ export default function SharedAlbum({
                 ) : photos.length ? (
                     <div className="album-gallery">
                         {photos.map((photo) => (
-                            <PhotoCard key={photo.id} photo={photo} onOpen={setActivePhoto} />
+                            <PhotoCard
+                                key={photo.id}
+                                photo={photo}
+                                onOpen={setActivePhoto}
+                                onError={handlePhotoError}
+                            />
                         ))}
                     </div>
                 ) : (

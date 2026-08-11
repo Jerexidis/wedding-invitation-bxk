@@ -41,9 +41,9 @@ An editorial quinceañera invitation built around Daniela's forest portraits. It
 - Parents: José Luis Aguilar Hernández and Miriam Sarahi Montoya
 - Godparents: Heriberto Torres Hernández and Esmeralda Marín Guerrero
 - Mass: El Conventito at 5:00 pm
-- Reception: Finca D at 7:30 pm
+- Reception: Finca D at 7:00 pm
 - RSVP: name and optional message are stored in the panel, then WhatsApp opens with a prepared confirmation
-- Dress code: formal elegant; nude, pink, peach, coral, and gray are reserved for Daniela
+- Dress code: formal; nude, pink, peach, coral, and gray are reserved for Daniela
 
 ## Motion
 

@@ -121,4 +121,14 @@ export const ogData = {
         description: 'Acompáñanos a celebrar nuestra boda el viernes 8 de enero de 2027 en Aguascalientes.',
         image: '/invitations/boda-pamela-y-alfredo/img/og-preview.jpg',
     },
+    'xv-anos-kimberly-judith': {
+        title: 'XV Años | Kimberly Judith',
+        description: 'Acompáñame a celebrar mis XV años. Descubre todos los detalles de esta noche especial.',
+        image: '/invitations/xv-anos-kimberly-judith/img/og-preview.jpg',
+    },
+    'baby-ernesto': {
+        title: 'Baby Shower | Baby Ernesto 👶',
+        description: '¡Acompáñanos a celebrar la llegada de Baby Ernesto! Sábado 12 de septiembre.',
+        image: '/invitations/baby-ernesto/img/og-preview.jpg',
+    },
 }

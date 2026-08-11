@@ -1,0 +1,1375 @@
+:root {
+    --baby-ivory: #fbf7ef;
+    --baby-paper: #f5eddf;
+    --baby-sand: #e8dac5;
+    --baby-taupe: #a9977e;
+    --baby-gold: #b79556;
+    --baby-gold-deep: #8b6b34;
+    --baby-cocoa: #5a4939;
+    --baby-ink: #3e342c;
+    --baby-blue: #bdd7e5;
+    --baby-blue-soft: #e8f1f5;
+    --baby-white: #fffdf8;
+    --baby-shadow: rgba(76, 57, 39, .11);
+}
+
+.baby-template {
+    background: var(--baby-ivory);
+    color: var(--baby-ink);
+    font-family: "Manrope", sans-serif;
+    min-width: 320px;
+    overflow: hidden;
+}
+
+.baby-template *,
+.baby-template *::before,
+.baby-template *::after {
+    box-sizing: border-box;
+}
+
+.baby-template button,
+.baby-template input {
+    font: inherit;
+}
+
+.baby-container {
+    margin: 0 auto;
+    max-width: 1100px;
+    position: relative;
+    width: min(100% - 2.5rem, 1100px);
+    z-index: 2;
+}
+
+.baby-section {
+    padding: clamp(5.5rem, 11vw, 9rem) 0;
+    position: relative;
+}
+
+.baby-float {
+    filter: drop-shadow(0 14px 18px rgba(91, 68, 46, .1));
+    max-width: none;
+    opacity: .8;
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    z-index: 1;
+}
+
+.baby-float--hero-cloud {
+    left: -2.5rem;
+    opacity: .5;
+    top: 15%;
+    width: clamp(7rem, 18vw, 12rem);
+}
+
+.baby-float--hero-bear {
+    bottom: 2.5rem;
+    opacity: .64;
+    right: -3.2rem;
+    width: clamp(7.5rem, 20vw, 13rem);
+}
+
+.baby-float--intro-teddy {
+    bottom: -2rem;
+    opacity: .68;
+    right: -3.8rem;
+    width: clamp(8rem, 21vw, 15rem);
+}
+
+.baby-float--countdown-balloon {
+    left: -3rem;
+    top: 7%;
+    width: clamp(8rem, 18vw, 13rem);
+}
+
+.baby-float--countdown-cloud {
+    opacity: .55;
+    right: -3.5rem;
+    top: 4%;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--location-balloons {
+    bottom: -2.5rem;
+    opacity: .7;
+    right: -4rem;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--notes-bottle {
+    bottom: 6%;
+    opacity: .68;
+    right: clamp(.4rem, 4vw, 3rem);
+    transform: rotate(9deg);
+    width: clamp(3.8rem, 8vw, 5.5rem);
+}
+
+.baby-float--gifts-rattle {
+    left: clamp(.8rem, 5vw, 4rem);
+    opacity: .7;
+    top: 7%;
+    width: clamp(3.5rem, 7vw, 5rem);
+}
+
+.baby-float--gifts-teddy {
+    bottom: -2rem;
+    opacity: .56;
+    right: -3.5rem;
+    width: clamp(8rem, 19vw, 13rem);
+}
+
+.baby-float--rsvp-bear {
+    bottom: -2.5rem;
+    left: -3.5rem;
+    opacity: .46;
+    width: clamp(8rem, 20vw, 14rem);
+}
+
+.baby-float--rsvp-teddy {
+    bottom: 8%;
+    opacity: .5;
+    right: -3.8rem;
+    width: clamp(7.5rem, 18vw, 12rem);
+}
+
+.baby-music {
+    align-items: center;
+    backdrop-filter: blur(14px);
+    background: rgba(255, 253, 248, .9);
+    border: 1px solid rgba(183, 149, 86, .5);
+    border-radius: 999px;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    box-shadow: 0 12px 34px rgba(76, 57, 39, .16);
+    color: var(--baby-cocoa);
+    cursor: pointer;
+    display: flex;
+    height: 3.35rem;
+    justify-content: center;
+    left: 1rem;
+    padding: .55rem;
+    position: fixed;
+    width: 3.35rem;
+    z-index: 30;
+}
+
+.baby-music__icon {
+    align-items: center;
+    background: var(--baby-blue-soft);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: flex;
+    height: 2.15rem;
+    justify-content: center;
+    position: relative;
+    width: 2.15rem;
+}
+
+.baby-music.is-playing .baby-music__icon::after {
+    animation: baby-music-ring 1.8s ease-out infinite;
+    border: 1px solid rgba(183, 149, 86, .5);
+    border-radius: inherit;
+    content: "";
+    inset: -4px;
+    position: absolute;
+}
+
+@keyframes baby-music-ring {
+    from { opacity: .75; transform: scale(.9); }
+    to { opacity: 0; transform: scale(1.35); }
+}
+
+.baby-heading {
+    margin-bottom: 2.4rem;
+    text-align: center;
+}
+
+.baby-heading > p {
+    color: var(--baby-gold-deep);
+    font-size: .67rem;
+    font-weight: 600;
+    letter-spacing: .26em;
+    margin: 0 0 .9rem;
+    text-transform: uppercase;
+}
+
+.baby-heading h2 {
+    color: var(--baby-cocoa);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.55rem, 7vw, 4.8rem);
+    font-weight: 500;
+    letter-spacing: -.035em;
+    line-height: .94;
+    margin: 0;
+}
+
+.baby-heading h2 em {
+    color: var(--baby-gold-deep);
+    font-weight: 400;
+}
+
+.baby-heading--light > p,
+.baby-heading--light h2 em {
+    color: #dbc695;
+}
+
+.baby-heading--light h2 {
+    color: var(--baby-white);
+}
+
+.baby-ornament {
+    align-items: center;
+    display: flex;
+    gap: .65rem;
+    justify-content: center;
+    margin: 1.25rem auto 0;
+    width: 9rem;
+}
+
+.baby-ornament i {
+    background: linear-gradient(90deg, transparent, var(--baby-gold));
+    height: 1px;
+    width: 3rem;
+}
+
+.baby-ornament i:last-child {
+    background: linear-gradient(90deg, var(--baby-gold), transparent);
+}
+
+.baby-ornament svg {
+    fill: none;
+    height: .8rem;
+    stroke: var(--baby-gold);
+    stroke-width: 1.2;
+    width: .8rem;
+}
+
+.baby-ornament--light i {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55));
+}
+
+.baby-ornament--light i:last-child {
+    background: linear-gradient(90deg, rgba(255, 255, 255, .55), transparent);
+}
+
+.baby-ornament--light svg {
+    stroke: #dbc695;
+}
+
+/* Hero */
+.baby-hero {
+    align-items: center;
+    display: flex;
+    min-height: 100svh;
+    overflow: hidden;
+    padding: 4rem 1.25rem 6.5rem;
+    position: relative;
+}
+
+.baby-hero__sky {
+    background:
+        linear-gradient(180deg, rgba(255, 253, 248, .28), rgba(246, 237, 221, .55)),
+        url("/invitations/baby-ernesto/img/hero-babyshower.png") center / cover;
+    inset: -7%;
+    position: absolute;
+}
+
+.baby-hero::after {
+    background: linear-gradient(180deg, transparent 58%, var(--baby-ivory));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.baby-hero__content {
+    margin: auto;
+    max-width: 760px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 3;
+}
+
+.baby-hero__seal,
+.baby-footer__seal {
+    align-items: center;
+    border: 1px solid rgba(139, 107, 52, .55);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: flex;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    height: 3.25rem;
+    justify-content: center;
+    margin: 0 auto 1.4rem;
+    position: relative;
+    width: 3.25rem;
+}
+
+.baby-hero__seal::before,
+.baby-footer__seal::before {
+    border: 1px solid rgba(139, 107, 52, .2);
+    border-radius: inherit;
+    content: "";
+    inset: 4px;
+    position: absolute;
+}
+
+.baby-hero__eyebrow {
+    color: var(--baby-gold-deep);
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .3em;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+}
+
+.baby-hero h1 {
+    color: var(--baby-cocoa);
+    font-family: "Cormorant Garamond", serif;
+    line-height: .78;
+    margin: 0;
+}
+
+.baby-hero h1 span {
+    display: block;
+    font-size: clamp(2.1rem, 8vw, 4.2rem);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: .02em;
+    margin-bottom: .2em;
+}
+
+.baby-hero h1 strong {
+    display: block;
+    font-size: clamp(4.4rem, 17vw, 9rem);
+    font-weight: 500;
+    letter-spacing: -.065em;
+}
+
+.baby-ultrasound {
+    aspect-ratio: 45 / 41;
+    background: #050505;
+    border: 1px solid rgba(183, 149, 86, .6);
+    box-shadow: 0 18px 50px rgba(76, 57, 39, .16);
+    margin: .75rem auto 1rem;
+    max-height: 29vh;
+    max-width: 20rem;
+    padding: .35rem;
+    position: relative;
+    width: min(76vw, 20rem);
+}
+
+.baby-ultrasound__halo {
+    border: 1px solid rgba(189, 215, 229, .9);
+    inset: -.5rem;
+    pointer-events: none;
+    position: absolute;
+}
+
+.baby-ultrasound > button {
+    background: #050505;
+    border: 0;
+    cursor: pointer;
+    display: block;
+    inset: .35rem;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    touch-action: none;
+    user-select: none;
+}
+
+.baby-ultrasound > button img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    width: 100%;
+}
+
+.baby-ultrasound__instruction {
+    align-items: center;
+    background: linear-gradient(180deg, transparent, rgba(4, 4, 4, .82));
+    bottom: 0;
+    color: white;
+    display: flex;
+    font-size: .49rem;
+    font-weight: 600;
+    gap: .45rem;
+    inset-inline: 0;
+    justify-content: center;
+    letter-spacing: .1em;
+    min-height: 28%;
+    padding: 1.5rem .7rem .12rem;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.baby-ultrasound__instruction svg { flex: 0 0 auto; }
+
+.baby-ultrasound__pulse {
+    color: var(--baby-blue);
+    opacity: .8;
+    position: absolute;
+    right: .9rem;
+    top: .9rem;
+    z-index: 3;
+}
+
+.baby-ultrasound.is-listening .baby-ultrasound__pulse,
+.baby-ultrasound.is-listening .baby-ultrasound__instruction svg {
+    animation: baby-heartbeat 1.05s ease-in-out infinite;
+    color: #e8b7a8;
+}
+
+.baby-hero__date {
+    align-items: center;
+    color: var(--baby-cocoa);
+    display: flex;
+    font-size: .72rem;
+    font-weight: 600;
+    gap: .75rem;
+    justify-content: center;
+    letter-spacing: .16em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.baby-hero__date i {
+    background: var(--baby-blue);
+    border-radius: 50%;
+    height: .28rem;
+    width: .28rem;
+}
+
+.baby-hero__quote {
+    color: #756454;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    font-style: italic;
+    line-height: 1.35;
+    margin: 1rem auto 0;
+    max-width: 28rem;
+}
+
+.baby-hero__line {
+    background: linear-gradient(180deg, transparent, var(--baby-gold), transparent);
+    height: 45%;
+    opacity: .55;
+    position: absolute;
+    top: 14%;
+    transform-origin: top;
+    width: 1px;
+    z-index: 2;
+}
+
+.baby-hero__line--left { left: clamp(1.5rem, 8vw, 7rem); }
+.baby-hero__line--right { right: clamp(1.5rem, 8vw, 7rem); }
+
+.baby-cloud-decor {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+}
+
+.baby-cloud-decor span {
+    background: url("/invitations/baby-ernesto/img/hero-babyshower.png") center / cover;
+    filter: saturate(.7);
+    opacity: .32;
+    position: absolute;
+}
+
+.baby-cloud-decor__one {
+    border-radius: 50%;
+    height: 18rem;
+    left: -11rem;
+    top: 6%;
+    width: 25rem;
+}
+
+.baby-cloud-decor__two {
+    border-radius: 50%;
+    bottom: 9%;
+    height: 16rem;
+    right: -10rem;
+    width: 22rem;
+}
+
+.baby-scroll {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    bottom: 1.35rem;
+    color: var(--baby-gold-deep);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-size: .56rem;
+    gap: .35rem;
+    left: 50%;
+    letter-spacing: .2em;
+    padding: .5rem;
+    position: absolute;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    z-index: 4;
+}
+
+.baby-scroll svg { animation: baby-float 1.5s ease-in-out infinite; }
+
+/* Intro */
+.baby-intro {
+    background:
+        linear-gradient(rgba(251, 247, 239, .94), rgba(251, 247, 239, .94)),
+        url("/invitations/baby-ernesto/img/baby-pattern.png") center / 470px;
+}
+
+.baby-intro__layout {
+    align-items: center;
+    display: grid;
+    gap: 3.5rem;
+}
+
+.baby-intro__copy-wrap { text-align: center; }
+
+.baby-intro__copy {
+    color: #786958;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.2rem, 4vw, 1.55rem);
+    line-height: 1.55;
+    margin: -1rem auto 0;
+    max-width: 35rem;
+}
+
+.baby-intro__host {
+    color: var(--baby-gold-deep);
+    font-size: .72rem;
+    letter-spacing: .08em;
+    margin: 1.6rem 0 0;
+}
+
+.baby-intro__host strong { font-weight: 600; }
+
+.baby-date-card {
+    background: rgba(255, 253, 248, .93);
+    border: 1px solid rgba(183, 149, 86, .45);
+    box-shadow: 0 22px 55px var(--baby-shadow);
+    margin: auto;
+    max-width: 25rem;
+    padding: 2.5rem 2rem;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.baby-date-card::before {
+    border: 1px solid rgba(183, 149, 86, .2);
+    content: "";
+    inset: .55rem;
+    pointer-events: none;
+    position: absolute;
+}
+
+.baby-date-card__kicker {
+    color: var(--baby-gold-deep);
+    font-size: .59rem;
+    font-weight: 600;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+}
+
+.baby-date-card__date {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    margin: 1rem 0 .75rem;
+}
+
+.baby-date-card__date strong {
+    border-left: 1px solid var(--baby-sand);
+    border-right: 1px solid var(--baby-sand);
+    font-family: "Manrope", sans-serif;
+    font-size: 4.45rem;
+    font-weight: 300;
+    letter-spacing: -.075em;
+    line-height: .9;
+    padding: 0 1.1rem 0 .9rem;
+}
+
+.baby-date-card__date span {
+    font-size: .61rem;
+    letter-spacing: .1em;
+    line-height: 1.55;
+    text-transform: uppercase;
+}
+
+.baby-date-card > i {
+    background: var(--baby-blue);
+    display: block;
+    height: 1px;
+    margin: 0 auto .75rem;
+    width: 3rem;
+}
+
+.baby-date-card > p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.baby-date-card > svg {
+    color: var(--baby-blue);
+    margin-top: .8rem;
+    stroke-width: 1.2;
+}
+
+/* Countdown */
+.baby-countdown {
+    background:
+        linear-gradient(rgba(252, 247, 239, .72), rgba(244, 231, 213, .72)),
+        url("/invitations/baby-ernesto/img/ivory-silk.webp") center / cover;
+    color: var(--baby-ink);
+    overflow: hidden;
+}
+
+.baby-countdown::before {
+    background:
+        radial-gradient(circle at 15% 10%, rgba(255, 255, 255, .5), transparent 30%),
+        radial-gradient(circle at 86% 80%, rgba(183, 149, 86, .08), transparent 30%);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.baby-countdown__arch {
+    border: 1px solid rgba(139, 107, 52, .17);
+    border-bottom: 0;
+    border-radius: 50% 50% 0 0;
+    height: 82%;
+    left: 50%;
+    position: absolute;
+    top: 12%;
+    transform: translateX(-50%);
+    width: min(88%, 55rem);
+}
+
+.baby-timer {
+    display: grid;
+    gap: .45rem;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto 2rem;
+    max-width: 46rem;
+}
+
+.baby-timer__unit {
+    border-left: 1px solid rgba(139, 107, 52, .18);
+    padding: 1rem .2rem;
+    text-align: center;
+}
+
+.baby-timer__unit:last-child { border-right: 1px solid rgba(139, 107, 52, .18); }
+
+.baby-timer__unit strong {
+    color: var(--baby-cocoa);
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.3rem, 9vw, 4.6rem);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.baby-timer__unit span {
+    color: var(--baby-gold-deep);
+    display: block;
+    font-size: clamp(.45rem, 1.5vw, .62rem);
+    letter-spacing: .12em;
+    margin-top: .45rem;
+    text-transform: uppercase;
+}
+
+.baby-button {
+    align-items: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: flex;
+    font-size: .62rem;
+    font-weight: 600;
+    gap: .55rem;
+    justify-content: center;
+    letter-spacing: .13em;
+    margin: 1.4rem auto 0;
+    min-height: 3.2rem;
+    padding: .8rem 1.35rem;
+    text-transform: uppercase;
+    transition: transform .25s, background .25s, color .25s;
+}
+
+.baby-button:hover { transform: translateY(-2px); }
+
+.baby-button--light {
+    background: transparent;
+    border-color: rgba(139, 107, 52, .45);
+    color: var(--baby-gold-deep);
+}
+
+.baby-button--light:hover {
+    background: var(--baby-gold-deep);
+    color: white;
+}
+
+.baby-button--gold {
+    background: var(--baby-gold-deep);
+    color: white;
+    width: 100%;
+}
+
+/* Location */
+.baby-location { background: var(--baby-ivory); }
+
+.baby-location__wash {
+    background: var(--baby-blue-soft);
+    border-radius: 48% 52% 45% 55% / 55% 43% 57% 45%;
+    height: 24rem;
+    opacity: .72;
+    position: absolute;
+    right: -13rem;
+    top: 12%;
+    transform: rotate(-12deg);
+    width: 28rem;
+}
+
+.baby-location__layout {
+    align-items: center;
+    display: grid;
+    gap: 3rem;
+}
+
+.baby-location__intro { text-align: center; }
+
+.baby-location__intro > p {
+    color: #786958;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    margin: -1rem 0 0;
+}
+
+.baby-location__card {
+    background: var(--baby-white);
+    border: 1px solid var(--baby-sand);
+    box-shadow: 0 24px 65px var(--baby-shadow);
+    margin: auto;
+    max-width: 30rem;
+    padding: 3rem 2rem;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.baby-location__card::before,
+.baby-location__card::after {
+    border-color: var(--baby-gold);
+    border-style: solid;
+    content: "";
+    height: 2.2rem;
+    opacity: .55;
+    position: absolute;
+    width: 2.2rem;
+}
+
+.baby-location__card::before {
+    border-width: 1px 0 0 1px;
+    left: .75rem;
+    top: .75rem;
+}
+
+.baby-location__card::after {
+    border-width: 0 1px 1px 0;
+    bottom: .75rem;
+    right: .75rem;
+}
+
+.baby-location__icon {
+    align-items: center;
+    background: var(--baby-blue-soft);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: flex;
+    height: 3.4rem;
+    justify-content: center;
+    margin: 0 auto 1.3rem;
+    width: 3.4rem;
+}
+
+.baby-location__label {
+    color: var(--baby-gold-deep);
+    font-size: .59rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+}
+
+.baby-location__card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.4rem, 8vw, 3.7rem);
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+}
+
+.baby-location__card > strong {
+    color: var(--baby-gold-deep);
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    font-weight: 500;
+    margin-top: .35rem;
+}
+
+.baby-location__address {
+    color: #756454;
+    font-size: .79rem;
+    margin: 1.1rem 0 .6rem;
+}
+
+.baby-location__time {
+    align-items: center;
+    color: #756454;
+    display: flex;
+    font-size: .67rem;
+    gap: .4rem;
+    justify-content: center;
+    margin: 0;
+}
+
+.baby-location__card a {
+    align-items: center;
+    border-bottom: 1px solid var(--baby-gold);
+    color: var(--baby-gold-deep);
+    display: inline-flex;
+    font-size: .6rem;
+    font-weight: 600;
+    gap: .45rem;
+    letter-spacing: .12em;
+    margin-top: 1.6rem;
+    padding: .45rem .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* Considerations */
+.baby-notes {
+    background:
+        linear-gradient(rgba(232, 241, 245, .92), rgba(232, 241, 245, .92)),
+        url("/invitations/baby-ernesto/img/baby-pattern.png") center / 430px;
+}
+
+.baby-notes::before,
+.baby-notes::after {
+    border: 1px solid rgba(183, 149, 86, .22);
+    border-radius: 50%;
+    content: "";
+    height: 15rem;
+    pointer-events: none;
+    position: absolute;
+    width: 15rem;
+}
+
+.baby-notes::before {
+    left: -9rem;
+    top: -8rem;
+}
+
+.baby-notes::after {
+    bottom: -9rem;
+    right: -8rem;
+}
+
+.baby-notes__intro {
+    color: #6f6256;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.18rem;
+    line-height: 1.5;
+    margin: -1rem auto 2.6rem;
+    max-width: 32rem;
+    text-align: center;
+}
+
+.baby-notes__grid {
+    display: grid;
+    gap: 1rem;
+    margin: auto;
+    max-width: 55rem;
+}
+
+.baby-note {
+    background: rgba(255, 253, 248, .8);
+    border: 1px solid rgba(183, 149, 86, .3);
+    padding: clamp(2rem, 6vw, 3rem);
+    position: relative;
+    text-align: center;
+}
+
+.baby-note__icon {
+    align-items: center;
+    border: 1px solid rgba(183, 149, 86, .45);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: flex;
+    height: 3.2rem;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    width: 3.2rem;
+}
+
+.baby-note__icon svg { stroke-width: 1.25; }
+
+.baby-note__kicker {
+    color: var(--baby-gold-deep) !important;
+    font-size: .56rem !important;
+    font-weight: 600;
+    letter-spacing: .16em;
+    margin: 0 0 .55rem !important;
+    text-transform: uppercase;
+}
+
+.baby-note h3 {
+    color: var(--baby-cocoa);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.7rem, 5vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.05;
+    margin: 0 0 1rem;
+}
+
+.baby-note > p:last-child {
+    color: #75695d;
+    font-size: .76rem;
+    line-height: 1.75;
+    margin: 0 auto;
+    max-width: 24rem;
+}
+
+/* Dress code */
+.baby-dress {
+    background: var(--baby-ivory);
+    color: var(--baby-ink);
+    overflow: hidden;
+}
+
+.baby-dress::before {
+    background:
+        linear-gradient(rgba(255, 253, 248, .78), rgba(246, 237, 223, .72)),
+        url("/invitations/baby-ernesto/img/ivory-silk.webp") center / cover;
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.baby-dress__intro {
+    color: #75685c;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.08rem, 3vw, 1.35rem);
+    line-height: 1.55;
+    margin: -1rem auto 2.5rem;
+    max-width: 34rem;
+    text-align: center;
+}
+
+.baby-dress__palette {
+    align-items: start;
+    display: grid;
+    gap: clamp(.5rem, 2.5vw, 1.4rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 auto;
+    max-width: 34rem;
+}
+
+.baby-dress__tone {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.baby-dress__tone > span {
+    background: var(--dress-tone);
+    border: 1px solid rgba(90, 73, 57, .48);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 3px rgba(255, 253, 248, .92),
+        0 0 0 4px rgba(90, 73, 57, .32),
+        0 12px 24px rgba(76, 57, 39, .12);
+    display: block;
+    width: min(100%, 6.2rem);
+}
+
+.baby-dress__tone > span::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+/* Gifts */
+.baby-gifts {
+    background: var(--baby-paper);
+    color: var(--baby-ink);
+    overflow: hidden;
+}
+
+.baby-gifts::before {
+    background:
+        linear-gradient(rgba(252, 247, 239, .66), rgba(244, 231, 213, .72)),
+        url("/invitations/baby-ernesto/img/ivory-silk.webp") center / cover;
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.baby-gifts__glow {
+    border: 1px solid rgba(139, 107, 52, .16);
+    border-radius: 50%;
+    height: 42rem;
+    left: 50%;
+    position: absolute;
+    top: -22rem;
+    transform: translateX(-50%);
+    width: 42rem;
+}
+
+.baby-gifts__intro {
+    color: #6f6256;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.18rem;
+    line-height: 1.5;
+    margin: -1rem auto 2.6rem;
+    max-width: 32rem;
+    text-align: center;
+}
+
+.baby-gift-grid {
+    display: grid;
+    gap: .8rem;
+    margin: auto;
+    max-width: 58rem;
+}
+
+.baby-gift-card {
+    align-items: center;
+    background: rgba(255, 253, 248, .97);
+    border: 1px solid rgba(219, 198, 149, .55);
+    color: var(--baby-ink);
+    display: flex;
+    flex-direction: column;
+    min-height: 15rem;
+    padding: 2rem 1.5rem;
+    position: relative;
+    text-align: center;
+    transition: transform .3s, border-color .3s;
+}
+
+.baby-gift-card:hover {
+    border-color: var(--baby-gold);
+    transform: translateY(-5px);
+}
+
+.baby-gift-card__number {
+    color: var(--baby-taupe);
+    font-family: "Cormorant Garamond", serif;
+    font-size: .85rem;
+    left: .8rem;
+    position: absolute;
+    top: .65rem;
+}
+
+.baby-gift-card__icon {
+    align-items: center;
+    background: linear-gradient(145deg, rgba(189, 215, 229, .32), rgba(255, 253, 248, .85));
+    border: 1px solid rgba(183, 149, 86, .42);
+    border-radius: 50%;
+    color: var(--baby-gold-deep);
+    display: inline-flex;
+    height: 3.5rem;
+    justify-content: center;
+    margin-bottom: .8rem;
+    width: 3.5rem;
+}
+
+.baby-gift-card__icon svg { stroke-width: 1.3; }
+
+.baby-gift-card__store {
+    color: var(--baby-gold-deep);
+    font-size: .59rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+}
+
+.baby-gift-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.55rem;
+    font-weight: 500;
+    line-height: 1.05;
+    margin: 0 0 1rem;
+}
+
+.baby-gift-card__code {
+    align-items: center;
+    background: var(--baby-blue-soft);
+    border: 0;
+    color: var(--baby-cocoa);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: .68rem;
+    gap: .5rem;
+    letter-spacing: .06em;
+    padding: .65rem .9rem;
+}
+
+.baby-gift-card__actions {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.baby-gift-card a {
+    align-items: center;
+    border-bottom: 1px solid var(--baby-gold);
+    color: var(--baby-gold-deep);
+    display: inline-flex;
+    font-size: .58rem;
+    font-weight: 600;
+    gap: .45rem;
+    letter-spacing: .13em;
+    padding: .35rem 0 .3rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* RSVP */
+.baby-rsvp {
+    background: var(--baby-ivory);
+    overflow: hidden;
+}
+
+.baby-rsvp .baby-cloud-decor { opacity: .45; }
+
+.baby-rsvp__intro {
+    color: #786958;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.2rem;
+    margin: -1rem auto 2.2rem;
+    max-width: 28rem;
+    text-align: center;
+}
+
+.baby-form {
+    background: rgba(255, 253, 248, .95);
+    border: 1px solid var(--baby-sand);
+    box-shadow: 0 25px 65px var(--baby-shadow);
+    margin: auto;
+    max-width: 34rem;
+    padding: clamp(1.5rem, 6vw, 2.8rem);
+    position: relative;
+}
+
+.baby-form__field > span,
+.baby-form legend {
+    color: var(--baby-gold-deep);
+    display: block;
+    font-size: .59rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    margin: 0 0 .6rem;
+    text-transform: uppercase;
+}
+
+.baby-form input:not([type="radio"]) {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--baby-sand);
+    color: var(--baby-ink);
+    min-height: 3rem;
+    outline: 0;
+    padding: 0 .2rem;
+    width: 100%;
+}
+
+.baby-form input:not([type="radio"]):focus { border-color: var(--baby-gold); }
+
+.baby-form fieldset {
+    border: 0;
+    margin: 1.7rem 0;
+    padding: 0;
+}
+
+.baby-options {
+    display: grid;
+    gap: .6rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.baby-options label {
+    border: 1px solid var(--baby-sand);
+    cursor: pointer;
+    font-size: .67rem;
+    padding: .9rem .5rem;
+    text-align: center;
+    transition: background .2s, border-color .2s, color .2s;
+}
+
+.baby-options label.is-selected {
+    background: var(--baby-blue-soft);
+    border-color: var(--baby-blue);
+    color: var(--baby-cocoa);
+}
+
+.baby-options input {
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.baby-form__hint {
+    color: #786958;
+    font-size: .64rem;
+    line-height: 1.5;
+    margin: .85rem 0 0;
+    text-align: center;
+}
+
+/* Footer */
+.baby-footer {
+    background: var(--baby-paper);
+    border-top: 1px solid var(--baby-sand);
+    padding: 4.5rem 1.25rem 2rem;
+    text-align: center;
+}
+
+.baby-footer__seal { margin-bottom: 1.25rem; }
+
+.baby-footer > p {
+    color: #786958;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.baby-footer > p em { color: var(--baby-gold-deep); }
+
+.baby-footer h2 {
+    color: var(--baby-cocoa);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin: .7rem 0 .2rem;
+}
+
+.baby-footer > span {
+    color: var(--baby-taupe);
+    display: block;
+    font-size: .56rem;
+    letter-spacing: .2em;
+    margin-bottom: 1.8rem;
+}
+
+.baby-footer > a {
+    color: var(--baby-gold-deep);
+    font-size: .48rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+@keyframes baby-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes baby-heartbeat {
+    0%, 38%, 100% { transform: scale(1); }
+    10% { transform: scale(1.24); }
+    20% { transform: scale(.95); }
+    28% { transform: scale(1.15); }
+}
+
+@media (min-width: 700px) {
+    .baby-intro__layout,
+    .baby-location__layout {
+        grid-template-columns: 1.08fr .92fr;
+        text-align: left;
+    }
+
+    .baby-location__layout { grid-template-columns: .92fr 1.08fr; }
+
+    .baby-intro__copy-wrap,
+    .baby-location__intro { text-align: left; }
+
+    .baby-intro__copy { margin-left: 0; }
+
+    .baby-intro .baby-heading,
+    .baby-location .baby-heading { text-align: left; }
+
+    .baby-intro .baby-ornament,
+    .baby-location .baby-ornament { margin-left: 0; }
+
+    .baby-date-card { transform: rotate(1.5deg); }
+
+    .baby-notes__grid { grid-template-columns: repeat(2, 1fr); }
+
+    .baby-gift-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 980px) {
+    .baby-gift-grid { grid-template-columns: repeat(4, 1fr); }
+    .baby-gift-card { padding-left: 1.2rem; padding-right: 1.2rem; }
+}
+
+@media (max-width: 430px) {
+    .baby-container { width: min(100% - 1.75rem, 1100px); }
+    .baby-hero { padding-left: .9rem; padding-right: .9rem; }
+    .baby-hero__quote { max-width: 20rem; }
+    .baby-float { opacity: .52; }
+    .baby-float--hero-bear { bottom: 5.5rem; right: -3.8rem; width: 8rem; }
+    .baby-float--hero-cloud { left: -3.2rem; top: 20%; width: 8rem; }
+    .baby-float--intro-teddy { right: -4.5rem; width: 9rem; }
+    .baby-float--countdown-balloon { left: -4rem; width: 9rem; }
+    .baby-float--location-balloons { right: -4.5rem; width: 9rem; }
+    .baby-float--gifts-teddy { right: -4.6rem; width: 9rem; }
+    .baby-float--rsvp-bear { left: -4.5rem; width: 9rem; }
+    .baby-float--rsvp-teddy { right: -4.6rem; width: 8.5rem; }
+    .baby-music { bottom: max(.75rem, env(safe-area-inset-bottom)); left: .75rem; }
+    .baby-timer { gap: 0; }
+    .baby-date-card__date strong { font-size: 3.75rem; padding: 0 .7rem 0 .55rem; }
+    .baby-options { grid-template-columns: 1fr; }
+}
+
+@media (max-height: 760px) and (min-width: 700px) {
+    .baby-hero { padding-bottom: 4.5rem; padding-top: 2rem; }
+    .baby-ultrasound { max-height: 28vh; width: 15rem; }
+    .baby-hero h1 strong { font-size: 6rem; }
+    .baby-hero h1 span { font-size: 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .baby-template *,
+    .baby-template *::before,
+    .baby-template *::after {
+        animation-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

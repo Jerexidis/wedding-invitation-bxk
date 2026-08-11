@@ -681,6 +681,65 @@
         "bytes": 5748603,
         "megabytes": 5.48
       }
+    },
+    {
+      "slug": "xv-anos-kimberly-judith",
+      "title": "XV Años | Kimberly Judith",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "xv",
+      "eventDate": "2026-08-29T00:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "none",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/xv-anos-kimberly-judith/DESIGN.md",
+        "src/invitations/xv-anos-kimberly-judith/index.jsx",
+        "src/invitations/xv-anos-kimberly-judith/invitation.css",
+        "src/invitations/xv-anos-kimberly-judith/invitation.manifest.json"
+      ],
+      "designBrief": "src/invitations/xv-anos-kimberly-judith/DESIGN.md",
+      "assets": {
+        "files": 19,
+        "images": 16,
+        "audio": 1,
+        "bytes": 9232898,
+        "megabytes": 8.81
+      }
+    },
+    {
+      "slug": "baby-ernesto",
+      "title": "Baby Shower | Baby Ernesto",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "babyshower",
+      "eventDate": "2026-09-12T17:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": false,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/baby-ernesto/babyshower-template.css",
+        "src/invitations/baby-ernesto/DESIGN.md",
+        "src/invitations/baby-ernesto/index.jsx"
+      ],
+      "designBrief": "src/invitations/baby-ernesto/DESIGN.md",
+      "assets": {
+        "files": 17,
+        "images": 15,
+        "audio": 2,
+        "bytes": 5724584,
+        "megabytes": 5.46
+      }
     }
   ]
 }
