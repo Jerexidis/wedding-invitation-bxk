@@ -134,6 +134,6 @@ export const ogData = {
     'gretel-y-geraldine': {
         title: 'XV Años | Gretel y Geraldine',
         description: 'Acompáñanos a celebrar los XV años de Gretel y Geraldine el 5 de diciembre de 2026.',
-        image: '/invitations/gretel-y-geraldine/img/og-preview-ocean.jpg',
+        image: '/invitations/gretel-y-geraldine/img/og-princesses.jpg',
     },
 }

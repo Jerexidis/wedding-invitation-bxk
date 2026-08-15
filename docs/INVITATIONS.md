@@ -31,7 +31,7 @@ the minimum invitation-specific files needed for a task.
 | `boda-pamela-y-alfredo` | standalone-custom | boda | mixed | 3 files | 5.48 MB |
 | `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.81 MB |
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 5.46 MB |
-| `gretel-y-geraldine` | standalone-custom | xv | none | 2 files | 7.20 MB |
+| `gretel-y-geraldine` | standalone-custom | xv | none | 2 files | 7.35 MB |
 
 ## Targeted context
 
