@@ -51,7 +51,7 @@ const STORY_CONFIG = {
             place: 'Salón Cumbres',
             address: 'Calle Venustiano Carranza #203, Pabellón de Hidalgo',
             time: 'Después de la ceremonia',
-            maps: 'https://www.google.com/maps/search/?api=1&query=Salon+Cumbres+Venustiano+Carranza+203+Pabellon+de+Hidalgo+Aguascalientes',
+            maps: 'https://maps.app.goo.gl/V3ycXtG6U1YuPH5MA?g_st=aw',
             icon: PartyPopper,
         },
     ],
