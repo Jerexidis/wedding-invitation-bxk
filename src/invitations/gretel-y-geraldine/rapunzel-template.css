@@ -1338,6 +1338,22 @@
     to { stroke-dashoffset: -520; }
 }
 
+@media (max-width: 719px) {
+    .story-intro {
+        padding-top: 28.5rem;
+    }
+
+    .story-intro::after {
+        background:
+            linear-gradient(180deg, rgba(13, 10, 49, .3) 0, rgba(16, 17, 57, .48) 17rem, rgba(3, 52, 70, .94) 21rem, rgb(3, 52, 70) 24.5rem),
+            url("/invitations/gretel-y-geraldine/img/theme-moana-rapunzel.webp") center top / 100% auto no-repeat;
+    }
+
+    .story-gold-ribbon {
+        top: 34rem;
+    }
+}
+
 @media (min-width: 720px) {
     .story-music { padding-right: .95rem; }
     .story-music__copy {
