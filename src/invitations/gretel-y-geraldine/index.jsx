@@ -308,7 +308,9 @@ function Godparents({ config }) {
     return (
         <section className="story-section story-godparents" data-story-section>
             <div className="story-spark-field" />
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pua.webp" className="story-float--pua" delay={-2.4} />
+            <div className="story-padrinos-lanterns" aria-hidden="true">
+                <span /><span /><span />
+            </div>
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-lanterns.webp" className="story-float--lanterns" delay={-1.1} />
             <div className="story-container">
                 <SectionHeading kicker="Con el cariño de" light>Nuestros<br /><em>padrinos</em></SectionHeading>

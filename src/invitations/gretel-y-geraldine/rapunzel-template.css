@@ -295,7 +295,49 @@
 .story-float--pascal { left: -1.2rem; top: 5%; width: 6.2rem; }
 .story-float--lanterns { bottom: 3%; left: -1.7rem; width: 7.8rem; }
 .story-float--tower-rapunzel { bottom: 2%; right: .35rem; width: 6.6rem; z-index: 3; }
-.story-float--pua { right: -1.5rem; top: 7%; width: 6.7rem; }
+.story-padrinos-lanterns {
+    height: 9.5rem;
+    pointer-events: none;
+    position: absolute;
+    right: .2rem;
+    top: 7.5rem;
+    width: 4.8rem;
+    z-index: 3;
+}
+
+.story-padrinos-lanterns span {
+    animation: story-lantern 4.4s ease-in-out infinite alternate;
+    background: linear-gradient(90deg, #e28c2f, #fff1a3 48%, #e89a37);
+    border: 1px solid rgba(142, 85, 27, .64);
+    border-radius: 3px 3px 7px 7px;
+    box-shadow: 0 0 17px 5px rgba(255, 194, 70, .42);
+    height: 2.25rem;
+    position: absolute;
+    width: 1.35rem;
+}
+
+.story-padrinos-lanterns span::before {
+    border-top: 2px solid rgba(255, 231, 147, .95);
+    content: "";
+    left: .16rem;
+    position: absolute;
+    right: .16rem;
+    top: .3rem;
+}
+
+.story-padrinos-lanterns span::after {
+    color: rgba(176, 91, 25, .82);
+    content: "✦";
+    font-size: .72rem;
+    left: 50%;
+    position: absolute;
+    top: 52%;
+    transform: translate(-50%, -50%);
+}
+
+.story-padrinos-lanterns span:nth-child(1) { animation-delay: -1.2s; right: .2rem; top: 0; }
+.story-padrinos-lanterns span:nth-child(2) { animation-delay: -3.1s; height: 1.9rem; right: 1.9rem; top: 2.7rem; width: 1.15rem; }
+.story-padrinos-lanterns span:nth-child(3) { animation-delay: -2.2s; height: 1.65rem; right: .5rem; top: 5.25rem; width: 1rem; }
 .story-float--moana-paddle { right: -1.8rem; top: 4%; width: 7.6rem; }
 .story-float--gifts-lanterns {
     bottom: 1.25rem;
@@ -1211,7 +1253,7 @@
     .story-float--pascal { left: 4%; width: 8rem; }
     .story-float--lanterns { left: 3%; width: 10rem; }
     .story-float--tower-rapunzel { right: 3%; width: 9rem; }
-    .story-float--pua { right: 3%; width: 9rem; }
+    .story-padrinos-lanterns { right: 4%; transform: scale(1.18); transform-origin: top right; }
     .story-float--moana-paddle { right: 3%; width: 10rem; }
     .story-float--gifts-lanterns { left: 3%; width: 9rem; }
     .story-float--moana-friends { right: 3%; width: 10rem; }
@@ -1224,6 +1266,7 @@
 @media (prefers-reduced-motion: reduce) {
     .story-scroll svg,
     .story-lanterns span,
+    .story-padrinos-lanterns span,
     .story-float,
     .story-ocean-ornament,
     .story-gallery::after,
