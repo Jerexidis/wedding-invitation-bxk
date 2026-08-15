@@ -264,6 +264,16 @@ const invitations = [
         eventDate: '2026-09-12T17:00:00-06:00',
     },
 
+    {
+        slug: 'gretel-y-geraldine',
+        title: 'XV Años | Gretel y Geraldine',
+        component: lazy(() => import('./gretel-y-geraldine/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'none',
+        eventDate: '2026-12-05T13:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

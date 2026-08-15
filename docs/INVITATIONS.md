@@ -31,6 +31,7 @@ the minimum invitation-specific files needed for a task.
 | `boda-pamela-y-alfredo` | standalone-custom | boda | mixed | 3 files | 5.48 MB |
 | `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.81 MB |
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 5.46 MB |
+| `gretel-y-geraldine` | standalone-custom | xv | none | 2 files | 7.11 MB |
 
 ## Targeted context
 
@@ -209,6 +210,13 @@ the minimum invitation-specific files needed for a task.
 - Flags: audio, calendar
 - Design brief: `src/invitations/baby-ernesto/DESIGN.md`
 - Source: `src/invitations/baby-ernesto/babyshower-template.css`, `src/invitations/baby-ernesto/DESIGN.md`, `src/invitations/baby-ernesto/index.jsx`
+
+### gretel-y-geraldine
+
+- Entry: `src/invitations/gretel-y-geraldine/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Source: `src/invitations/gretel-y-geraldine/index.jsx`, `src/invitations/gretel-y-geraldine/rapunzel-template.css`
 
 ## Refresh
 

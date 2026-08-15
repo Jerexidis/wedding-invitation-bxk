@@ -131,4 +131,9 @@ export const ogData = {
         description: '¡Acompáñanos a celebrar la llegada de Baby Ernesto! Sábado 12 de septiembre.',
         image: '/invitations/baby-ernesto/img/og-preview.jpg',
     },
+    'gretel-y-geraldine': {
+        title: 'XV Años | Gretel y Geraldine',
+        description: 'Acompáñanos a celebrar los XV años de Gretel y Geraldine el 5 de diciembre de 2026.',
+        image: '/invitations/gretel-y-geraldine/img/og-preview-ocean.jpg',
+    },
 }
