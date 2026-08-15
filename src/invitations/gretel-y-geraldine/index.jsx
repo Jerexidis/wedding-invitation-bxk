@@ -311,25 +311,6 @@ function Intro({ config }) {
     )
 }
 
-function ThemePortrait() {
-    return (
-        <section className="story-section story-duo" data-story-section>
-            <div className="story-container">
-                <SectionHeading kicker="Dos mundos, una celebración" light>
-                    La magia del mar<br /><em>y los faroles</em>
-                </SectionHeading>
-                <figure className="story-duo__frame" data-card>
-                    <img
-                        src="/invitations/gretel-y-geraldine/img/theme-moana-rapunzel.webp"
-                        alt="Moana y Rapunzel juntas en un paisaje tropical"
-                        loading="lazy"
-                    />
-                </figure>
-            </div>
-        </section>
-    )
-}
-
 function Godparents({ config }) {
     return (
         <section className="story-section story-godparents" data-story-section>
@@ -612,7 +593,6 @@ export default function GretelGeraldineXV({ hideGallery = false }) {
             <MusicControl />
             <Hero config={STORY_CONFIG} />
             <Intro config={STORY_CONFIG} />
-            <ThemePortrait />
             <Godparents config={STORY_CONFIG} />
             <Countdown config={STORY_CONFIG} />
             <Events config={STORY_CONFIG} />

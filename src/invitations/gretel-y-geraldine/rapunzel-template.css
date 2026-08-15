@@ -462,10 +462,23 @@
 .story-intro {
     align-items: center;
     background:
-        linear-gradient(150deg, rgba(31, 8, 52, .82), rgba(4, 67, 82, .74)),
+        linear-gradient(150deg, rgba(31, 8, 52, .86), rgba(4, 67, 82, .82)),
         url("/invitations/gretel-y-geraldine/img/hero-lanterns-ocean.webp") center 56% / cover;
     color: white;
     display: flex;
+    isolation: isolate;
+}
+
+.story-intro::after {
+    background:
+        linear-gradient(180deg, rgba(13, 10, 49, .44) 0%, rgba(16, 17, 57, .62) 38%, rgba(3, 52, 70, .93) 72%, rgba(3, 52, 70, .98) 100%),
+        url("/invitations/gretel-y-geraldine/img/theme-moana-rapunzel.webp") center top / min(100%, 52rem) auto no-repeat;
+    content: "";
+    inset: 0;
+    opacity: .86;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
 }
 
 .story-intro::before,
@@ -565,7 +578,7 @@
 }
 
 .story-gold-ribbon {
-    filter: drop-shadow(0 6px 10px rgba(196, 128, 24, .1));
+    filter: drop-shadow(0 6px 13px rgba(40, 171, 211, .18));
     height: 24rem;
     left: 50%;
     overflow: visible;
@@ -574,12 +587,12 @@
     top: 16rem;
     transform: translateX(-50%) rotate(-7deg);
     width: 23rem;
-    z-index: 0;
+    z-index: 1;
 }
 
 .story-gold-ribbon__lock {
     fill: none;
-    stroke: rgba(230, 174, 47, .28);
+    stroke: rgba(67, 180, 221, .42);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 9;
@@ -588,51 +601,10 @@
 .story-gold-ribbon__shine {
     animation: story-hair-shimmer 6.5s ease-in-out infinite alternate;
     fill: none;
-    stroke: rgba(255, 225, 128, .38);
+    stroke: rgba(144, 230, 242, .58);
     stroke-dasharray: 58 700;
     stroke-linecap: round;
     stroke-width: 3;
-}
-
-.story-duo {
-    align-items: center;
-    background:
-        linear-gradient(155deg, rgba(26, 7, 47, .78), rgba(3, 71, 86, .7)),
-        url("/invitations/gretel-y-geraldine/img/lagoon-lanterns.webp") center / cover;
-    color: white;
-    display: flex;
-    isolation: isolate;
-}
-
-.story-duo::before {
-    background: radial-gradient(circle at 50% 45%, rgba(248, 202, 91, .2), transparent 21rem);
-    content: "";
-    inset: 0;
-    position: absolute;
-}
-
-.story-duo__frame {
-    background: linear-gradient(145deg, rgba(244, 189, 69, .92), rgba(99, 218, 213, .86));
-    box-shadow: 0 28px 65px rgba(7, 2, 21, .42), 0 0 40px rgba(244, 189, 69, .14);
-    margin: 0 auto;
-    max-width: 27rem;
-    padding: .45rem;
-    position: relative;
-    transform: rotate(-1deg);
-}
-
-.story-duo__frame::after {
-    border: 1px solid rgba(255, 241, 180, .75);
-    content: "";
-    inset: .85rem;
-    pointer-events: none;
-    position: absolute;
-}
-
-.story-duo__frame img {
-    display: block;
-    height: auto;
-    width: 100%;
 }
 
 .story-godparents {
