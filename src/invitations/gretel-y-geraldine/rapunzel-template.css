@@ -295,6 +295,8 @@
 .story-float--pascal { left: -1.2rem; top: 5%; width: 6.2rem; }
 .story-float--lanterns { bottom: 3%; left: -1.7rem; width: 7.8rem; }
 .story-float--tower-rapunzel { bottom: 2%; right: .35rem; width: 6.6rem; z-index: 3; }
+.story-float--itinerary-pascal { bottom: 1rem; left: -1rem; width: 5.8rem; z-index: 3; }
+.story-float--itinerary-moana { right: -1.8rem; top: 4%; width: 7.2rem; }
 .story-padrinos-lanterns {
     height: 9.5rem;
     pointer-events: none;
@@ -460,9 +462,9 @@
 .story-intro {
     align-items: center;
     background:
-        radial-gradient(circle at 20% 20%, rgba(237, 189, 72, .15), transparent 24rem),
-        radial-gradient(circle at 90% 75%, rgba(8, 127, 140, .14), transparent 22rem),
-        var(--story-cream);
+        linear-gradient(150deg, rgba(31, 8, 52, .82), rgba(4, 67, 82, .74)),
+        url("/invitations/gretel-y-geraldine/img/hero-lanterns-ocean.webp") center 56% / cover;
+    color: white;
     display: flex;
 }
 
@@ -479,18 +481,22 @@
 }
 
 .story-intro__copy {
+    color: rgba(255, 255, 255, .92);
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: 1.22rem;
     line-height: 1.65;
     margin: 0 auto 2.2rem;
     max-width: 35rem;
     text-align: center;
+    text-shadow: 0 2px 18px rgba(16, 3, 28, .74);
 }
 
 .story-name-card {
-    background: rgba(255, 255, 255, .72);
-    border: 1px solid rgba(111, 50, 144, .25);
-    box-shadow: 0 18px 50px rgba(78, 39, 91, .11);
+    backdrop-filter: blur(13px);
+    background: rgba(27, 10, 47, .7);
+    border: 1px solid rgba(244, 189, 69, .45);
+    box-shadow: 0 18px 50px rgba(10, 3, 24, .28);
+    color: white;
     margin: 0;
     padding: 2.5rem 1.4rem;
     position: relative;
@@ -506,7 +512,8 @@
 }
 
 .story-family-grid .story-name-card:nth-child(2) {
-    border-color: rgba(8, 127, 140, .35);
+    background: rgba(3, 67, 82, .7);
+    border-color: rgba(117, 220, 215, .5);
 }
 
 .story-name-card::before,
@@ -524,7 +531,7 @@
 .story-name-card > svg { color: var(--story-gold); margin-bottom: .6rem; }
 
 .story-name-card > span {
-    color: var(--story-purple);
+    color: #9de3df;
     display: block;
     font-size: .62rem;
     font-weight: 600;
@@ -540,6 +547,8 @@
     font-weight: 600;
     margin: 0;
 }
+
+.story-name-card h3 { color: white; }
 
 .story-name-card > i {
     color: var(--story-gold);
@@ -583,6 +592,47 @@
     stroke-dasharray: 58 700;
     stroke-linecap: round;
     stroke-width: 3;
+}
+
+.story-duo {
+    align-items: center;
+    background:
+        linear-gradient(155deg, rgba(26, 7, 47, .78), rgba(3, 71, 86, .7)),
+        url("/invitations/gretel-y-geraldine/img/lagoon-lanterns.webp") center / cover;
+    color: white;
+    display: flex;
+    isolation: isolate;
+}
+
+.story-duo::before {
+    background: radial-gradient(circle at 50% 45%, rgba(248, 202, 91, .2), transparent 21rem);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.story-duo__frame {
+    background: linear-gradient(145deg, rgba(244, 189, 69, .92), rgba(99, 218, 213, .86));
+    box-shadow: 0 28px 65px rgba(7, 2, 21, .42), 0 0 40px rgba(244, 189, 69, .14);
+    margin: 0 auto;
+    max-width: 27rem;
+    padding: .45rem;
+    position: relative;
+    transform: rotate(-1deg);
+}
+
+.story-duo__frame::after {
+    border: 1px solid rgba(255, 241, 180, .75);
+    content: "";
+    inset: .85rem;
+    pointer-events: none;
+    position: absolute;
+}
+
+.story-duo__frame img {
+    display: block;
+    height: auto;
+    width: 100%;
 }
 
 .story-godparents {
@@ -632,7 +682,10 @@
 
 .story-countdown {
     align-items: center;
-    background: linear-gradient(135deg, #eadcf0 0 52%, #d8efeb 100%);
+    background:
+        linear-gradient(135deg, rgba(40, 12, 64, .82), rgba(3, 79, 94, .76)),
+        url("/invitations/gretel-y-geraldine/img/tower-still-life.webp") center / cover;
+    color: white;
     display: flex;
     overflow: hidden;
 }
@@ -646,15 +699,16 @@
 }
 
 .story-timer div {
-    background: rgba(255, 248, 233, .86);
-    border: 1px solid rgba(75, 23, 109, .24);
-    box-shadow: 0 7px 0 rgba(75, 23, 109, .12);
+    backdrop-filter: blur(10px);
+    background: rgba(22, 9, 40, .66);
+    border: 1px solid rgba(244, 189, 69, .42);
+    box-shadow: 0 7px 0 rgba(5, 53, 67, .34);
     padding: 1.25rem .2rem 1rem;
     text-align: center;
 }
 
 .story-timer strong {
-    color: var(--story-plum);
+    color: var(--story-gold);
     display: block;
     font-family: "Italiana", Georgia, serif;
     font-size: clamp(1.7rem, 8vw, 3.6rem);
@@ -672,6 +726,7 @@
 }
 
 .story-countdown__date {
+    color: white;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: 1.2rem;
     font-weight: 600;
@@ -744,7 +799,10 @@
 .story-tower i:nth-child(3) { --n: 2; }
 
 .story-events {
-    background: var(--story-cream);
+    background:
+        linear-gradient(150deg, rgba(28, 8, 51, .82), rgba(4, 73, 88, .76)),
+        url("/invitations/gretel-y-geraldine/img/two-lanterns.webp") center / cover;
+    color: white;
     padding-bottom: 13rem;
 }
 
@@ -754,16 +812,19 @@
 }
 
 .story-event-card {
-    background: white;
-    border: 1px solid #dfcfe5;
+    backdrop-filter: blur(12px);
+    background: rgba(25, 9, 43, .72);
+    border: 1px solid rgba(244, 189, 69, .5);
+    box-shadow: 0 22px 55px rgba(9, 3, 22, .3);
+    color: white;
     padding: 2.7rem 1.4rem 2rem;
     position: relative;
     text-align: center;
 }
 
 .story-event-card:nth-child(2) {
-    background: #e7f6f3;
-    border-color: #a8d8d3;
+    background: rgba(3, 71, 86, .72);
+    border-color: rgba(135, 226, 219, .56);
     transform: rotate(1deg);
 }
 
@@ -784,7 +845,7 @@
 }
 
 .story-event-card > p {
-    color: var(--story-purple);
+    color: #9de3df;
     font-size: .62rem;
     font-weight: 600;
     letter-spacing: .2em;
@@ -793,6 +854,7 @@
 }
 
 .story-event-card h3 {
+    color: white;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: 1.8rem;
     margin: 0 0 .8rem;
@@ -809,7 +871,7 @@
 }
 
 .story-event-card address {
-    color: #715f73;
+    color: rgba(255, 255, 255, .78);
     font-size: .72rem;
     font-style: normal;
     line-height: 1.55;
@@ -819,8 +881,8 @@
 
 .story-event-card a {
     align-items: center;
-    border-bottom: 1px solid var(--story-plum);
-    color: var(--story-plum);
+    border-bottom: 1px solid var(--story-gold);
+    color: var(--story-gold);
     display: inline-flex;
     font-size: .67rem;
     font-weight: 600;
@@ -830,11 +892,124 @@
     text-transform: uppercase;
 }
 
+.story-itinerary {
+    align-items: center;
+    background:
+        linear-gradient(145deg, rgba(35, 8, 57, .82), rgba(3, 69, 84, .76)),
+        url("/invitations/gretel-y-geraldine/img/lantern-lake.webp") center / cover;
+    color: white;
+    display: flex;
+    isolation: isolate;
+}
+
+.story-itinerary::before {
+    background:
+        radial-gradient(circle at 10% 30%, rgba(244, 189, 69, .16), transparent 18rem),
+        radial-gradient(circle at 90% 78%, rgba(115, 222, 216, .15), transparent 20rem);
+    content: "";
+    inset: 0;
+    position: absolute;
+}
+
+.story-itinerary__list {
+    display: grid;
+    gap: .85rem;
+    margin: 0 auto;
+    max-width: 40rem;
+    position: relative;
+}
+
+.story-itinerary__list::before {
+    background: linear-gradient(var(--story-gold), #75d8d3);
+    bottom: 1.5rem;
+    content: "";
+    left: 1.45rem;
+    opacity: .6;
+    position: absolute;
+    top: 1.5rem;
+    width: 1px;
+}
+
+.story-itinerary__item {
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(23, 9, 40, .72);
+    border: 1px solid rgba(244, 189, 69, .38);
+    box-shadow: 0 16px 38px rgba(8, 2, 22, .25);
+    display: flex;
+    gap: 1.1rem;
+    padding: 1.15rem 1.1rem;
+    position: relative;
+}
+
+.story-itinerary__item > span {
+    align-items: center;
+    background: linear-gradient(145deg, var(--story-gold), var(--story-amber));
+    border-radius: 50%;
+    color: var(--story-plum);
+    display: flex;
+    flex: 0 0 auto;
+    font: 600 .66rem "DM Sans", sans-serif;
+    height: 2.9rem;
+    justify-content: center;
+    position: relative;
+    width: 2.9rem;
+    z-index: 1;
+}
+
+.story-itinerary__item h3 {
+    color: white;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.55rem;
+    margin: 0 0 .15rem;
+}
+
+.story-itinerary__item p {
+    align-items: center;
+    color: #9de3df;
+    display: flex;
+    font-size: .72rem;
+    gap: .4rem;
+    margin: 0;
+}
+
+.story-music-program {
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(4, 83, 99, .76);
+    border: 1px solid rgba(141, 231, 224, .52);
+    box-shadow: 0 18px 45px rgba(7, 2, 21, .28);
+    display: flex;
+    gap: 1rem;
+    margin: 1.3rem auto 0;
+    max-width: 40rem;
+    padding: 1.3rem 1.4rem;
+}
+
+.story-music-program > svg { color: var(--story-gold); flex: 0 0 auto; }
+
+.story-music-program span {
+    color: var(--story-gold);
+    display: block;
+    font-size: .62rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    margin-bottom: .35rem;
+    text-transform: uppercase;
+}
+
+.story-music-program p {
+    color: white;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+    margin: 0;
+}
+
 .story-gallery {
     background:
-        radial-gradient(circle at 18% 78%, rgba(56, 178, 178, .2), transparent 19rem),
-        radial-gradient(circle at 82% 12%, rgba(240, 184, 66, .2), transparent 17rem),
-        linear-gradient(145deg, #efe1f3, #dff2ef);
+        linear-gradient(145deg, rgba(35, 9, 56, .83), rgba(3, 70, 84, .75)),
+        url("/invitations/gretel-y-geraldine/img/lantern-lake.webp") center / cover;
+    color: white;
     isolation: isolate;
     min-height: 900px;
 }
@@ -1005,7 +1180,7 @@
 .story-gallery__arrow--next { right: -.85rem; }
 
 .story-gallery__counter {
-    color: var(--story-purple);
+    color: rgba(255, 255, 255, .86);
     font: 600 .62rem "DM Sans", sans-serif;
     letter-spacing: .18em;
     margin: 1.2rem 0 0;
@@ -1022,7 +1197,7 @@
 
 .story-gallery__dots button {
     background: transparent;
-    border: 1px solid var(--story-plum);
+    border: 1px solid rgba(255, 255, 255, .7);
     border-radius: 50%;
     cursor: pointer;
     height: .65rem;
@@ -1038,7 +1213,7 @@
 
 .story-gallery__hint {
     align-items: center;
-    color: #7e6a81;
+    color: rgba(255, 255, 255, .78);
     display: flex;
     font-size: .62rem;
     gap: .4rem;
@@ -1048,14 +1223,18 @@
 
 .story-gifts {
     align-items: center;
-    background: var(--story-cream);
+    background:
+        linear-gradient(150deg, rgba(29, 8, 50, .82), rgba(3, 76, 90, .76)),
+        url("/invitations/gretel-y-geraldine/img/lagoon-lanterns.webp") center / cover;
+    color: white;
     display: flex;
 }
 
 .story-gift-card {
-    background: white;
-    border: 1px solid #ead29c;
-    box-shadow: 0 18px 50px rgba(75, 23, 109, .09);
+    backdrop-filter: blur(13px);
+    background: rgba(24, 9, 42, .74);
+    border: 1px solid rgba(244, 189, 69, .48);
+    box-shadow: 0 18px 50px rgba(8, 2, 22, .3);
     margin: 0 auto;
     max-width: 34rem;
     padding: 2.7rem 1.5rem;
@@ -1075,6 +1254,7 @@
 }
 
 .story-gift-card h3 {
+    color: white;
     font-family: "Italiana", Georgia, serif;
     font-size: 2rem;
     font-weight: 400;
@@ -1082,7 +1262,7 @@
 }
 
 .story-gift-card > p {
-    color: #715f73;
+    color: rgba(255, 255, 255, .8);
     font-size: .77rem;
     line-height: 1.7;
     margin: 0 auto 1.5rem;
@@ -1090,9 +1270,9 @@
 }
 
 .story-envelope {
-    background: #f2e3ee;
-    border: 1px solid #c6a6cd;
-    color: var(--story-purple);
+    background: rgba(4, 81, 96, .82);
+    border: 1px solid rgba(132, 224, 217, .56);
+    color: white;
     display: inline-block;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
@@ -1103,7 +1283,10 @@
 .story-envelope i { color: #d25e78; }
 
 .story-footer {
-    background: linear-gradient(90deg, var(--story-cream), #e4f4f0);
+    background:
+        linear-gradient(90deg, rgba(31, 8, 52, .88), rgba(3, 67, 82, .86)),
+        url("/invitations/gretel-y-geraldine/img/hero-lanterns-ocean.webp") center 78% / cover;
+    color: white;
     min-height: 15rem;
     overflow: hidden;
     padding: 1.55rem 1.2rem 1.35rem;
@@ -1134,10 +1317,10 @@
     margin: .35rem 0;
 }
 
-.story-footer > p em { color: var(--story-purple); font-size: 1rem; }
+.story-footer > p em { color: var(--story-gold); font-size: 1rem; }
 
 .story-footer h2 {
-    color: var(--story-plum);
+    color: white;
     font-family: "Italiana", Georgia, serif;
     font-size: 1.5rem;
     font-weight: 400;
@@ -1152,7 +1335,7 @@
 }
 
 .story-footer > a {
-    color: var(--story-purple);
+    color: #9de3df;
     font-size: .5rem;
     letter-spacing: .13em;
     text-decoration: none;
@@ -1255,6 +1438,8 @@
     .story-float--tower-rapunzel { right: 3%; width: 9rem; }
     .story-padrinos-lanterns { right: 4%; transform: scale(1.18); transform-origin: top right; }
     .story-float--moana-paddle { right: 3%; width: 10rem; }
+    .story-float--itinerary-pascal { left: 3%; width: 8rem; }
+    .story-float--itinerary-moana { right: 3%; width: 9rem; }
     .story-float--gifts-lanterns { left: 3%; width: 9rem; }
     .story-float--moana-friends { right: 3%; width: 10rem; }
     .story-float--footer-pascal { left: 5%; width: 5rem; }

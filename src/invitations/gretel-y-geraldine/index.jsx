@@ -23,7 +23,7 @@ const STORY_CONFIG = {
     date: '2026-12-05T13:00:00-06:00',
     dateLabel: '05 · DICIEMBRE · 2026',
     shortDate: '5 de diciembre de 2026',
-    quote: 'Dos quinceañeras, dos sueños y una misma aventura iluminada por el mar y los faroles.',
+    quote: 'Dos quinceañeras, dos sueños y una misma aventura iluminadas por el mar y los faroles.',
     invitationCopy: 'Hay momentos inolvidables que se atesoran en el corazón para siempre. Por esta razón, queremos que compartas con nosotras este día tan especial. Te invitamos a celebrar nuestros XV años.',
     families: [
         {
@@ -59,6 +59,13 @@ const STORY_CONFIG = {
         title: 'El mejor regalo',
         copy: 'Tu presencia y tus buenos deseos harán que esta celebración sea todavía más especial para nosotras.',
     },
+    itinerary: [
+        { label: 'Misa', time: '1:00 p.m. a 2:00 p.m.' },
+        { label: 'Recepción', time: '2:00 p.m.' },
+        { label: 'Comida', time: '3:00 p.m. a 7:00 p.m.' },
+        { label: 'Vals', time: '8:00 p.m. a 9:00 p.m.' },
+    ],
+    music: ['Mariachi', 'Banda', 'Grupo'],
     gallery: [
         { src: '/invitations/gretel-y-geraldine/img/gallery-01.webp', alt: 'Gretel y Geraldine sentadas frente a un templo', caption: 'Un momento para recordar' },
         { src: '/invitations/gretel-y-geraldine/img/gallery-02.webp', alt: 'Retrato con peinado y maquillaje para una ocasión especial', caption: 'La ilusión comienza' },
@@ -282,7 +289,7 @@ function Intro({ config }) {
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-sea-stars.webp" className="story-float--sea-stars" />
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pua.webp" className="story-float--intro-pua" delay={-1.8} />
             <div className="story-container">
-                <SectionHeading kicker="Con la bendición de Dios">
+                <SectionHeading kicker="Con la bendición de Dios" light>
                     Dos sueños,<br /><em>una aventura</em>
                 </SectionHeading>
 
@@ -299,6 +306,25 @@ function Intro({ config }) {
                         </article>
                     ))}
                 </div>
+            </div>
+        </section>
+    )
+}
+
+function ThemePortrait() {
+    return (
+        <section className="story-section story-duo" data-story-section>
+            <div className="story-container">
+                <SectionHeading kicker="Dos mundos, una celebración" light>
+                    La magia del mar<br /><em>y los faroles</em>
+                </SectionHeading>
+                <figure className="story-duo__frame" data-card>
+                    <img
+                        src="/invitations/gretel-y-geraldine/img/theme-moana-rapunzel.webp"
+                        alt="Moana y Rapunzel juntas en un paisaje tropical"
+                        loading="lazy"
+                    />
+                </figure>
             </div>
         </section>
     )
@@ -357,7 +383,7 @@ function Countdown({ config }) {
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-rapunzel-full.webp" className="story-float--tower-rapunzel" delay={-2.9} />
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pascal.webp" className="story-float--pascal" delay={-.7} />
             <div className="story-container">
-                <SectionHeading kicker="La aventura comienza en">
+                <SectionHeading kicker="La aventura comienza en" light>
                     {time.arrived ? 'El gran día' : 'Falta muy poco'}
                 </SectionHeading>
                 {!time.arrived && (
@@ -385,7 +411,7 @@ function Events({ config }) {
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-paddle.webp" className="story-float--moana-paddle" delay={-1.5} />
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-rapunzel.webp" className="story-float--rapunzel" delay={-3.2} />
             <div className="story-container">
-                <SectionHeading kicker="Dónde y cuándo">Nuestros<br /><em>encuentros</em></SectionHeading>
+                <SectionHeading kicker="Dónde y cuándo" light>Nuestros<br /><em>encuentros</em></SectionHeading>
                 <div className="story-event-grid">
                     {config.events.map((event) => {
                         const Icon = event.icon
@@ -408,6 +434,36 @@ function Events({ config }) {
     )
 }
 
+function Itinerary({ config }) {
+    return (
+        <section className="story-section story-itinerary" data-story-section>
+            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pascal.webp" className="story-float--itinerary-pascal" delay={-1.9} />
+            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-paddle.webp" className="story-float--itinerary-moana" delay={-3.3} />
+            <div className="story-container">
+                <SectionHeading kicker="Paso a paso" light>Nuestro<br /><em>itinerario</em></SectionHeading>
+                <div className="story-itinerary__list">
+                    {config.itinerary.map((item, index) => (
+                        <article className="story-itinerary__item" key={item.label} data-card>
+                            <span>{String(index + 1).padStart(2, '0')}</span>
+                            <div>
+                                <h3>{item.label}</h3>
+                                <p><Clock3 size={14} /> {item.time}</p>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+                <article className="story-music-program" data-card>
+                    <Music2 size={24} />
+                    <div>
+                        <span>Música a disfrutar</span>
+                        <p>{config.music.join(' · ')}</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    )
+}
+
 function Gallery({ config }) {
     const [active, setActive] = useState(0)
     const showPrevious = () => setActive((current) => (current - 1 + config.gallery.length) % config.gallery.length)
@@ -418,7 +474,7 @@ function Gallery({ config }) {
             <OceanOrnament className="story-ocean-ornament--gallery" />
             <LanternTrail />
             <div className="story-container">
-                <SectionHeading kicker="Érase una vez">Nuestra galería</SectionHeading>
+                <SectionHeading kicker="Érase una vez" light>Nuestra galería</SectionHeading>
                 <div className="story-gallery__stage" data-card>
                     {config.gallery.map((photo, index) => (
                         <figure
@@ -462,7 +518,7 @@ function Gifts({ config }) {
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-lanterns.webp" className="story-float--gifts-lanterns" delay={-2.6} />
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-friends.webp" className="story-float--moana-friends" delay={-1.2} />
             <div className="story-container">
-                <SectionHeading kicker="Tu presencia es nuestro regalo">Detalles con<br /><em>mucho cariño</em></SectionHeading>
+                <SectionHeading kicker="Tu presencia es nuestro regalo" light>Detalles con<br /><em>mucho cariño</em></SectionHeading>
                 <article className="story-gift-card" data-card>
                     <span className="story-gift-card__icon"><Gift size={31} /></span>
                     <h3>{config.gifts.title}</h3>
@@ -556,9 +612,11 @@ export default function GretelGeraldineXV({ hideGallery = false }) {
             <MusicControl />
             <Hero config={STORY_CONFIG} />
             <Intro config={STORY_CONFIG} />
+            <ThemePortrait />
             <Godparents config={STORY_CONFIG} />
             <Countdown config={STORY_CONFIG} />
             <Events config={STORY_CONFIG} />
+            <Itinerary config={STORY_CONFIG} />
             {!hideGallery && <Gallery config={STORY_CONFIG} />}
             <Gifts config={STORY_CONFIG} />
             <Footer config={STORY_CONFIG} />
