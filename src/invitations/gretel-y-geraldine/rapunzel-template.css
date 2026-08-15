@@ -289,14 +289,11 @@
     z-index: 1;
 }
 
-.story-float--sea-stars { right: -2.2rem; top: 8%; width: 8.5rem; }
 .story-float--intro-pua { bottom: .8rem; left: .2rem; width: 6.4rem; z-index: 3; }
-.story-float--rapunzel { bottom: 1.5rem; left: .35rem; width: 6.6rem; }
-.story-float--pascal { left: -1.2rem; top: 5%; width: 6.2rem; }
 .story-float--lanterns { bottom: 3%; left: -1.7rem; width: 7.8rem; }
 .story-float--tower-rapunzel { bottom: 2%; right: .35rem; width: 6.6rem; z-index: 3; }
+.story-float--events-moana { bottom: 1.25rem; left: .25rem; width: 7rem; z-index: 3; }
 .story-float--itinerary-pascal { bottom: 1rem; left: -1rem; width: 5.8rem; z-index: 3; }
-.story-float--itinerary-moana { right: -1.8rem; top: 4%; width: 7.2rem; }
 .story-padrinos-lanterns {
     height: 9.5rem;
     pointer-events: none;
@@ -340,7 +337,6 @@
 .story-padrinos-lanterns span:nth-child(1) { animation-delay: -1.2s; right: .2rem; top: 0; }
 .story-padrinos-lanterns span:nth-child(2) { animation-delay: -3.1s; height: 1.9rem; right: 1.9rem; top: 2.7rem; width: 1.15rem; }
 .story-padrinos-lanterns span:nth-child(3) { animation-delay: -2.2s; height: 1.65rem; right: .5rem; top: 5.25rem; width: 1rem; }
-.story-float--moana-paddle { right: -1.8rem; top: 4%; width: 7.6rem; }
 .story-float--gifts-lanterns {
     bottom: 1.25rem;
     filter: drop-shadow(0 13px 18px rgba(44, 14, 54, .28));
@@ -349,7 +345,6 @@
     width: 7.2rem;
     z-index: 3;
 }
-.story-float--moana-friends { right: -1.8rem; top: 4%; width: 7.2rem; }
 .story-float--footer-pascal { bottom: .35rem; left: .35rem; opacity: .7; width: 3.8rem; }
 
 .story-ocean-ornament {
@@ -471,7 +466,7 @@
 
 .story-intro::after {
     background:
-        linear-gradient(180deg, rgba(13, 10, 49, .44) 0%, rgba(16, 17, 57, .62) 38%, rgba(3, 52, 70, .93) 72%, rgba(3, 52, 70, .98) 100%),
+        linear-gradient(180deg, rgba(13, 10, 49, .44) 0%, rgba(16, 17, 57, .62) 38%, rgba(3, 52, 70, .98) 63%, rgb(3, 52, 70) 73%),
         url("/invitations/gretel-y-geraldine/img/theme-moana-rapunzel.webp") center top / min(100%, 52rem) auto no-repeat;
     content: "";
     inset: 0;
@@ -584,7 +579,7 @@
     overflow: visible;
     pointer-events: none;
     position: absolute;
-    top: 16rem;
+    top: 21rem;
     transform: translateX(-50%) rotate(-7deg);
     width: 23rem;
     z-index: 1;
@@ -592,7 +587,7 @@
 
 .story-gold-ribbon__lock {
     fill: none;
-    stroke: rgba(67, 180, 221, .42);
+    stroke: rgba(67, 180, 221, .3);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 9;
@@ -601,7 +596,7 @@
 .story-gold-ribbon__shine {
     animation: story-hair-shimmer 6.5s ease-in-out infinite alternate;
     fill: none;
-    stroke: rgba(144, 230, 242, .58);
+    stroke: rgba(144, 230, 242, .44);
     stroke-dasharray: 58 700;
     stroke-linecap: round;
     stroke-width: 3;
@@ -655,8 +650,8 @@
 .story-countdown {
     align-items: center;
     background:
-        linear-gradient(135deg, rgba(40, 12, 64, .82), rgba(3, 79, 94, .76)),
-        url("/invitations/gretel-y-geraldine/img/tower-still-life.webp") center / cover;
+        linear-gradient(135deg, rgba(34, 9, 60, .79), rgba(3, 66, 88, .72)),
+        url("/invitations/gretel-y-geraldine/img/lantern-lake.webp") center top / cover;
     color: white;
     display: flex;
     overflow: hidden;
@@ -1028,17 +1023,12 @@
     max-width: 22rem;
     perspective: 1000px;
     position: relative;
+    touch-action: pan-y;
+    user-select: none;
 }
 
 .story-gallery__stage::before {
-    border: 1px solid rgba(213, 153, 61, .62);
-    box-shadow: 0 22px 50px rgba(35, 82, 93, .11);
-    content: "";
-    inset: -.45rem;
-    pointer-events: none;
-    position: absolute;
-    transform: rotate(2.2deg);
-    z-index: 0;
+    content: none;
 }
 
 .story-gallery figure {
@@ -1122,35 +1112,6 @@
     z-index: 3;
 }
 
-.story-gallery__arrow {
-    align-items: center;
-    backdrop-filter: blur(8px);
-    background: rgba(255, 248, 233, .88);
-    border: 1px solid rgba(75, 23, 109, .2);
-    border-radius: 50%;
-    color: var(--story-plum);
-    cursor: pointer;
-    display: flex;
-    height: 2.7rem;
-    justify-content: center;
-    padding: 0;
-    position: absolute;
-    top: calc(50% - 2rem);
-    box-shadow: 0 8px 22px rgba(58, 23, 72, .16);
-    transition: background .2s, box-shadow .2s, transform .2s;
-    width: 2.7rem;
-    z-index: 6;
-}
-
-.story-gallery__arrow:hover {
-    background: white;
-    box-shadow: 0 10px 28px rgba(58, 23, 72, .23);
-    transform: scale(1.1);
-}
-
-.story-gallery__arrow--previous { left: -.85rem; }
-.story-gallery__arrow--next { right: -.85rem; }
-
 .story-gallery__counter {
     color: rgba(255, 255, 255, .86);
     font: 600 .62rem "DM Sans", sans-serif;
@@ -1193,11 +1154,16 @@
     margin: 1rem 0 0;
 }
 
+.story-closing-scene {
+    background:
+        linear-gradient(180deg, rgba(29, 8, 50, .82), rgba(3, 76, 90, .74) 68%, rgba(3, 48, 69, .9)),
+        url("/invitations/gretel-y-geraldine/img/lagoon-lanterns.webp") center / cover no-repeat;
+    overflow: hidden;
+}
+
 .story-gifts {
     align-items: center;
-    background:
-        linear-gradient(150deg, rgba(29, 8, 50, .82), rgba(3, 76, 90, .76)),
-        url("/invitations/gretel-y-geraldine/img/lagoon-lanterns.webp") center / cover;
+    background: transparent;
     color: white;
     display: flex;
 }
@@ -1255,9 +1221,7 @@
 .story-envelope i { color: #d25e78; }
 
 .story-footer {
-    background:
-        linear-gradient(90deg, rgba(31, 8, 52, .88), rgba(3, 67, 82, .86)),
-        url("/invitations/gretel-y-geraldine/img/hero-lanterns-ocean.webp") center 78% / cover;
+    background: transparent;
     color: white;
     min-height: 15rem;
     overflow: hidden;
@@ -1395,25 +1359,20 @@
         white-space: nowrap;
     }
     .story-hero { min-height: 980px; }
-    .story-gold-ribbon { height: 34rem; top: 12rem; width: 32rem; }
+    .story-gold-ribbon { height: 34rem; top: 17rem; width: 32rem; }
     .story-section { min-height: 760px; }
     .story-family-grid,
     .story-godparents-grid { grid-template-columns: 1fr 1fr; }
     .story-event-grid { grid-template-columns: 1fr 1fr; }
     .story-event-card:nth-child(2) { transform: translateY(1.5rem) rotate(1deg); }
     .story-gallery { min-height: 920px; }
-    .story-float--sea-stars { right: 2%; width: 12rem; }
     .story-float--intro-pua { left: 3%; width: 8.5rem; }
-    .story-float--rapunzel { bottom: 2%; left: 1%; width: 10rem; }
-    .story-float--pascal { left: 4%; width: 8rem; }
     .story-float--lanterns { left: 3%; width: 10rem; }
     .story-float--tower-rapunzel { right: 3%; width: 9rem; }
+    .story-float--events-moana { bottom: 2%; left: 2%; width: 10rem; }
     .story-padrinos-lanterns { right: 4%; transform: scale(1.18); transform-origin: top right; }
-    .story-float--moana-paddle { right: 3%; width: 10rem; }
     .story-float--itinerary-pascal { left: 3%; width: 8rem; }
-    .story-float--itinerary-moana { right: 3%; width: 9rem; }
     .story-float--gifts-lanterns { left: 3%; width: 9rem; }
-    .story-float--moana-friends { right: 3%; width: 10rem; }
     .story-float--footer-pascal { left: 5%; width: 5rem; }
     .story-ocean-ornament--gallery { bottom: 2%; left: 2%; width: 13rem; }
     .story-ocean-ornament--footer { right: 4%; width: 9rem; }

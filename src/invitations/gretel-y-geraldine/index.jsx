@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-    CalendarPlus, Camera, ChevronDown, ChevronLeft, ChevronRight, Church, Clock3, Crown,
+    CalendarPlus, Camera, ChevronDown, Church, Clock3, Crown,
     Gift, Music2, Navigation, PartyPopper, Pause, Sparkles, Waves,
 } from 'lucide-react'
 import { gsap } from 'gsap'
@@ -286,7 +286,6 @@ function Intro({ config }) {
                     d="M50 374C18 300 24 159 124 82C218 10 343 58 360 172C376 280 294 367 196 351C106 337 76 248 119 181C159 118 255 117 292 182C324 239 285 300 226 298"
                 />
             </svg>
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-sea-stars.webp" className="story-float--sea-stars" />
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pua.webp" className="story-float--intro-pua" delay={-1.8} />
             <div className="story-container">
                 <SectionHeading kicker="Con la bendición de Dios" light>
@@ -362,7 +361,6 @@ function Countdown({ config }) {
         <section className="story-section story-countdown" data-story-section>
             <div className="story-tower" data-drift aria-hidden="true"><i /><i /><i /></div>
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-rapunzel-full.webp" className="story-float--tower-rapunzel" delay={-2.9} />
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pascal.webp" className="story-float--pascal" delay={-.7} />
             <div className="story-container">
                 <SectionHeading kicker="La aventura comienza en" light>
                     {time.arrived ? 'El gran día' : 'Falta muy poco'}
@@ -389,8 +387,7 @@ function Countdown({ config }) {
 function Events({ config }) {
     return (
         <section className="story-section story-events" data-story-section>
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-paddle.webp" className="story-float--moana-paddle" delay={-1.5} />
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-rapunzel.webp" className="story-float--rapunzel" delay={-3.2} />
+            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-paddle.webp" className="story-float--events-moana" delay={-1.5} />
             <div className="story-container">
                 <SectionHeading kicker="Dónde y cuándo" light>Nuestros<br /><em>encuentros</em></SectionHeading>
                 <div className="story-event-grid">
@@ -419,7 +416,6 @@ function Itinerary({ config }) {
     return (
         <section className="story-section story-itinerary" data-story-section>
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-pascal.webp" className="story-float--itinerary-pascal" delay={-1.9} />
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-paddle.webp" className="story-float--itinerary-moana" delay={-3.3} />
             <div className="story-container">
                 <SectionHeading kicker="Paso a paso" light>Nuestro<br /><em>itinerario</em></SectionHeading>
                 <div className="story-itinerary__list">
@@ -447,8 +443,20 @@ function Itinerary({ config }) {
 
 function Gallery({ config }) {
     const [active, setActive] = useState(0)
+    const touchStartX = useRef(null)
     const showPrevious = () => setActive((current) => (current - 1 + config.gallery.length) % config.gallery.length)
     const showNext = () => setActive((current) => (current + 1) % config.gallery.length)
+    const handleTouchStart = (event) => {
+        touchStartX.current = event.touches[0]?.clientX ?? null
+    }
+    const handleTouchEnd = (event) => {
+        if (touchStartX.current === null) return
+        const distance = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current
+        touchStartX.current = null
+        if (Math.abs(distance) < 42) return
+        if (distance > 0) showPrevious()
+        else showNext()
+    }
 
     return (
         <section className="story-section story-gallery" data-story-section>
@@ -456,7 +464,13 @@ function Gallery({ config }) {
             <LanternTrail />
             <div className="story-container">
                 <SectionHeading kicker="Érase una vez" light>Nuestra galería</SectionHeading>
-                <div className="story-gallery__stage" data-card>
+                <div
+                    className="story-gallery__stage"
+                    data-card
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    aria-label="Galería deslizable de fotografías"
+                >
                     {config.gallery.map((photo, index) => (
                         <figure
                             key={photo.caption}
@@ -468,12 +482,6 @@ function Gallery({ config }) {
                             <figcaption>{photo.caption}</figcaption>
                         </figure>
                     ))}
-                    <button className="story-gallery__arrow story-gallery__arrow--previous" type="button" onClick={showPrevious} aria-label="Ver foto anterior">
-                        <ChevronLeft size={22} />
-                    </button>
-                    <button className="story-gallery__arrow story-gallery__arrow--next" type="button" onClick={showNext} aria-label="Ver foto siguiente">
-                        <ChevronRight size={22} />
-                    </button>
                 </div>
                 <p className="story-gallery__counter" aria-live="polite">{active + 1} / {config.gallery.length}</p>
                 <div className="story-gallery__dots" aria-label="Seleccionar imagen">
@@ -487,7 +495,7 @@ function Gallery({ config }) {
                         />
                     ))}
                 </div>
-                <p className="story-gallery__hint"><Camera size={14} /> Momentos para atesorar</p>
+                <p className="story-gallery__hint"><Camera size={14} /> Desliza para ver más momentos</p>
             </div>
         </section>
     )
@@ -497,7 +505,6 @@ function Gifts({ config }) {
     return (
         <section className="story-section story-gifts" data-story-section>
             <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-lanterns.webp" className="story-float--gifts-lanterns" delay={-2.6} />
-            <FloatingSticker src="/invitations/gretel-y-geraldine/img/decor-moana-friends.webp" className="story-float--moana-friends" delay={-1.2} />
             <div className="story-container">
                 <SectionHeading kicker="Tu presencia es nuestro regalo" light>Detalles con<br /><em>mucho cariño</em></SectionHeading>
                 <article className="story-gift-card" data-card>
@@ -598,8 +605,10 @@ export default function GretelGeraldineXV({ hideGallery = false }) {
             <Events config={STORY_CONFIG} />
             <Itinerary config={STORY_CONFIG} />
             {!hideGallery && <Gallery config={STORY_CONFIG} />}
-            <Gifts config={STORY_CONFIG} />
-            <Footer config={STORY_CONFIG} />
+            <div className="story-closing-scene">
+                <Gifts config={STORY_CONFIG} />
+                <Footer config={STORY_CONFIG} />
+            </div>
         </main>
     )
 }
