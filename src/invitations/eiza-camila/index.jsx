@@ -244,7 +244,7 @@ function Family() {
                 <article className="maia-family-card maia-family-card--reverse" data-reveal>
                     <span>Mis padrinos</span>
                     <p>Y la compañía de</p>
-                    <h3>Nley Gutiérrez Muñoz</h3>
+                    <h3>Nely Gutiérrez Muñoz</h3>
                     <b>&</b>
                     <h3>Juan Everardo Gutiérrez Muñoz</h3>
                     <Flower2 className="maia-family-card__flower" size={32} strokeWidth={1.15} />
