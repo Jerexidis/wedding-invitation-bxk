@@ -136,4 +136,9 @@ export const ogData = {
         description: 'Acompáñanos a celebrar los XV años de Gretel y Geraldine el 5 de diciembre de 2026.',
         image: '/invitations/gretel-y-geraldine/img/og-princesses.jpg',
     },
+    'eiza-camila': {
+        title: 'Mis XV | Eiza Camila',
+        description: 'Acompáñame a celebrar mis XV años el sábado 22 de agosto de 2026.',
+        image: '/invitations/eiza-camila/img/og-preview.jpg',
+    },
 }

@@ -274,6 +274,16 @@ const invitations = [
         eventDate: '2026-12-05T13:00:00-06:00',
     },
 
+    {
+        slug: 'eiza-camila',
+        title: 'Mis XV | Eiza Camila',
+        component: lazy(() => import('./eiza-camila/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'mixed',
+        eventDate: '2026-09-19T18:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

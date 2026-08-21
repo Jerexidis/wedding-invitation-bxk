@@ -32,6 +32,7 @@ the minimum invitation-specific files needed for a task.
 | `xv-anos-kimberly-judith` | standalone-custom | xv | none | 4 files | 8.81 MB |
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 5.46 MB |
 | `gretel-y-geraldine` | standalone-custom | xv | none | 2 files | 7.35 MB |
+| `eiza-camila` | standalone-custom | xv | mixed | 4 files | 6.03 MB |
 
 ## Targeted context
 
@@ -217,6 +218,14 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `standalone-custom`
 - Flags: gallery, audio, calendar
 - Source: `src/invitations/gretel-y-geraldine/index.jsx`, `src/invitations/gretel-y-geraldine/rapunzel-template.css`
+
+### eiza-camila
+
+- Entry: `src/invitations/eiza-camila/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/eiza-camila/DESIGN.md`
+- Source: `src/invitations/eiza-camila/DESIGN.md`, `src/invitations/eiza-camila/index.jsx`, `src/invitations/eiza-camila/invitation.css`, `src/invitations/eiza-camila/invitation.manifest.json`
 
 ## Refresh
 

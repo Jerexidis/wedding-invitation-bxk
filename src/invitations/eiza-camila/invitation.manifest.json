@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "slug": "eiza-camila",
+  "title": "Mis XV | Eiza Camila",
+  "eventType": "xv",
+  "eventDate": "2026-09-19T18:00:00-06:00",
+  "architecture": "standalone-custom",
+  "status": "published",
+  "registered": true,
+  "functionalReference": "maia-sofia-duran-avila",
+  "entry": "index.jsx",
+  "styles": [
+    "invitation.css"
+  ],
+  "services": {
+    "audio": true,
+    "calendar": true,
+    "gallery": false,
+    "rsvp": "mixed",
+    "seo": true
+  }
+}
