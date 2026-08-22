@@ -201,6 +201,9 @@ account through OAuth. The Drive folder remains private: image display and
 individual downloads are proxied by a route that verifies every requested file
 belongs to that folder. Server-only variables are documented in `.env.example`;
 they must never use the `VITE_` prefix.
+`ALBUM_ALLOWED_ORIGINS` must include the exact public front-end origin
+(`https://eventos.invita-ya.com` in production); multiple origins are separated
+with commas.
 
 The dashboard route fetches
 `public/invitations/<slug>/rsvp-access.json`, validates the supplied key in the

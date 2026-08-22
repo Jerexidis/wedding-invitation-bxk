@@ -27,14 +27,24 @@ function requiredEnvironment() {
 }
 
 export function assertAllowedOrigin(request) {
+    const normalizeOrigin = (value) => {
+        if (!value) return ''
+
+        try {
+            return new URL(value).origin.toLowerCase()
+        } catch {
+            return value.trim().replace(/\/+$/, '').toLowerCase()
+        }
+    }
+
     const configuredOrigins = (process.env.ALBUM_ALLOWED_ORIGINS || '')
         .split(',')
-        .map((origin) => origin.trim())
+        .map(normalizeOrigin)
         .filter(Boolean)
 
     if (!configuredOrigins.length) return
 
-    const origin = request.headers.origin
+    const origin = normalizeOrigin(request.headers.origin)
     if (origin && !configuredOrigins.includes(origin)) {
         const error = new Error('Este origen no tiene permiso para subir fotografías.')
         error.code = 'ORIGIN_NOT_ALLOWED'
