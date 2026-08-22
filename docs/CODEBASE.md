@@ -33,8 +33,11 @@ index.html
      -> src/App.jsx
         /                       -> Showcase
         /album                  -> public shared event photo album
+        /privacidad             -> public privacy policy and Google API disclosures
+        /terminos               -> public terms of service
         /i/:slug                -> registry lookup -> lazy invitation component
-        /i/boda-lorena-y-arturo/album -> themed guest photo album
+        /i/boda-lorena-y-arturo/album -> Supabase-themed guest photo album
+        /i/gretel-y-geraldine/album    -> private Google Drive-backed guest album
         /i/:slug/rsvp           -> protected RSVP dashboard
         /admin                  -> local development only
         anything else           -> 404
@@ -190,6 +193,14 @@ nested event folder; Lorena and Arturo use
 JPEG and resized to a maximum 2400px edge in the browser before upload. Storage
 RLS allows anonymous read and insert for that bucket/folder only; guests cannot
 update or delete objects.
+
+Gretel and Geraldine use the same browser-side validation and optimization but
+send the prepared JPEG to `/api/albums/gretel-y-geraldine`. Private Vercel Node
+functions upload to and list a folder owned by the administrator's Google Drive
+account through OAuth. The Drive folder remains private: image display and
+individual downloads are proxied by a route that verifies every requested file
+belongs to that folder. Server-only variables are documented in `.env.example`;
+they must never use the `VITE_` prefix.
 
 The dashboard route fetches
 `public/invitations/<slug>/rsvp-access.json`, validates the supplied key in the

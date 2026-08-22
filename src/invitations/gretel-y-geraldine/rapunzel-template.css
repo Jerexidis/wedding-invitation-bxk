@@ -1154,6 +1154,11 @@
     margin: 1rem 0 0;
 }
 
+.story-gallery__album-link {
+    max-width: 22rem;
+    text-decoration: none;
+}
+
 .story-closing-scene {
     background:
         linear-gradient(180deg, rgba(29, 8, 50, .82), rgba(3, 76, 90, .74) 68%, rgba(3, 48, 69, .9)),

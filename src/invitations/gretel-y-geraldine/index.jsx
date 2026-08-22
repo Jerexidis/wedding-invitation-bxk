@@ -496,6 +496,9 @@ function Gallery({ config }) {
                     ))}
                 </div>
                 <p className="story-gallery__hint"><Camera size={14} /> Desliza para ver más momentos</p>
+                <a className="story-button story-button--gold story-gallery__album-link" href="/i/gretel-y-geraldine/album">
+                    <Camera size={17} /> Compartir fotos de la celebración
+                </a>
             </div>
         </section>
     )

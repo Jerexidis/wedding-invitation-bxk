@@ -75,3 +75,46 @@ test('representative architectures render on desktop', async ({ page }) => {
         await inspectInvitation(page, slug)
     }
 })
+
+test('Gretel and Geraldine album is linked and renders on mobile', async ({ page }) => {
+    await page.route('**/api/albums/gretel-y-geraldine', async (route) => {
+        await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({ photos: [] }),
+        })
+    })
+
+    await page.goto('/i/gretel-y-geraldine')
+    const albumLink = page.getByRole('link', { name: 'Compartir fotos de la celebración' })
+    await expect(albumLink).toHaveAttribute('href', '/i/gretel-y-geraldine/album')
+
+    await page.goto('/i/gretel-y-geraldine/album')
+    await expect(page.getByRole('heading', { name: 'El reino de nuestros recuerdos' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Compartir mis fotos' })).toBeEnabled()
+    await expect(page.getByText('Tu recuerdo puede encender el primer farol')).toBeVisible()
+
+    const hasHorizontalOverflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+    )
+    expect(hasHorizontalOverflow).toBe(false)
+})
+
+test('public legal routes render and are linked from the homepage', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByRole('link', { name: 'Privacidad' })).toHaveAttribute('href', '/privacidad')
+    await expect(page.getByRole('link', { name: 'Términos' })).toHaveAttribute('href', '/terminos')
+
+    for (const [path, heading] of [
+        ['/privacidad', 'Política de privacidad'],
+        ['/terminos', 'Términos del servicio'],
+    ]) {
+        await page.goto(path)
+        await expect(page.getByRole('heading', { name: heading, level: 1 })).toBeVisible()
+        await expect(page.getByRole('link', { name: 'Volver a Invita-Ya' })).toHaveAttribute('href', '/')
+        const hasHorizontalOverflow = await page.evaluate(
+            () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+        )
+        expect(hasHorizontalOverflow).toBe(false)
+    }
+})

@@ -6,6 +6,9 @@ const RsvpDashboard = lazy(() => import('./components/RsvpDashboard'))
 const Showcase = lazy(() => import('./components/Showcase'))
 const SharedAlbum = lazy(() => import('./album/SharedAlbum'))
 const LorenaArturoAlbum = lazy(() => import('./invitations/boda-lorena-y-arturo/Album'))
+const GretelGeraldineAlbum = lazy(() => import('./invitations/gretel-y-geraldine/Album'))
+const PrivacyPolicy = lazy(() => import('./legal/PrivacyPolicy'))
+const TermsOfService = lazy(() => import('./legal/TermsOfService'))
 
 function ScrollToTop() {
     const { pathname, search } = useLocation()
@@ -114,6 +117,9 @@ function App() {
                     <Route path="/" element={<Showcase />} />
                     <Route path="/album" element={<SharedAlbum />} />
                     <Route path="/i/boda-lorena-y-arturo/album" element={<LorenaArturoAlbum />} />
+                    <Route path="/i/gretel-y-geraldine/album" element={<GretelGeraldineAlbum />} />
+                    <Route path="/privacidad" element={<PrivacyPolicy />} />
+                    <Route path="/terminos" element={<TermsOfService />} />
                     <Route path="/i/:slug" element={<InvitationBySlug />} />
                     <Route path="/i/:slug/rsvp" element={<RsvpBySlug />} />
                     {AdminPanel && <Route path="/admin" element={<AdminPanel />} />}

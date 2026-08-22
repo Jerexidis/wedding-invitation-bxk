@@ -247,8 +247,13 @@ export default function Showcase() {
                 )}
             </main>
 
-            <footer className="border-t border-[#EFE8E2] px-5 py-8 text-center text-xs text-[#9A8F8A]">
-                Invita-Ya · Invitaciones digitales interactivas
+            <footer className="flex flex-col items-center justify-center gap-3 border-t border-[#EFE8E2] px-5 py-8 text-center text-xs text-[#9A8F8A] sm:flex-row sm:gap-5">
+                <span>Invita-Ya · Invitaciones digitales interactivas</span>
+                <span className="hidden text-[#C9A38B] sm:inline">•</span>
+                <nav className="flex items-center gap-4" aria-label="Documentos legales">
+                    <Link className="underline decoration-[#D8C9C1] underline-offset-4 transition hover:text-[#D96A86]" to="/privacidad">Privacidad</Link>
+                    <Link className="underline decoration-[#D8C9C1] underline-offset-4 transition hover:text-[#D96A86]" to="/terminos">Términos</Link>
+                </nav>
             </footer>
         </div>
     )

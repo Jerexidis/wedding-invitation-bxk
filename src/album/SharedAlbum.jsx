@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
     Camera,
     CheckCircle2,
+    Download,
     Heart,
     Images,
     LoaderCircle,
@@ -18,21 +19,41 @@ import {
 } from '../utils/albumStore'
 import './shared-album.css'
 
-function PhotoCard({ photo, onOpen, onError }) {
+const defaultAlbumStore = {
+    albumLimits,
+    isAlbumConfigured,
+    listAlbumPhotos,
+    uploadAlbumPhoto,
+    validateAlbumFiles,
+}
+
+function PhotoCard({ photo, onOpen, onError, downloadsEnabled }) {
     return (
-        <button
-            className="album-photo"
-            type="button"
-            onClick={() => onOpen(photo)}
-            aria-label="Abrir fotografía"
-        >
-            <img
-                src={photo.url}
-                alt="Recuerdo compartido por un invitado"
-                loading="lazy"
-                onError={() => onError(photo.id)}
-            />
-        </button>
+        <div className="album-photo-wrap">
+            <button
+                className="album-photo"
+                type="button"
+                onClick={() => onOpen(photo)}
+                aria-label="Abrir fotografía"
+            >
+                <img
+                    src={photo.url}
+                    alt="Recuerdo compartido por un invitado"
+                    loading="lazy"
+                    onError={() => onError(photo.id)}
+                />
+            </button>
+            {downloadsEnabled && photo.downloadUrl && (
+                <a
+                    className="album-photo-download"
+                    href={photo.downloadUrl}
+                    aria-label="Descargar fotografía"
+                    title="Descargar fotografía"
+                >
+                    <Download size={17} />
+                </a>
+            )}
+        </div>
     )
 }
 
@@ -51,6 +72,9 @@ export default function SharedAlbum({
     heroImageAlt = '',
     invitationHref = null,
     invitationLabel = 'Volver a la invitación',
+    albumStore = defaultAlbumStore,
+    downloadsEnabled = false,
+    configurationErrorText = 'Falta configurar la conexión con Supabase.',
 }) {
     const inputRef = useRef(null)
     const [photos, setPhotos] = useState([])
@@ -66,14 +90,14 @@ export default function SharedAlbum({
     const loadPhotos = useCallback(async (quiet = false) => {
         if (!quiet) setRefreshing(true)
         try {
-            setPhotos(await listAlbumPhotos(eventFolder))
+            setPhotos(await albumStore.listAlbumPhotos(eventFolder))
         } catch (error) {
             setMessage({ type: 'error', text: error.message })
         } finally {
             setLoading(false)
             setRefreshing(false)
         }
-    }, [eventFolder])
+    }, [albumStore, eventFolder])
 
     const handlePhotoError = useCallback((photoId) => {
         setPhotos((currentPhotos) => currentPhotos.filter((photo) => photo.id !== photoId))
@@ -112,7 +136,7 @@ export default function SharedAlbum({
     function handleSelection(event) {
         setMessage(null)
         try {
-            setSelectedFiles(validateAlbumFiles(event.target.files))
+            setSelectedFiles(albumStore.validateAlbumFiles(event.target.files))
         } catch (error) {
             setSelectedFiles([])
             setMessage({ type: 'error', text: error.message })
@@ -133,7 +157,7 @@ export default function SharedAlbum({
 
         try {
             for (let index = 0; index < selectedFiles.length; index += 1) {
-                await uploadAlbumPhoto(selectedFiles[index], eventFolder)
+                await albumStore.uploadAlbumPhoto(selectedFiles[index], eventFolder)
                 setUploadedCount(index + 1)
             }
             const total = selectedFiles.length
@@ -152,7 +176,8 @@ export default function SharedAlbum({
         }
     }
 
-    const configured = isAlbumConfigured()
+    const configured = albumStore.isAlbumConfigured()
+    const limits = albumStore.albumLimits
 
     return (
         <main className={`shared-album ${className}`.trim()}>
@@ -175,7 +200,7 @@ export default function SharedAlbum({
                         <Camera size={20} />
                         Compartir mis fotos
                     </button>
-                    <span className="album-helper">Puedes elegir hasta {albumLimits.maxFiles} fotos por subida</span>
+                    <span className="album-helper">Puedes elegir hasta {limits.maxFiles} fotos por subida</span>
                 </div>
             </section>
 
@@ -199,7 +224,7 @@ export default function SharedAlbum({
                         >
                             <span className="album-dropzone__icon"><Upload size={25} /></span>
                             <strong>Selecciona fotos de tu galería</strong>
-                            <span>JPEG, PNG, WebP o HEIC · máximo {albumLimits.maxSourceMegabytes} MB</span>
+                            <span>JPEG, PNG, WebP o HEIC · máximo {limits.maxSourceMegabytes} MB</span>
                         </button>
                     ) : (
                         <div className="album-selection">
@@ -240,7 +265,7 @@ export default function SharedAlbum({
 
                     {!configured && (
                         <div className="album-notice album-notice--error">
-                            Falta configurar la conexión con Supabase.
+                            {configurationErrorText}
                         </div>
                     )}
                     {message && (
@@ -280,6 +305,7 @@ export default function SharedAlbum({
                                 photo={photo}
                                 onOpen={setActivePhoto}
                                 onError={handlePhotoError}
+                                downloadsEnabled={downloadsEnabled}
                             />
                         ))}
                     </div>
@@ -302,9 +328,16 @@ export default function SharedAlbum({
 
             {activePhoto && (
                 <div className="album-lightbox" role="dialog" aria-modal="true" aria-label="Fotografía ampliada" onClick={() => setActivePhoto(null)}>
-                    <button type="button" onClick={() => setActivePhoto(null)} aria-label="Cerrar fotografía">
-                        <X size={24} />
-                    </button>
+                    <div className="album-lightbox__actions">
+                        {downloadsEnabled && activePhoto.downloadUrl && (
+                            <a href={activePhoto.downloadUrl} aria-label="Descargar fotografía">
+                                <Download size={22} />
+                            </a>
+                        )}
+                        <button type="button" onClick={() => setActivePhoto(null)} aria-label="Cerrar fotografía">
+                            <X size={24} />
+                        </button>
+                    </div>
                     <img src={activePhoto.url} alt="Recuerdo compartido ampliado" onClick={(event) => event.stopPropagation()} />
                 </div>
             )}

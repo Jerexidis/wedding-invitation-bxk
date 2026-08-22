@@ -62,7 +62,7 @@ function loadImage(file) {
     })
 }
 
-async function optimizeImage(file) {
+export async function optimizeAlbumPhoto(file) {
     const image = await loadImage(file)
     const scale = Math.min(1, MAX_IMAGE_EDGE / Math.max(image.naturalWidth, image.naturalHeight))
     const width = Math.max(1, Math.round(image.naturalWidth * scale))
@@ -98,7 +98,7 @@ export async function uploadAlbumPhoto(file, eventFolder = DEFAULT_EVENT_FOLDER)
         throw new Error('El álbum todavía no tiene conexión con Supabase.')
     }
 
-    const optimized = await optimizeImage(file)
+    const optimized = await optimizeAlbumPhoto(file)
     const uniqueId = typeof crypto.randomUUID === 'function'
         ? crypto.randomUUID()
         : `${Date.now()}-${Math.random().toString(16).slice(2)}`
