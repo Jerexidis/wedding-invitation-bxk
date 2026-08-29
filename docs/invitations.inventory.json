@@ -800,6 +800,36 @@
         "bytes": 6356459,
         "megabytes": 6.06
       }
+    },
+    {
+      "slug": "ivanna-flores",
+      "title": "Mis XV | Ivanna Flores",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "xv",
+      "eventDate": "2026-09-26T19:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": true,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/ivanna-flores/DESIGN.md",
+        "src/invitations/ivanna-flores/index.jsx",
+        "src/invitations/ivanna-flores/invitation.css",
+        "src/invitations/ivanna-flores/invitation.manifest.json"
+      ],
+      "designBrief": "src/invitations/ivanna-flores/DESIGN.md",
+      "assets": {
+        "files": 5,
+        "images": 3,
+        "audio": 0,
+        "bytes": 146655,
+        "megabytes": 0.14
+      }
     }
   ]
 }

@@ -284,6 +284,16 @@ const invitations = [
         eventDate: '2026-09-19T18:00:00-06:00',
     },
 
+    {
+        slug: 'ivanna-flores',
+        title: 'Mis XV | Ivanna Flores',
+        component: lazy(() => import('./ivanna-flores/index.jsx')),
+        enabled: true,
+        eventType: 'xv',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-09-26T19:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas
