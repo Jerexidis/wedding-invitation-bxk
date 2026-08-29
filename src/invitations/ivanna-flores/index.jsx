@@ -181,12 +181,9 @@ function Countdown() {
     )
 }
 
-function VenueCard({ icon: Icon, label, place, detail, time, maps, image, imageAlt, offset = false, preserveImage = false }) {
+function VenueCard({ icon: Icon, label, place, detail, time, maps, offset = false }) {
     return (
-        <article className={`ivanna-venue${offset ? ' ivanna-venue--offset' : ''}${preserveImage ? ' ivanna-venue--preserve-image' : ''}`}>
-            <div className="ivanna-venue__media">
-                <img src={image} alt={imageAlt} loading="lazy" />
-            </div>
+        <article className={`ivanna-venue${offset ? ' ivanna-venue--offset' : ''}`}>
             <div className="ivanna-venue__content">
                 <div className="ivanna-venue__icon" aria-hidden="true">
                     <Icon size={31} strokeWidth={1.15} />
@@ -227,8 +224,6 @@ function Celebration() {
                         detail={EVENT.ceremony.detail}
                         time={EVENT.ceremony.time}
                         maps={EVENT.ceremony.maps}
-                        image="/invitations/ivanna-flores/img/iglesia-san-peregrino.webp"
-                        imageAlt="Fachada de la Iglesia de San Peregrino"
                     />
                     <VenueCard
                         icon={Wine}
@@ -236,10 +231,7 @@ function Celebration() {
                         place={EVENT.reception.place}
                         detail={EVENT.reception.detail}
                         maps={EVENT.reception.maps}
-                        image="/invitations/ivanna-flores/img/hacienda-los-pocitos.webp"
-                        imageAlt="Patio de la Hacienda de los Pocitos"
                         offset
-                        preserveImage
                     />
                 </div>
             </div>

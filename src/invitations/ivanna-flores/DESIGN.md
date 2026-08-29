@@ -20,7 +20,7 @@ completo la fotografía.
 - Palette: vino profundo, vino medio y marfil apagado.
 - Typography: Italiana, Cormorant Garamond y DM Sans, tomadas de la familia tipográfica de la plantilla de los faroles.
 - Composition: mobile-first, portada tipo tarjeta impresa, bloques editoriales asimétricos y marcos rectos.
-- References: papelería de evento en vino y marfil. Las únicas fotos son documentales de los lugares; no usar retratos, dorado ni motivos de cuento.
+- References: papelería de evento en vino y marfil. No usar fotografías, dorado ni motivos de cuento.
 
 ## Structure
 
@@ -42,5 +42,5 @@ marco de fondo del hero de forma mínima. Todo el movimiento se desactiva con
 - Ceremonia: Iglesia de San Peregrino (La Herradura), 7:00 pm.
 - Recepción: Hacienda de los Pocitos, sin inventar una hora no proporcionada.
 - Vestimenta formal. Evitar blanco y beige.
-- No incluir retratos ni música. Mantener las fotos de los dos lugares.
+- No incluir fotografías ni música.
 - Confirmación por WhatsApp al número +52 449 544 9980.
