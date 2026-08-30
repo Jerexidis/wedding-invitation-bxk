@@ -23,7 +23,11 @@ const EVENT_DATE = '2027-01-08T17:00:00-06:00'
 const WHATSAPP = '524494371541'
 const AUDIO = `${BASE}/audio/cancion-de-boda.mp3`
 
-const photos = Array.from({ length: 6 }, (_, index) => `${BASE}/img/photo-${index + 1}.webp`)
+const photos = [
+    ...Array.from({ length: 6 }, (_, index) => `${BASE}/img/photo-${index + 1}.webp`),
+    `${BASE}/img/gallery-moto-retrato.jpeg`,
+    `${BASE}/img/gallery-moto-ramo.jpeg`,
+]
 
 const events = [
     {
@@ -113,7 +117,7 @@ function MusicControl({ active, audioRef }) {
 function Opening({ onOpen }) {
     return (
         <div className="ays-opening">
-            <img src={photos[5]} alt="Pamela y Alfredo al atardecer" />
+            <img src={`${BASE}/img/opening-moto.jpeg`} alt="Pamela y Alfredo juntos en una motocicleta" />
             <div className="ays-opening__veil" />
             <div className="ays-opening__content">
                 <p>Nos casamos</p>
@@ -156,7 +160,7 @@ function Quote() {
 function SaveTheDate() {
     return (
         <section className="ays-save-date">
-            <div className="ays-save-date__photo" data-reveal><img src={photos[3]} alt="Propuesta de matrimonio de Pamela y Alfredo" loading="lazy" /></div>
+            <div className="ays-save-date__photo" data-reveal><img src={`${BASE}/img/save-the-date-moto.jpeg`} alt="Pamela y Alfredo sentados junto a su motocicleta" loading="lazy" /></div>
             <div className="ays-save-date__card" data-reveal>
                 <p>Save the date</p><strong>08 · 01 · 27</strong><span>Viernes</span>
                 <CalendarDays size={28} strokeWidth={1.2} />
@@ -218,7 +222,7 @@ function Events() {
 function DressCode() {
     const colors = [
         ['Blanco', '#f8f7f0'], ['Beige', '#d8c5aa'], ['Nude', '#e4c9b5'], ['Champagne', '#ead9b9'],
-        ['Gris claro', '#d8d9da'], ['Rosa claro', '#edc5c8'], ['Rojo', '#b5443e'],
+        ['Gris claro', '#d8d9da'], ['Rosa claro', '#edc5c8'], ['Rojo', '#b5443e'], ['Azul marino', '#202b3d'],
     ]
     return (
         <section className="ays-dress">
@@ -377,6 +381,7 @@ export default function PamelaYAlfredo({ hideGallery = false }) {
                     <footer className="ays-footer">
                         <Heart size={22} fill="currentColor" /><h2>Pamela <i>&</i> Alfredo</h2>
                         <p>Gracias por ser parte de nuestra historia.</p><time>08 · 01 · 2027</time>
+                        <small className="ays-footer__credit">Hecho con Invita Ya</small>
                     </footer>
                 </main>
             )}
