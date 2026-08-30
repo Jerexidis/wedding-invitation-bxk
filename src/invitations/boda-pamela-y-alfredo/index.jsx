@@ -150,7 +150,7 @@ function Quote() {
     return (
         <section className="ays-quote" id="bienvenida">
             <Heart size={24} strokeWidth={1.1} data-reveal />
-            <h2 data-reveal>Pamela Gonzalez <i>&</i> Alfredo Lara</h2>
+            <h2 data-reveal>Pamela González <i>&</i> Alfredo Lara</h2>
             <blockquote data-reveal>“Con mucha ilusión queremos compartir con ustedes uno de los días más importantes de nuestras vidas.”</blockquote>
             <p data-reveal>Gracias por acompañarnos a celebrar<br /><strong>el inicio de esta nueva etapa.</strong></p>
         </section>
