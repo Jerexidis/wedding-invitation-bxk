@@ -96,15 +96,6 @@
     position: absolute;
 }
 
-.ivanna-card__intro {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(.78rem, 2.7vw, .95rem);
-    font-style: italic;
-    letter-spacing: .05em;
-    line-height: 1.45;
-    margin: 0;
-}
-
 .ivanna-card__name span {
     display: block;
     font-size: .62rem;
@@ -188,15 +179,6 @@
     padding: clamp(6rem, 13vw, 10rem) 0;
 }
 
-.ivanna-family__layout {
-    align-items: center;
-    display: grid;
-    gap: clamp(4rem, 9vw, 8rem);
-    grid-template-columns: 1.05fr .95fr;
-}
-
-.ivanna-family h2,
-.ivanna-section-title h2,
 .ivanna-countdown h2,
 .ivanna-dress h2,
 .ivanna-gifts h2 {
@@ -208,19 +190,9 @@
     margin: 0;
 }
 
-.ivanna-family__copy p,
-.ivanna-section-title p {
-    color: var(--ivanna-ivory-muted);
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(1.15rem, 2.1vw, 1.42rem);
-    line-height: 1.6;
-    margin: 1.5rem 0 0;
-    max-width: 31rem;
-}
-
 .ivanna-family__names {
-    border-left: 1px solid var(--ivanna-line);
-    padding: 1.5rem 0 1.5rem clamp(1.8rem, 5vw, 4rem);
+    max-width: 48rem;
+    padding: 1.5rem 0;
 }
 
 .ivanna-family__names p {
@@ -330,10 +302,6 @@
         radial-gradient(circle at 100% 0, rgba(110, 39, 62, .3), transparent 30rem),
         var(--ivanna-wine-deep);
     padding: clamp(6rem, 13vw, 10rem) 0;
-}
-
-.ivanna-section-title {
-    margin-bottom: clamp(3.5rem, 8vw, 6rem);
 }
 
 .ivanna-venues {
@@ -646,16 +614,9 @@
         min-height: calc(100dvh - 3.2rem);
     }
 
-    .ivanna-family__layout,
     .ivanna-venues,
     .ivanna-dress {
         grid-template-columns: 1fr;
-    }
-
-    .ivanna-family__names {
-        border-left: 0;
-        border-top: 1px solid var(--ivanna-line);
-        padding: 2.2rem 0 0;
     }
 
     .ivanna-countdown__grid {

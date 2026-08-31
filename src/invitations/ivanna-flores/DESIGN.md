@@ -43,5 +43,5 @@ marco de fondo del hero de forma mínima. Todo el movimiento se desactiva con
 - Recepción: Hacienda de los Pocitos, sin inventar una hora no proporcionada.
 - Vestimenta formal. Evitar blanco y beige.
 - No incluir fotografías ni música.
-- El regalo se indicará como lluvia de sobres.
+- El regalo se indicará como regalo en sobre.
 - No incluir confirmación de asistencia.

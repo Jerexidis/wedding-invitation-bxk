@@ -98,11 +98,6 @@ function Hero() {
             <div className="ivanna-hero__halo" aria-hidden="true" />
             <div className="ivanna-card" data-ivanna-hero-card>
                 <div className="ivanna-card__inner">
-                    <p className="ivanna-card__intro">
-                        La fecha está lista<br />
-                        acompáñame a celebrar
-                    </p>
-
                     <div className="ivanna-card__name">
                         <span>mis quince años</span>
                         <h1 id="ivanna-title">Ivanna</h1>
@@ -124,15 +119,8 @@ function Hero() {
 
 function Family() {
     return (
-        <section className="ivanna-family" aria-labelledby="ivanna-family-title">
-            <div className="ivanna-shell ivanna-family__layout">
-                <div className="ivanna-family__copy" data-ivanna-reveal>
-                    <h2 id="ivanna-family-title">Es momento de celebrar</h2>
-                    <p>
-                        Acompáñame a disfrutar una noche de música, baile y mucha diversión.
-                    </p>
-                </div>
-
+        <section className="ivanna-family" aria-label="Familia de Ivanna Flores">
+            <div className="ivanna-shell">
                 <div className="ivanna-family__names" data-ivanna-reveal>
                     <p>Con el amor y la bendición de mis papás</p>
                     <strong>{EVENT.parents[0]}</strong>
@@ -204,13 +192,8 @@ function VenueCard({ icon: Icon, label, place, detail, time, maps, offset = fals
 
 function Celebration() {
     return (
-        <section className="ivanna-celebration" aria-labelledby="ivanna-celebration-title">
+        <section className="ivanna-celebration" aria-label="Ceremonia y recepción">
             <div className="ivanna-shell">
-                <div className="ivanna-section-title" data-ivanna-reveal>
-                    <h2 id="ivanna-celebration-title">Dónde celebraremos</h2>
-                    <p>Te esperamos para compartir juntos cada momento de esta noche.</p>
-                </div>
-
                 <div className="ivanna-venues" data-ivanna-venues>
                     <VenueCard
                         icon={Landmark}
@@ -265,9 +248,9 @@ function Gifts() {
                 <div className="ivanna-gifts__flap" aria-hidden="true" />
                 <div className="ivanna-gifts__content">
                     <p>Un detalle especial</p>
-                    <h2 id="ivanna-gifts-title">Lluvia<br />de sobres</h2>
+                    <h2 id="ivanna-gifts-title">Regalo<br />en sobre</h2>
                     <span>
-                        Si deseas obsequiarme un detalle, tendremos lluvia de sobres el día del evento.
+                        Si deseas obsequiarme un detalle, puedes hacerlo mediante un sobre con dinero.
                     </span>
                 </div>
             </div>
@@ -315,7 +298,7 @@ export default function IvannaFloresInvitation({ portfolioMode = false }) {
                 .fromTo('[data-ivanna-hero-card]',
                     { autoAlpha: 0, y: 26 },
                     { autoAlpha: 1, y: 0, duration: 1.05 })
-                .from('.ivanna-card__intro, .ivanna-card__name > *, .ivanna-card .ivanna-ornament, .ivanna-card time', {
+                .from('.ivanna-card__name > *, .ivanna-card .ivanna-ornament, .ivanna-card time', {
                     autoAlpha: 0,
                     duration: .7,
                     stagger: .08,
