@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 const EVENT = {
     name: 'Ivanna Flores',
     date: '2026-09-26T19:00:00-06:00',
-    parents: ['César Iván Flores Trigos', 'Luisa Elvira Tristan Damia'],
+    parents: ['César Iván Flores Trigos', 'Luisa Elvira Tristán Damián'],
     ceremony: {
         place: 'Iglesia de San Peregrino',
         detail: 'La Herradura',
@@ -247,10 +247,9 @@ function Gifts() {
             <div className="ivanna-gifts__envelope" data-ivanna-reveal>
                 <div className="ivanna-gifts__flap" aria-hidden="true" />
                 <div className="ivanna-gifts__content">
-                    <p>Un detalle especial</p>
                     <h2 id="ivanna-gifts-title">Regalo<br />en sobre</h2>
                     <span>
-                        Si deseas obsequiarme un detalle, puedes hacerlo mediante un sobre con dinero.
+                        Si deseas obsequiarme un detalle, puedes hacerlo mediante un sobre.
                     </span>
                 </div>
             </div>

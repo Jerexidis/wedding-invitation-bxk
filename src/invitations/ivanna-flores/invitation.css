@@ -619,15 +619,21 @@
 
     .ivanna-card__name {
         grid-row: 2;
+        justify-self: center;
+        text-align: center;
+        transform: translateY(-6dvh);
+        width: 100%;
     }
 
     .ivanna-card .ivanna-ornament {
         align-self: center;
         grid-row: 3;
+        justify-self: center;
     }
 
     .ivanna-card time {
         grid-row: 4;
+        justify-self: center;
     }
 
     .ivanna-venues,
