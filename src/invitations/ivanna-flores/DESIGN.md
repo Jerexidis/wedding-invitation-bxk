@@ -24,8 +24,8 @@ completo la fotografía.
 
 ## Structure
 
-- Section order: portada, familia, cuenta regresiva, ceremonia y recepción, vestimenta y cierre.
-- Shared services: calendario de Google, enlaces de Google Maps y confirmación por WhatsApp.
+- Section order: portada, familia, cuenta regresiva, ceremonia y recepción, vestimenta y regalo.
+- Shared services: calendario de Google y enlaces de Google Maps.
 - Custom sections: todas son autocontenidas en `index.jsx`.
 
 ## Motion
@@ -38,9 +38,10 @@ marco de fondo del hero de forma mínima. Todo el movimiento se desactiva con
 
 - Nombre: Ivanna Flores.
 - Fecha: 26 de septiembre de 2026.
-- Papás: César Iván Flores Trigos y Luisa Tristán.
+- Papás: César Iván Flores Trigos y Luisa Elvira Tristan Damia.
 - Ceremonia: Iglesia de San Peregrino (La Herradura), 7:00 pm.
 - Recepción: Hacienda de los Pocitos, sin inventar una hora no proporcionada.
 - Vestimenta formal. Evitar blanco y beige.
 - No incluir fotografías ni música.
-- Confirmación por WhatsApp al número +52 449 544 9980.
+- El regalo se indicará como lluvia de sobres.
+- No incluir confirmación de asistencia.

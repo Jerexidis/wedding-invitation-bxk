@@ -15,7 +15,7 @@
     "audio": false,
     "calendar": true,
     "gallery": false,
-    "rsvp": "whatsapp",
+    "rsvp": "none",
     "seo": true
   },
   "eventDate": "2026-09-26T19:00:00-06:00",

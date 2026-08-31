@@ -290,7 +290,7 @@ const invitations = [
         component: lazy(() => import('./ivanna-flores/index.jsx')),
         enabled: true,
         eventType: 'xv',
-        rsvpMode: 'whatsapp',
+        rsvpMode: 'none',
         eventDate: '2026-09-26T19:00:00-06:00',
     },
 

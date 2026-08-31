@@ -4,11 +4,9 @@ import {
     CalendarPlus,
     Clock3,
     Gem,
-    Heart,
     Landmark,
     MapPin,
-    MessageCircle,
-    Wine,
+    PartyPopper,
 } from 'lucide-react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -19,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 const EVENT = {
     name: 'Ivanna Flores',
     date: '2026-09-26T19:00:00-06:00',
-    parents: ['César Iván Flores Trigos', 'Luisa Tristán'],
+    parents: ['César Iván Flores Trigos', 'Luisa Elvira Tristan Damia'],
     ceremony: {
         place: 'Iglesia de San Peregrino',
         detail: 'La Herradura',
@@ -31,7 +29,6 @@ const EVENT = {
         detail: 'Después de la ceremonia',
         maps: 'https://www.google.com/maps/search/?api=1&query=Hacienda+de+los+Pocitos',
     },
-    whatsapp: '524495449980',
 }
 
 const pad = (value) => String(value).padStart(2, '0')
@@ -102,8 +99,8 @@ function Hero() {
             <div className="ivanna-card" data-ivanna-hero-card>
                 <div className="ivanna-card__inner">
                     <p className="ivanna-card__intro">
-                        Con alegría en nuestros corazones<br />
-                        te invitamos a celebrar
+                        La fecha está lista<br />
+                        acompáñame a celebrar
                     </p>
 
                     <div className="ivanna-card__name">
@@ -130,11 +127,9 @@ function Family() {
         <section className="ivanna-family" aria-labelledby="ivanna-family-title">
             <div className="ivanna-shell ivanna-family__layout">
                 <div className="ivanna-family__copy" data-ivanna-reveal>
-                    <Heart size={28} strokeWidth={1.2} aria-hidden="true" />
-                    <h2 id="ivanna-family-title">Una noche para recordar</h2>
+                    <h2 id="ivanna-family-title">Es momento de celebrar</h2>
                     <p>
-                        Hay momentos que guardamos para siempre. Será una alegría compartir contigo
-                        el comienzo de esta nueva etapa.
+                        Acompáñame a disfrutar una noche de música, baile y mucha diversión.
                     </p>
                 </div>
 
@@ -226,7 +221,7 @@ function Celebration() {
                         maps={EVENT.ceremony.maps}
                     />
                     <VenueCard
-                        icon={Wine}
+                        icon={PartyPopper}
                         label="Recepción"
                         place={EVENT.reception.place}
                         detail={EVENT.reception.detail}
@@ -263,64 +258,18 @@ function DressCode() {
     )
 }
 
-function RSVP() {
-    const [form, setForm] = useState({ name: '', guests: '1' })
-
-    const handleNameChange = (event) => {
-        const name = event.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '')
-        setForm((current) => ({ ...current, name }))
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        const message = `Hola, soy ${form.name}. Confirmo mi asistencia a los XV años de Ivanna Flores para ${form.guests} persona(s).`
-        window.location.href = `https://wa.me/${EVENT.whatsapp}?text=${encodeURIComponent(message)}`
-    }
-
+function Gifts() {
     return (
-        <section className="ivanna-closing" aria-labelledby="ivanna-closing-title">
-            <div className="ivanna-closing__frame" data-ivanna-reveal>
-                <p>Tu presencia hará esta noche aún más especial</p>
-                <h2 id="ivanna-closing-title">Confirma tu asistencia</h2>
-                <span>26 de septiembre de 2026</span>
-
-                <form className="ivanna-rsvp-form" onSubmit={handleSubmit}>
-                    <label htmlFor="ivanna-rsvp-name">
-                        Nombre completo
-                        <input
-                            id="ivanna-rsvp-name"
-                            name="name"
-                            type="text"
-                            autoComplete="name"
-                            minLength="2"
-                            pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+"
-                            required
-                            value={form.name}
-                            onChange={handleNameChange}
-                        />
-                    </label>
-
-                    <label htmlFor="ivanna-rsvp-guests">
-                        Número de personas
-                        <input
-                            id="ivanna-rsvp-guests"
-                            name="guests"
-                            type="number"
-                            inputMode="numeric"
-                            min="1"
-                            max="10"
-                            required
-                            value={form.guests}
-                            onChange={(event) => setForm((current) => ({ ...current, guests: event.target.value }))}
-                        />
-                    </label>
-
-                    <button className="ivanna-button" type="submit">
-                        <MessageCircle size={18} strokeWidth={1.4} aria-hidden="true" />
-                        Confirmar por WhatsApp
-                    </button>
-                    <p>Se abrirá WhatsApp con tu confirmación lista para enviar.</p>
-                </form>
+        <section className="ivanna-gifts" aria-labelledby="ivanna-gifts-title">
+            <div className="ivanna-gifts__envelope" data-ivanna-reveal>
+                <div className="ivanna-gifts__flap" aria-hidden="true" />
+                <div className="ivanna-gifts__content">
+                    <p>Un detalle especial</p>
+                    <h2 id="ivanna-gifts-title">Lluvia<br />de sobres</h2>
+                    <span>
+                        Si deseas obsequiarme un detalle, tendremos lluvia de sobres el día del evento.
+                    </span>
+                </div>
             </div>
         </section>
     )
@@ -424,7 +373,7 @@ export default function IvannaFloresInvitation({ portfolioMode = false }) {
             <Countdown />
             <Celebration />
             <DressCode />
-            <RSVP />
+            <Gifts />
             <BrandFooter />
         </main>
     )
