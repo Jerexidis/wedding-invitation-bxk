@@ -144,6 +144,6 @@ export const ogData = {
     'ivanna-flores': {
         title: 'Mis XV | Ivanna Flores',
         description: 'Acompáñame a celebrar mis XV años el sábado 26 de septiembre de 2026.',
-        image: '/invitations/ivanna-flores/img/og-preview.jpg',
+        image: '/invitations/ivanna-flores/img/og-preview-square.jpg',
     },
 }

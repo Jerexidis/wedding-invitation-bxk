@@ -33,7 +33,7 @@ the minimum invitation-specific files needed for a task.
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 5.46 MB |
 | `gretel-y-geraldine` | standalone-custom | xv | none | 4 files | 7.35 MB |
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 6.06 MB |
-| `ivanna-flores` | standalone-custom | xv | none | 4 files | 0.14 MB |
+| `ivanna-flores` | standalone-custom | xv | none | 4 files | 0.24 MB |
 
 ## Targeted context
 
