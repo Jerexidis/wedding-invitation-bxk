@@ -611,7 +611,23 @@
     }
 
     .ivanna-card__inner {
+        display: grid;
+        grid-template-rows: 1fr auto 1fr auto;
+        justify-items: center;
         min-height: calc(100dvh - 3.2rem);
+    }
+
+    .ivanna-card__name {
+        grid-row: 2;
+    }
+
+    .ivanna-card .ivanna-ornament {
+        align-self: center;
+        grid-row: 3;
+    }
+
+    .ivanna-card time {
+        grid-row: 4;
     }
 
     .ivanna-venues,
