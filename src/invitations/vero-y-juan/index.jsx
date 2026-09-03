@@ -35,7 +35,10 @@ const events = [
         type: 'Recepción',
         name: 'Recepción en casa',
         address: 'Calle Venustiano Carranza #210',
-        time: '4:00 pm a 7:00 pm',
+        schedule: [
+            { label: 'Comida', time: '4:00 pm a 7:00 pm' },
+            { label: 'Baile', time: '7:00 pm a 1:00 am' },
+        ],
         maps: 'https://maps.app.goo.gl/cNu8PuXcRBHyEKe48',
         icon: UtensilsCrossed,
         photo: `${BASE}/img/venue-reception.webp`,
@@ -141,9 +144,62 @@ function Hero() {
     )
 }
 
+function SilverRings({ placement }) {
+    const metalId = `ays-ring-metal-${placement}`
+    const gemId = `ays-ring-gem-${placement}`
+
+    return (
+        <svg className={`ays-rings ays-rings--${placement}`} viewBox="0 0 220 150" aria-hidden="true" focusable="false">
+            <defs>
+                <linearGradient id={metalId} x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stopColor="#66717d" />
+                    <stop offset=".2" stopColor="#f8fbfd" />
+                    <stop offset=".43" stopColor="#a5b0bb" />
+                    <stop offset=".67" stopColor="#ffffff" />
+                    <stop offset="1" stopColor="#707b87" />
+                </linearGradient>
+                <radialGradient id={gemId} cx="35%" cy="25%" r="80%">
+                    <stop offset="0" stopColor="#ffffff" />
+                    <stop offset=".35" stopColor="#dbe8f1" />
+                    <stop offset=".72" stopColor="#9eafbf" />
+                    <stop offset="1" stopColor="#f8fbff" />
+                </radialGradient>
+            </defs>
+
+            <g className="ays-rings__ring ays-rings__ring--diamond" transform="rotate(-14 78 84)">
+                <ellipse cx="78" cy="84" rx="49" ry="43" fill="none" stroke={`url(#${metalId})`} strokeWidth="9" />
+                <ellipse cx="78" cy="84" rx="44" ry="38" fill="none" stroke="#687582" strokeOpacity=".48" strokeWidth="1.2" />
+                <ellipse cx="78" cy="84" rx="49" ry="43" fill="none" stroke="#ffffff" strokeOpacity=".7" strokeWidth="1.2" />
+                <ellipse cx="78" cy="84" rx="47" ry="41" fill="none" stroke="#ffffff" strokeOpacity=".62" strokeDasharray="1.5 7" strokeWidth="2.3" />
+                <path d="M57 46 65 35h26l8 11-21 15Z" fill={`url(#${gemId})`} stroke="#667583" strokeWidth="1.7" />
+                <path d="m57 46 21-11 21 11M65 35l13 26 13-26M78 35v26M57 46h42" fill="none" stroke="#ffffff" strokeOpacity=".86" strokeWidth="1" />
+                <path d="M64 50v11M92 50v11M70 38l-8-7M86 38l8-7" stroke={`url(#${metalId})`} strokeWidth="3" strokeLinecap="round" />
+            </g>
+
+            <g className="ays-rings__ring ays-rings__ring--band" transform="rotate(13 142 87)">
+                <ellipse cx="142" cy="87" rx="50" ry="44" fill="none" stroke={`url(#${metalId})`} strokeWidth="10" />
+                <ellipse cx="142" cy="87" rx="45" ry="39" fill="none" stroke="#667481" strokeOpacity=".5" strokeWidth="1.2" />
+                <ellipse cx="142" cy="87" rx="50" ry="44" fill="none" stroke="#ffffff" strokeOpacity=".66" strokeWidth="1.2" />
+                <path d="M105 58c12-14 29-19 46-14" fill="none" stroke="#ffffff" strokeOpacity=".82" strokeWidth="2" strokeLinecap="round" />
+                {[108, 119, 130, 141, 152, 163, 174].map((cx, index) => (
+                    <circle key={cx} cx={cx} cy={49 - Math.abs(index - 3) * 2} r="2.5" fill={`url(#${gemId})`} stroke="#7e8d9b" strokeWidth=".8" />
+                ))}
+                <path d="M112 121c17 11 43 13 62-2" fill="none" stroke="#ffffff" strokeOpacity=".58" strokeDasharray="2 6" strokeWidth="1.8" />
+            </g>
+
+            <path className="ays-rings__sparkle ays-rings__sparkle--one" d="M181 22v18M172 31h18M175 25l12 12M187 25l-12 12" />
+            <path className="ays-rings__sparkle ays-rings__sparkle--two" d="M32 104v13M25.5 110.5h13" />
+            <path className="ays-rings__sparkle ays-rings__sparkle--three" d="M205 101v10M200 106h10" />
+            <circle cx="198" cy="57" r="2.5" fill="#ffffff" />
+            <circle cx="43" cy="31" r="1.8" fill="#ffffff" />
+        </svg>
+    )
+}
+
 function Quote() {
     return (
         <section className="ays-quote" id="historia">
+            <SilverRings placement="quote" />
             <Heart size={24} strokeWidth={1.1} data-reveal />
             <h2 data-reveal>Vero <i>&</i> Juan</h2>
             <blockquote data-reveal>
@@ -166,7 +222,7 @@ function SaveTheDate() {
                 <span>Sábado</span>
                 <CalendarDays size={28} strokeWidth={1.2} />
                 <a
-                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Bodas%20de%20Plata%20de%20Vero%20y%20Juan&dates=20261226T210000Z%2F20261227T010000Z&details=Acomp%C3%A1%C3%B1anos%20a%20celebrar%2025%20a%C3%B1os%20de%20amor.&location=Parroquia%20del%20Divino%20Salvador%2C%20Ni%C3%B1os%20H%C3%A9roes%20120%2C%20Trojes%20de%20Alonso%2C%20Aguascalientes"
+                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Bodas%20de%20Plata%20de%20Vero%20y%20Juan&dates=20261226T210000Z%2F20261227T070000Z&details=Acomp%C3%A1%C3%B1anos%20a%20celebrar%2025%20a%C3%B1os%20de%20amor.&location=Parroquia%20del%20Divino%20Salvador%2C%20Ni%C3%B1os%20H%C3%A9roes%20120%2C%20Trojes%20de%20Alonso%2C%20Aguascalientes"
                     target="_blank"
                     rel="noreferrer"
                 >
@@ -180,6 +236,7 @@ function SaveTheDate() {
 function Welcome() {
     return (
         <section className="ays-welcome">
+            <SilverRings placement="welcome" />
             <Sparkles size={28} strokeWidth={1.1} data-reveal />
             <p data-reveal>Bienvenidos a este día tan especial.</p>
             <blockquote data-reveal>
@@ -245,7 +302,18 @@ function Events() {
                                 <Icon size={30} strokeWidth={1.15} />
                                 <p>{event.type}</p>
                                 <h3>{event.name}</h3>
-                                <time><Clock3 size={15} /> {event.time}</time>
+                                {event.schedule ? (
+                                    <div className="ays-event__schedule">
+                                        {event.schedule.map((item) => (
+                                            <div key={item.label}>
+                                                <span>{item.label}</span>
+                                                <time><Clock3 size={15} /> {item.time}</time>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <time><Clock3 size={15} /> {event.time}</time>
+                                )}
                                 <address>{event.address}</address>
                                 {event.maps ? (
                                     <a href={event.maps} target="_blank" rel="noreferrer"><Navigation size={16} /> Ir a ubicación</a>
