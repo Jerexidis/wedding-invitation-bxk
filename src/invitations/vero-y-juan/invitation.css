@@ -43,7 +43,7 @@
 
 .ays-hero { position: sticky; top: 0; z-index: 0; height: 100svh; min-height: 620px; color: #fff; }
 .ays-hero ~ * { position: relative; z-index: 1; }
-.ays-hero__photo { height: 100%; object-fit: cover; object-position: center; filter: grayscale(1); }
+.ays-hero__photo { height: 100%; object-fit: cover; object-position: center; }
 .ays-hero__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24,32,44,.18), rgba(20,28,40,.28) 46%, rgba(17,24,35,.82)); }
 .ays-hero__copy { position: absolute; left: 0; right: 0; bottom: 15%; padding: 0 1.2rem; text-align: center; }
 .ays-hero__copy > p { font-size: .65rem; letter-spacing: .52em; text-transform: uppercase; }
