@@ -294,6 +294,16 @@ const invitations = [
         eventDate: '2026-09-26T19:00:00-06:00',
     },
 
+    {
+        slug: 'vero-y-juan',
+        title: 'Bodas de Plata | Vero y Juan',
+        component: lazy(() => import('./vero-y-juan/index.jsx')),
+        enabled: true,
+        eventType: 'boda',
+        rsvpMode: 'none',
+        eventDate: '2026-12-26T15:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

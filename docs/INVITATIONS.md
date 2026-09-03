@@ -34,6 +34,7 @@ the minimum invitation-specific files needed for a task.
 | `gretel-y-geraldine` | standalone-custom | xv | none | 4 files | 7.35 MB |
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 6.06 MB |
 | `ivanna-flores` | standalone-custom | xv | none | 4 files | 0.24 MB |
+| `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.62 MB |
 
 ## Targeted context
 
@@ -235,6 +236,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/ivanna-flores/DESIGN.md`
 - Source: `src/invitations/ivanna-flores/DESIGN.md`, `src/invitations/ivanna-flores/index.jsx`, `src/invitations/ivanna-flores/invitation.css`, `src/invitations/ivanna-flores/invitation.manifest.json`
+
+### vero-y-juan
+
+- Entry: `src/invitations/vero-y-juan/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery, audio, calendar
+- Design brief: `src/invitations/vero-y-juan/DESIGN.md`
+- Source: `src/invitations/vero-y-juan/DESIGN.md`, `src/invitations/vero-y-juan/index.jsx`, `src/invitations/vero-y-juan/invitation.css`
 
 ## Refresh
 

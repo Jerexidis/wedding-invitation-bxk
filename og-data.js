@@ -146,4 +146,9 @@ export const ogData = {
         description: 'Acompáñame a celebrar mis XV años el sábado 26 de septiembre de 2026.',
         image: '/invitations/ivanna-flores/img/og-preview-square.jpg',
     },
+    'vero-y-juan': {
+        title: 'Bodas de Plata | Vero y Juan',
+        description: 'Acompáñanos a celebrar 25 años de amor el sábado 26 de diciembre de 2026.',
+        image: '/invitations/vero-y-juan/img/og-preview.jpg',
+    },
 }
