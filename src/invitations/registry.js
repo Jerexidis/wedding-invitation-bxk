@@ -80,6 +80,7 @@ const invitations = [
         eventType: 'boda',
         rsvpMode: 'whatsapp',
         portfolioGalleryAllowed: true,
+        portfolioCover: '/invitations/kassandra-brian/img/portfolio-cover.png',
         eventDate: '2026-05-30T16:00:00',
     },
     {
@@ -90,6 +91,7 @@ const invitations = [
         isDemo: true,
         eventType: 'xv',
         rsvpMode: 'whatsapp',
+        portfolioCover: '/invitations/melani-marisol/img/portfolio-cover.png',
         eventDate: '2026-05-02T19:00:00',
     },
 
@@ -102,6 +104,7 @@ const invitations = [
         rsvpMode: 'whatsapp',
         eventDate: '2026-10-17T19:00:00',
         portfolioPriority: 6,
+        portfolioCover: '/invitations/despedida-kass-brian/img/portfolio-cover.png',
     },
 
     {
@@ -111,6 +114,7 @@ const invitations = [
         enabled: true,
         eventType: 'primera-comunion',
         rsvpMode: 'supabase',
+        portfolioCover: '/invitations/isabella/img/portfolio-cover.png',
         eventDate: '2026-06-27T13:00:00',
     },
     {
@@ -120,6 +124,7 @@ const invitations = [
         enabled: true,
         eventType: 'primera-comunion',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/erik-shady-bermejo/img/portfolio-cover.png',
         eventDate: '2026-06-27T12:00:00',
     },
     {
@@ -140,6 +145,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/victoria-rojas/img/portfolio-cover.png',
         eventDate: '2026-07-25T12:00:00',
     },
 
@@ -161,6 +167,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/maria-loyola/img/portfolio-cover.png',
         eventDate: '2026-07-25T18:00:00',
     },
 
@@ -171,6 +178,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'none',
+        portfolioCover: '/invitations/jose-raul/img/portfolio-cover.png',
         eventDate: '2026-08-15T14:00:00',
     },
 
@@ -181,6 +189,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/maia-sofia-duran-avila/img/portfolio-cover.png',
         eventDate: '2026-07-24T19:00:00-06:00',
     },
 
@@ -191,6 +200,7 @@ const invitations = [
         enabled: true,
         eventType: 'bautizo',
         rsvpMode: 'none',
+        portfolioCover: '/invitations/andre-joel/img/portfolio-cover.png',
         eventDate: '2026-07-18T15:30:00',
     },
 
@@ -201,6 +211,7 @@ const invitations = [
         enabled: true,
         eventType: 'boda',
         rsvpMode: 'whatsapp',
+        portfolioCover: '/invitations/boda-lorena-y-arturo/img/og-preview.webp',
         eventDate: '2026-08-08T19:00:00',
     },
 
@@ -211,6 +222,7 @@ const invitations = [
         enabled: true,
         eventType: 'cumpleanos',
         rsvpMode: 'supabase',
+        portfolioCover: '/invitations/hannia/img/portfolio-cover.png',
         eventDate: '2026-07-20T15:00:00-06:00',
     },
 
@@ -221,6 +233,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/daniela-itzel/img/portfolio-cover.png',
         eventDate: '2026-08-22T17:00:00-06:00',
     },
 
@@ -231,6 +244,7 @@ const invitations = [
         enabled: true,
         eventType: 'boda',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/angelica-y-salvador/img/portfolio-cover.png',
         eventDate: '2026-08-22T19:00:00-06:00',
     },
 
@@ -241,6 +255,7 @@ const invitations = [
         enabled: true,
         eventType: 'boda',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/boda-pamela-y-alfredo/img/portfolio-cover.png',
         eventDate: '2027-01-08T17:00:00-06:00',
     },
 
@@ -251,6 +266,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'none',
+        portfolioCover: '/invitations/xv-anos-kimberly-judith/img/portfolio-cover.png',
         eventDate: '2026-08-29T00:00:00-06:00',
     },
 
@@ -261,6 +277,7 @@ const invitations = [
         enabled: true,
         eventType: 'babyshower',
         rsvpMode: 'whatsapp',
+        portfolioCover: '/invitations/baby-ernesto/img/portfolio-cover.png',
         eventDate: '2026-09-12T17:00:00-06:00',
     },
 
@@ -271,6 +288,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'none',
+        portfolioCover: '/invitations/gretel-y-geraldine/img/portfolio-cover.png',
         eventDate: '2026-12-05T13:00:00-06:00',
     },
 
@@ -281,6 +299,7 @@ const invitations = [
         enabled: true,
         eventType: 'xv',
         rsvpMode: 'mixed',
+        portfolioCover: '/invitations/eiza-camila/img/portfolio-cover.png',
         eventDate: '2026-09-19T18:00:00-06:00',
     },
 
@@ -290,7 +309,8 @@ const invitations = [
         component: lazy(() => import('./ivanna-flores/index.jsx')),
         enabled: true,
         eventType: 'xv',
-        rsvpMode: 'none',
+        rsvpMode: 'whatsapp',
+        portfolioCover: '/invitations/ivanna-flores/img/portfolio-cover.png',
         eventDate: '2026-09-26T19:00:00-06:00',
     },
 

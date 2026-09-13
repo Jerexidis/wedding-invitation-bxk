@@ -175,11 +175,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 7,
-        "images": 6,
+        "files": 8,
+        "images": 7,
         "audio": 1,
-        "bytes": 5902970,
-        "megabytes": 5.63
+        "bytes": 7998524,
+        "megabytes": 7.63
       }
     },
     {
@@ -214,11 +214,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 14,
-        "images": 13,
+        "files": 15,
+        "images": 14,
         "audio": 1,
-        "bytes": 5211977,
-        "megabytes": 4.97
+        "bytes": 7397665,
+        "megabytes": 7.05
       }
     },
     {
@@ -247,11 +247,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 5,
-        "images": 4,
+        "files": 6,
+        "images": 5,
         "audio": 0,
-        "bytes": 2248525,
-        "megabytes": 2.14
+        "bytes": 2542706,
+        "megabytes": 2.42
       }
     },
     {
@@ -275,11 +275,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 4,
-        "images": 2,
+        "files": 5,
+        "images": 3,
         "audio": 1,
-        "bytes": 2740081,
-        "megabytes": 2.61
+        "bytes": 3660466,
+        "megabytes": 3.49
       }
     },
     {
@@ -303,11 +303,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 7,
-        "images": 5,
+        "files": 8,
+        "images": 6,
         "audio": 1,
-        "bytes": 5522705,
-        "megabytes": 5.27
+        "bytes": 7225785,
+        "megabytes": 6.89
       }
     },
     {
@@ -334,7 +334,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2740081,
+        "bytes": 2740080,
         "megabytes": 2.61
       }
     },
@@ -366,11 +366,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 30,
-        "images": 28,
+        "files": 31,
+        "images": 29,
         "audio": 1,
-        "bytes": 9058496,
-        "megabytes": 8.64
+        "bytes": 9387495,
+        "megabytes": 8.95
       }
     },
     {
@@ -397,7 +397,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 6172296,
+        "bytes": 6172293,
         "megabytes": 5.89
       }
     },
@@ -429,11 +429,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 45,
-        "images": 42,
+        "files": 46,
+        "images": 43,
         "audio": 2,
-        "bytes": 13889272,
-        "megabytes": 13.25
+        "bytes": 14223868,
+        "megabytes": 13.56
       }
     },
     {
@@ -458,11 +458,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 15,
-        "images": 13,
+        "files": 16,
+        "images": 14,
         "audio": 1,
-        "bytes": 5432296,
-        "megabytes": 5.18
+        "bytes": 7760033,
+        "megabytes": 7.4
       }
     },
     {
@@ -488,11 +488,11 @@
       ],
       "designBrief": "src/invitations/maia-sofia-duran-avila/DESIGN.md",
       "assets": {
-        "files": 6,
-        "images": 2,
+        "files": 7,
+        "images": 3,
         "audio": 1,
-        "bytes": 1572102,
-        "megabytes": 1.5
+        "bytes": 3631178,
+        "megabytes": 3.46
       }
     },
     {
@@ -520,11 +520,11 @@
       ],
       "designBrief": "src/invitations/andre-joel/DESIGN.md",
       "assets": {
-        "files": 34,
-        "images": 31,
+        "files": 35,
+        "images": 32,
         "audio": 2,
-        "bytes": 13878236,
-        "megabytes": 13.24
+        "bytes": 14209385,
+        "megabytes": 13.55
       }
     },
     {
@@ -559,11 +559,11 @@
       ],
       "designBrief": "src/invitations/boda-lorena-y-arturo/DESIGN.md",
       "assets": {
-        "files": 17,
-        "images": 14,
+        "files": 18,
+        "images": 15,
         "audio": 1,
-        "bytes": 8616211,
-        "megabytes": 8.22
+        "bytes": 9278694,
+        "megabytes": 8.85
       }
     },
     {
@@ -587,11 +587,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 19,
-        "images": 17,
+        "files": 20,
+        "images": 18,
         "audio": 1,
-        "bytes": 17295528,
-        "megabytes": 16.49
+        "bytes": 18099563,
+        "megabytes": 17.26
       }
     },
     {
@@ -617,11 +617,11 @@
       ],
       "designBrief": "src/invitations/daniela-itzel/DESIGN.md",
       "assets": {
-        "files": 7,
-        "images": 2,
+        "files": 8,
+        "images": 3,
         "audio": 2,
-        "bytes": 7265157,
-        "megabytes": 6.93
+        "bytes": 9085522,
+        "megabytes": 8.66
       }
     },
     {
@@ -646,11 +646,11 @@
       ],
       "designBrief": "src/invitations/angelica-y-salvador/DESIGN.md",
       "assets": {
-        "files": 14,
-        "images": 12,
+        "files": 15,
+        "images": 13,
         "audio": 1,
-        "bytes": 6231539,
-        "megabytes": 5.94
+        "bytes": 7816172,
+        "megabytes": 7.45
       }
     },
     {
@@ -675,11 +675,11 @@
       ],
       "designBrief": "src/invitations/boda-pamela-y-alfredo/DESIGN.md",
       "assets": {
-        "files": 16,
-        "images": 14,
+        "files": 17,
+        "images": 15,
         "audio": 1,
-        "bytes": 6440365,
-        "megabytes": 6.14
+        "bytes": 8265683,
+        "megabytes": 7.88
       }
     },
     {
@@ -705,11 +705,11 @@
       ],
       "designBrief": "src/invitations/xv-anos-kimberly-judith/DESIGN.md",
       "assets": {
-        "files": 19,
-        "images": 16,
+        "files": 20,
+        "images": 17,
         "audio": 1,
-        "bytes": 9232898,
-        "megabytes": 8.81
+        "bytes": 10264437,
+        "megabytes": 9.79
       }
     },
     {
@@ -734,11 +734,11 @@
       ],
       "designBrief": "src/invitations/baby-ernesto/DESIGN.md",
       "assets": {
-        "files": 17,
-        "images": 15,
+        "files": 18,
+        "images": 16,
         "audio": 2,
-        "bytes": 5724584,
-        "megabytes": 5.46
+        "bytes": 6914932,
+        "megabytes": 6.59
       }
     },
     {
@@ -764,11 +764,11 @@
       ],
       "designBrief": null,
       "assets": {
-        "files": 30,
-        "images": 29,
+        "files": 31,
+        "images": 30,
         "audio": 1,
-        "bytes": 7704768,
-        "megabytes": 7.35
+        "bytes": 9534582,
+        "megabytes": 9.09
       }
     },
     {
@@ -794,11 +794,11 @@
       ],
       "designBrief": "src/invitations/eiza-camila/DESIGN.md",
       "assets": {
-        "files": 11,
-        "images": 7,
+        "files": 12,
+        "images": 8,
         "audio": 1,
-        "bytes": 6356462,
-        "megabytes": 6.06
+        "bytes": 7754323,
+        "megabytes": 7.4
       }
     },
     {
@@ -811,7 +811,7 @@
       "eventDate": "2026-09-26T19:00:00-06:00",
       "portfolioGalleryAllowed": false,
       "services": {
-        "rsvp": "none",
+        "rsvp": "whatsapp",
         "gallery": true,
         "audio": true,
         "calendar": true
@@ -824,11 +824,11 @@
       ],
       "designBrief": "src/invitations/ivanna-flores/DESIGN.md",
       "assets": {
-        "files": 6,
-        "images": 4,
+        "files": 7,
+        "images": 5,
         "audio": 0,
-        "bytes": 247722,
-        "megabytes": 0.24
+        "bytes": 875748,
+        "megabytes": 0.84
       }
     },
     {

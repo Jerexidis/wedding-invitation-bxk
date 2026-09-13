@@ -1,7 +1,22 @@
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import activeInvitations from '../invitations/registry'
 import { ogData } from '../../og-data'
-import { ArrowUpRight, Calendar, Eye, Heart, MessageCircle, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Calendar, Eye, Heart, MessageCircle, Sparkles, PartyPopper, Church, Baby, Gift } from 'lucide-react'
+
+/* ─── Event type metadata ─── */
+
+const EVENT_CATEGORIES = [
+    { key: 'all', label: 'Todos', icon: <Sparkles size={13} /> },
+    { key: 'boda', label: 'Bodas', icon: <Heart size={13} /> },
+    { key: 'xv', label: 'XV Años', icon: <Sparkles size={13} /> },
+    { key: 'cumpleanos', label: 'Cumpleaños', icon: <PartyPopper size={13} /> },
+    { key: 'primera-comunion', label: 'Comunión', icon: <Church size={13} /> },
+    { key: 'otros', label: 'Otros', icon: <Gift size={13} /> },
+]
+
+// Types that go into the "Otros" bucket
+const OTROS_TYPES = new Set(['despedida', 'bautizo', 'babyshower'])
 
 const getEventMeta = (eventType) => {
     switch (eventType?.toLowerCase()) {
@@ -24,7 +39,7 @@ const getEventMeta = (eventType) => {
                 label: 'Primera Comunión',
                 chip: 'bg-[#F6EFEA] text-[#8B6B52] border-[#E9DED6]',
                 accent: 'from-[#C9A38B] to-[#E9C7B7]',
-                icon: <Calendar size={14} />,
+                icon: <Church size={14} />,
             }
         case 'despedida':
             return {
@@ -38,7 +53,21 @@ const getEventMeta = (eventType) => {
                 label: 'Cumpleaños',
                 chip: 'bg-[#EAF2FF] text-[#295A91] border-[#C9DDF8]',
                 accent: 'from-[#EE4D87] to-[#185DA7]',
-                icon: <Sparkles size={14} />,
+                icon: <PartyPopper size={14} />,
+            }
+        case 'bautizo':
+            return {
+                label: 'Bautizo',
+                chip: 'bg-[#E8F4FD] text-[#3B7BA6] border-[#C4E1F5]',
+                accent: 'from-[#7EB8DE] to-[#BFD8EA]',
+                icon: <Baby size={14} />,
+            }
+        case 'babyshower':
+            return {
+                label: 'Baby Shower',
+                chip: 'bg-[#FFF5E6] text-[#B87D3B] border-[#F5E0BE]',
+                accent: 'from-[#F0C27F] to-[#E9C7B7]',
+                icon: <Baby size={14} />,
             }
         default:
             return {
@@ -59,7 +88,60 @@ const formatEventDate = (date) => {
     }).format(new Date(date))
 }
 
+/* ─── Helper: resolve the cover image for the portfolio card ─── */
+function getPortfolioCover(inv) {
+    // If the registry declares a dedicated portfolio cover, prefer it
+    if (inv.portfolioCover) return inv.portfolioCover
+
+    // Otherwise fall back to the OG image → generic hero
+    const meta = ogData[inv.slug] || {}
+    return meta.image || `/invitations/${inv.slug}/img/hero.png`
+}
+
+/* ─── Premium iOS-Style Segmented Control ─── */
+
+function FilterBar({ categories, activeFilter, onSelect, invitations }) {
+    const getCount = (key) => {
+        if (key === 'all') return invitations.length
+        if (key === 'otros') return invitations.filter((inv) => OTROS_TYPES.has(inv.eventType)).length
+        return invitations.filter((inv) => inv.eventType === key).length
+    }
+
+    return (
+        <div className="showcase-segmented-wrap">
+            <div className="showcase-segmented-container">
+                {categories.map((cat) => {
+                    const isActive = activeFilter === cat.key
+                    const count = getCount(cat.key)
+
+                    return (
+                        <button
+                            key={cat.key}
+                            id={`filter-${cat.key}`}
+                            type="button"
+                            onClick={() => onSelect(cat.key)}
+                            className={`showcase-segment-btn ${isActive ? 'showcase-segment-btn--active' : ''}`}
+                        >
+                            <span className="showcase-segment-btn__inner">
+                                <span className="showcase-segment-btn__icon">{cat.icon}</span>
+                                <span className="showcase-segment-btn__label">{cat.label}</span>
+                            </span>
+                            <span className={`showcase-segment-btn__count ${isActive ? 'showcase-segment-btn__count--active' : ''}`}>
+                                {count}
+                            </span>
+                        </button>
+                    )
+                })}
+            </div>
+        </div>
+    )
+}
+
+/* ─── Component ─── */
+
 export default function Showcase() {
+    const [activeFilter, setActiveFilter] = useState('all')
+
     const portfolioInvitations = activeInvitations
         .filter((inv) => {
             if (inv.excludeFromPortfolio) return false
@@ -73,6 +155,22 @@ export default function Showcase() {
             if (aPriority !== bPriority) return aPriority - bPriority
             return new Date(b.eventDate || 0) - new Date(a.eventDate || 0)
         })
+
+    // Compute which categories actually have invitations
+    const availableCategories = EVENT_CATEGORIES.filter((cat) => {
+        if (cat.key === 'all') return true
+        if (cat.key === 'otros') {
+            return portfolioInvitations.some((inv) => OTROS_TYPES.has(inv.eventType))
+        }
+        return portfolioInvitations.some((inv) => inv.eventType === cat.key)
+    })
+
+    // Apply active filter
+    const filteredInvitations = portfolioInvitations.filter((inv) => {
+        if (activeFilter === 'all') return true
+        if (activeFilter === 'otros') return OTROS_TYPES.has(inv.eventType)
+        return inv.eventType === activeFilter
+    })
 
     return (
         <div className="min-h-screen bg-[#FBFAF8] text-[#1F1F1F] font-sans selection:bg-[#E7A2B1]/30">
@@ -119,7 +217,7 @@ export default function Showcase() {
                         {portfolioInvitations[0] && (() => {
                             const featured = portfolioInvitations[0]
                             const meta = ogData[featured.slug] || {}
-                            const coverImg = meta.image || `/invitations/${featured.slug}/img/hero.png`
+                            const coverImg = getPortfolioCover(featured)
                             const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉/g, '').trim() || featured.title
 
                             return (
@@ -167,34 +265,47 @@ export default function Showcase() {
                     </p>
                 </div>
 
-                {portfolioInvitations.length === 0 ? (
+                {/* ─── Premium category filter bar ─── */}
+                <FilterBar
+                    categories={availableCategories}
+                    activeFilter={activeFilter}
+                    onSelect={setActiveFilter}
+                    invitations={portfolioInvitations}
+                />
+
+                {filteredInvitations.length === 0 ? (
                     <div className="rounded-lg border border-[#EFE8E2] bg-white p-10 text-center shadow-sm">
-                        <p className="text-lg font-medium">Aún no hay invitaciones para mostrar.</p>
+                        <p className="text-lg font-medium">No hay invitaciones en esta categoría.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                        {portfolioInvitations.map((inv, index) => {
+                        {filteredInvitations.map((inv, index) => {
                             const meta = ogData[inv.slug] || {}
                             const eventMeta = getEventMeta(inv.eventType)
-                            const coverImg = meta.image || `/invitations/${inv.slug}/img/hero.png`
-                            const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉/g, '').trim() || inv.title
+                            const coverImg = getPortfolioCover(inv)
+                            const title = meta.title?.replace(/🕊️|💕|✨|🐸|🎉|🐾|⛏️|🤠|👶/g, '').trim() || inv.title
 
                             return (
                                 <article
                                     key={inv.slug}
-                                    className={`group relative overflow-hidden rounded-lg border border-[#EFE8E2] bg-white shadow-[0_18px_50px_rgba(31,31,31,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#E0C9C4] ${index === 0 ? 'md:col-span-2 xl:col-span-1' : ''}`}
+                                    className={`group relative overflow-hidden rounded-lg border border-[#EFE8E2] bg-white shadow-[0_18px_50px_rgba(31,31,31,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#E0C9C4] ${index === 0 && activeFilter === 'all' ? 'md:col-span-2 xl:col-span-1' : ''}`}
+                                    style={{
+                                        animation: 'showcase-card-in 0.4s ease-out both',
+                                        animationDelay: `${Math.min(index * 60, 400)}ms`,
+                                    }}
                                 >
-                                    <div className="relative aspect-[4/3] overflow-hidden bg-[#F6EFEA]">
+                                    {/* Cover image — 16:9 to avoid cropping panoramic screenshots */}
+                                    <div className="relative aspect-[16/9] overflow-hidden bg-[#F6EFEA]">
                                         <img
                                             src={coverImg}
                                             alt={title}
-                                            className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                                            className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-105"
                                             loading="lazy"
                                             decoding="async"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1F1F]/70 via-[#1F1F1F]/12 to-transparent" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#1F1F1F]/50 via-transparent to-transparent" />
                                         <div className={`absolute left-0 right-0 bottom-0 h-1 bg-gradient-to-r ${eventMeta.accent}`} />
-                                        <span className={`absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm ${eventMeta.chip}`}>
+                                        <span className={`absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-sm ${eventMeta.chip}`}>
                                             {eventMeta.icon}
                                             {eventMeta.label}
                                         </span>
@@ -211,14 +322,14 @@ export default function Showcase() {
                                             </span>
                                         </div>
 
-                                        <h2 className="text-2xl font-black leading-tight tracking-[-0.01em] text-[#1F1F1F]">
+                                        <h2 className="text-xl sm:text-2xl font-black leading-tight tracking-[-0.01em] text-[#1F1F1F]">
                                             {title}
                                         </h2>
-                                        <p className="mt-3 min-h-[3rem] text-sm leading-6 text-[#7B7F86] line-clamp-2">
+                                        <p className="mt-3 min-h-[2.5rem] text-sm leading-6 text-[#7B7F86] line-clamp-2">
                                             {meta.description || 'Invitación digital personalizada para evento especial.'}
                                         </p>
 
-                                        <div className="mt-6 flex items-center justify-between gap-3">
+                                        <div className="mt-5 flex items-center justify-between gap-3">
                                             <Link
                                                 to={`/i/${inv.slug}?portfolio=1`}
                                                 className="inline-flex items-center gap-2 rounded-full bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#D96A86]"
@@ -255,6 +366,140 @@ export default function Showcase() {
                     <Link className="underline decoration-[#D8C9C1] underline-offset-4 transition hover:text-[#D96A86]" to="/terminos">Términos</Link>
                 </nav>
             </footer>
+
+            {/* Animations + filter bar styles */}
+            <style>{`
+                @keyframes showcase-card-in {
+                    from { opacity: 0; transform: translateY(16px); }
+                    to   { opacity: 1; transform: translateY(0); }
+                }
+
+                /* ─── Premium iOS-Style Segmented Control ─── */
+                .showcase-segmented-wrap {
+                    margin-bottom: 2.25rem;
+                    max-width: 100%;
+                }
+
+                .showcase-segmented-container {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 0.35rem;
+                    padding: 0.35rem;
+                    background: #F3EDE7;
+                    border: 1px solid #E6DDD5;
+                    border-radius: 1rem;
+                    box-shadow: inset 0 2px 4px rgba(31, 31, 31, 0.04), 0 1px 2px rgba(255, 255, 255, 0.8);
+                    backdrop-filter: blur(10px);
+                }
+
+                @media (min-width: 520px) {
+                    .showcase-segmented-container {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+
+                @media (min-width: 840px) {
+                    .showcase-segmented-container {
+                        grid-template-columns: repeat(6, 1fr);
+                        gap: 0.5rem;
+                        padding: 0.5rem;
+                        border-radius: 9999px;
+                    }
+                }
+
+                .showcase-segment-btn {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 0.3rem;
+                    padding: 0.6rem 0.65rem;
+                    border-radius: 0.75rem;
+                    font-size: 0.78125rem;
+                    font-weight: 600;
+                    color: #6E6763;
+                    background: transparent;
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.22s cubic-bezier(0.25, 1, 0.5, 1);
+                    user-select: none;
+                    -webkit-tap-highlight-color: transparent;
+                    width: 100%;
+                    min-width: 0;
+                }
+
+                @media (min-width: 840px) {
+                    .showcase-segment-btn {
+                        justify-content: center;
+                        border-radius: 9999px;
+                        padding: 0.625rem 0.85rem;
+                    }
+                }
+
+                .showcase-segment-btn:hover {
+                    color: #1F1F1F;
+                    background: rgba(255, 255, 255, 0.45);
+                }
+
+                .showcase-segment-btn--active {
+                    color: #1F1F1F;
+                    font-weight: 700;
+                    background: #FFFFFF;
+                    border-radius: 0.75rem;
+                    box-shadow: 0 3px 12px rgba(31, 31, 31, 0.08), 0 1px 3px rgba(31, 31, 31, 0.04), 0 0 0 1px rgba(217, 106, 134, 0.12);
+                    transform: scale(1.02);
+                }
+
+                @media (min-width: 840px) {
+                    .showcase-segment-btn--active {
+                        border-radius: 9999px;
+                    }
+                }
+
+                .showcase-segment-btn__inner {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.3rem;
+                    min-width: 0;
+                }
+
+                .showcase-segment-btn__icon {
+                    display: flex;
+                    align-items: center;
+                    opacity: 0.65;
+                    transition: all 0.2s ease;
+                    flex-shrink: 0;
+                }
+
+                .showcase-segment-btn--active .showcase-segment-btn__icon {
+                    opacity: 1;
+                    color: #D96A86;
+                    transform: scale(1.1);
+                }
+
+                .showcase-segment-btn__label {
+                    line-height: 1;
+                    white-space: nowrap;
+                }
+
+                .showcase-segment-btn__count {
+                    font-size: 0.6875rem;
+                    font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+                    font-weight: 600;
+                    padding: 0.125rem 0.38rem;
+                    border-radius: 9999px;
+                    background: #EAE4DF;
+                    color: #857B74;
+                    line-height: 1.2;
+                    transition: all 0.2s ease;
+                    flex-shrink: 0;
+                }
+
+                .showcase-segment-btn--active .showcase-segment-btn__count {
+                    background: #FBE9EF;
+                    color: #9B4660;
+                }
+            `}</style>
         </div>
     )
 }

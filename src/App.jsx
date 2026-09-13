@@ -20,7 +20,19 @@ function ScrollToTop() {
     }, [])
 
     useLayoutEffect(() => {
+        // Kill any lingering GSAP ScrollTrigger instances from the previous route
+        // so they don't fight scroll position on the new page.
+        try {
+            import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+                ScrollTrigger.getAll().forEach((t) => t.kill())
+                ScrollTrigger.clearScrollMemory()
+            }).catch(() => {})
+        } catch { /* gsap may not be loaded yet */ }
+
         window.scrollTo(0, 0)
+        // Also reset scroll on any full-height container that an invitation may use
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
     }, [pathname, search])
 
     return null
