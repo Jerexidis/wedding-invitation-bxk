@@ -593,9 +593,10 @@ function RomanticQuote() {
             <div className="mx-container">
                 <div className="mx-quote-card mx-reveal">
                     <img
-                        src="/invitations/plantilla-boda-mexicana/img/stickers/sticker-20.png"
+                        src="/invitations/plantilla-boda-mexicana/img/corazon-frase.png"
                         alt="Para toda la vida"
                         className="mx-quote__sticker"
+                        style={{ maxWidth: '105px', margin: '0 auto .8rem', display: 'block' }}
                     />
                     <p className="mx-quote__text">
                         “Andábamos sin buscarnos, pero sabiendo que andábamos para encontrarnos.
@@ -621,12 +622,6 @@ function ItineraryAndVenues() {
                     alt=""
                     className="mx-floating-sticker mx-float-anim-1"
                     style={{ top: '10px', left: '10px', width: '55px', '--rot': '-8deg' }}
-                />
-                <img
-                    src="/invitations/plantilla-boda-mexicana/img/stickers/sticker-26.png"
-                    alt=""
-                    className="mx-floating-sticker mx-float-anim-2"
-                    style={{ bottom: '15px', right: '10px', width: '65px', '--rot': '6deg' }}
                 />
             </div>
 
@@ -674,7 +669,7 @@ function ItineraryAndVenues() {
                 </div>
 
                 {/* Reception */}
-                <div className="mx-event-card mx-reveal mx-reveal--d2" style={{ marginTop: '1.8rem' }}>
+                <div className="mx-event-card mx-reveal mx-reveal--d2" style={{ marginTop: '1.8rem', position: 'relative' }}>
                     <MexicanFloralFrame />
                     <PartyPopper size={30} className="mx-event__icon" style={{ color: 'var(--mx-rosa)' }} />
                     <p className="mx-heading__kicker" style={{ marginBottom: '.2rem' }}>Recepción & Fiesta</p>
@@ -686,6 +681,21 @@ function ItineraryAndVenues() {
                     <a className="mx-btn mx-btn--rosa" href={CONFIG.reception.maps} target="_blank" rel="noreferrer">
                         <Navigation size={14} /> VER UBICACIÓN
                     </a>
+
+                    {/* Cempasúchil flower pot IN FRONT of the card */}
+                    <img
+                        src="/invitations/plantilla-boda-mexicana/img/stickers/sticker-26.png"
+                        alt=""
+                        className="mx-floating-sticker mx-float-anim-2"
+                        style={{
+                            position: 'absolute',
+                            bottom: '-22px',
+                            right: '-16px',
+                            width: '78px',
+                            zIndex: 10,
+                            pointerEvents: 'none',
+                        }}
+                    />
                 </div>
             </div>
         </section>
@@ -941,6 +951,7 @@ export default function MexicanWeddingTemplate() {
     return (
         <main className="mx-template" ref={rootRef}>
             <audio ref={audioRef} loop preload="none">
+                <source src={`/invitations/${CONFIG.slug}/audio/sabes-una-cosa.mp3`} type="audio/mpeg" />
                 <source src={`/invitations/${CONFIG.slug}/audio/background.mp3`} type="audio/mpeg" />
             </audio>
 
