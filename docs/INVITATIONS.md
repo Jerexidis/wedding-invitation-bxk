@@ -35,6 +35,7 @@ the minimum invitation-specific files needed for a task.
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 7.40 MB |
 | `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 0.84 MB |
 | `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.62 MB |
+| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 3.89 MB |
 
 ## Targeted context
 
@@ -244,6 +245,14 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/vero-y-juan/DESIGN.md`
 - Source: `src/invitations/vero-y-juan/DESIGN.md`, `src/invitations/vero-y-juan/index.jsx`, `src/invitations/vero-y-juan/invitation.css`
+
+### plantilla-boda-mexicana
+
+- Entry: `src/invitations/plantilla-boda-mexicana/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: demo, audio, calendar
+- Design brief: `src/invitations/plantilla-boda-mexicana/DESIGN.md`
+- Source: `src/invitations/plantilla-boda-mexicana/DESIGN.md`, `src/invitations/plantilla-boda-mexicana/index.jsx`, `src/invitations/plantilla-boda-mexicana/mexican-wedding.css`
 
 ## Refresh
 

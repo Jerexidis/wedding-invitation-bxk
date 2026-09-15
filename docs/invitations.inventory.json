@@ -250,7 +250,7 @@
         "files": 6,
         "images": 5,
         "audio": 0,
-        "bytes": 2542706,
+        "bytes": 2542707,
         "megabytes": 2.42
       }
     },
@@ -278,7 +278,7 @@
         "files": 5,
         "images": 3,
         "audio": 1,
-        "bytes": 3660466,
+        "bytes": 3660467,
         "megabytes": 3.49
       }
     },
@@ -306,7 +306,7 @@
         "files": 8,
         "images": 6,
         "audio": 1,
-        "bytes": 7225785,
+        "bytes": 7225786,
         "megabytes": 6.89
       }
     },
@@ -334,7 +334,7 @@
         "files": 4,
         "images": 2,
         "audio": 1,
-        "bytes": 2740080,
+        "bytes": 2740081,
         "megabytes": 2.61
       }
     },
@@ -397,7 +397,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 6172293,
+        "bytes": 6172296,
         "megabytes": 5.89
       }
     },
@@ -432,7 +432,7 @@
         "files": 46,
         "images": 43,
         "audio": 2,
-        "bytes": 14223868,
+        "bytes": 14223871,
         "megabytes": 13.56
       }
     },
@@ -491,7 +491,7 @@
         "files": 7,
         "images": 3,
         "audio": 1,
-        "bytes": 3631178,
+        "bytes": 3631181,
         "megabytes": 3.46
       }
     },
@@ -590,7 +590,7 @@
         "files": 20,
         "images": 18,
         "audio": 1,
-        "bytes": 18099563,
+        "bytes": 18099560,
         "megabytes": 17.26
       }
     },
@@ -620,7 +620,7 @@
         "files": 8,
         "images": 3,
         "audio": 2,
-        "bytes": 9085522,
+        "bytes": 9085519,
         "megabytes": 8.66
       }
     },
@@ -649,7 +649,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 7816172,
+        "bytes": 7816169,
         "megabytes": 7.45
       }
     },
@@ -678,7 +678,7 @@
         "files": 17,
         "images": 15,
         "audio": 1,
-        "bytes": 8265683,
+        "bytes": 8265680,
         "megabytes": 7.88
       }
     },
@@ -797,7 +797,7 @@
         "files": 12,
         "images": 8,
         "audio": 1,
-        "bytes": 7754323,
+        "bytes": 7754326,
         "megabytes": 7.4
       }
     },
@@ -827,7 +827,7 @@
         "files": 7,
         "images": 5,
         "audio": 0,
-        "bytes": 875748,
+        "bytes": 875750,
         "megabytes": 0.84
       }
     },
@@ -858,6 +858,35 @@
         "audio": 1,
         "bytes": 4841167,
         "megabytes": 4.62
+      }
+    },
+    {
+      "slug": "plantilla-boda-mexicana",
+      "title": "Plantilla Boda | Mexicana Artesanal",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": true,
+      "eventType": "boda",
+      "eventDate": "2026-10-18T17:00:00-06:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": false,
+        "audio": true,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/plantilla-boda-mexicana/DESIGN.md",
+        "src/invitations/plantilla-boda-mexicana/index.jsx",
+        "src/invitations/plantilla-boda-mexicana/mexican-wedding.css"
+      ],
+      "designBrief": "src/invitations/plantilla-boda-mexicana/DESIGN.md",
+      "assets": {
+        "files": 34,
+        "images": 34,
+        "audio": 0,
+        "bytes": 4079546,
+        "megabytes": 3.89
       }
     }
   ]

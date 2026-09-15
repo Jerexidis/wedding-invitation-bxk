@@ -1,0 +1,1329 @@
+/* ═══════════════════════════════════════════════════════════════
+   PLANTILLA BODA MEXICANA — Uriel & Fernanda
+   Artesanía, Rótulos Tradicionales, Papel Picado & Talavera
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Palette ───────────────────────────────────────────────── */
+:root {
+    --mx-terracotta: #B5382A;
+    --mx-terracotta-deep: #8B2318;
+    --mx-brick: #A0422F;
+    --mx-rosa: #E0457B;
+    --mx-rosa-hot: #D42B6A;
+    --mx-coral: #E8734A;
+    --mx-orange: #E8943A;
+    --mx-mustard: #D4A533;
+    --mx-gold: #C49A2A;
+    --mx-sky: #4AB8D4;
+    --mx-blue: #16428F;
+    --mx-teal: #1A9E82;
+    --mx-green: #3B8C3B;
+    --mx-green-dark: #2B6B2B;
+    --mx-purple: #7B4F9D;
+    --mx-cream: #F5EDDC;
+    --mx-cream-warm: #F0E4CC;
+    --mx-cream-dark: #E4D5B8;
+    --mx-paper: #FAF5EA;
+    --mx-ink: #2C1810;
+    --mx-ink-soft: #5C4033;
+    --mx-brown: #6B3A2A;
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.mx-template {
+    background: var(--mx-cream);
+    color: var(--mx-ink);
+    font-family: "Outfit", "Segoe UI", sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+}
+
+.mx-template *, .mx-template *::before, .mx-template *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Paper grain overlay */
+.mx-template::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+    mix-blend-mode: multiply;
+}
+
+/* ── Terracotta textured background ────────────────────────── */
+.mx-terracotta-bg {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.12'/%3E%3C/svg%3E"),
+        linear-gradient(175deg, #B5382A 0%, #9A2E1F 40%, #8B2318 100%);
+    color: var(--mx-cream);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   1. SOBRE ARTESANAL MEXICANO (Envelope)
+   ══════════════════════════════════════════════════════════════ */
+.mx-envelope-screen {
+    align-items: center;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.12'/%3E%3C/svg%3E"),
+        linear-gradient(175deg, #9C2E20 0%, #852217 60%, #6E1A11 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 200;
+}
+
+.mx-envelope-screen__garland {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 5;
+}
+
+.mx-envelope-stage {
+    perspective: 1200px;
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 1.5rem auto;
+    z-index: 10;
+}
+
+/* Envelope 3D structure */
+.mx-envelope {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: #E8D9C0;
+    border-radius: 8px;
+    box-shadow: 0 16px 36px rgba(0,0,0,.45), 0 4px 10px rgba(0,0,0,.3);
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.mx-envelope:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+
+/* Envelope interior / back lining */
+.mx-envelope__back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #C2533A 0%, #9C2E20 100%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.mx-envelope__back-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: .25;
+    background-image: radial-gradient(#F5EDDC 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+}
+
+/* Card inside envelope */
+.mx-envelope__card {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 10px;
+    height: 220px;
+    background: var(--mx-paper);
+    border: 2px solid var(--mx-cream-dark);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+}
+
+.mx-envelope.is-opening .mx-envelope__card {
+    transform: translateY(-85px);
+}
+
+.mx-envelope__card-subtitle {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+}
+
+.mx-envelope__card-names {
+    color: var(--mx-terracotta);
+    font-family: "Dancing Script", cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: .2rem 0;
+}
+
+.mx-envelope__card-date {
+    color: var(--mx-mustard);
+    font-family: "Outfit", sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+/* Envelope front pocket (triangular folds) */
+.mx-envelope__pocket {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.mx-envelope__pocket-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 -2px 6px rgba(0,0,0,.15));
+}
+
+/* Flap at top (folds down over pocket, flips up when opening) */
+.mx-envelope__flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 130px;
+    transform-origin: top center;
+    transition: transform .7s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
+}
+
+.mx-envelope.is-opening .mx-envelope__flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.mx-envelope__flap-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,.25));
+}
+
+/* Realistic Wax Seal Image Button */
+.mx-wax-seal {
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    height: 78px;
+    justify-content: center;
+    left: 50%;
+    padding: 0;
+    position: absolute;
+    top: 110px;
+    transform: translate(-50%, -50%);
+    width: 78px;
+    z-index: 10;
+    transition: transform .2s ease;
+    animation: mx-seal-pulse 2.2s infinite ease-in-out;
+}
+
+.mx-wax-seal:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.mx-wax-seal__img {
+    display: block;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,.55));
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+@keyframes mx-seal-pulse {
+    0%, 100% { filter: drop-shadow(0 4px 10px rgba(0,0,0,.45)); transform: translate(-50%, -50%) scale(1); }
+    50% { filter: drop-shadow(0 8px 18px rgba(224, 69, 123, .5)); transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.mx-envelope-cta {
+    align-items: center;
+    color: var(--mx-cream);
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    margin-top: 1.2rem;
+    text-align: center;
+    z-index: 10;
+}
+
+.mx-envelope-cta__hint {
+    font-family: "Outfit", sans-serif;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mx-mustard);
+}
+
+.mx-envelope-cta__btn {
+    align-items: center;
+    background: var(--mx-rosa);
+    border: 2px solid var(--mx-rosa-hot);
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "Outfit", sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    gap: .4rem;
+    letter-spacing: .15em;
+    padding: .65rem 1.6rem;
+    text-transform: uppercase;
+    transition: transform .15s ease;
+}
+
+.mx-envelope-cta__btn:hover {
+    transform: scale(1.04);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. RÓTULO TRADICIONAL MEXICANO (Hero / Bienvenida)
+   ══════════════════════════════════════════════════════════════ */
+.mx-rotulo-section {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.1'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, #9C2E20 0%, #B5382A 30%, #F5EDDC 100%);
+    padding: 1.5rem 1rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.mx-rotulo-wrap {
+    margin: 0 auto;
+    max-width: 420px;
+    position: relative;
+    z-index: 5;
+}
+
+/* The painted sign board */
+.mx-rotulo-board {
+    background:
+        linear-gradient(135deg, #FFAEC8 0%, #F593B4 50%, #EF7A9F 100%);
+    border: 6px solid #FBE9A6;
+    border-radius: 8px;
+    box-shadow:
+        0 14px 34px rgba(0,0,0,.35),
+        0 3px 0 3px #B52220,
+        inset 0 0 16px rgba(181, 34, 32, .25);
+    padding: 2.2rem 1.2rem 1.8rem;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+.mx-rotulo-board::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px dashed #B52220;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: .5;
+}
+
+/* BIENVENIDOS — sized so it fits perfectly without overflowing */
+.mx-rotulo__bienvenidos {
+    color: #9E1917;
+    font-family: "Alfa Slab One", "Arial Black", Impact, sans-serif;
+    font-size: clamp(1.1rem, 4.8vw, 1.7rem);
+    font-weight: 400;
+    letter-spacing: .02em;
+    line-height: 1.15;
+    margin: 0 0 .2rem;
+    text-transform: uppercase;
+    text-shadow:
+        1.5px 1.5px 0 #FFD53D,
+        2.5px 2.5px 0 #FFD53D,
+        3.5px 3.5px 0 #FFC107,
+        4.5px 4.5px 0 #B52220;
+    transform: scaleY(1.04);
+    word-break: normal;
+    white-space: nowrap;
+}
+
+/* - A NUESTRA BODA - */
+.mx-rotulo__sub {
+    color: #16428F;
+    font-family: "Alfa Slab One", "Outfit", sans-serif;
+    font-size: clamp(.8rem, 3.4vw, 1.05rem);
+    font-weight: 400;
+    letter-spacing: .1em;
+    margin: .25rem 0 1rem;
+    text-shadow:
+        1.5px 1.5px 0 #FFFFFF,
+        2.5px 2.5px 0 #9E1917;
+    text-transform: uppercase;
+}
+
+/* Names container flanked by painted starbursts */
+.mx-rotulo__names-row {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: .3rem;
+    margin: .8rem 0;
+    position: relative;
+}
+
+.mx-rotulo-sparkle {
+    flex-shrink: 0;
+    height: 48px;
+    width: 40px;
+}
+
+.mx-rotulo-sparkle--left { transform: rotate(-5deg); }
+.mx-rotulo-sparkle--right { transform: rotate(5deg); }
+
+.mx-rotulo__couple {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.mx-rotulo__name {
+    color: #9E1917;
+    font-family: "Pacifico", "Dancing Script", cursive;
+    font-size: clamp(2.4rem, 10.5vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    text-shadow:
+        -1.5px -1.5px 0 #FFF, 1.5px -1.5px 0 #FFF,
+        -1.5px 1.5px 0 #FFF, 1.5px 1.5px 0 #FFF,
+        3px 3px 0 #7D1513,
+        4px 4px 0 rgba(0,0,0,.25);
+}
+
+.mx-rotulo__amp {
+    color: #16428F;
+    font-family: "Pacifico", "Dancing Script", cursive;
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    font-weight: 400;
+    margin: -.2rem 0;
+    text-shadow:
+        -1.5px -1.5px 0 #FFF, 1.5px -1.5px 0 #FFF,
+        -1.5px 1.5px 0 #FFF, 1.5px 1.5px 0 #FFF,
+        2.5px 2.5px 0 #0E2958;
+}
+
+.mx-rotulo__date-tag {
+    color: #16428F;
+    font-family: "Alfa Slab One", "Outfit", sans-serif;
+    font-size: clamp(.8rem, 3.4vw, 1.05rem);
+    font-weight: 400;
+    letter-spacing: .06em;
+    margin: .6rem 0 .3rem;
+    text-shadow:
+        1.5px 1.5px 0 #FFD53D,
+        2px 2px 0 #9E1917;
+    text-transform: uppercase;
+}
+
+.mx-rotulo__quote {
+    color: #FFFFFF;
+    font-family: "Outfit", sans-serif;
+    font-size: clamp(.8rem, 3.2vw, .95rem);
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: .03em;
+    margin-top: .5rem;
+    text-shadow:
+        1.5px 1.5px 0 #9E1917,
+        2.5px 2.5px 0 #5E0E0C;
+}
+
+.mx-rotulo-easel-legs {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 380px;
+    padding: 0 1.5rem;
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+}
+
+.mx-rotulo-easel-leg {
+    background: linear-gradient(90deg, #A2703F 0%, #855428 60%, #683E18 100%);
+    box-shadow: 2px 4px 8px rgba(0,0,0,.3);
+    height: 48px;
+    width: 14px;
+    border-radius: 0 0 4px 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. PADRINOS
+   ══════════════════════════════════════════════════════════════ */
+.mx-padrinos-section {
+    background: var(--mx-cream);
+    padding: 3rem 1rem 3.5rem;
+    position: relative;
+}
+
+.mx-padrinos__card {
+    background: var(--mx-paper);
+    border: 3px solid var(--mx-cream-dark);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    padding: 2.4rem 1.4rem;
+    position: relative;
+    text-align: center;
+}
+
+.mx-padrinos__role {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .24em;
+    margin-bottom: .8rem;
+    text-transform: uppercase;
+}
+
+.mx-padrinos__names {
+    color: var(--mx-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.2rem, 5.2vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.mx-padrinos__names span {
+    color: var(--mx-rosa);
+    display: block;
+    font-family: "Pacifico", "Dancing Script", cursive;
+    font-size: 1.2em;
+    margin: .2rem 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. LA FECHA — CALENDARIO CON CORAZÓN EN DÍA 18
+   ══════════════════════════════════════════════════════════════ */
+.mx-date-section {
+    background: var(--mx-cream);
+    padding: 2.5rem 1rem 3.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.mx-date__display {
+    background: var(--mx-paper);
+    border: 2px solid var(--mx-cream-dark);
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    display: inline-block;
+    padding: 1.6rem 2.2rem;
+    position: relative;
+    text-align: center;
+}
+
+.mx-date__weekday {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+}
+
+.mx-date__number {
+    color: var(--mx-terracotta);
+    display: block;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(4.2rem, 18vw, 6.2rem);
+    font-weight: 800;
+    line-height: .9;
+    margin: .1rem 0;
+}
+
+.mx-date__month {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .84rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.mx-date__time {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin-top: .6rem;
+}
+
+/* Calendar grid */
+.mx-calendar {
+    background: var(--mx-paper);
+    border: 2px solid var(--mx-cream-dark);
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 1.6rem auto;
+    max-width: 320px;
+    padding: 1rem;
+}
+
+.mx-calendar__header {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: .52rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: .3rem .1rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.mx-calendar__day {
+    align-items: center;
+    color: var(--mx-ink-soft);
+    display: flex;
+    font-family: "Outfit", sans-serif;
+    font-size: .72rem;
+    font-weight: 500;
+    height: 34px;
+    justify-content: center;
+    position: relative;
+}
+
+.mx-calendar__day--empty { visibility: hidden; }
+
+/* Day 18 enclosed in a heart! */
+.mx-calendar__day--heart {
+    font-weight: 800;
+}
+
+.mx-calendar__heart-badge {
+    align-items: center;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    position: relative;
+    width: 32px;
+    animation: mx-heartbeat 2s infinite ease-in-out;
+}
+
+.mx-calendar__heart-svg {
+    filter: drop-shadow(0 2px 4px rgba(181, 56, 42, .4));
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.mx-calendar__heart-num {
+    color: white;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: .82rem;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+    transform: translateY(-1px);
+}
+
+@keyframes mx-heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+}
+
+/* Countdown */
+.mx-countdown {
+    display: grid;
+    gap: 6px;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 1.4rem auto;
+    max-width: 320px;
+}
+
+.mx-countdown__item {
+    background: var(--mx-terracotta);
+    border: 2px solid var(--mx-terracotta-deep);
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    padding: .65rem .2rem .55rem;
+    text-align: center;
+}
+
+.mx-countdown__number {
+    color: var(--mx-cream);
+    display: block;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.mx-countdown__label {
+    color: var(--mx-mustard);
+    display: block;
+    font-family: "Outfit", sans-serif;
+    font-size: .5rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    margin-top: .2rem;
+    text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5. FRASE DE AMOR ROMÁNTICA
+   ══════════════════════════════════════════════════════════════ */
+.mx-quote-section {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.1'/%3E%3C/svg%3E"),
+        linear-gradient(135deg, #B5382A 0%, #9C2E20 100%);
+    color: var(--mx-cream);
+    padding: 3.5rem 1rem;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+.mx-quote-card {
+    background: rgba(250, 245, 234, .08);
+    border: 2px dashed rgba(245, 237, 220, .4);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    margin: 0 auto;
+    max-width: 440px;
+    padding: 2.2rem 1.6rem;
+    position: relative;
+    z-index: 2;
+}
+
+.mx-quote__sticker {
+    display: block;
+    height: auto;
+    margin: 0 auto 1rem;
+    max-width: 85px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+}
+
+.mx-quote__text {
+    color: var(--mx-cream);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.mx-quote__author {
+    color: var(--mx-mustard);
+    font-family: "Pacifico", "Dancing Script", cursive;
+    font-size: 1.4rem;
+    letter-spacing: .05em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. ITINERARIO & LUGARES
+   ══════════════════════════════════════════════════════════════ */
+.mx-itinerary-section {
+    background: var(--mx-cream);
+    padding: 3.5rem 1rem;
+    position: relative;
+}
+
+.mx-timeline {
+    margin: 0 auto;
+    max-width: 360px;
+    position: relative;
+}
+
+.mx-timeline::before {
+    background: linear-gradient(180deg, var(--mx-terracotta), var(--mx-rosa), var(--mx-mustard), var(--mx-green));
+    content: "";
+    height: 100%;
+    left: 18px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    opacity: .4;
+}
+
+.mx-timeline__item {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.6rem;
+    position: relative;
+}
+
+.mx-timeline__item:last-child { padding-bottom: 0; }
+
+.mx-timeline__dot {
+    align-items: center;
+    background: var(--mx-terracotta);
+    border: 3px solid var(--mx-cream);
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 0;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+    z-index: 2;
+    box-shadow: 0 3px 6px rgba(0,0,0,.15);
+}
+
+.mx-timeline__dot svg { color: white; height: 16px; width: 16px; }
+
+.mx-timeline__dot--rosa { background: var(--mx-rosa); }
+.mx-timeline__dot--mustard { background: var(--mx-mustard); }
+.mx-timeline__dot--green { background: var(--mx-green); }
+.mx-timeline__dot--blue { background: var(--mx-blue); }
+.mx-timeline__dot--purple { background: var(--mx-purple); }
+
+.mx-timeline__content { padding-top: .3rem; }
+
+.mx-timeline__time {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+.mx-timeline__title {
+    color: var(--mx-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* Event cards for locations */
+.mx-event-card {
+    background: var(--mx-paper);
+    border: 3px solid var(--mx-cream-dark);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    margin-bottom: 2rem;
+    padding: 2.4rem 1.4rem;
+    position: relative;
+    text-align: center;
+}
+
+.mx-event-card:last-child { margin-bottom: 0; }
+
+.mx-event__icon {
+    color: var(--mx-terracotta);
+    margin-bottom: .6rem;
+}
+
+.mx-event__name {
+    color: var(--mx-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: .5rem;
+}
+
+.mx-event__address {
+    color: var(--mx-ink-soft);
+    font-family: "Outfit", sans-serif;
+    font-size: .84rem;
+    font-style: normal;
+    line-height: 1.6;
+    margin-bottom: .8rem;
+}
+
+.mx-event__time {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    margin-bottom: 1.2rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   7. LO DEMÁS: DRESS CODE & REGALOS
+   ══════════════════════════════════════════════════════════════ */
+.mx-dress-section {
+    background: var(--mx-cream);
+    padding: 3rem 1rem;
+    position: relative;
+}
+
+.mx-dress__card {
+    background: var(--mx-paper);
+    border: 3px solid var(--mx-cream-dark);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    padding: 2.2rem 1.4rem;
+    position: relative;
+    text-align: center;
+}
+
+.mx-dress__subtitle {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.mx-dress__type {
+    color: var(--mx-terracotta);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    font-weight: 800;
+    margin: .3rem 0 .6rem;
+}
+
+.mx-dress__group { margin: .8rem 0; }
+
+.mx-dress__group-title {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.mx-dress__group-text {
+    color: var(--mx-ink-soft);
+    font-size: .82rem;
+    line-height: 1.5;
+}
+
+/* Gifts */
+.mx-gifts-section {
+    background: var(--mx-cream);
+    padding: 3rem 1rem;
+    position: relative;
+}
+
+.mx-gifts__card {
+    background: var(--mx-paper);
+    border: 3px solid var(--mx-cream-dark);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    padding: 2.2rem 1.4rem;
+    position: relative;
+    text-align: center;
+}
+
+.mx-gifts__text {
+    color: var(--mx-ink-soft);
+    font-size: .85rem;
+    line-height: 1.7;
+    margin: .6rem 0;
+}
+
+.mx-gifts__store {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    margin: .8rem 0 1.2rem;
+    text-transform: uppercase;
+}
+
+.mx-gifts__sentiment {
+    color: var(--mx-ink-soft);
+    font-size: .75rem;
+    font-style: italic;
+    margin-top: 1.2rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. RSVP — ANTES DEL FOOTER (Sin opción negativa)
+   ══════════════════════════════════════════════════════════════ */
+.mx-rsvp-section {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.12'/%3E%3C/svg%3E"),
+        linear-gradient(175deg, #B5382A 0%, #8B2318 100%);
+    padding: 4rem 1rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.mx-rsvp__card {
+    background: var(--mx-paper);
+    border: 3px solid var(--mx-cream-dark);
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.25);
+    margin: 0 auto;
+    max-width: 440px;
+    padding: 2.4rem 1.6rem;
+    position: relative;
+    z-index: 2;
+}
+
+.mx-rsvp__subtitle {
+    color: var(--mx-ink-soft);
+    font-size: .85rem;
+    margin-bottom: 1.4rem;
+    text-align: center;
+}
+
+.mx-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.mx-form label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    text-align: left;
+}
+
+.mx-form label span {
+    color: var(--mx-brown);
+    font-family: "Outfit", sans-serif;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.mx-form input[type="text"],
+.mx-form input[type="number"] {
+    background: var(--mx-cream);
+    border: 2px solid var(--mx-cream-dark);
+    border-radius: 4px;
+    color: var(--mx-ink);
+    font-family: "Outfit", sans-serif;
+    font-size: .88rem;
+    padding: .7rem .9rem;
+    transition: border-color .15s;
+    width: 100%;
+}
+
+.mx-form input:focus {
+    border-color: var(--mx-terracotta);
+    outline: none;
+}
+
+.mx-form__hint {
+    color: var(--mx-green-dark);
+    font-size: .75rem;
+    margin-top: .6rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   9. FOOTER CON PAPEL PICADO & CENEFA DE TALAVERA
+   ══════════════════════════════════════════════════════════════ */
+.mx-footer {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)' opacity='.12'/%3E%3C/svg%3E"),
+        linear-gradient(175deg, #9C2E20 0%, #7D1513 100%);
+    color: var(--mx-cream);
+    padding: 0;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+.mx-footer__picado {
+    margin-bottom: 2rem;
+}
+
+.mx-footer__content {
+    padding: 1rem 1rem 2rem;
+}
+
+.mx-footer__phrase {
+    color: var(--mx-mustard);
+    font-family: "Outfit", sans-serif;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .25em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+.mx-footer__names {
+    color: var(--mx-cream);
+    font-family: "Dancing Script", cursive;
+    font-size: clamp(2.6rem, 11vw, 4rem);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 .6rem;
+    position: relative;
+    z-index: 2;
+}
+
+.mx-footer__thanks {
+    color: var(--mx-cream-warm);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1rem, 4.5vw, 1.25rem);
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0 auto 1.5rem;
+    max-width: 420px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Talavera ceramic ribbon border across the footer */
+.mx-footer__talavera-wrap {
+    background: #FAF5EA;
+    border-top: 3px solid #16428F;
+    border-bottom: 3px solid #16428F;
+    box-shadow: 0 4px 14px rgba(0,0,0,.3);
+    margin: 1.5rem 0 0;
+    overflow: hidden;
+    padding: .35rem 0;
+    position: relative;
+}
+
+.mx-footer__talavera-img {
+    display: block;
+    height: 52px;
+    margin: 0 auto;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+
+.mx-footer__bottom-bar {
+    background: #4E0E0A;
+    padding: 1rem;
+    text-align: center;
+}
+
+.mx-footer__credit {
+    color: var(--mx-cream);
+    font-family: "Outfit", sans-serif;
+    font-size: .56rem;
+    letter-spacing: .14em;
+    opacity: .5;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   10. ELEMENTOS FLOTANTES
+   ══════════════════════════════════════════════════════════════ */
+.mx-floating-stickers-layer {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+}
+
+.mx-floating-sticker {
+    pointer-events: auto;
+    position: absolute;
+    user-select: none;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.18));
+    transition: transform .25s ease;
+    cursor: default;
+}
+
+.mx-floating-sticker:hover {
+    transform: scale(1.12) rotate(var(--rot-hover, 5deg)) !important;
+}
+
+@keyframes mx-float-gentle {
+    0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50% { transform: translateY(-12px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+}
+
+@keyframes mx-sway-subtle {
+    0%, 100% { transform: rotate(var(--r1, -4deg)); }
+    50% { transform: rotate(var(--r2, 4deg)); }
+}
+
+.mx-float-anim-1 { animation: mx-float-gentle 4.5s ease-in-out infinite; }
+.mx-float-anim-2 { animation: mx-float-gentle 5.8s ease-in-out infinite 1s; }
+.mx-float-anim-3 { animation: mx-float-gentle 5.2s ease-in-out infinite 2s; }
+.mx-float-anim-4 { animation: mx-float-gentle 6.4s ease-in-out infinite 1.5s; }
+
+/* ── General Buttons & Accents ─────────────────────────────── */
+.mx-btn {
+    align-items: center;
+    background: var(--mx-terracotta);
+    border: 2px solid var(--mx-terracotta-deep);
+    border-radius: 4px;
+    box-shadow: 0 3px 0 var(--mx-terracotta-deep);
+    color: var(--mx-cream);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "Outfit", sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    gap: .4rem;
+    justify-content: center;
+    letter-spacing: .14em;
+    padding: .8rem 1.6rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .15s, box-shadow .15s;
+}
+
+.mx-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 0 var(--mx-terracotta-deep); }
+.mx-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--mx-terracotta-deep); }
+
+.mx-btn--rosa { background: var(--mx-rosa); border-color: var(--mx-rosa-hot); box-shadow: 0 3px 0 var(--mx-rosa-hot); }
+.mx-btn--blue { background: var(--mx-blue); border-color: #122F6E; box-shadow: 0 3px 0 #122F6E; }
+.mx-btn--gold { background: var(--mx-gold); border-color: #9A7718; box-shadow: 0 3px 0 #9A7718; color: var(--mx-ink); }
+
+/* Floating action buttons (Music / WhatsApp) */
+.mx-fab {
+    align-items: center;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    height: 46px;
+    justify-content: center;
+    position: fixed;
+    transition: transform .2s;
+    width: 46px;
+    z-index: 100;
+}
+
+.mx-fab:hover { transform: scale(1.08); }
+.mx-fab--music { background: var(--mx-ink); bottom: 1rem; left: 1rem; }
+.mx-fab--whatsapp { background: #25D366; bottom: 1rem; right: 1rem; }
+.mx-fab--music.is-playing svg { animation: mx-spin 3s linear infinite; }
+
+@keyframes mx-spin { to { transform: rotate(360deg); } }
+
+/* Papel picado sway */
+.mx-picado-flag {
+    animation: mx-sway-subtle var(--dur, 3.5s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    transform-origin: top center;
+}
+
+/* Floral frame */
+.mx-floral-frame {
+    inset: -20px;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+}
+
+.mx-floral-frame svg {
+    height: 100%;
+    width: 100%;
+}
+
+/* Section Headings */
+.mx-heading {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.mx-heading__kicker {
+    color: var(--mx-terracotta);
+    font-family: "Outfit", sans-serif;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .3em;
+    margin-bottom: .3rem;
+    text-transform: uppercase;
+}
+
+.mx-heading__title {
+    color: var(--mx-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: .02em;
+    line-height: 1.2;
+}
+
+.mx-heading--cream .mx-heading__kicker { color: var(--mx-mustard); }
+.mx-heading--cream .mx-heading__title { color: var(--mx-cream); }
+
+/* Scallop edge */
+.mx-scallop {
+    height: 18px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 3;
+}
+.mx-scallop--top { top: -1px; }
+.mx-scallop--bottom { bottom: -1px; }
+.mx-scallop svg { display: block; height: 100%; width: 100%; }
+
+.mx-container {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 480px;
+    padding: 0 1rem;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+/* Scroll reveal */
+.mx-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease-out, transform .6s ease-out;
+}
+.mx-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.mx-reveal--d1 { transition-delay: .1s; }
+.mx-reveal--d2 { transition-delay: .2s; }
+.mx-reveal--d3 { transition-delay: .3s; }
+
+/* Responsive adjustments */
+@media (min-width: 480px) {
+    .mx-container { max-width: 520px; }
+}
+
+@media (min-width: 768px) {
+    .mx-container { max-width: 580px; }
+    .mx-envelope-stage { max-width: 440px; }
+    .mx-envelope { height: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mx-reveal { transition: none; opacity: 1; transform: none; }
+    .mx-picado-flag, .mx-wax-seal, .mx-float-anim-1, .mx-float-anim-2, .mx-float-anim-3, .mx-float-anim-4, .mx-calendar__heart-badge { animation: none; }
+}

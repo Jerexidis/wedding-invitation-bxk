@@ -324,6 +324,18 @@ const invitations = [
         eventDate: '2026-12-26T15:00:00-06:00',
     },
 
+    {
+        slug: 'plantilla-boda-mexicana',
+        title: 'Plantilla Boda | Mexicana Artesanal',
+        component: lazy(() => import('./plantilla-boda-mexicana/index.jsx')),
+        enabled: true,
+        isDemo: true,
+        portfolioPriority: 7,
+        eventType: 'boda',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-10-18T17:00:00-06:00',
+    },
+
 ]
 
 // Solo invitaciones activas

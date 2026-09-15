@@ -151,4 +151,9 @@ export const ogData = {
         description: 'Acompáñanos a celebrar 25 años de amor el sábado 26 de diciembre de 2026.',
         image: '/invitations/vero-y-juan/img/og-preview.jpg',
     },
+    'plantilla-boda-mexicana': {
+        title: 'Plantilla Boda | Mexicana Artesanal 🇲🇽',
+        description: 'Invitación de boda con estética mexicana artesanal: papel picado, flores, texturas y colores vibrantes.',
+        image: '/invitations/plantilla-boda-mexicana/img/og-preview.jpg',
+    },
 }
