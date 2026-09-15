@@ -274,7 +274,7 @@ function RotuloSparkle({ side = 'left' }) {
    ═══════════════════════════════════════════════════════════════ */
 function EnvelopeScreen({ onOpen, isOpening }) {
     return (
-        <section className="mx-envelope-screen">
+        <section className={`mx-envelope-screen${isOpening ? ' is-opening' : ''}`}>
             <div className="mx-envelope-screen__garland">
                 <PapelPicadoGarland large />
             </div>
@@ -346,7 +346,7 @@ function EnvelopeScreen({ onOpen, isOpening }) {
                     {/* Realistic Wax Seal Image from User */}
                     <button
                         className="mx-wax-seal"
-                        onClick={onOpen}
+                        onClick={(e) => { e.stopPropagation(); onOpen(); }}
                         type="button"
                         aria-label="Abrir invitación con sello de cera"
                     >
@@ -916,8 +916,8 @@ export default function MexicanWeddingTemplate() {
             setIsOpen(true)
             setTimeout(() => {
                 document.getElementById('mx-rotulo')?.scrollIntoView({ behavior: 'smooth' })
-            }, 150)
-        }, 750)
+            }, 100)
+        }, 1850)
     }
 
     const toggleMusic = async () => {

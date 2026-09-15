@@ -30,20 +30,12 @@
 }
 
 /* ── Base ──────────────────────────────────────────────────── */
-html, body {
-    overflow-x: hidden;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 .mx-template {
     background: var(--mx-cream);
     color: var(--mx-ink);
     font-family: "Outfit", "Segoe UI", sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
-    max-width: 100vw;
     position: relative;
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
@@ -88,7 +80,7 @@ html, body {
     min-height: 100svh;
     padding: 2rem 1rem;
     position: relative;
-    overflow: hidden;
+    overflow-x: clip;
     z-index: 200;
 }
 
@@ -119,9 +111,10 @@ html, body {
     box-shadow: 0 16px 36px rgba(0,0,0,.45), 0 4px 10px rgba(0,0,0,.3);
     cursor: pointer;
     transition: transform .3s ease;
+    transform-style: preserve-3d;
 }
 
-.mx-envelope:hover {
+.mx-envelope:hover:not(.is-opening) {
     transform: translateY(-4px) scale(1.01);
 }
 
@@ -132,6 +125,7 @@ html, body {
     background: linear-gradient(135deg, #C2533A 0%, #9C2E20 100%);
     border-radius: 8px;
     overflow: hidden;
+    z-index: 1;
 }
 
 .mx-envelope__back-pattern {
@@ -159,12 +153,24 @@ html, body {
     justify-content: center;
     padding: 1.5rem;
     text-align: center;
-    transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 2;
+    z-index: 3;
+    transform: translateY(0);
 }
 
+/* Card rises AFTER triangle flap has opened (starts at 0.65s, rises gently peek-out) */
 .mx-envelope.is-opening .mx-envelope__card {
-    transform: translateY(-85px);
+    animation: mx-card-rise 0.8s cubic-bezier(0.2, 0.85, 0.25, 1) 0.65s forwards;
+}
+
+@keyframes mx-card-rise {
+    0% {
+        transform: translateY(0);
+        box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    }
+    100% {
+        transform: translateY(-75px);
+        box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
 }
 
 .mx-envelope__card-subtitle {
@@ -197,7 +203,7 @@ html, body {
 .mx-envelope__pocket {
     position: absolute;
     inset: 0;
-    z-index: 3;
+    z-index: 4;
     pointer-events: none;
 }
 
@@ -207,7 +213,7 @@ html, body {
     filter: drop-shadow(0 -2px 6px rgba(0,0,0,.15));
 }
 
-/* Flap at top (folds down over pocket, flips up when opening) */
+/* Flap at top (folds down over pocket, flips up FIRST when opening) */
 .mx-envelope__flap {
     position: absolute;
     top: 0;
@@ -215,13 +221,32 @@ html, body {
     right: 0;
     height: 130px;
     transform-origin: top center;
-    transition: transform .7s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 4;
+    transform-style: preserve-3d;
+    z-index: 5;
+    pointer-events: none;
 }
 
+/* Triangle flap unfolds open FIRST (0s to 0.65s) */
 .mx-envelope.is-opening .mx-envelope__flap {
-    transform: rotateX(180deg);
-    z-index: 1;
+    animation: mx-flap-open 0.65s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes mx-flap-open {
+    0% {
+        transform: rotateX(0deg);
+        z-index: 5;
+    }
+    49% {
+        z-index: 5;
+    }
+    50% {
+        transform: rotateX(90deg);
+        z-index: 2;
+    }
+    100% {
+        transform: rotateX(180deg);
+        z-index: 2;
+    }
 }
 
 .mx-envelope__flap-svg {
@@ -246,12 +271,19 @@ html, body {
     transform: translate(-50%, -50%);
     width: 78px;
     z-index: 10;
-    transition: transform .2s ease;
+    transition: transform .25s ease, opacity .25s ease;
     animation: mx-seal-pulse 2.2s infinite ease-in-out;
 }
 
 .mx-wax-seal:hover {
     transform: translate(-50%, -50%) scale(1.1);
+}
+
+.mx-envelope.is-opening .mx-wax-seal {
+    animation: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.65);
+    pointer-events: none;
 }
 
 .mx-wax-seal__img {
@@ -276,6 +308,23 @@ html, body {
     margin-top: 1.2rem;
     text-align: center;
     z-index: 10;
+    transition: opacity .35s ease;
+}
+
+.mx-envelope-screen.is-opening .mx-envelope-cta {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mx-envelope-screen.is-opening {
+    animation: mx-envelope-screen-fade 0.35s ease-out 1.55s forwards;
+}
+
+@keyframes mx-envelope-screen-fade {
+    to {
+        opacity: 0;
+        transform: scale(1.02);
+    }
 }
 
 .mx-envelope-cta__hint {
