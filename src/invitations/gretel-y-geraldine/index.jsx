@@ -55,6 +55,19 @@ const STORY_CONFIG = {
             icon: PartyPopper,
         },
     ],
+    dressCode: {
+        title: 'Formal',
+        description: 'Una noche mágica para celebrar juntos.',
+        reservedTitle: 'El color azul está reservado para las quinceañeras',
+        reservedCopy: 'Agradecemos que elijas cualquier otro color para tus prendas y acompañar a Gretel y Geraldine en este día tan especial.',
+        colors: [
+            { label: 'Azul noche', color: '#0b1d3a' },
+            { label: 'Azul marino', color: '#1e3a8a' },
+            { label: 'Azul rey', color: '#2563eb' },
+            { label: 'Azul océano', color: '#0284c7' },
+            { label: 'Azul cielo', color: '#38bdf8' },
+        ],
+    },
     gifts: {
         title: 'El mejor regalo',
         copy: 'Tu presencia y tus buenos deseos harán que esta celebración sea todavía más especial para nosotras.',
@@ -504,6 +517,62 @@ function Gallery({ config }) {
     )
 }
 
+function DressCode({ config }) {
+    return (
+        <section className="story-section story-dress" data-story-section>
+            <FloatingSticker
+                src="/invitations/gretel-y-geraldine/img/decor-lanterns.webp"
+                className="story-float--dress-lanterns"
+                delay={-1.4}
+            />
+            <div className="story-container">
+                <SectionHeading kicker="Una noche mágica" light>
+                    Código de<br /><em>vestimenta</em>
+                </SectionHeading>
+
+                <article className="story-dress-card" data-card>
+                    <span className="story-dress-card__icon" aria-hidden="true">
+                        <Crown size={28} />
+                    </span>
+                    <span className="story-dress-card__badge">Etiqueta</span>
+                    <h3 className="story-dress-card__style">{config.dressCode.title}</h3>
+                    <p className="story-dress-card__copy">{config.dressCode.description}</p>
+
+                    <div className="story-dress-card__reserved">
+                        <div className="story-dress-card__reserved-pill">
+                            <span className="story-dress-card__reserved-dot" aria-hidden="true" />
+                            <span>Reserva de color</span>
+                        </div>
+                        <h4 className="story-dress-card__reserved-title">
+                            {config.dressCode.reservedTitle}
+                        </h4>
+                        <p className="story-dress-card__reserved-copy">
+                            {config.dressCode.reservedCopy}
+                        </p>
+                        <div
+                            className="story-dress-palette"
+                            aria-label="Tonalidades de azul reservadas para las quinceañeras"
+                        >
+                            {config.dressCode.colors.map((swatch) => (
+                                <span
+                                    key={swatch.label}
+                                    className="story-dress-palette__swatch"
+                                    style={{ '--swatch-bg': swatch.color }}
+                                    title={swatch.label}
+                                    aria-label={swatch.label}
+                                />
+                            ))}
+                        </div>
+                        <span className="story-dress-palette__caption">
+                            Tonalidades de azul reservadas
+                        </span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    )
+}
+
 function Gifts({ config }) {
     return (
         <section className="story-section story-gifts" data-story-section>
@@ -609,6 +678,7 @@ export default function GretelGeraldineXV({ hideGallery = false }) {
             <Itinerary config={STORY_CONFIG} />
             {!hideGallery && <Gallery config={STORY_CONFIG} />}
             <div className="story-closing-scene">
+                <DressCode config={STORY_CONFIG} />
                 <Gifts config={STORY_CONFIG} />
                 <Footer config={STORY_CONFIG} />
             </div>
