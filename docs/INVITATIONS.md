@@ -34,7 +34,7 @@ the minimum invitation-specific files needed for a task.
 | `gretel-y-geraldine` | standalone-custom | xv | none | 4 files | 9.09 MB |
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 7.40 MB |
 | `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 0.84 MB |
-| `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.62 MB |
+| `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.88 MB |
 | `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.01 MB |
 
 ## Targeted context
