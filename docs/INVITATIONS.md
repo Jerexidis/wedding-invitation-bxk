@@ -33,16 +33,10 @@ the minimum invitation-specific files needed for a task.
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 6.59 MB |
 | `gretel-y-geraldine` | standalone-custom | xv | none | 4 files | 9.09 MB |
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 7.40 MB |
-<<<<<<< HEAD
 | `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 1.72 MB |
-| `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.62 MB |
-| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.53 MB |
-| `menu-desayunos` | standalone-custom | menu | none | 2 files | 2.22 MB |
-=======
-| `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 0.84 MB |
 | `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.88 MB |
-| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.01 MB |
->>>>>>> f8960fe3dcbfd3bc4f53caad45a2aa45c8aa9d46
+| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.53 MB |
+| `menu-desayunos` | standalone-custom | menu | none | 2 files | 2.21 MB |
 
 ## Targeted context
 

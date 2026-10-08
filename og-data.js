@@ -157,8 +157,8 @@ export const ogData = {
         image: '/invitations/plantilla-boda-mexicana/img/og-preview.jpg',
     },
     'menu-desayunos': {
-        title: 'Menú de desayunos | Raíz',
-        description: 'Desayunos caseros mexicanos preparados en Raíz. Consulta el menú y haz tu pedido por WhatsApp.',
+        title: 'Raíz · Desayunos caseros',
+        description: 'Menú de desayunos caseros mexicanos de Raíz. Consulta nuestros platillos y haz tu pedido por WhatsApp.',
         image: '/invitations/menu-desayunos/img/og-preview.jpg',
     },
 }
