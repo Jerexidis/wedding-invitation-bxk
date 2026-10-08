@@ -26,6 +26,22 @@
     </div>
 </header>
 
+<!-- CUENTA REGRESIVA DE INAUGURACIÓN -->
+<section class="opening-countdown" aria-labelledby="opening-countdown-title" data-deadline="2026-10-12T09:00:00-06:00">
+    <div class="opening-countdown__inner">
+        <p class="opening-countdown__eyebrow">Gran inauguración</p>
+        <h2 class="opening-countdown__title" id="opening-countdown-title">¡Ya casi abrimos!</h2>
+        <p class="opening-countdown__date">Lunes 12 de octubre · 9:00 a. m.</p>
+        <div class="opening-countdown__grid" aria-label="Tiempo restante para la inauguración">
+            <div class="opening-countdown__unit"><strong data-countdown-days>00</strong><span>Días</span></div>
+            <div class="opening-countdown__unit"><strong data-countdown-hours>00</strong><span>Horas</span></div>
+            <div class="opening-countdown__unit"><strong data-countdown-minutes>00</strong><span>Minutos</span></div>
+            <div class="opening-countdown__unit"><strong data-countdown-seconds>00</strong><span>Segundos</span></div>
+        </div>
+        <p class="opening-countdown__status" role="status" hidden>¡Ya inauguramos! Te esperamos en Raíz.</p>
+    </div>
+</section>
+
 <!-- SOPAS -->
 <div class="scallop scallop--into-rosa"></div>
 <section class="section section--rosa" id="sopas">
@@ -212,6 +228,7 @@
         </div>
         <div class="contact-details reveal" id="datos-local">
             <div class="contact-detail"><span>Pedidos y contacto</span><a href="tel:+524499750321">449-975-03-21</a></div>
+            <div class="contact-detail contact-detail--hours"><span>Horario del local</span><strong>Lunes a viernes<br />9:00 a. m. a 2:00 p. m.</strong></div>
             <div class="contact-detail contact-detail--address">
                 <span>Dirección del local</span>
                 <strong>Calle 1810 #309, colonia Del Trabajo, Aguascalientes</strong>
@@ -229,6 +246,39 @@
 </footer>
 
 <script>
+// Cuenta regresiva hasta la apertura en horario de Aguascalientes (UTC-6).
+const openingCountdown = document.querySelector('.opening-countdown');
+if (openingCountdown) {
+    const openingTime = new Date(openingCountdown.dataset.deadline).getTime();
+    const countdownUnits = {
+        days: openingCountdown.querySelector('[data-countdown-days]'),
+        hours: openingCountdown.querySelector('[data-countdown-hours]'),
+        minutes: openingCountdown.querySelector('[data-countdown-minutes]'),
+        seconds: openingCountdown.querySelector('[data-countdown-seconds]'),
+    };
+    const countdownGrid = openingCountdown.querySelector('.opening-countdown__grid');
+    const countdownStatus = openingCountdown.querySelector('.opening-countdown__status');
+    const updateOpeningCountdown = () => {
+        const remaining = openingTime - Date.now();
+        if (remaining <= 0) {
+            countdownGrid.hidden = true;
+            countdownStatus.hidden = false;
+            openingCountdown.classList.add('is-open');
+            return;
+        }
+        const days = Math.floor(remaining / 86400000);
+        const hours = Math.floor((remaining % 86400000) / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        countdownUnits.days.textContent = String(days).padStart(2, '0');
+        countdownUnits.hours.textContent = String(hours).padStart(2, '0');
+        countdownUnits.minutes.textContent = String(minutes).padStart(2, '0');
+        countdownUnits.seconds.textContent = String(seconds).padStart(2, '0');
+    };
+    updateOpeningCountdown();
+    window.setInterval(updateOpeningCountdown, 1000);
+}
+
 // Scroll Reveal
 const revealEls = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver((entries) => {
