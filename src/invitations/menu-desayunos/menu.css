@@ -875,3 +875,11 @@ body { font-family: 'DM Sans', Arial, sans-serif; }
 .opening-countdown__status[hidden],
 .opening-countdown__grid[hidden] { display: none; }
 .contact-detail--hours strong { line-height: 1.45; }
+.opening-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}

@@ -321,12 +321,88 @@
             };
             const countdownGrid = openingCountdown.querySelector('.opening-countdown__grid');
             const countdownStatus = openingCountdown.querySelector('.opening-countdown__status');
+            let openingCelebrated = openingTime <= Date.now();
+
+        const launchOpeningConfetti = () => {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.className = 'opening-confetti';
+            canvas.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(canvas);
+
+            const context = canvas.getContext('2d');
+            if (!context) {
+                canvas.remove();
+                return;
+            }
+
+            const colors = ['#63351E', '#A9572B', '#C8793F', '#687B57', '#F4ECDF'];
+            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+            let width = 0;
+            let height = 0;
+            let frame = 0;
+            const resizeCanvas = () => {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = Math.round(width * pixelRatio);
+                canvas.height = Math.round(height * pixelRatio);
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            };
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const pieces = Array.from({ length: 120 }, () => ({
+                x: Math.random() * width,
+                y: -Math.random() * height * .35,
+                size: 5 + Math.random() * 6,
+                length: 7 + Math.random() * 8,
+                speedX: (Math.random() - .5) * 2.8,
+                speedY: 1.8 + Math.random() * 3.2,
+                rotation: Math.random() * Math.PI,
+                spin: (Math.random() - .5) * .16,
+                color: colors[Math.floor(Math.random() * colors.length)],
+            }));
+            const startedAt = performance.now();
+
+            const drawConfetti = (now) => {
+                context.clearRect(0, 0, width, height);
+                const elapsed = now - startedAt;
+                pieces.forEach((piece) => {
+                    piece.x += piece.speedX;
+                    piece.y += piece.speedY;
+                    piece.speedY += .035;
+                    piece.rotation += piece.spin;
+                    if (piece.y > height + 20) return;
+                    context.save();
+                    context.translate(piece.x, piece.y);
+                    context.rotate(piece.rotation);
+                    context.fillStyle = piece.color;
+                    context.fillRect(-piece.size / 2, -piece.length / 2, piece.size, piece.length);
+                    context.restore();
+                });
+
+                if (elapsed < 4500 && pieces.some((piece) => piece.y <= height + 20)) {
+                    frame = window.requestAnimationFrame(drawConfetti);
+                } else {
+                    window.cancelAnimationFrame(frame);
+                    window.removeEventListener('resize', resizeCanvas);
+                    canvas.remove();
+                }
+            };
+            frame = window.requestAnimationFrame(drawConfetti);
+        };
+
             const updateOpeningCountdown = () => {
                 const remaining = openingTime - Date.now();
                 if (remaining <= 0) {
                     countdownGrid.hidden = true;
                     countdownStatus.hidden = false;
                     openingCountdown.classList.add('is-open');
+                    if (!openingCelebrated) {
+                        openingCelebrated = true;
+                        launchOpeningConfetti();
+                    }
                     return;
                 }
                 const days = Math.floor(remaining / 86400000);
