@@ -33,9 +33,10 @@ the minimum invitation-specific files needed for a task.
 | `baby-ernesto` | standalone-custom | babyshower | whatsapp | 3 files | 6.59 MB |
 | `gretel-y-geraldine` | standalone-custom | xv | none | 4 files | 9.09 MB |
 | `eiza-camila` | standalone-custom | xv | mixed | 4 files | 7.40 MB |
-| `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 0.84 MB |
+| `ivanna-flores` | standalone-custom | xv | whatsapp | 4 files | 1.72 MB |
 | `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.62 MB |
-| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.01 MB |
+| `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.53 MB |
+| `menu-desayunos` | standalone-custom | menu | none | 2 files | 2.22 MB |
 
 ## Targeted context
 
@@ -253,6 +254,13 @@ the minimum invitation-specific files needed for a task.
 - Flags: demo, audio, calendar
 - Design brief: `src/invitations/plantilla-boda-mexicana/DESIGN.md`
 - Source: `src/invitations/plantilla-boda-mexicana/DESIGN.md`, `src/invitations/plantilla-boda-mexicana/index.jsx`, `src/invitations/plantilla-boda-mexicana/mexican-wedding.css`
+
+### menu-desayunos
+
+- Entry: `src/invitations/menu-desayunos/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: gallery
+- Source: `src/invitations/menu-desayunos/index.jsx`, `src/invitations/menu-desayunos/menu.css`
 
 ## Refresh
 

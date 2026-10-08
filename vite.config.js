@@ -27,6 +27,10 @@ export default defineConfig(async ({ command }) => {
     },
     build: {
       rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          menuDesayunos: path.resolve(__dirname, 'src/invitations/menu-desayunos/index.html'),
+        },
         output: {
           manualChunks: {
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
@@ -37,3 +41,4 @@ export default defineConfig(async ({ command }) => {
     },
   }
 })
+

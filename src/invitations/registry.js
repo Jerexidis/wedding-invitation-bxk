@@ -336,6 +336,16 @@ const invitations = [
         eventDate: '2026-10-18T17:00:00-06:00',
     },
 
+    {
+        slug: 'menu-desayunos',
+        title: 'Menú de desayunos | Raíz',
+        component: lazy(() => import('./menu-desayunos/index.jsx')),
+        enabled: true,
+        eventType: 'menu',
+        rsvpMode: 'none',
+        excludeFromPortfolio: true,
+    },
+
 ]
 
 // Solo invitaciones activas
