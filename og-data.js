@@ -160,5 +160,8 @@ export const ogData = {
         title: 'Raíz · Desayunos caseros',
         description: 'Menú de desayunos caseros mexicanos de Raíz. Consulta nuestros platillos y haz tu pedido por WhatsApp.',
         image: '/invitations/menu-desayunos/img/og-preview.jpg',
+        imageWidth: 1080,
+        imageHeight: 1080,
+        twitterCard: 'summary',
     },
 }

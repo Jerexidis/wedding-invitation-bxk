@@ -38,6 +38,9 @@ export default function middleware(request) {
     const origin = url.origin                                     // e.g. https://invita-ya.com
     const canonicalUrl = `${origin}/i/${slug}`
     const imageUrl = `${origin}${og.image}`
+    const imageWidth = og.imageWidth || 1200
+    const imageHeight = og.imageHeight || 630
+    const twitterCard = og.twitterCard || 'summary_large_image'
 
     const html = `<!DOCTYPE html>
 <html lang="es">
@@ -50,12 +53,12 @@ export default function middleware(request) {
     <meta property="og:title"       content="${og.title}" />
     <meta property="og:description" content="${og.description}" />
     <meta property="og:image"       content="${imageUrl}" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="${imageWidth}" />
+    <meta property="og:image:height" content="${imageHeight}" />
     <meta property="og:url"         content="${canonicalUrl}" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:card"        content="${twitterCard}" />
     <meta name="twitter:title"       content="${og.title}" />
     <meta name="twitter:description" content="${og.description}" />
     <meta name="twitter:image"       content="${imageUrl}" />
