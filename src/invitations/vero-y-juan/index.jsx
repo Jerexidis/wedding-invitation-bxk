@@ -19,6 +19,7 @@ const EVENT_DATE = '2026-12-26T15:00:00-06:00'
 const AUDIO = `${BASE}/audio/eres-toda-una-mujer-bxs.mp3`
 
 const photos = Array.from({ length: 6 }, (_, index) => `${BASE}/img/photo-${index + 1}.webp`)
+const OPENING_PHOTO = `${BASE}/img/opening-cover.webp`
 
 const events = [
     {
@@ -111,7 +112,7 @@ function MusicControl({ active }) {
 function Opening({ onOpen }) {
     return (
         <div className="ays-opening">
-            <img src={photos[0]} alt="Vero y Juan el día de su boda" />
+            <img src={OPENING_PHOTO} alt="Vero y Juan celebrando 25 años" />
             <div className="ays-opening__veil" />
             <div className="ays-opening__content">
                 <p>Celebramos 25 años</p>
@@ -214,7 +215,7 @@ function SaveTheDate() {
     return (
         <section className="ays-save-date">
             <div className="ays-save-date__photo" data-reveal>
-                <img src={photos[2]} alt="Vero y Juan a través de los años" loading="lazy" />
+                <img src={photos[0]} alt="Vero y Juan el día de su boda" loading="lazy" />
             </div>
             <div className="ays-save-date__card" data-reveal>
                 <p>Una fecha para celebrar</p>
