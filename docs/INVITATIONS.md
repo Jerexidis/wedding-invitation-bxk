@@ -37,6 +37,7 @@ the minimum invitation-specific files needed for a task.
 | `vero-y-juan` | standalone-custom | boda | none | 3 files | 4.88 MB |
 | `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.53 MB |
 | `menu-desayunos` | standalone-custom | menu | none | 2 files | 2.17 MB |
+| `carlos-juaquin` | standalone-custom | bautizo | whatsapp | 3 files | 1.53 MB |
 
 ## Targeted context
 
@@ -261,6 +262,14 @@ the minimum invitation-specific files needed for a task.
 - Architecture: `standalone-custom`
 - Flags: gallery
 - Source: `src/invitations/menu-desayunos/index.jsx`, `src/invitations/menu-desayunos/menu.css`
+
+### carlos-juaquin
+
+- Entry: `src/invitations/carlos-juaquin/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: calendar
+- Design brief: `src/invitations/carlos-juaquin/DESIGN.md`
+- Source: `src/invitations/carlos-juaquin/config.json`, `src/invitations/carlos-juaquin/DESIGN.md`, `src/invitations/carlos-juaquin/index.jsx`
 
 ## Refresh
 

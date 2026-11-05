@@ -590,7 +590,7 @@
         "files": 20,
         "images": 18,
         "audio": 1,
-        "bytes": 18099560,
+        "bytes": 18099563,
         "megabytes": 17.26
       }
     },
@@ -620,7 +620,7 @@
         "files": 8,
         "images": 3,
         "audio": 2,
-        "bytes": 9085519,
+        "bytes": 9085522,
         "megabytes": 8.66
       }
     },
@@ -649,7 +649,7 @@
         "files": 15,
         "images": 13,
         "audio": 1,
-        "bytes": 7816169,
+        "bytes": 7816172,
         "megabytes": 7.45
       }
     },
@@ -678,7 +678,7 @@
         "files": 17,
         "images": 15,
         "audio": 1,
-        "bytes": 8265680,
+        "bytes": 8265683,
         "megabytes": 7.88
       }
     },
@@ -913,8 +913,37 @@
         "files": 17,
         "images": 17,
         "audio": 0,
-        "bytes": 2272076,
+        "bytes": 2272084,
         "megabytes": 2.17
+      }
+    },
+    {
+      "slug": "carlos-juaquin",
+      "title": "Bautizo | Carlos Joaquín",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": "bautizo",
+      "eventDate": "2026-12-05T15:00:00",
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": "whatsapp",
+        "gallery": false,
+        "audio": false,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/carlos-juaquin/config.json",
+        "src/invitations/carlos-juaquin/DESIGN.md",
+        "src/invitations/carlos-juaquin/index.jsx"
+      ],
+      "designBrief": "src/invitations/carlos-juaquin/DESIGN.md",
+      "assets": {
+        "files": 4,
+        "images": 4,
+        "audio": 0,
+        "bytes": 1601616,
+        "megabytes": 1.53
       }
     }
   ]

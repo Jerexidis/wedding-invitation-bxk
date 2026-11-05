@@ -346,6 +346,16 @@ const invitations = [
         excludeFromPortfolio: true,
     },
 
+    {
+        slug: 'carlos-juaquin',
+        title: 'Bautizo | Carlos Joaquín',
+        component: lazy(() => import('./carlos-juaquin/index.jsx')),
+        enabled: true,
+        eventType: 'bautizo',
+        rsvpMode: 'whatsapp',
+        eventDate: '2026-12-05T15:00:00',
+    },
+
 ]
 
 // Solo invitaciones activas

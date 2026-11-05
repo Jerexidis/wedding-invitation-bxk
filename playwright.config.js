@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test'
 
+const previewPort = process.env.PLAYWRIGHT_PREVIEW_PORT || '4174'
+
 export default defineConfig({
     testDir: './tests',
     timeout: 30_000,
@@ -9,18 +11,19 @@ export default defineConfig({
     workers: 1,
     reporter: 'line',
     use: {
-        baseURL: 'http://127.0.0.1:4173',
+        baseURL: `http://127.0.0.1:${previewPort}`,
         browserName: 'chromium',
+        channel: 'chrome',
         viewport: { width: 390, height: 844 },
         reducedMotion: 'reduce',
         screenshot: 'only-on-failure',
         trace: 'retain-on-failure',
     },
     webServer: {
-        command: 'npm run preview -- --host 127.0.0.1 --port 4173 --strictPort',
-        url: 'http://127.0.0.1:4173',
-        // El panel local ya suele tener Vite abierto en este puerto. Reutilizarlo
-        // evita que la revisión falle antes de ejecutar las pruebas de rutas.
+        command: `npm run preview -- --host 127.0.0.1 --port ${previewPort} --strictPort`,
+        url: `http://127.0.0.1:${previewPort}`,
+        // Mantener la prueba fuera del puerto de preview local (4173) evita choques
+        // con servidores que ya estén abiertos durante la revisión.
         reuseExistingServer: true,
         timeout: 30_000,
     },

@@ -1,0 +1,108 @@
+{
+    "slug": "carlos-juaquin",
+    "eventType": "bautizo",
+    "title": "Bautizo | Carlos Joaquín",
+    "seo": {
+        "description": "La felicidad se comparte y nosotros queremos compartir la nuestra: ¡Carlos Joaquín se bautiza! ¡Te esperamos para festejar!",
+        "shareImage": "og-preview.jpg"
+    },
+    "theme": {
+        "primaryHue": 205,
+        "primarySat": 55,
+        "accentHue": 45,
+        "fontBody": "Nunito Sans",
+        "fontDisplay": "Cormorant Garamond"
+    },
+    "hero": {
+        "subtitle": "Mi Bautizo",
+        "name": "Carlos Joaquín",
+        "date": "5 DE DICIEMBRE DE 2026",
+        "backgroundImage": "jardin-rivera.png",
+        "song": ""
+    },
+    "intro": {
+        "message": "La felicidad se comparte y nosotros queremos compartir la nuestra:",
+        "label": "Mis Papás",
+        "parent1": "Carlos Yañez",
+        "parent2": "Teresa Juarez",
+        "closingMessage": "Tienen el honor de invitarte al bautizo de su hijo"
+    },
+    "padrinos": {
+        "enabled": true,
+        "label": "Mis Padrinos",
+        "subtitle": "Con el cariño de",
+        "padrino1": "Enrique Yañez",
+        "padrino2": "Karen Yañez"
+    },
+    "countdown": {
+        "targetDate": "2026-12-05T15:00:00",
+        "displayDate": "sábado, 5 de diciembre",
+        "displayYear": "2026"
+    },
+    "calendar": {
+        "title": "Bautizo | Carlos Joaquín",
+        "description": "¡Celebra con nosotros!",
+        "location": "Jardín Rivera, Aguascalientes",
+        "startDateTime": "20261205T210000",
+        "endDateTime": "20261206T000000",
+        "outlookStart": "2026-12-05T21:00:00",
+        "outlookEnd": "2026-12-06T00:00:00",
+        "icsFilename": "carlos-juaquin.ics",
+        "icsProdId": "Bautizo | Carlos Joaquín"
+    },
+    "events": [
+        {
+            "icon": "church",
+            "title": "Ceremonia Religiosa",
+            "location": "Iglesia",
+            "address": "Av. Heroico Colegio Militar 709, Col. del Trabajo, 20180 Aguascalientes, Ags.",
+            "time": "Horario por confirmar",
+            "mapLink": "https://maps.app.goo.gl/gDi76LM6EfGt52n16"
+        },
+        {
+            "icon": "party",
+            "title": "Recepción",
+            "location": "Jardín Rivera",
+            "address": "Aguascalientes, Ags.",
+            "time": "15:00",
+            "mapLink": "https://maps.app.goo.gl/XQCTsxREMMzkeBU56?g_st=aw"
+        }
+    ],
+    "dressCode": {
+        "enabled": false,
+        "type": "Formal",
+        "image": "dresscode-icon.png"
+    },
+    "gallery": {
+        "enabled": false,
+        "photos": []
+    },
+    "gifts": {
+        "enabled": true,
+        "title": "Un detalle con cariño",
+        "message": "Tu presencia es lo más importante para nosotros, pero si deseas tener un detalle conmigo:",
+        "type": "envelope",
+        "envelopeText": "Se agradece cualquier detalle",
+        "envelopeDescription": "Será recibido con muchísimo cariño y gratitud.",
+        "link": "",
+        "linkText": "Ver Mesa de Regalos"
+    },
+    "itinerary": {
+        "enabled": false,
+        "items": []
+    },
+    "rsvp": {
+        "mode": "whatsapp",
+        "whatsappNumber": "4493950472",
+        "whatsappConfirmMessage": "¡Hola! Soy {name}. Confirmo mi asistencia al bautizo de Carlos Joaquín para {guests} persona(s).",
+        "whatsappDeclineMessage": "Hola! Soy {name}. Lamentablemente no podré asistir.",
+        "deadline": "Cel para confirmar asistencia",
+        "directMessage": {
+            "enabled": false
+        }
+    },
+    "footer": {
+        "name": "Carlos Joaquín",
+        "subtitle": "Bautizo • sábado, 5 de diciembre"
+    }
+}

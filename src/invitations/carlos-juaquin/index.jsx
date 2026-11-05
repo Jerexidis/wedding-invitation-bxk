@@ -1,0 +1,713 @@
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { ArrowLeft, MapPinned } from 'lucide-react';
+import { injectGoogleFonts } from '../../utils/themeEngine';
+import config from './config.json';
+
+const basePath = `/invitations/${config.slug}`;
+const eventPhotos = {
+    church: `${basePath}/img/iglesia-carlos.png`,
+    party: `${basePath}/img/jardin-rivera.png`,
+};
+
+const decorationImages = {
+    angel: `${basePath}/img/angel-reference-cutout.png`,
+};
+
+const getTimeLeft = (targetDate) => {
+    const distance = new Date(targetDate).getTime() - Date.now();
+
+    if (distance <= 0) {
+        return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
+    }
+
+    return {
+        dias: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        horas: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutos: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        segundos: Math.floor((distance % (1000 * 60)) / 1000),
+    };
+};
+
+export default function AndreJoelInvitation() {
+    const navigate = useNavigate();
+    const [envelopeOpen, setEnvelopeOpen] = useState(false);
+    const [envelopeExit, setEnvelopeExit] = useState(false);
+    const [rsvpForm, setRsvpForm] = useState({ name: '', guests: '1' });
+    const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(config.countdown.targetDate));
+
+    const heroRef = useRef(null);
+
+    const eventDateLine = useMemo(
+        () => `Sábado ${config.hero.date.toLowerCase()}`,
+        [],
+    );
+
+    useEffect(() => {
+        injectGoogleFonts('Nunito Sans', 'Cormorant Garamond');
+
+        const cardLink = document.createElement('link');
+        cardLink.rel = 'stylesheet';
+        cardLink.href = 'https://fonts.googleapis.com/css2?family=Parisienne&display=swap';
+        document.head.appendChild(cardLink);
+
+        return () => {
+            cardLink.remove();
+        };
+    }, []);
+
+    useEffect(() => {
+        document.title = config.title || 'Invita-Ya';
+        return () => {
+            document.title = 'Invita-Ya';
+        };
+    }, []);
+
+    useEffect(() => {
+        const timer = window.setInterval(() => {
+            setTimeLeft(getTimeLeft(config.countdown.targetDate));
+        }, 1000);
+
+        return () => window.clearInterval(timer);
+    }, []);
+
+    useLayoutEffect(() => {
+        if (!envelopeOpen) return undefined;
+
+        const ctx = gsap.context(() => {
+            gsap.from('[data-hero-badge]', {
+                y: 24,
+                opacity: 0,
+                duration: 0.7,
+                ease: 'power2.out',
+            });
+
+            gsap.from('[data-hero-copy]', {
+                y: 48,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
+                stagger: 0.12,
+                delay: 0.15,
+            });
+
+            gsap.from('[data-section-card]', {
+                y: 36,
+                opacity: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                stagger: 0.12,
+                scrollTrigger: undefined,
+            });
+
+        }, heroRef);
+
+        return () => ctx.revert();
+    }, [envelopeOpen]);
+
+    const openInvitation = () => {
+        setEnvelopeExit(true);
+        window.setTimeout(() => setEnvelopeOpen(true), 700);
+    };
+
+    const handleRsvpChange = (event) => {
+        const { name, value } = event.target;
+        setRsvpForm((current) => ({ ...current, [name]: value }));
+    };
+
+    const handleRsvpSubmit = (event) => {
+        event.preventDefault();
+        const message = config.rsvp.whatsappConfirmMessage
+            .replace('{name}', rsvpForm.name.trim())
+            .replace('{guests}', rsvpForm.guests);
+        window.location.href = `https://wa.me/52${config.rsvp.whatsappNumber}?text=${encodeURIComponent(message)}`;
+    };
+
+    return (
+        <div
+            className="carlos-juaquin-invitation min-h-screen overflow-x-hidden bg-[#f7fbff] text-[#355164] selection:bg-[#bfd8ea]"
+            ref={heroRef}
+        >
+            <style>{`
+                .carlos-juaquin-invitation {
+                    font-family: 'Nunito Sans', sans-serif;
+                    background:
+                        radial-gradient(circle at top, rgba(184, 214, 232, 0.55), transparent 30%),
+                        repeating-linear-gradient(
+                            90deg,
+                            rgba(190, 224, 243, 0.34) 0,
+                            rgba(190, 224, 243, 0.34) 24px,
+                            rgba(255, 255, 255, 0.5) 24px,
+                            rgba(255, 255, 255, 0.5) 48px
+                        ),
+                        linear-gradient(180deg, #edf6fd 0%, #f8fcff 20%, #ffffff 100%);
+                }
+                .baptism-frame {
+                    position: relative;
+                    border-radius: 40px;
+                    background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(244,250,255,0.95));
+                    border: 1px solid rgba(143, 185, 210, 0.45);
+                    box-shadow: 0 28px 90px rgba(74, 128, 161, 0.18);
+                }
+                .baptism-frame::before {
+                    content: '';
+                    position: absolute;
+                    inset: 14px;
+                    border-radius: 30px;
+                    border: 2px dashed rgba(157, 197, 220, 0.65);
+                    pointer-events: none;
+                }
+                .heaven-stripes {
+                    background-image: repeating-linear-gradient(
+                        90deg,
+                        rgba(178, 216, 238, 0.48) 0,
+                        rgba(178, 216, 238, 0.48) 24px,
+                        rgba(255, 255, 255, 0.68) 24px,
+                        rgba(255, 255, 255, 0.68) 48px
+                    );
+                }
+                .cloud-card {
+                    border-radius: 32px;
+                    background: rgba(255, 255, 255, 0.88);
+                    border: 1px solid rgba(176, 210, 230, 0.5);
+                    box-shadow: 0 20px 50px rgba(88, 136, 164, 0.13);
+                }
+                .baby-portrait {
+                    border: 6px solid rgba(255,255,255,.96);
+                    border-radius: 50%;
+                    box-shadow: 0 18px 42px rgba(74,128,161,.2);
+                    height: 8.5rem;
+                    margin: 1.15rem auto 0;
+                    object-fit: cover;
+                    width: 8.5rem;
+                }
+                .side-ornament {
+                    animation: angelFloat 4.2s ease-in-out infinite;
+                    filter: drop-shadow(0 14px 24px rgba(78,127,154,.16));
+                    opacity: .8;
+                    pointer-events: none;
+                    position: absolute;
+                    top: 45%;
+                    width: clamp(4.2rem, 12vw, 9rem);
+                    z-index: 2;
+                }
+                .side-ornament--left {
+                    left: clamp(-1.2rem, 1vw, 1rem);
+                }
+                .section-angel {
+                    animation: angelFloat 4.8s ease-in-out infinite;
+                    filter: drop-shadow(0 12px 22px rgba(78,127,154,.15));
+                    pointer-events: none;
+                    position: absolute;
+                    width: 6rem;
+                    z-index: 0;
+                }
+                .countdown-strip {
+                    background: linear-gradient(135deg, rgba(238,247,252,.95), rgba(255,255,255,.95));
+                    border: 1px solid rgba(156,197,220,.5);
+                    border-radius: 24px;
+                    display: grid;
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    overflow: hidden;
+                }
+                .countdown-strip > div {
+                    padding: 1.25rem .25rem;
+                    position: relative;
+                    text-align: center;
+                }
+                .countdown-strip > div + div::before {
+                    background: rgba(134,179,205,.28);
+                    content: '';
+                    height: 52%;
+                    left: 0;
+                    position: absolute;
+                    top: 24%;
+                    width: 1px;
+                }
+                .gallery-feature {
+                    aspect-ratio: 4 / 5;
+                    background: #fff;
+                    border: 8px solid rgba(255, 255, 255, 0.96);
+                    border-radius: 34px;
+                    box-shadow: 0 28px 65px rgba(67, 106, 131, 0.2);
+                    overflow: hidden;
+                    position: relative;
+                    cursor: pointer;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .gallery-feature:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 32px 75px rgba(67, 106, 131, 0.25);
+                }
+                .gallery-feature img {
+                    height: 100%;
+                    object-fit: cover;
+                    transition: opacity .3s ease, transform .6s ease;
+                    width: 100%;
+                }
+                .gallery-feature:hover img {
+                    transform: scale(1.03);
+                }
+                .gallery-caption {
+                    background: rgba(255, 255, 255, .94);
+                    border: 1px solid rgba(157, 197, 220, .4);
+                    border-radius: 24px;
+                    margin: -2.5rem auto 0;
+                    max-width: calc(100% - 2rem);
+                    padding: 1.1rem 1.25rem;
+                    position: relative;
+                    text-align: center;
+                    z-index: 2;
+                }
+                .detail-pill {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.55rem;
+                    text-align: center;
+                    padding: 0.25rem 0.5rem;
+                }
+                .envelope-overlay {
+                    position: fixed;
+                    inset: 0;
+                    z-index: 9999;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 1.5rem;
+                    background:
+                        radial-gradient(circle at top, rgba(203, 227, 244, 0.7), transparent 35%),
+                        linear-gradient(180deg, #d9eefc 0%, #eef7fe 45%, #ffffff 100%);
+                    transition: opacity 0.7s ease, visibility 0.7s ease;
+                }
+                .envelope-overlay.exit {
+                    opacity: 0;
+                    visibility: hidden;
+                    pointer-events: none;
+                }
+                .envelope-card {
+                    position: relative;
+                    width: min(100%, 430px);
+                    padding: 2.25rem 2rem;
+                    border-radius: 36px;
+                    text-align: center;
+                    background: rgba(255,255,255,0.95);
+                    border: 1px solid rgba(166, 203, 225, 0.6);
+                    box-shadow: 0 30px 80px rgba(77, 128, 157, 0.22);
+                    overflow: hidden;
+                }
+                .seal-button {
+                    width: 104px;
+                    height: 104px;
+                    border-radius: 999px;
+                    border: 4px solid #fff;
+                    background: linear-gradient(145deg, #8fbedb, #6f9bb8);
+                    color: #fff;
+                    box-shadow: 0 20px 40px rgba(79, 129, 158, 0.3);
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                    animation: pulseSeal 2s infinite;
+                }
+                .seal-button:hover {
+                    transform: scale(1.06) rotate(-4deg);
+                    box-shadow: 0 24px 48px rgba(79, 129, 158, 0.38);
+                }
+                @keyframes pulseSeal {
+                    0% { box-shadow: 0 0 0 0 rgba(143, 190, 219, 0.4); }
+                    70% { box-shadow: 0 0 0 22px rgba(143, 190, 219, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(143, 190, 219, 0); }
+                }
+                @keyframes angelFloat {
+                    0%, 100% { transform: translateY(2px) rotate(-1deg); }
+                    50% { transform: translateY(-7px) rotate(1deg); }
+                }
+                @media (max-width: 767px) {
+                    .baptism-frame {
+                        border-radius: 30px;
+                    }
+                    .baptism-frame::before {
+                        inset: 10px;
+                        border-radius: 22px;
+                    }
+                    .cloud-card {
+                        border-radius: 26px;
+                    }
+                    .gallery-feature {
+                        border-radius: 26px;
+                    }
+                    .envelope-card {
+                        padding: 1.75rem 1.35rem;
+                    }
+                    .side-ornament {
+                        top: 27%;
+                        width: 4rem;
+                    }
+                    .baby-portrait {
+                        height: 7.5rem;
+                        width: 7.5rem;
+                    }
+                }
+            `}</style>
+
+            {!envelopeOpen && (
+                <div className={`envelope-overlay ${envelopeExit ? 'exit' : ''}`}>
+                    <div className="envelope-card heaven-stripes">
+                        <img
+                            src={decorationImages.angel}
+                            alt=""
+                            className="absolute left-2 top-3 w-16 opacity-70"
+                            aria-hidden="true"
+                        />
+                        <div className="relative z-10 space-y-5 py-4">
+                            <p className="text-[0.72rem] font-black uppercase tracking-[0.38em] text-[#729ab5]">
+                                Una celebración muy especial
+                            </p>
+                            <h2 className="font-['Parisienne'] text-5xl text-[#45657a]">
+                                {config.hero.name}
+                            </h2>
+                            <p className="mx-auto max-w-xs text-sm leading-7 text-[#60839a]">
+                                Con mucha alegría queremos compartir contigo el día en que recibirá la bendición de Dios.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={openInvitation}
+                                className="seal-button font-['Cormorant_Garamond'] text-4xl font-bold"
+                            >
+                                A
+                            </button>
+                            <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-[#84a9c3]">
+                                Abrir invitación
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {envelopeOpen && (
+                <>
+                    <button
+                        onClick={() => navigate('/')}
+                        className="fixed left-3 top-3 z-50 inline-flex h-10 w-10 items-center justify-center gap-2 rounded-full border border-white/80 bg-white/85 text-sm font-bold text-[#48677c] shadow-lg backdrop-blur-md transition hover:bg-white sm:left-4 sm:top-4 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
+                        aria-label="Regresar"
+                    >
+                        <ArrowLeft size={16} />
+                        <span className="hidden sm:inline">Regresar</span>
+                    </button>
+
+                    <header className="relative px-4 pb-10 pt-16 md:px-8 md:pb-20 md:pt-24">
+                        <div className="mx-auto max-w-6xl">
+                            <div className="baptism-frame heaven-stripes overflow-hidden px-5 py-8 md:px-10 md:py-12">
+                                <img
+                                    src={decorationImages.angel}
+                                    alt=""
+                                    className="side-ornament side-ornament--left"
+                                    aria-hidden="true"
+                                />
+                                <div className="relative mx-auto max-w-3xl px-1 text-center md:px-0">
+                                        <div
+                                            className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 shadow-sm"
+                                            data-hero-badge
+                                        >
+                                            <span className="h-2 w-2 rounded-full bg-[#86b6d3]" />
+                                            <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#6f95b0]">
+                                                Mi Bautizo
+                                            </p>
+                                            <span className="h-2 w-2 rounded-full bg-[#d4c287]" />
+                                        </div>
+
+                                        <p
+                                            className="text-sm font-bold uppercase tracking-[0.35em] text-[#7da0b9]"
+                                            data-hero-copy
+                                        >
+                                            {config.intro.message}
+                                        </p>
+                                        <h1
+                                            className="mt-5 font-['Parisienne'] text-[3.55rem] leading-[0.9] text-[#48677c] sm:text-6xl md:text-8xl"
+                                            data-hero-copy
+                                        >
+                                            {config.hero.name}
+                                        </h1>
+                                        <p
+                                            className="mx-auto mt-4 max-w-xl text-base font-semibold leading-7 text-[#56788f] md:text-lg"
+                                            data-hero-copy
+                                        >
+                                            ¡{config.hero.name} se bautiza! ¡Te esperamos para festejar!
+                                        </p>
+                                        <p
+                                            className="mx-auto mt-5 max-w-[19rem] text-[0.9rem] leading-6 text-[#56788f] sm:max-w-xl md:max-w-2xl md:text-base md:leading-7"
+                                            data-hero-copy
+                                        >
+                                            <span className="block">“Doy gracias a Dios por haberme dado la vida.</span>
+                                            <span className="block">A mis papás por esperarme con tanto amor.</span>
+                                            <span className="block">A mis padrinos porque me guiarán por el camino de la Fe.</span>
+                                            <span className="block">Y a ustedes por acompañarme en este día tan importante.”</span>
+                                        </p>
+
+                                        <div
+                                            className="mx-auto mt-7 flex max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+                                            data-hero-copy
+                                        >
+                                            <div className="detail-pill">
+                                                <span className="text-[0.68rem] font-black uppercase tracking-[0.25em] text-[#84a6be]">Fecha</span>
+                                                <span className="text-sm font-bold text-[#47657a]">{eventDateLine}</span>
+                                            </div>
+                                            <div className="detail-pill">
+                                                <span className="text-[0.68rem] font-black uppercase tracking-[0.25em] text-[#84a6be]">Hora</span>
+                                                <span className="text-sm font-bold text-[#47657a]">3:30 p. m.</span>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="space-y-10 pb-16 md:space-y-14 md:pb-20">
+                        <section className="px-4 md:px-8">
+                            <div className="cloud-card mx-auto grid max-w-6xl items-center gap-6 px-5 py-6 md:grid-cols-[0.65fr_1.35fr] md:px-10 md:py-8" data-section-card>
+                                <div className="text-center md:text-left">
+                                    <p className="text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                        Cuenta regresiva
+                                    </p>
+                                    <h2 className="mt-2 font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4b6a7f] md:text-4xl">
+                                        Falta muy poquito
+                                    </h2>
+                                </div>
+                                <div className="countdown-strip" aria-label="Cuenta regresiva para el bautizo">
+                                    {[
+                                        { value: timeLeft.dias, label: 'Días' },
+                                        { value: timeLeft.horas, label: 'Horas' },
+                                        { value: timeLeft.minutos, label: 'Min' },
+                                        { value: timeLeft.segundos, label: 'Seg' },
+                                    ].map((item) => (
+                                        <div key={item.label}>
+                                            <p className="text-2xl font-black text-[#4a6b7f] md:text-4xl">
+                                                {String(item.value).padStart(2, '0')}
+                                            </p>
+                                            <p className="mt-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-[#8aadc3] md:text-[0.68rem]">
+                                                {item.label}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+                                <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                    <img
+                                        src={decorationImages.angel}
+                                        alt=""
+                                        className="section-angel -bottom-5 -right-4 opacity-20 md:w-28"
+                                        aria-hidden="true"
+                                    />
+                                    <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                        Mis papás
+                                    </p>
+                                    <h2 className="mx-auto mt-3 max-w-xl text-center font-['Cormorant_Garamond'] text-[2.15rem] font-semibold leading-[1.05] text-[#4b6a7f] md:text-5xl">
+                                        Con el amor de nuestra familia
+                                    </h2>
+                                    <div className="mt-6 space-y-4 text-center text-lg text-[#54758b]">
+                                        <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#45667d]">
+                                            {config.intro.parent1}
+                                        </p>
+                                        <p className="text-sm font-black uppercase tracking-[0.32em] text-[#d2bf86]">&</p>
+                                        <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#45667d]">
+                                            {config.intro.parent2}
+                                        </p>
+                                    </div>
+                                    <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-7 text-[#6a889b] md:text-base md:leading-8">
+                                        {config.intro.closingMessage}. Nos encantará que nos acompañes a vivir este momento de fe, ternura y gratitud.
+                                    </p>
+                                </div>
+
+                                {config.padrinos?.enabled && (
+                                    <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                        <p className="text-center text-[0.72rem] font-black uppercase tracking-[0.34em] text-[#7aa0bb]">
+                                            Mis padrinos
+                                        </p>
+                                        <h2 className="mt-3 text-center font-['Cormorant_Garamond'] text-[2.15rem] font-semibold leading-[1.05] text-[#4b6a7f] md:text-5xl">
+                                            Con cariño y fe
+                                        </h2>
+                                        <div className="mt-7 space-y-4 text-center">
+                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#48687d]">
+                                                {config.padrinos.padrino1}
+                                            </p>
+                                            <p className="text-sm font-black uppercase tracking-[0.25em] text-[#d3bf80]">&</p>
+                                            <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#48687d]">
+                                                {config.padrinos.padrino2}
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="mx-auto max-w-6xl">
+                                <div className="mb-7 text-center">
+                                    <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
+                                        Detalles del día
+                                    </p>
+                                    <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.3rem] font-semibold leading-none text-[#49697e] md:text-5xl">
+                                        Lugares para celebrar
+                                    </h2>
+                                </div>
+
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    {config.events.map((event) => {
+                                        const imageSrc = event.icon === 'church' ? eventPhotos.church : eventPhotos.party;
+
+                                        return (
+                                            <article key={event.title} className="cloud-card overflow-hidden" data-section-card>
+                                                <div className="relative h-48 md:h-64">
+                                                    <img
+                                                        src={imageSrc}
+                                                        alt={event.location}
+                                                        className={`h-full w-full object-cover ${event.icon === 'church' ? 'object-center' : 'object-[center_22%]'}`}
+                                                    />
+                                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#213e50]/85 via-[#213e50]/20 to-transparent px-5 pb-4 pt-12 md:px-7 md:pb-5">
+                                                        <h3 className="font-['Cormorant_Garamond'] text-[1.7rem] font-semibold text-white md:text-4xl">
+                                                            {event.title}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-4 p-6 md:p-7">
+                                                    <div>
+                                                        <p className="text-xl font-bold text-[#48687d]">{event.location}</p>
+                                                        <p className="mt-1 text-sm leading-6 text-[#6d8a9c]">{event.address}</p>
+                                                    </div>
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <span className="rounded-full bg-[#edf5fb] px-3 py-2 text-sm font-bold text-[#4f748d]">
+                                                            {event.icon === 'church' ? event.time : `${event.time} hrs.`}
+                                                        </span>
+                                                        {event.mapLink && (
+                                                            <a
+                                                                href={event.mapLink}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center gap-2 rounded-full bg-[#edf6fc] px-4 py-2 text-sm font-bold text-[#4c718a] transition hover:bg-[#dfeef8]"
+                                                            >
+                                                                <MapPinned size={16} />
+                                                                Ver ubicación
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="mx-auto max-w-lg" data-section-card>
+                                <div className="cloud-card relative overflow-hidden p-7 md:p-10">
+                                    <img
+                                        src={decorationImages.angel}
+                                        alt=""
+                                        className="section-angel -right-4 -top-4 opacity-15 md:w-28"
+                                        aria-hidden="true"
+                                    />
+                                    <div className="relative z-10 text-center">
+                                        <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
+                                            {config.rsvp.deadline}
+                                        </p>
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.3rem] font-semibold leading-none text-[#49697e] md:text-5xl">
+                                            Confirma tu asistencia
+                                        </h2>
+                                    </div>
+                                    <form onSubmit={handleRsvpSubmit} className="relative z-10 mt-7 space-y-4">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            required
+                                            placeholder="Nombre completo"
+                                            value={rsvpForm.name}
+                                            onChange={handleRsvpChange}
+                                            className="w-full rounded-xl border border-[#cfdfeb] bg-white/80 px-5 py-4 text-center text-[#48687d] placeholder:text-[#8ca5b5] focus:border-[#7ca6bf] focus:outline-none focus:ring-2 focus:ring-[#b7d3e4]/50"
+                                        />
+                                        <input
+                                            type="number"
+                                            name="guests"
+                                            min="1"
+                                            max="10"
+                                            required
+                                            aria-label="Número de personas"
+                                            placeholder="Número de personas"
+                                            value={rsvpForm.guests}
+                                            onChange={handleRsvpChange}
+                                            className="w-full rounded-xl border border-[#cfdfeb] bg-white/80 px-5 py-4 text-center text-[#48687d] placeholder:text-[#8ca5b5] focus:border-[#7ca6bf] focus:outline-none focus:ring-2 focus:ring-[#b7d3e4]/50"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="w-full rounded-xl bg-[#4d9275] px-6 py-4 font-bold tracking-wide text-white shadow-md transition hover:bg-[#3e7d64] focus:outline-none focus:ring-2 focus:ring-[#4d9275]/50 focus:ring-offset-2"
+                                        >
+                                            Confirmar por WhatsApp
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="mx-auto max-w-5xl">
+                                <div className="cloud-card relative overflow-hidden p-6 md:p-10" data-section-card>
+                                    <img
+                                        src={decorationImages.angel}
+                                        alt=""
+                                        className="section-angel -left-4 -top-5 opacity-20 md:w-28"
+                                        aria-hidden="true"
+                                    />
+                                    <div className="relative z-10 mx-auto max-w-2xl text-center">
+                                        <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
+                                            Un detalle con cariño
+                                        </p>
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.3rem] font-semibold leading-none text-[#49697e] md:text-5xl">
+                                            Se agradece cualquier detalle
+                                        </h2>
+                                        <p className="mt-5 text-base leading-8 text-[#67879d]">
+                                            Tu presencia es lo más importante para nosotros. Si además deseas consentir a {config.hero.name} con un detalle, será recibido con muchísimo cariño y gratitud.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="cloud-card mx-auto max-w-5xl px-6 py-8 text-center md:px-10 md:py-10" data-section-card>
+                                <p className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#4a6a7f] md:text-4xl">
+                                    Gracias por acompañarnos
+                                </p>
+                                <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#7393a8]">
+                                    Cada muestra de afecto hará todavía más especial este día tan esperado para nuestra familia.
+                                </p>
+                            </div>
+                        </section>
+                    </main>
+
+                    <footer className="px-4 pb-14 md:px-8">
+                        <div className="mx-auto max-w-6xl rounded-[30px] border border-white/70 bg-white/80 px-8 py-8 text-center shadow-[0_22px_60px_rgba(72,103,124,0.12)] backdrop-blur-sm">
+                            <p className="font-['Parisienne'] text-4xl text-[#4a697e]">{config.footer.name}</p>
+                            <p className="mt-1 text-sm uppercase tracking-[0.28em] text-[#86a8c1]">{config.footer.subtitle}</p>
+                            <p className="mt-4 text-sm leading-7 text-[#6d8b9e]">
+                                Gracias por ser parte de este momento tan especial en la vida de nuestro pequeño.
+                            </p>
+                            <a
+                                href="https://invita-ya.com"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-6 inline-block border-t border-[#d8e8f2] px-6 pt-5 text-xs font-bold uppercase tracking-[0.24em] text-[#789bb2] transition hover:text-[#49697e]"
+                            >
+                                Hecho con cariño por invita-ya.com
+                            </a>
+                        </div>
+                    </footer>
+                </>
+            )}
+        </div>
+    );
+}
