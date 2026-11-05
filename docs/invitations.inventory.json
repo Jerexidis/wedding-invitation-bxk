@@ -916,35 +916,6 @@
         "bytes": 2272084,
         "megabytes": 2.17
       }
-    },
-    {
-      "slug": "carlos-juaquin",
-      "title": "Bautizo | Carlos Joaquín",
-      "architecture": "standalone-custom",
-      "enabled": true,
-      "demo": false,
-      "eventType": "bautizo",
-      "eventDate": "2026-12-05T15:00:00",
-      "portfolioGalleryAllowed": false,
-      "services": {
-        "rsvp": "whatsapp",
-        "gallery": false,
-        "audio": true,
-        "calendar": true
-      },
-      "sourceFiles": [
-        "src/invitations/carlos-juaquin/config.json",
-        "src/invitations/carlos-juaquin/DESIGN.md",
-        "src/invitations/carlos-juaquin/index.jsx"
-      ],
-      "designBrief": "src/invitations/carlos-juaquin/DESIGN.md",
-      "assets": {
-        "files": 5,
-        "images": 4,
-        "audio": 1,
-        "bytes": 7687447,
-        "megabytes": 7.33
-      }
     }
   ]
 }
