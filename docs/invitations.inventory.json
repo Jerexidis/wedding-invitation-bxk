@@ -929,7 +929,7 @@
       "services": {
         "rsvp": "whatsapp",
         "gallery": false,
-        "audio": false,
+        "audio": true,
         "calendar": true
       },
       "sourceFiles": [
@@ -939,11 +939,11 @@
       ],
       "designBrief": "src/invitations/carlos-juaquin/DESIGN.md",
       "assets": {
-        "files": 4,
+        "files": 5,
         "images": 4,
-        "audio": 0,
-        "bytes": 1601616,
-        "megabytes": 1.53
+        "audio": 1,
+        "bytes": 7687447,
+        "megabytes": 7.33
       }
     }
   ]

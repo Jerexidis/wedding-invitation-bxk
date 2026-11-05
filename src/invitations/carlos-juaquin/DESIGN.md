@@ -13,4 +13,5 @@
 - Parents: Carlos Yañez and Teresa Juarez.
 - Godparents: Enrique Yañez and Karen Yañez.
 - RSVP uses a name and guest count form that opens WhatsApp.
-- Do not show personal baby photos, a photo gallery, or background music.
+- Do not show personal baby photos or a photo gallery.
+- Start the selected song when the guest opens the invitation and keep a visible play/pause control.

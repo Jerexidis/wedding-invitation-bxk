@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
-import { ArrowLeft, MapPinned } from 'lucide-react';
+import { ArrowLeft, MapPinned, Music2, Pause, Utensils } from 'lucide-react';
 import { injectGoogleFonts } from '../../utils/themeEngine';
 import config from './config.json';
 
@@ -34,10 +34,13 @@ export default function AndreJoelInvitation() {
     const navigate = useNavigate();
     const [envelopeOpen, setEnvelopeOpen] = useState(false);
     const [envelopeExit, setEnvelopeExit] = useState(false);
+    const [musicPlaying, setMusicPlaying] = useState(false);
     const [rsvpForm, setRsvpForm] = useState({ name: '', guests: '1' });
     const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(config.countdown.targetDate));
 
     const heroRef = useRef(null);
+    const audioRef = useRef(null);
+    const receptionTime = config.events.find((event) => event.icon === 'party')?.time;
 
     const eventDateLine = useMemo(
         () => `Sábado ${config.hero.date.toLowerCase()}`,
@@ -107,8 +110,24 @@ export default function AndreJoelInvitation() {
     }, [envelopeOpen]);
 
     const openInvitation = () => {
+        audioRef.current?.play().catch(() => setMusicPlaying(false));
         setEnvelopeExit(true);
         window.setTimeout(() => setEnvelopeOpen(true), 700);
+    };
+
+    const toggleMusic = async () => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        if (audio.paused) {
+            try {
+                await audio.play();
+            } catch {
+                setMusicPlaying(false);
+            }
+        } else {
+            audio.pause();
+        }
     };
 
     const handleRsvpChange = (event) => {
@@ -129,6 +148,14 @@ export default function AndreJoelInvitation() {
             className="carlos-juaquin-invitation min-h-screen overflow-x-hidden bg-[#f7fbff] text-[#355164] selection:bg-[#bfd8ea]"
             ref={heroRef}
         >
+            <audio
+                ref={audioRef}
+                src={`${basePath}/audio/${config.hero.song}`}
+                preload="metadata"
+                loop
+                onPlay={() => setMusicPlaying(true)}
+                onPause={() => setMusicPlaying(false)}
+            />
             <style>{`
                 .carlos-juaquin-invitation {
                     font-family: 'Nunito Sans', sans-serif;
@@ -386,6 +413,14 @@ export default function AndreJoelInvitation() {
             {envelopeOpen && (
                 <>
                     <button
+                        type="button"
+                        onClick={toggleMusic}
+                        className={`fixed right-3 top-3 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/80 bg-white/85 shadow-lg backdrop-blur-md transition hover:bg-white ${musicPlaying ? 'text-[#48677c]' : 'text-[#86a8c1]'}`}
+                        aria-label={musicPlaying ? 'Pausar música' : 'Reproducir música'}
+                    >
+                        {musicPlaying ? <Pause size={16} /> : <Music2 size={16} />}
+                    </button>
+                    <button
                         onClick={() => navigate('/')}
                         className="fixed left-3 top-3 z-50 inline-flex h-10 w-10 items-center justify-center gap-2 rounded-full border border-white/80 bg-white/85 text-sm font-bold text-[#48677c] shadow-lg backdrop-blur-md transition hover:bg-white sm:left-4 sm:top-4 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
                         aria-label="Regresar"
@@ -453,7 +488,7 @@ export default function AndreJoelInvitation() {
                                             </div>
                                             <div className="detail-pill">
                                                 <span className="text-[0.68rem] font-black uppercase tracking-[0.25em] text-[#84a6be]">Hora</span>
-                                                <span className="text-sm font-bold text-[#47657a]">3:30 p. m.</span>
+                                                <span className="text-sm font-bold text-[#47657a]">{receptionTime}</span>
                                             </div>
                                         </div>
                                 </div>
@@ -579,9 +614,11 @@ export default function AndreJoelInvitation() {
                                                         <p className="mt-1 text-sm leading-6 text-[#6d8a9c]">{event.address}</p>
                                                     </div>
                                                     <div className="flex flex-wrap items-center gap-2">
-                                                        <span className="rounded-full bg-[#edf5fb] px-3 py-2 text-sm font-bold text-[#4f748d]">
-                                                            {event.icon === 'church' ? event.time : `${event.time} hrs.`}
-                                                        </span>
+                                                        {event.time && (
+                                                            <span className="rounded-full bg-[#edf5fb] px-3 py-2 text-sm font-bold text-[#4f748d]">
+                                                                {event.time}
+                                                            </span>
+                                                        )}
                                                         {event.mapLink && (
                                                             <a
                                                                 href={event.mapLink}
@@ -594,6 +631,12 @@ export default function AndreJoelInvitation() {
                                                             </a>
                                                         )}
                                                     </div>
+                                                    {event.note && (
+                                                        <p className="flex items-start gap-2 rounded-2xl bg-[#fbf7e9] px-4 py-3 text-sm leading-6 text-[#786c49]">
+                                                            <Utensils size={17} className="mt-1 shrink-0" aria-hidden="true" />
+                                                            <span>{event.note}</span>
+                                                        </p>
+                                                    )}
                                                 </div>
                                             </article>
                                         );

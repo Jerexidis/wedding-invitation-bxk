@@ -18,7 +18,7 @@
         "name": "Carlos Joaquín",
         "date": "5 DE DICIEMBRE DE 2026",
         "backgroundImage": "jardin-rivera.png",
-        "song": ""
+        "song": "mi-lugar-favorito.mp3"
     },
     "intro": {
         "message": "La felicidad se comparte y nosotros queremos compartir la nuestra:",
@@ -56,7 +56,6 @@
             "title": "Ceremonia Religiosa",
             "location": "Iglesia",
             "address": "Av. Heroico Colegio Militar 709, Col. del Trabajo, 20180 Aguascalientes, Ags.",
-            "time": "Horario por confirmar",
             "mapLink": "https://maps.app.goo.gl/gDi76LM6EfGt52n16"
         },
         {
@@ -64,8 +63,9 @@
             "title": "Recepción",
             "location": "Jardín Rivera",
             "address": "Aguascalientes, Ags.",
-            "time": "15:00",
-            "mapLink": "https://maps.app.goo.gl/XQCTsxREMMzkeBU56?g_st=aw"
+            "time": "3:00 pm",
+            "mapLink": "https://maps.app.goo.gl/XQCTsxREMMzkeBU56?g_st=aw",
+            "note": "La comida se sirve de 3:30 a 4:30 p. m."
         }
     ],
     "dressCode": {

@@ -85,6 +85,9 @@ slug, eventType, title, theme, hero, seo?, intro, padrinos, countdown,
 calendar, events, dressCode, gallery, gifts, itinerary, rsvp, footer
 ```
 
+Event `time` is optional. Omit it when the schedule is not announced so the
+invitation can show the venue without displaying a placeholder time.
+
 `DynamicInvitation` derives media URLs from
 `/invitations/<config.slug>/...`, injects theme fonts/CSS variables, and updates
 browser SEO metadata.

@@ -644,7 +644,7 @@ function validateEvents(events, report) {
         return
     }
     events.forEach((event, index) => {
-        for (const field of ['title', 'location', 'time']) {
+        for (const field of ['title', 'location']) {
             if (!event[field]) report.warnings.push(`events[${index}].${field} is empty`)
         }
         if (event.mapLink && !/^https?:\/\//.test(event.mapLink)) {
