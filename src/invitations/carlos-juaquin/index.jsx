@@ -217,7 +217,7 @@ export default function AndreJoelInvitation() {
                     height: 8.5rem;
                     margin: 1.15rem auto 0;
                     object-fit: cover;
-                    object-position: center 18%;
+                    object-position: center;
                     width: 8.5rem;
                 }
                 .side-ornament {
