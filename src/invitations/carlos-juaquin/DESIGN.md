@@ -5,7 +5,7 @@
 - Celestial baptism palette with sky blue, white, and soft gold accents.
 - Keep the existing illustrated angel as a small decorative detail.
 - Use the supplied church and Jardín Rivera photos in the venue cards.
-- Use a close, gently rotated crop of the striped romper portrait as the hero image; keep the original photo in the gallery.
+- Use a close, gently rotated crop of the portrait with the gray bear hood as the hero image; keep the original photo in the gallery.
 - Show the four supplied new photos in the original portrait carousel.
 
 ## Invitation content
