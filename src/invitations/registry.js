@@ -350,7 +350,7 @@ const invitations = [
         slug: 'carlos-juaquin',
         title: 'Bautizo | Carlos Joaquín',
         component: lazy(() => import('./carlos-juaquin/index.jsx')),
-        enabled: false,
+        enabled: true,
         eventType: 'bautizo',
         rsvpMode: 'whatsapp',
         eventDate: '2026-12-05T15:00:00',

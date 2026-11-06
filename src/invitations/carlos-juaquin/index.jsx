@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
-import { ArrowLeft, MapPinned, Music2, Pause, Utensils } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, MapPinned, Music2, Pause, Utensils } from 'lucide-react';
 import { injectGoogleFonts } from '../../utils/themeEngine';
 import config from './config.json';
 
@@ -10,6 +10,12 @@ const eventPhotos = {
     church: `${basePath}/img/iglesia-carlos.png`,
     party: `${basePath}/img/jardin-rivera.png`,
 };
+
+const heroImage = `${basePath}/img/${config.hero.backgroundImage}`;
+const photoGallery = (config.gallery?.photos || []).map((photo) => ({
+    url: `${basePath}/img/${photo.src}`,
+    label: photo.caption || config.hero.name,
+}));
 
 const decorationImages = {
     angel: `${basePath}/img/angel-reference-cutout.png`,
@@ -35,12 +41,16 @@ export default function AndreJoelInvitation() {
     const [envelopeOpen, setEnvelopeOpen] = useState(false);
     const [envelopeExit, setEnvelopeExit] = useState(false);
     const [musicPlaying, setMusicPlaying] = useState(false);
+    const [activePhoto, setActivePhoto] = useState(0);
     const [rsvpForm, setRsvpForm] = useState({ name: '', guests: '1' });
     const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(config.countdown.targetDate));
 
     const heroRef = useRef(null);
     const audioRef = useRef(null);
     const receptionTime = config.events.find((event) => event.icon === 'party')?.time;
+
+    const nextPhoto = () => setActivePhoto((current) => (current + 1) % photoGallery.length);
+    const prevPhoto = () => setActivePhoto((current) => (current - 1 + photoGallery.length) % photoGallery.length);
 
     const eventDateLine = useMemo(
         () => `Sábado ${config.hero.date.toLowerCase()}`,
@@ -207,6 +217,7 @@ export default function AndreJoelInvitation() {
                     height: 8.5rem;
                     margin: 1.15rem auto 0;
                     object-fit: cover;
+                    object-position: center 18%;
                     width: 8.5rem;
                 }
                 .side-ornament {
@@ -456,6 +467,12 @@ export default function AndreJoelInvitation() {
                                         >
                                             {config.intro.message}
                                         </p>
+                                        <img
+                                            src={heroImage}
+                                            alt={config.hero.name}
+                                            className="baby-portrait"
+                                            data-hero-copy
+                                        />
                                         <h1
                                             className="mt-5 font-['Parisienne'] text-[3.55rem] leading-[0.9] text-[#48677c] sm:text-6xl md:text-8xl"
                                             data-hero-copy
@@ -641,6 +658,60 @@ export default function AndreJoelInvitation() {
                                             </article>
                                         );
                                     })}
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="px-4 md:px-8">
+                            <div className="mx-auto max-w-6xl overflow-hidden rounded-[30px] bg-gradient-to-br from-[#dff1fc] via-[#eef8ff] to-white px-5 py-8 md:rounded-[36px] md:px-10 md:py-12">
+                                <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+                                    <div className="text-center lg:text-left" data-section-card>
+                                        <p className="text-[0.72rem] font-black uppercase tracking-[0.36em] text-[#81a6bf]">
+                                            Galería
+                                        </p>
+                                        <h2 className="mt-3 font-['Cormorant_Garamond'] text-[2.35rem] font-semibold leading-[0.98] text-[#49697e] md:text-5xl">
+                                            Recuerdos de {config.hero.name}
+                                        </h2>
+                                        <p className="mx-auto mt-5 max-w-md text-base leading-8 text-[#638399] lg:mx-0">
+                                            Momentos especiales para compartir contigo.
+                                        </p>
+                                    </div>
+
+                                    <div data-section-card>
+                                        <div className="gallery-feature">
+                                            <img
+                                                key={photoGallery[activePhoto]?.url}
+                                                src={photoGallery[activePhoto]?.url}
+                                                alt={photoGallery[activePhoto]?.label || config.hero.name}
+                                            />
+                                        </div>
+                                        <div className="gallery-caption">
+                                            <p className="font-['Cormorant_Garamond'] text-2xl font-semibold text-[#49697e]">
+                                                {photoGallery[activePhoto]?.label}
+                                            </p>
+                                        </div>
+                                        <div className="mt-6 flex items-center justify-center gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={prevPhoto}
+                                                className="rounded-full bg-white p-3 text-[#4b7087] shadow-md transition hover:-translate-y-0.5"
+                                                aria-label="Foto anterior"
+                                            >
+                                                <ChevronLeft size={18} />
+                                            </button>
+                                            <p className="mx-2 text-sm font-bold uppercase tracking-[0.28em] text-[#87aac3]">
+                                                {String(activePhoto + 1).padStart(2, '0')} / {String(photoGallery.length).padStart(2, '0')}
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={nextPhoto}
+                                                className="rounded-full bg-white p-3 text-[#4b7087] shadow-md transition hover:-translate-y-0.5"
+                                                aria-label="Siguiente foto"
+                                            >
+                                                <ChevronRight size={18} />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </section>

@@ -164,4 +164,9 @@ export const ogData = {
         imageHeight: 1080,
         twitterCard: 'summary',
     },
+    'carlos-juaquin': {
+        title: 'Bautizo | Carlos Joaquín',
+        description: 'La felicidad se comparte y nosotros queremos compartir la nuestra: ¡Carlos Joaquín se bautiza! ¡Te esperamos para festejar!',
+        image: '/invitations/carlos-juaquin/img/og-preview.jpg',
+    },
 }

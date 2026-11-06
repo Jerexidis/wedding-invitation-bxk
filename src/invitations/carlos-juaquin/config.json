@@ -17,7 +17,7 @@
         "subtitle": "Mi Bautizo",
         "name": "Carlos Joaquín",
         "date": "5 DE DICIEMBRE DE 2026",
-        "backgroundImage": "jardin-rivera.png",
+        "backgroundImage": "gallery-1.webp",
         "song": "mi-lugar-favorito.mp3"
     },
     "intro": {
@@ -75,8 +75,13 @@
         "image": "dresscode-icon.png"
     },
     "gallery": {
-        "enabled": false,
-        "photos": []
+        "enabled": true,
+        "photos": [
+            { "src": "gallery-1.webp", "caption": "Una sonrisa para recordar" },
+            { "src": "gallery-2.webp", "caption": "Un momento de ternura" },
+            { "src": "gallery-3.webp", "caption": "Sonrisas que alegran el corazón" },
+            { "src": "gallery-4.webp", "caption": "Listo para celebrar" }
+        ]
     },
     "gifts": {
         "enabled": true,
