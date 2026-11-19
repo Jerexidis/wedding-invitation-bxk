@@ -8,14 +8,14 @@ export default function OrlanndoAlbum() {
         <SharedAlbum
             className="orlanndo-album"
             eventFolder="album-orlanndo"
-            kicker="Album Orlando"
-            title="Álbum compartido"
-            intro="Sube aquí tus fotos del evento para compartirlas con todos."
-            sectionLabel="Fotos del evento"
-            galleryTitle="Fotos compartidas"
+            kicker="Fati cumple 15 años"
+            title="¡Mis XV años!"
+            intro="Celebremos juntas este día tan especial. Sábado 21 de noviembre de 2026."
+            sectionLabel="Recuerdos de la fiesta"
+            galleryTitle="Fotos de mis XV"
             emptyTitle="Aún no hay fotos"
-            emptyText="Sé la primera persona en compartir un recuerdo del evento."
-            footerText="Gracias por compartir tus fotos."
+            emptyText="Sé la primera persona en compartir un recuerdo de esta fiesta."
+            footerText="Gracias por celebrar conmigo."
             albumStore={albumStore}
             downloadsEnabled
             configurationErrorText="Falta terminar la conexión con Google Drive."
