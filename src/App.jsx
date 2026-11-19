@@ -131,6 +131,7 @@ function App() {
                     <Route path="/album" element={<SharedAlbum />} />
                     <Route path="/i/boda-lorena-y-arturo/album" element={<LorenaArturoAlbum />} />
                     <Route path="/i/gretel-y-geraldine/album" element={<GretelGeraldineAlbum />} />
+                    <Route path="/xv-fati" element={<OrlanndoAlbum />} />
                     <Route path="/album-orlanndo" element={<OrlanndoAlbum />} />
                     <Route path="/privacidad" element={<PrivacyPolicy />} />
                     <Route path="/terminos" element={<TermsOfService />} />

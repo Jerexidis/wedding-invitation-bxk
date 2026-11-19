@@ -65,6 +65,7 @@ export default function SharedAlbum({
     intro = 'Ayúdanos a guardar cada sonrisa, abrazo y momento especial que vivamos juntos.',
     sectionLabel = 'Recuerdos compartidos',
     galleryTitle = 'Nuestros momentos',
+    eventDate = null,
     emptyTitle = 'La primera foto puede ser tuya',
     emptyText = 'Comparte un momento y comienza este álbum con nosotros.',
     footerText = 'Gracias por ser parte de nuestra historia',
@@ -75,6 +76,7 @@ export default function SharedAlbum({
     albumStore = defaultAlbumStore,
     downloadsEnabled = false,
     configurationErrorText = 'Falta configurar la conexión con Supabase.',
+    loadErrorText = 'No fue posible cargar las fotografías. Inténtalo de nuevo en unos minutos.',
 }) {
     const inputRef = useRef(null)
     const [photos, setPhotos] = useState([])
@@ -92,12 +94,13 @@ export default function SharedAlbum({
         try {
             setPhotos(await albumStore.listAlbumPhotos(eventFolder))
         } catch (error) {
-            setMessage({ type: 'error', text: error.message })
+            console.error('Could not load shared album photos:', error)
+            setMessage({ type: 'error', text: loadErrorText })
         } finally {
             setLoading(false)
             setRefreshing(false)
         }
-    }, [albumStore, eventFolder])
+    }, [albumStore, eventFolder, loadErrorText])
 
     const handlePhotoError = useCallback((photoId) => {
         setPhotos((currentPhotos) => currentPhotos.filter((photo) => photo.id !== photoId))
@@ -165,8 +168,8 @@ export default function SharedAlbum({
             setMessage({
                 type: 'success',
                 text: total === 1
-                    ? '¡Tu foto ya forma parte del álbum!'
-                    : `¡Tus ${total} fotos ya forman parte del álbum!`,
+                    ? 'La fotografía se agregó al álbum.'
+                    : `Las ${total} fotografías se agregaron al álbum.`,
             })
             await loadPhotos(true)
         } catch (error) {
@@ -191,6 +194,7 @@ export default function SharedAlbum({
                     )}
                     <h1>{title}</h1>
                     <p>{intro}</p>
+                    {eventDate && <div className="album-event-date">{eventDate}</div>}
                     <button
                         className="album-primary-button"
                         type="button"
@@ -198,9 +202,9 @@ export default function SharedAlbum({
                         disabled={!configured || uploading}
                     >
                         <Camera size={20} />
-                        Compartir mis fotos
+                        Compartir fotografías
                     </button>
-                    <span className="album-helper">Puedes elegir hasta {limits.maxFiles} fotos por subida</span>
+                    <span className="album-helper">Hasta {limits.maxFiles} fotografías por carga</span>
                 </div>
             </section>
 
@@ -223,7 +227,7 @@ export default function SharedAlbum({
                             disabled={!configured}
                         >
                             <span className="album-dropzone__icon"><Upload size={25} /></span>
-                            <strong>Selecciona fotos de tu galería</strong>
+                            <strong>Selecciona tus fotografías</strong>
                             <span>JPEG, PNG, WebP o HEIC · máximo {limits.maxSourceMegabytes} MB</span>
                         </button>
                     ) : (
@@ -231,7 +235,7 @@ export default function SharedAlbum({
                             <div className="album-selection__header">
                                 <div>
                                     <strong>{selectedFiles.length} {selectedFiles.length === 1 ? 'foto seleccionada' : 'fotos seleccionadas'}</strong>
-                                    <span>Las optimizaremos antes de subirlas</span>
+                                    <span>Las fotografías se optimizarán antes de publicarlas.</span>
                                 </div>
                                 <button type="button" onClick={clearSelection} disabled={uploading} aria-label="Quitar selección">
                                     <X size={19} />
@@ -256,7 +260,7 @@ export default function SharedAlbum({
                                 ) : (
                                     <>
                                         <Upload size={20} />
-                                        Subir al álbum
+                                        Publicar fotografías
                                     </>
                                 )}
                             </button>

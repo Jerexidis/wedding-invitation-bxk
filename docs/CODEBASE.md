@@ -38,7 +38,8 @@ index.html
         /i/:slug                -> registry lookup -> lazy invitation component
         /i/boda-lorena-y-arturo/album -> Supabase-themed guest photo album
         /i/gretel-y-geraldine/album    -> private Google Drive-backed guest album
-        /album-orlanndo                -> base Google Drive-backed guest album
+        /xv-fati                       -> Fati's XV birthday album (Google Drive-backed)
+        /album-orlanndo                -> legacy alias for the XV de Fati album
         /i/:slug/rsvp           -> protected RSVP dashboard
         /admin                  -> local development only
         anything else           -> 404
@@ -199,8 +200,9 @@ RLS allows anonymous read and insert for that bucket/folder only; guests cannot
 update or delete objects.
 
 Gretel and Geraldine use the same browser-side validation and optimization but
-send the prepared JPEG to `/api/albums/gretel-y-geraldine`. The base Orlanndo
-album uses `/album-orlanndo` and `/api/albums/album-orlanndo`. Private Vercel Node
+send the prepared JPEG to `/api/albums/gretel-y-geraldine`. Fati's XV album uses
+`/xv-fati` (with `/album-orlanndo` retained as a legacy alias) and
+`/api/albums/album-orlanndo`. Private Vercel Node
 functions upload to and list the configured folder in the administrator's Google Drive
 account through OAuth. The Drive folder remains private: image display and
 individual downloads are proxied by a route that verifies every requested file
