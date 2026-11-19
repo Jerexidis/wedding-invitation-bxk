@@ -1,7 +1,7 @@
 import SharedAlbum from './SharedAlbum'
 import { createDriveAlbumStore } from '../utils/driveAlbumStore'
 
-const albumStore = createDriveAlbumStore('/api/albums/album-fatima')
+const albumStore = createDriveAlbumStore('/api/albums/album-orlanndo')
 
 export default function FatimaAlbum() {
     return (
