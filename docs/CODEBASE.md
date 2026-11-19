@@ -38,6 +38,7 @@ index.html
         /i/:slug                -> registry lookup -> lazy invitation component
         /i/boda-lorena-y-arturo/album -> Supabase-themed guest photo album
         /i/gretel-y-geraldine/album    -> private Google Drive-backed guest album
+        /album-orlanndo                -> base Google Drive-backed guest album
         /i/:slug/rsvp           -> protected RSVP dashboard
         /admin                  -> local development only
         anything else           -> 404
@@ -198,12 +199,14 @@ RLS allows anonymous read and insert for that bucket/folder only; guests cannot
 update or delete objects.
 
 Gretel and Geraldine use the same browser-side validation and optimization but
-send the prepared JPEG to `/api/albums/gretel-y-geraldine`. Private Vercel Node
-functions upload to and list a folder owned by the administrator's Google Drive
+send the prepared JPEG to `/api/albums/gretel-y-geraldine`. The base Orlanndo
+album uses `/album-orlanndo` and `/api/albums/album-orlanndo`. Private Vercel Node
+functions upload to and list the configured folder in the administrator's Google Drive
 account through OAuth. The Drive folder remains private: image display and
 individual downloads are proxied by a route that verifies every requested file
 belongs to that folder. Server-only variables are documented in `.env.example`;
-they must never use the `VITE_` prefix.
+they must never use the `VITE_` prefix. Orlanndo uses
+`GOOGLE_DRIVE_ALBUM_ORLANNDO_FOLDER_ID` for its Drive folder ID.
 `ALBUM_ALLOWED_ORIGINS` must include the exact public front-end origin
 (`https://eventos.invita-ya.com` in production); multiple origins are separated
 with commas.

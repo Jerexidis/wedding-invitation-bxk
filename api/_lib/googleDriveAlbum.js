@@ -5,12 +5,12 @@ const DRIVE_API = 'https://www.googleapis.com/drive/v3'
 const DRIVE_UPLOAD_API = 'https://www.googleapis.com/upload/drive/v3'
 const MAX_UPLOAD_BYTES = 12 * 1024 * 1024
 
-function requiredEnvironment() {
+function requiredEnvironment(folderVariable = 'GOOGLE_DRIVE_GRETEL_GERALDINE_FOLDER_ID') {
     const values = {
         clientId: process.env.GOOGLE_DRIVE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_DRIVE_CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_DRIVE_REFRESH_TOKEN,
-        folderId: process.env.GOOGLE_DRIVE_GRETEL_GERALDINE_FOLDER_ID,
+        folderId: process.env[folderVariable],
     }
 
     const missing = Object.entries(values)
@@ -101,8 +101,8 @@ function safeFileId(fileId) {
     return fileId
 }
 
-export async function verifyAlbumPhoto(fileId) {
-    const { folderId } = requiredEnvironment()
+export async function verifyAlbumPhoto(fileId, folderVariable) {
+    const { folderId } = requiredEnvironment(folderVariable)
     const id = safeFileId(fileId)
     const fields = encodeURIComponent('id,name,mimeType,parents,size')
     const response = await driveRequest(`/files/${id}?fields=${fields}&supportsAllDrives=true`)
@@ -117,8 +117,26 @@ export async function verifyAlbumPhoto(fileId) {
     return file
 }
 
-export async function listAlbumPhotos() {
-    const { folderId } = requiredEnvironment()
+export async function listAlbumPhotos({
+    folderVariable,
+    apiPath = '/api/albums/gretel-y-geraldine',
+    expectedFolderName,
+    requireUploadPermission = false,
+} = {}) {
+    const { folderId } = requiredEnvironment(folderVariable)
+    const folderFields = encodeURIComponent('id,name,mimeType,capabilities(canAddChildren)')
+    const folderResponse = await driveRequest(`/files/${encodeURIComponent(folderId)}?fields=${folderFields}&supportsAllDrives=true`)
+    const folder = await folderResponse.json()
+    if (folder.mimeType !== 'application/vnd.google-apps.folder'
+        || (expectedFolderName && folder.name !== expectedFolderName)) {
+        throw new Error('La carpeta configurada de Google Drive no coincide con el álbum esperado.')
+    }
+    if (requireUploadPermission && !folder.capabilities?.canAddChildren) {
+        const error = new Error('La cuenta conectada no tiene permiso para añadir fotos a esta carpeta de Google Drive.')
+        error.code = 'DRIVE_FOLDER_READ_ONLY'
+        throw error
+    }
+
     const query = `'${folderId.replaceAll("'", "\\'")}' in parents and trashed = false and mimeType contains 'image/'`
     const params = new URLSearchParams({
         q: query,
@@ -136,13 +154,13 @@ export async function listAlbumPhotos() {
         id: file.id,
         name: file.name,
         createdAt: file.createdTime,
-        url: `/api/albums/gretel-y-geraldine/photo?id=${encodeURIComponent(file.id)}`,
-        downloadUrl: `/api/albums/gretel-y-geraldine/photo?id=${encodeURIComponent(file.id)}&download=1`,
+        url: `${apiPath}/photo?id=${encodeURIComponent(file.id)}`,
+        downloadUrl: `${apiPath}/photo?id=${encodeURIComponent(file.id)}&download=1`,
     }))
 }
 
-export async function uploadAlbumPhoto(buffer) {
-    const { folderId } = requiredEnvironment()
+export async function uploadAlbumPhoto(buffer, folderVariable) {
+    const { folderId } = requiredEnvironment(folderVariable)
     if (!Buffer.isBuffer(buffer) || !buffer.length || buffer.length > MAX_UPLOAD_BYTES) {
         const error = new Error('La fotografía preparada supera el límite permitido.')
         error.code = 'INVALID_UPLOAD_SIZE'
@@ -182,8 +200,8 @@ export async function uploadAlbumPhoto(buffer) {
     return response.json()
 }
 
-export async function downloadAlbumPhoto(fileId, verifiedFile = null) {
-    if (!verifiedFile) await verifyAlbumPhoto(fileId)
+export async function downloadAlbumPhoto(fileId, verifiedFile = null, folderVariable) {
+    if (!verifiedFile) await verifyAlbumPhoto(fileId, folderVariable)
     return driveRequest(`/files/${safeFileId(fileId)}?alt=media&supportsAllDrives=true`)
 }
 
@@ -191,6 +209,7 @@ export function sendAlbumError(response, error) {
     const knownStatus = {
         DRIVE_NOT_CONFIGURED: 503,
         ORIGIN_NOT_ALLOWED: 403,
+        DRIVE_FOLDER_READ_ONLY: 403,
         INVALID_FILE_ID: 400,
         PHOTO_NOT_IN_ALBUM: 404,
         INVALID_UPLOAD_SIZE: 413,
