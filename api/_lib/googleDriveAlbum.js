@@ -117,8 +117,20 @@ export async function verifyAlbumPhoto(fileId, folderVariable) {
     return file
 }
 
-export async function listAlbumPhotos({ folderVariable, apiPath = '/api/albums/gretel-y-geraldine' } = {}) {
+export async function listAlbumPhotos({
+    folderVariable,
+    apiPath = '/api/albums/gretel-y-geraldine',
+    expectedFolderName,
+} = {}) {
     const { folderId } = requiredEnvironment(folderVariable)
+    const folderFields = encodeURIComponent('id,name,mimeType')
+    const folderResponse = await driveRequest(`/files/${encodeURIComponent(folderId)}?fields=${folderFields}&supportsAllDrives=true`)
+    const folder = await folderResponse.json()
+    if (folder.mimeType !== 'application/vnd.google-apps.folder'
+        || (expectedFolderName && folder.name !== expectedFolderName)) {
+        throw new Error('La carpeta configurada de Google Drive no coincide con el álbum esperado.')
+    }
+
     const query = `'${folderId.replaceAll("'", "\\'")}' in parents and trashed = false and mimeType contains 'image/'`
     const params = new URLSearchParams({
         q: query,

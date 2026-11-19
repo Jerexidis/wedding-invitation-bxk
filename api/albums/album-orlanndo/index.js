@@ -19,7 +19,11 @@ export default async function handler(request, response) {
     response.setHeader('X-Content-Type-Options', 'nosniff')
     try {
         if (request.method === 'GET') {
-            const photos = await listAlbumPhotos({ folderVariable: FOLDER_VARIABLE, apiPath: API_PATH })
+            const photos = await listAlbumPhotos({
+                folderVariable: FOLDER_VARIABLE,
+                apiPath: API_PATH,
+                expectedFolderName: 'Album Orlanndo',
+            })
             response.setHeader('Cache-Control', 'public, max-age=0, s-maxage=20, stale-while-revalidate=60')
             response.status(200).json({ photos })
             return
