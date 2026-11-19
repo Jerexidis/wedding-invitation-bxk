@@ -121,14 +121,20 @@ export async function listAlbumPhotos({
     folderVariable,
     apiPath = '/api/albums/gretel-y-geraldine',
     expectedFolderName,
+    requireUploadPermission = false,
 } = {}) {
     const { folderId } = requiredEnvironment(folderVariable)
-    const folderFields = encodeURIComponent('id,name,mimeType')
+    const folderFields = encodeURIComponent('id,name,mimeType,capabilities(canAddChildren)')
     const folderResponse = await driveRequest(`/files/${encodeURIComponent(folderId)}?fields=${folderFields}&supportsAllDrives=true`)
     const folder = await folderResponse.json()
     if (folder.mimeType !== 'application/vnd.google-apps.folder'
         || (expectedFolderName && folder.name !== expectedFolderName)) {
         throw new Error('La carpeta configurada de Google Drive no coincide con el álbum esperado.')
+    }
+    if (requireUploadPermission && !folder.capabilities?.canAddChildren) {
+        const error = new Error('La cuenta conectada no tiene permiso para añadir fotos a esta carpeta de Google Drive.')
+        error.code = 'DRIVE_FOLDER_READ_ONLY'
+        throw error
     }
 
     const query = `'${folderId.replaceAll("'", "\\'")}' in parents and trashed = false and mimeType contains 'image/'`
@@ -203,6 +209,7 @@ export function sendAlbumError(response, error) {
     const knownStatus = {
         DRIVE_NOT_CONFIGURED: 503,
         ORIGIN_NOT_ALLOWED: 403,
+        DRIVE_FOLDER_READ_ONLY: 403,
         INVALID_FILE_ID: 400,
         PHOTO_NOT_IN_ALBUM: 404,
         INVALID_UPLOAD_SIZE: 413,

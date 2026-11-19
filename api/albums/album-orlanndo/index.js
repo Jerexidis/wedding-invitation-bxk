@@ -23,6 +23,7 @@ export default async function handler(request, response) {
                 folderVariable: FOLDER_VARIABLE,
                 apiPath: API_PATH,
                 expectedFolderName: 'Album Orlando',
+                requireUploadPermission: true,
             })
             response.setHeader('Cache-Control', 'public, max-age=0, s-maxage=20, stale-while-revalidate=60')
             response.status(200).json({ photos })
