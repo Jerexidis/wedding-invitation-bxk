@@ -8,7 +8,7 @@ export default function OrlanndoAlbum() {
         <SharedAlbum
             className="orlanndo-album"
             eventFolder="album-orlanndo"
-            kicker="Album Orlanndo"
+            kicker="Album Orlando"
             title="Álbum compartido"
             intro="Sube aquí tus fotos del evento para compartirlas con todos."
             sectionLabel="Fotos del evento"
