@@ -66,6 +66,7 @@ export default function SharedAlbum({
     sectionLabel = 'Recuerdos compartidos',
     galleryTitle = 'Nuestros momentos',
     eventDate = null,
+    documentTitle = null,
     emptyTitle = 'La primera foto puede ser tuya',
     emptyText = 'Comparte un momento y comienza este álbum con nosotros.',
     footerText = 'Gracias por ser parte de nuestra historia',
@@ -115,11 +116,11 @@ export default function SharedAlbum({
 
     useEffect(() => {
         const previousTitle = document.title
-        document.title = `${title} | Invita-Ya`
+        document.title = documentTitle || `${title} | Invita-Ya`
         return () => {
             document.title = previousTitle
         }
-    }, [title])
+    }, [title, documentTitle])
 
     useEffect(() => {
         const urls = selectedFiles.map((file) => URL.createObjectURL(file))

@@ -7,7 +7,7 @@ const Showcase = lazy(() => import('./components/Showcase'))
 const SharedAlbum = lazy(() => import('./album/SharedAlbum'))
 const LorenaArturoAlbum = lazy(() => import('./invitations/boda-lorena-y-arturo/Album'))
 const GretelGeraldineAlbum = lazy(() => import('./invitations/gretel-y-geraldine/Album'))
-const OrlanndoAlbum = lazy(() => import('./album/OrlanndoAlbum'))
+const FatimaAlbum = lazy(() => import('./album/FatimaAlbum'))
 const PrivacyPolicy = lazy(() => import('./legal/PrivacyPolicy'))
 const TermsOfService = lazy(() => import('./legal/TermsOfService'))
 
@@ -131,8 +131,9 @@ function App() {
                     <Route path="/album" element={<SharedAlbum />} />
                     <Route path="/i/boda-lorena-y-arturo/album" element={<LorenaArturoAlbum />} />
                     <Route path="/i/gretel-y-geraldine/album" element={<GretelGeraldineAlbum />} />
-                    <Route path="/xv-fati" element={<OrlanndoAlbum />} />
-                    <Route path="/album-orlanndo" element={<OrlanndoAlbum />} />
+                    <Route path="/album-xv-fati" element={<FatimaAlbum />} />
+                    <Route path="/xv-fati" element={<FatimaAlbum />} />
+                    <Route path="/album-orlanndo" element={<FatimaAlbum />} />
                     <Route path="/privacidad" element={<PrivacyPolicy />} />
                     <Route path="/terminos" element={<TermsOfService />} />
                     <Route path="/i/:slug" element={<InvitationBySlug />} />

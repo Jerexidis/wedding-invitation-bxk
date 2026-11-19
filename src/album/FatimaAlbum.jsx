@@ -8,7 +8,8 @@ export default function FatimaAlbum() {
         <SharedAlbum
             className="xv-fati-album"
             eventFolder="album-fatima"
-            kicker="Mis XV años · Fati "
+            kicker="Álbum · Mis XV años de Fati"
+            documentTitle="Álbum de XV de Fati | Invita-Ya"
             title="Una noche para recordar"
             intro="Me encantará compartir contigo este momento tan especial. Guarda aquí las fotografías de la celebración."
             eventDate="Sábado 21 de noviembre de 2026"
