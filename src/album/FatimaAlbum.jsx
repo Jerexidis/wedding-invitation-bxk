@@ -3,7 +3,7 @@ import { createDriveAlbumStore } from '../utils/driveAlbumStore'
 
 const albumStore = createDriveAlbumStore('/api/albums/album-fatima')
 
-export default function OrlanndoAlbum() {
+export default function FatimaAlbum() {
     return (
         <SharedAlbum
             className="xv-fati-album"
