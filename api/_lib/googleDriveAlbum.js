@@ -5,12 +5,12 @@ const DRIVE_API = 'https://www.googleapis.com/drive/v3'
 const DRIVE_UPLOAD_API = 'https://www.googleapis.com/upload/drive/v3'
 const MAX_UPLOAD_BYTES = 12 * 1024 * 1024
 
-function requiredEnvironment() {
+function requiredEnvironment(folderVariable = 'GOOGLE_DRIVE_GRETEL_GERALDINE_FOLDER_ID') {
     const values = {
         clientId: process.env.GOOGLE_DRIVE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_DRIVE_CLIENT_SECRET,
         refreshToken: process.env.GOOGLE_DRIVE_REFRESH_TOKEN,
-        folderId: process.env.GOOGLE_DRIVE_GRETEL_GERALDINE_FOLDER_ID,
+        folderId: process.env[folderVariable],
     }
 
     const missing = Object.entries(values)
@@ -101,8 +101,8 @@ function safeFileId(fileId) {
     return fileId
 }
 
-export async function verifyAlbumPhoto(fileId) {
-    const { folderId } = requiredEnvironment()
+export async function verifyAlbumPhoto(fileId, folderVariable) {
+    const { folderId } = requiredEnvironment(folderVariable)
     const id = safeFileId(fileId)
     const fields = encodeURIComponent('id,name,mimeType,parents,size')
     const response = await driveRequest(`/files/${id}?fields=${fields}&supportsAllDrives=true`)
@@ -117,8 +117,8 @@ export async function verifyAlbumPhoto(fileId) {
     return file
 }
 
-export async function listAlbumPhotos() {
-    const { folderId } = requiredEnvironment()
+export async function listAlbumPhotos({ folderVariable, apiPath = '/api/albums/gretel-y-geraldine' } = {}) {
+    const { folderId } = requiredEnvironment(folderVariable)
     const query = `'${folderId.replaceAll("'", "\\'")}' in parents and trashed = false and mimeType contains 'image/'`
     const params = new URLSearchParams({
         q: query,
@@ -136,13 +136,13 @@ export async function listAlbumPhotos() {
         id: file.id,
         name: file.name,
         createdAt: file.createdTime,
-        url: `/api/albums/gretel-y-geraldine/photo?id=${encodeURIComponent(file.id)}`,
-        downloadUrl: `/api/albums/gretel-y-geraldine/photo?id=${encodeURIComponent(file.id)}&download=1`,
+        url: `${apiPath}/photo?id=${encodeURIComponent(file.id)}`,
+        downloadUrl: `${apiPath}/photo?id=${encodeURIComponent(file.id)}&download=1`,
     }))
 }
 
-export async function uploadAlbumPhoto(buffer) {
-    const { folderId } = requiredEnvironment()
+export async function uploadAlbumPhoto(buffer, folderVariable) {
+    const { folderId } = requiredEnvironment(folderVariable)
     if (!Buffer.isBuffer(buffer) || !buffer.length || buffer.length > MAX_UPLOAD_BYTES) {
         const error = new Error('La fotografía preparada supera el límite permitido.')
         error.code = 'INVALID_UPLOAD_SIZE'
@@ -182,8 +182,8 @@ export async function uploadAlbumPhoto(buffer) {
     return response.json()
 }
 
-export async function downloadAlbumPhoto(fileId, verifiedFile = null) {
-    if (!verifiedFile) await verifyAlbumPhoto(fileId)
+export async function downloadAlbumPhoto(fileId, verifiedFile = null, folderVariable) {
+    if (!verifiedFile) await verifyAlbumPhoto(fileId, folderVariable)
     return driveRequest(`/files/${safeFileId(fileId)}?alt=media&supportsAllDrives=true`)
 }
 
