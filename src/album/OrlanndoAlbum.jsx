@@ -1,14 +1,14 @@
 import SharedAlbum from './SharedAlbum'
 import { createDriveAlbumStore } from '../utils/driveAlbumStore'
 
-const albumStore = createDriveAlbumStore('/api/albums/album-orlanndo')
+const albumStore = createDriveAlbumStore('/api/albums/album-fatima')
 
 export default function OrlanndoAlbum() {
     return (
         <SharedAlbum
             className="xv-fati-album"
-            eventFolder="album-orlanndo"
-            kicker="Fati · Mis XV años"
+            eventFolder="album-fatima"
+            kicker="Mis XV años · Fati "
             title="Una noche para recordar"
             intro="Me encantará compartir contigo este momento tan especial. Guarda aquí las fotografías de la celebración."
             eventDate="Sábado 21 de noviembre de 2026"
