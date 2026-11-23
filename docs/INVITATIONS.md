@@ -38,6 +38,7 @@ the minimum invitation-specific files needed for a task.
 | `plantilla-boda-mexicana` | standalone-custom | boda | whatsapp | 3 files | 18.53 MB |
 | `menu-desayunos` | standalone-custom | menu | none | 2 files | 2.17 MB |
 | `carlos-juaquin` | standalone-custom | bautizo | whatsapp | 3 files | 7.92 MB |
+| `fiesta-rebeca` | standalone-custom | — | custom/none | 2 files | 14.22 MB |
 
 ## Targeted context
 
@@ -270,6 +271,13 @@ the minimum invitation-specific files needed for a task.
 - Flags: gallery, audio, calendar
 - Design brief: `src/invitations/carlos-juaquin/DESIGN.md`
 - Source: `src/invitations/carlos-juaquin/config.json`, `src/invitations/carlos-juaquin/DESIGN.md`, `src/invitations/carlos-juaquin/index.jsx`
+
+### fiesta-rebeca
+
+- Entry: `src/invitations/fiesta-rebeca/index.jsx`
+- Architecture: `standalone-custom`
+- Flags: calendar
+- Source: `src/invitations/fiesta-rebeca/index.jsx`, `src/invitations/fiesta-rebeca/party-template.css`
 
 ## Refresh
 

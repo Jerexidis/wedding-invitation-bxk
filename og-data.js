@@ -169,4 +169,9 @@ export const ogData = {
         description: 'La felicidad se comparte y nosotros queremos compartir la nuestra: ¡Carlos Joaquín se bautiza! ¡Te esperamos para festejar!',
         image: '/invitations/carlos-juaquin/img/og-preview.jpg',
     },
+    'fiesta-rebeca': {
+        title: 'Fiesta de Rebeca · Bellota',
+        description: 'Rebeca celebra sus 45 años el 24 de noviembre con una tarde de fiesta y ricos tacos de canasta.',
+        image: '/invitations/fiesta-rebeca/img/og-preview.jpg',
+    },
 }

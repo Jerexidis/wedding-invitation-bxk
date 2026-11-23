@@ -945,6 +945,34 @@
         "bytes": 8303505,
         "megabytes": 7.92
       }
+    },
+    {
+      "slug": "fiesta-rebeca",
+      "title": "Fiesta de Rebeca · Bellota",
+      "architecture": "standalone-custom",
+      "enabled": true,
+      "demo": false,
+      "eventType": null,
+      "eventDate": null,
+      "portfolioGalleryAllowed": false,
+      "services": {
+        "rsvp": null,
+        "gallery": false,
+        "audio": false,
+        "calendar": true
+      },
+      "sourceFiles": [
+        "src/invitations/fiesta-rebeca/index.jsx",
+        "src/invitations/fiesta-rebeca/party-template.css"
+      ],
+      "designBrief": null,
+      "assets": {
+        "files": 21,
+        "images": 20,
+        "audio": 0,
+        "bytes": 14908473,
+        "megabytes": 14.22
+      }
     }
   ]
 }

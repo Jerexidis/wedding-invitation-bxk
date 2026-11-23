@@ -356,6 +356,13 @@ const invitations = [
         eventDate: '2026-12-05T15:00:00',
     },
 
+    {
+        slug: 'fiesta-rebeca',
+        title: 'Fiesta de Rebeca · Bellota',
+        component: lazy(() => import('./fiesta-rebeca/index.jsx')),
+        enabled: true,
+    },
+
 ]
 
 // Solo invitaciones activas
